@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AIST Blocker & Enabler Explorer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">UIC AIST</p>
+      <h1>Blocker & Enabler Explorer</h1>
+      <p class="subtitle">
+        Explore AI scalability blockers, related enablers, dependency links and stage-gate candidates.
+      </p>
+    </div>
+
+    <div class="header-actions">
+      <button id="resetFiltersBtn" class="secondary-btn">Reset filters</button>
+      <button id="toggleDependenciesBtn" class="primary-btn" aria-pressed="true">
+        Hide dependencies
+      </button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="filters-panel" aria-label="Filters">
+      <h2>Filters</h2>
+
+      <label class="filter-block">
+        Search
+        <input id="searchInput" type="search" placeholder="Search blockers, enablers, text..." />
+      </label>
+
+      <label class="filter-block">
+        View
+        <select id="viewModeSelect">
+          <option value="blockers">Blocker front side</option>
+          <option value="enablers">Enabler flip side</option>
+        </select>
+      </label>
+
+      <label class="filter-block">
+        Phase
+        <select id="phaseFilter">
+          <option value="">All phases</option>
+        </select>
+      </label>
+
+      <label class="filter-block">
+        Dimension
+        <select id="dimensionFilter">
+          <option value="">All dimensions</option>
+        </select>
+      </label>
+
+      <label class="filter-block">
+        Cluster
+        <select id="clusterFilter">
+          <option value="">All clusters</option>
+        </select>
+      </label>
+
+      <label class="filter-block">
+        Stakeholder
+        <select id="stakeholderFilter">
+          <option value="">All stakeholders</option>
+        </select>
+      </label>
+
+      <label class="check-row">
+        <input id="stageGateOnly" type="checkbox" />
+        Stage-gate candidates only
+      </label>
+
+      <hr />
+
+      <section class="legend">
+        <h3>Legend</h3>
+        <div><span class="legend-swatch technical"></span>Technical</div>
+        <div><span class="legend-swatch organisational"></span>Organisational</div>
+        <div><span class="legend-swatch cross-cutting"></span>Cross-cutting</div>
+        <div><span class="legend-swatch stage-gate"></span>Stage Gate candidate</div>
+      </section>
+
+      <section class="summary-box">
+        <h3>Current view</h3>
+        <p><strong id="visibleCount">0</strong> blockers visible</p>
+        <p><strong id="dependencyCount">0</strong> dependencies visible</p>
+      </section>
+    </aside>
+
+    <section class="roadmap-panel">
+      <div id="statusMessage" class="status-message">Loading data...</div>
+
+      <div class="roadmap-wrapper">
+        <svg id="dependencySvg" class="dependency-svg" aria-hidden="true"></svg>
+        <div id="roadmapGrid" class="roadmap-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <aside id="detailsPanel" class="details-panel" aria-label="Details">
+      <button id="closeDetailsBtn" class="close-btn" title="Close details">×</button>
+      <div id="detailsContent">
+        <p class="empty-details">Select a blocker card to see details.</p>
+      </div>
+    </aside>
+  </main>
+
+  <template id="cardTemplate">
+    <article class="card" tabindex="0">
+      <div class="card-topline">
+        <span class="card-id"></span>
+        <span class="card-badge"></span>
+      </div>
+      <h3 class="card-title"></h3>
+      <p class="card-cluster"></p>
+      <div class="card-tags"></div>
+      <p class="card-summary"></p>
+      <div class="card-footer">
+        <span class="dependency-level"></span>
+        <span class="enabler-count"></span>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
