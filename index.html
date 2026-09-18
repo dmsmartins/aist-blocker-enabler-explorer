@@ -385,6 +385,27 @@ h3 { font-size: 18px; color: #17334c; }
 .selection-item small { display:block; margin-top:4px; color:#7a8d9d; }
 .remove-btn { border:0; background:#f6f8fa; color:#617789; border-radius:8px; padding:7px 10px; cursor:pointer; }
 
+
+.browse-section { margin-top:34px; }
+.browse-section + .browse-section { margin-top:46px; }
+.browse-section-head { display:flex; justify-content:space-between; align-items:flex-start; gap:18px; margin-bottom:12px; }
+.browse-section-head h3 { margin:0; font-size:20px; }
+.browse-section-head .eyebrow { margin-bottom:5px; }
+.mechanism-filter-row { display:flex; gap:8px; flex-wrap:wrap; margin:8px 0 28px; padding-bottom:18px; border-bottom:1px solid var(--line); }
+.mechanism-filter { border:1px solid #d6e2ea; background:white; color:#60778a; border-radius:20px; padding:8px 13px; font-size:12px; font-weight:780; cursor:pointer; }
+.mechanism-filter:hover { border-color:#a9c7dc; }
+.mechanism-filter.active { background:#edf6fd; color:#1768a6; border-color:#b8d8ee; }
+.mechanism-filter.active:not([data-mechanism-filter="all"]) { color:var(--mech); background:color-mix(in srgb, var(--mech) 9%, white); border-color:color-mix(in srgb, var(--mech) 28%, white); }
+.mechanism-section-head .subtle { margin:5px 0 0; max-width:690px; font-size:13px; }
+.standalone-enabler { margin-bottom:8px; }
+.related-blockers-wrap { margin-top:18px; padding-top:16px; border-top:1px solid var(--line-2); }
+.related-blockers-wrap h4 { margin:0 0 12px; color:#28465d; font-size:13px; }
+.related-domain { margin-top:14px; }
+.related-domain-title { font-size:10px; text-transform:uppercase; letter-spacing:.08em; font-weight:800; color:#8796a3; margin-bottom:6px; }
+.related-blocker { border:1px solid var(--line-2); background:#fbfdfe; border-radius:9px; padding:11px 12px; margin-top:6px; }
+.related-blocker strong { display:block; color:#29485f; font-size:12.5px; }
+.related-blocker .relevance-btn { padding-top:7px; }
+
 .toast-root { position:fixed; right:22px; bottom:22px; z-index:120; display:flex; flex-direction:column; gap:9px; }
 .toast { background:#153750; color:white; border-radius:10px; padding:11px 14px; box-shadow:0 12px 30px rgba(9,28,43,.2); font-size:13px; animation:toastIn .2s ease; }
 @keyframes toastIn { from { opacity:0; transform:translateY(8px); } }
@@ -474,7 +495,8 @@ const state = {
   stakeholders: [],
   dimension: '',
   bookmarks: loadBookmarks(),
-  searchType: 'all'
+  searchType: 'all',
+  allMechanism: 'all'
 };
 
 function loadBookmarks() {
@@ -540,9 +562,9 @@ function routeFromHash() {
 }
 
 function render() {
-  searchBtn.hidden = !['explore','domains','domain','stage-gates'].includes(state.route);
-  navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.route === (state.route === 'home' ? '' : state.route === 'domain' || state.route === 'domains' || state.route === 'stage-gates' ? 'explore' : state.route)));
-  const renderers = { home:renderHome, explore:renderExplore, domains:renderDomains, domain:renderDomain, maturity:renderMaturity, selection:renderSelection, 'stage-gates':renderStageGates };
+  searchBtn.hidden = !['explore','domains','domain','all-blockers','all-enablers','stage-gates'].includes(state.route);
+  navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.route === (state.route === 'home' ? '' : state.route === 'domain' || state.route === 'domains' || state.route === 'all-blockers' || state.route === 'all-enablers' || state.route === 'stage-gates' ? 'explore' : state.route)));
+  const renderers = { home:renderHome, explore:renderExplore, domains:renderDomains, domain:renderDomain, 'all-blockers':renderAllBlockers, 'all-enablers':renderAllEnablers, maturity:renderMaturity, selection:renderSelection, 'stage-gates':renderStageGates };
   (renderers[state.route] || renderHome)();
   app.focus({preventScroll:true});
 }
@@ -589,8 +611,8 @@ function renderExplore() {
     <div class="secondary-actions"><button class="outline-btn" id="allBlockers">All Blockers →</button><button class="outline-btn" id="allEnablers">All Enablers →</button></div>
   </section>`;
   document.getElementById('byDomain').onclick = ()=>navigate('domains');
-  document.getElementById('allBlockers').onclick = ()=>toast('All Blockers will be activated when the full workbook is connected.');
-  document.getElementById('allEnablers').onclick = ()=>toast('All Enablers will be activated when all mechanism mappings are connected.');
+  document.getElementById('allBlockers').onclick = ()=>navigate('all-blockers');
+  document.getElementById('allEnablers').onclick = ()=>navigate('all-enablers');
 }
 
 function activePerspectiveHtml() {
@@ -653,6 +675,150 @@ function renderDomain() {
   document.getElementById('filterBtn').onclick = openFilters;
   document.getElementById('changePerspective')?.addEventListener('click', openRolePicker);
   bindBlockerEvents();
+}
+
+
+function rerenderCurrentExploreView() {
+  if (state.route === 'all-blockers') return renderAllBlockers();
+  if (state.route === 'all-enablers') return renderAllEnablers();
+  return renderDomain();
+}
+
+function renderAllBlockers() {
+  let rows = [...state.data.blockers];
+  if (state.stakeholders.length) rows = rows.filter(b => state.stakeholders.some(s => b.stakeholders.includes(s)));
+  if (state.dimension) rows = rows.filter(b => b.dimension === state.dimension);
+
+  const sections = state.data.domains.map(domain => {
+    const items = rows.filter(b => b.domain === domain.slug);
+    if (!items.length) return '';
+    return `<section class="browse-section">
+      <div class="browse-section-head">
+        <div><p class="eyebrow">Domain</p><h3>${escapeHtml(domain.title)}</h3></div>
+        <span class="stat-chip">${items.length} blocker${items.length===1?'':'s'}</span>
+      </div>
+      <div class="blocker-list">${items.map(renderBlockerCard).join('')}</div>
+    </section>`;
+  }).join('');
+
+  app.innerHTML = `<section class="page">
+    <button class="back-btn" id="backExplore">${icon('back')} Explore</button>
+    <div class="domain-title-row">
+      <div><p class="eyebrow">Browse all</p><h2>All Blockers</h2><p class="subtle">Browse the complete blocker landscape, grouped by domain. Open a blocker only when you need the detail.</p></div>
+      <button class="filter-btn" id="filterBtn">${icon('filter')} Filters</button>
+    </div>
+    ${activePerspectiveHtml()}
+    ${sections || '<div class="empty-state">No blockers match the current filters.</div>'}
+  </section>`;
+
+  document.getElementById('backExplore').onclick = ()=>navigate('explore');
+  document.getElementById('filterBtn').onclick = openFilters;
+  document.getElementById('changePerspective')?.addEventListener('click', openRolePicker);
+  bindBlockerEvents();
+}
+
+function mechanismsForEnabler(id) {
+  return unique(state.data.relationships.filter(r=>r.enablerId===id).map(r=>r.mechanism).filter(Boolean));
+}
+
+function relatedBlockersForEnabler(id) {
+  return state.data.relationships
+    .filter(r=>r.enablerId===id)
+    .map(r=>({relationship:r, blocker:state.data.blockers.find(b=>b.id===r.blockerId)}))
+    .filter(x=>x.blocker);
+}
+
+function renderAllEnablers() {
+  const mechanismOrder = state.data.mechanisms.map(m=>m.key);
+  const tabs = ['all', ...mechanismOrder].map(m => {
+    const active = state.allMechanism === m;
+    const label = m === 'all' ? 'All' : m;
+    const style = m === 'all' ? '' : `style="--mech:var(--${m.toLowerCase()})"`;
+    return `<button class="mechanism-filter ${active?'active':''}" data-mechanism-filter="${m}" ${style}>${label}</button>`;
+  }).join('');
+
+  const mechanismSections = mechanismOrder.map(mechanism => {
+    if (state.allMechanism !== 'all' && state.allMechanism !== mechanism) return '';
+    let items = state.data.enablers.filter(e => mechanismsForEnabler(e.id).includes(mechanism));
+    if (state.stakeholders.length) items = items.filter(e => state.stakeholders.some(s => e.stakeholders.includes(s)));
+    if (!items.length) return '';
+    const description = state.data.mechanisms.find(m=>m.key===mechanism)?.description || '';
+    return `<section class="browse-section">
+      <div class="browse-section-head mechanism-section-head" style="--mech:var(--${mechanism.toLowerCase()})">
+        <div><div class="enabler-group-title" style="color:var(--${mechanism.toLowerCase()})">${mechanism}</div><p class="subtle">${escapeHtml(description)}</p></div>
+        <span class="stat-chip">${items.length} enabler${items.length===1?'':'s'}</span>
+      </div>
+      <div class="enabler-list">${items.map(e=>renderStandaloneEnablerCard(e, mechanism)).join('')}</div>
+    </section>`;
+  }).join('');
+
+  app.innerHTML = `<section class="page">
+    <button class="back-btn" id="backExplore">${icon('back')} Explore</button>
+    <div class="page-head"><div><p class="eyebrow">Browse all</p><h2>All Enablers</h2><p class="subtle">Explore enablers by the way they help overcome barriers to scaling AI.</p></div></div>
+    ${activePerspectiveHtml()}
+    <div class="mechanism-filter-row">${tabs}</div>
+    ${mechanismSections || '<div class="empty-state">No enablers match the current perspective.</div>'}
+  </section>`;
+
+  document.getElementById('backExplore').onclick = ()=>navigate('explore');
+  document.getElementById('changePerspective')?.addEventListener('click', openRolePicker);
+  app.querySelectorAll('[data-mechanism-filter]').forEach(btn => btn.onclick = () => {
+    state.allMechanism = btn.dataset.mechanismFilter;
+    state.openEnablers.clear();
+    renderAllEnablers();
+  });
+  bindStandaloneEnablerEvents();
+}
+
+function renderStandaloneEnablerCard(e, mechanism) {
+  const openKey = `all:${e.id}`;
+  const open = state.openEnablers.has(openKey);
+  const saved = state.bookmarks.enablers.includes(e.id);
+  const related = relatedBlockersForEnabler(e.id);
+  const byDomain = state.data.domains.map(domain => {
+    const rows = related.filter(x=>x.blocker.domain===domain.slug);
+    if (!rows.length) return '';
+    return `<div class="related-domain"><div class="related-domain-title">${escapeHtml(domain.title)}</div>${rows.map(x=>`
+      <div class="related-blocker">
+        <strong>${escapeHtml(x.blocker.title)}</strong>
+        <button class="relevance-btn" data-standalone-rationale="${x.relationship.id}">Why is this relevant?</button>
+        <div class="rationale" data-standalone-rationale-text="${x.relationship.id}" hidden>${escapeHtml(x.relationship.rationale)}</div>
+      </div>`).join('')}</div>`;
+  }).join('');
+
+  return `<article class="enabler-card standalone-enabler">
+    <button class="enabler-summary" data-toggle-standalone-enabler="${openKey}">
+      <div><strong>${escapeHtml(e.title)}</strong><p>${escapeHtml(e.description)}</p></div>
+      <span class="chevron" style="transform:${open?'rotate(90deg)':'none'}">${icon('chevron')}</span>
+    </button>
+    ${open ? `<div class="enabler-detail">
+      <div class="detail-actions"><button class="save-btn ${saved?'saved':''}" data-save-standalone-enabler="${e.id}">${icon('bookmark')} ${saved?'Saved':'Save'}</button></div>
+      <div class="enabler-detail-grid">
+        <div class="mini-section"><b>Practical actions</b><p>${escapeHtml(e.practicalActions)}</p></div>
+        <div class="mini-section"><b>Expected outcome</b><p>${escapeHtml(e.expectedOutcome || '—')}</p></div>
+      </div>
+      <div class="enabler-stakeholders"><b>Stakeholders:</b> ${escapeHtml(e.stakeholders.join(' · '))}</div>
+      <div class="related-blockers-wrap"><h4>Related blockers</h4>${byDomain || '<p class="subtle">No related blockers.</p>'}</div>
+    </div>` : ''}
+  </article>`;
+}
+
+function bindStandaloneEnablerEvents() {
+  app.querySelectorAll('[data-toggle-standalone-enabler]').forEach(btn => btn.onclick = () => {
+    const key = btn.dataset.toggleStandaloneEnabler;
+    state.openEnablers.has(key) ? state.openEnablers.delete(key) : state.openEnablers.add(key);
+    renderAllEnablers();
+  });
+  app.querySelectorAll('[data-save-standalone-enabler]').forEach(btn => btn.onclick = e => {
+    e.stopPropagation();
+    toggleBookmark('enablers', Number(btn.dataset.saveStandaloneEnabler));
+    renderAllEnablers();
+  });
+  app.querySelectorAll('[data-standalone-rationale]').forEach(btn => btn.onclick = () => {
+    const el = app.querySelector(`[data-standalone-rationale-text="${btn.dataset.standaloneRationale}"]`);
+    el.hidden = !el.hidden;
+    btn.textContent = el.hidden ? 'Why is this relevant?' : 'Hide rationale';
+  });
 }
 
 function renderBlockerCard(b) {
@@ -718,18 +884,18 @@ function bindBlockerEvents() {
     const id = Number(btn.dataset.toggleBlocker);
     state.openBlocker = state.openBlocker === id ? null : id;
     state.openEnablers.clear();
-    renderDomain();
+    rerenderCurrentExploreView();
     if (state.openBlocker) document.querySelector(`[data-blocker-card="${id}"]`)?.scrollIntoView({behavior:'smooth',block:'nearest'});
   });
   app.querySelectorAll('[data-toggle-enabler]').forEach(btn => btn.onclick = () => {
     const key = btn.dataset.toggleEnabler;
     state.openEnablers.has(key) ? state.openEnablers.delete(key) : state.openEnablers.add(key);
-    renderDomain();
+    rerenderCurrentExploreView();
   });
-  app.querySelectorAll('[data-save-blocker]').forEach(btn => btn.onclick = e => { e.stopPropagation(); toggleBookmark('blockers', Number(btn.dataset.saveBlocker)); renderDomain(); });
-  app.querySelectorAll('[data-save-enabler]').forEach(btn => btn.onclick = e => { e.stopPropagation(); toggleBookmark('enablers', Number(btn.dataset.saveEnabler)); renderDomain(); });
+  app.querySelectorAll('[data-save-blocker]').forEach(btn => btn.onclick = e => { e.stopPropagation(); toggleBookmark('blockers', Number(btn.dataset.saveBlocker)); rerenderCurrentExploreView(); });
+  app.querySelectorAll('[data-save-enabler]').forEach(btn => btn.onclick = e => { e.stopPropagation(); toggleBookmark('enablers', Number(btn.dataset.saveEnabler)); rerenderCurrentExploreView(); });
   app.querySelectorAll('[data-relevance]').forEach(btn => btn.onclick = () => { const el=app.querySelector(`[data-rationale="${btn.dataset.relevance}"]`); el.hidden=!el.hidden; btn.textContent=el.hidden?'Why is this relevant?':'Hide rationale'; });
-  app.querySelectorAll('[data-more-enablers]').forEach(btn => btn.onclick = () => { const key=btn.dataset.moreEnablers; state.expandedEnablerLimit[key]=999; renderDomain(); });
+  app.querySelectorAll('[data-more-enablers]').forEach(btn => btn.onclick = () => { const key=btn.dataset.moreEnablers; state.expandedEnablerLimit[key]=999; rerenderCurrentExploreView(); });
 }
 function toggleBookmark(type,id) {
   const arr = state.bookmarks[type];
@@ -754,15 +920,15 @@ function openRolePicker() {
 function openFilters() {
   const stakeholders = unique(state.data.blockers.flatMap(b=>b.stakeholders));
   const dimensions = unique(state.data.blockers.map(b=>b.dimension));
-  modalRoot.innerHTML = `<div class="filter-drawer"><aside class="drawer"><div class="modal-head"><div><p class="eyebrow">Filters</p><h3>Refine this domain</h3></div><button class="close-modal">${icon('close')}</button></div>
+  modalRoot.innerHTML = `<div class="filter-drawer"><aside class="drawer"><div class="modal-head"><div><p class="eyebrow">Filters</p><h3>Refine this view</h3></div><button class="close-modal">${icon('close')}</button></div>
     <div class="filter-section"><label>Stakeholder</label><div class="check-list">${stakeholders.map(s=>`<label class="check-item"><input type="checkbox" value="${escapeHtml(s)}" ${state.stakeholders.includes(s)?'checked':''}><span>${escapeHtml(s)}</span></label>`).join('')}</div></div>
     <div class="filter-section"><label>Stage Gate</label><div class="disabled-filter">Stage Gate mapping is not yet available. The filter will activate automatically when the workbook is populated.</div></div>
     <div class="filter-section"><label>Dimension</label><select id="dimensionSelect"><option value="">All dimensions</option>${dimensions.map(d=>`<option ${state.dimension===d?'selected':''}>${escapeHtml(d)}</option>`).join('')}</select></div>
     <div class="modal-actions" style="margin-top:22px"><button class="outline-btn" id="clearFilters">Clear</button><button class="primary-btn" id="applyFilters">Apply filters</button></div>
   </aside></div>`;
   modalRoot.querySelector('.close-modal').onclick = closeModal;
-  document.getElementById('clearFilters').onclick=()=>{state.stakeholders=[]; state.dimension=''; closeModal(); renderDomain();};
-  document.getElementById('applyFilters').onclick=()=>{state.stakeholders=[...modalRoot.querySelectorAll('input:checked')].map(x=>x.value); state.dimension=document.getElementById('dimensionSelect').value; closeModal(); renderDomain();};
+  document.getElementById('clearFilters').onclick=()=>{state.stakeholders=[]; state.dimension=''; closeModal(); rerenderCurrentExploreView();};
+  document.getElementById('applyFilters').onclick=()=>{state.stakeholders=[...modalRoot.querySelectorAll('input:checked')].map(x=>x.value); state.dimension=document.getElementById('dimensionSelect').value; closeModal(); rerenderCurrentExploreView();};
   modalRoot.querySelector('.filter-drawer').addEventListener('click',e=>{if(e.target===e.currentTarget) closeModal();});
 }
 
@@ -789,7 +955,7 @@ function updateSearch(q) {
   if((state.searchType==='all'||state.searchType==='blockers')&&bs.length) html+=`<section class="search-section"><h4>Blockers</h4>${bs.map(b=>`<div class="search-result" data-search-blocker="${b.id}"><strong>${escapeHtml(b.title)}</strong><span>${escapeHtml(truncate(b.statement,140))}</span></div>`).join('')}</section>`;
   if((state.searchType==='all'||state.searchType==='enablers')&&es.length) html+=`<section class="search-section"><h4>Enablers</h4>${es.map(e=>`<div class="search-result"><strong>${escapeHtml(e.title)}</strong><span>${escapeHtml(truncate(e.description,140))}</span></div>`).join('')}</section>`;
   box.innerHTML=html||'<div class="empty-state">No matching items.</div>';
-  box.querySelectorAll('[data-search-blocker]').forEach(r=>r.onclick=()=>{state.domain='data-foundations'; state.openBlocker=Number(r.dataset.searchBlocker); closeModal(); location.hash='#domain/data-foundations'; setTimeout(()=>document.querySelector(`[data-blocker-card="${state.openBlocker}"]`)?.scrollIntoView({behavior:'smooth'}),100);});
+  box.querySelectorAll('[data-search-blocker]').forEach(r=>r.onclick=()=>{const id=Number(r.dataset.searchBlocker); const b=state.data.blockers.find(x=>x.id===id); if(!b)return; closeModal(); location.hash=`#domain/${b.domain}`; setTimeout(()=>{state.openBlocker=id; renderDomain(); document.querySelector(`[data-blocker-card="${id}"]`)?.scrollIntoView({behavior:'smooth',block:'center'});},80);});
 }
 
 function renderStageGates() {
