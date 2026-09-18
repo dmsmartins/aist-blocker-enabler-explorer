@@ -3,128 +3,827 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AIST Blocker & Enabler Explorer</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="color-scheme" content="light" />
+  <title>AI Scalability Explorer</title>
+  <style>
+:root {
+  --navy: #102a43;
+  --navy-2: #173f5f;
+  --ink: #172b3a;
+  --muted: #64748b;
+  --line: #dde6ee;
+  --line-2: #edf2f6;
+  --surface: #ffffff;
+  --surface-soft: #f7fafc;
+  --blue: #1479d2;
+  --blue-soft: #eaf4ff;
+  --shadow: 0 10px 35px rgba(16, 42, 67, .08);
+  --frame: #1f7ae0;
+  --commit: #7b3fe4;
+  --equip: #2e9f66;
+  --assure: #eb7f35;
+  --operate: #d84b55;
+  --learn: #d6a600;
+  --radius-lg: 22px;
+  --radius: 15px;
+  --radius-sm: 10px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: #f8fafc;
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select { font: inherit; }
+button { color: inherit; }
+.svg-sprite { position: absolute; overflow: hidden; }
+
+.topbar {
+  height: 68px;
+  background: var(--navy);
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+  padding: 0 30px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 4px 22px rgba(15, 42, 67, .16);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  color: white;
+  background: none;
+  font-weight: 700;
+  cursor: pointer;
+  justify-self: start;
+}
+.brand-mark {
+  width: 23px;
+  height: 23px;
+  position: relative;
+  display: inline-block;
+}
+.brand-mark span {
+  position: absolute;
+  width: 5px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #30d5c8, #3c9cff);
+  bottom: 2px;
+  transform-origin: bottom;
+}
+.brand-mark span:first-child { height: 20px; transform: rotate(29deg); left: 8px; }
+.brand-mark span:last-child { height: 16px; transform: rotate(-29deg); left: 11px; }
+.main-nav { display: flex; height: 100%; align-items: stretch; gap: 8px; }
+.main-nav button {
+  border: 0;
+  background: none;
+  color: rgba(255,255,255,.78);
+  padding: 0 15px;
+  cursor: pointer;
+  position: relative;
+}
+.main-nav button:hover, .main-nav button.active { color: white; }
+.main-nav button.active::after {
+  content: "";
+  position: absolute;
+  height: 3px;
+  left: 15px;
+  right: 15px;
+  bottom: 0;
+  background: #45a3ff;
+  border-radius: 3px 3px 0 0;
+}
+.topbar-actions { justify-self: end; display: flex; align-items: center; gap: 6px; }
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(255,255,255,.9);
+  cursor: pointer;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.icon-btn:hover { background: rgba(255,255,255,.09); }
+.icon-btn svg { width: 20px; height: 20px; }
+.count-dot {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #43a0f5;
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  border: 2px solid var(--navy);
+}
+
+#app { min-height: calc(100vh - 68px); }
+.page {
+  width: min(1180px, calc(100% - 42px));
+  margin: 0 auto;
+  padding: 54px 0 80px;
+}
+.page.narrow { width: min(920px, calc(100% - 42px)); }
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .17em;
+  font-weight: 800;
+  color: var(--blue);
+}
+h1, h2, h3, p { margin-top: 0; }
+h1 { font-size: clamp(36px, 5vw, 62px); line-height: .98; letter-spacing: -.045em; color: #102a43; }
+h2 { font-size: clamp(30px, 3vw, 42px); line-height: 1.08; letter-spacing: -.03em; color: #102a43; }
+h3 { font-size: 18px; color: #17334c; }
+.lead { font-size: 18px; line-height: 1.62; color: #486174; max-width: 680px; }
+.subtle { color: var(--muted); line-height: 1.55; }
+
+.hero {
+  margin-top: -54px;
+  padding-top: 70px;
+  min-height: 470px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 24%, rgba(69,163,255,.16), transparent 24%),
+    radial-gradient(circle at 64% 55%, rgba(46,159,102,.10), transparent 24%),
+    linear-gradient(135deg, #fafdff 0%, #f4f8fb 58%, #edf5fb 100%);
+  border-radius: 0 0 32px 32px;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 720px;
+  height: 260px;
+  right: -80px;
+  top: 90px;
+  border: 2px solid rgba(20,121,210,.16);
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  transform: rotate(-8deg);
+}
+.hero-inner { width: min(1180px, calc(100% - 42px)); margin: 0 auto; position: relative; z-index: 1; }
+.hero-copy { max-width: 640px; }
+.hero h1 { max-width: 610px; margin-bottom: 22px; }
+.home-cards {
+  width: min(1180px, calc(100% - 42px));
+  margin: -92px auto 0;
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.entry-card, .domain-card, .path-card {
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.98);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(16,42,67,.04);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.entry-card {
+  min-height: 210px;
+  padding: 26px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+.entry-card:hover, .domain-card:hover, .path-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  border-color: #c9d9e7;
+}
+.entry-icon, .domain-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--blue-soft);
+  color: var(--blue);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  margin-bottom: 22px;
+}
+.entry-card p { color: var(--muted); line-height: 1.5; margin-bottom: 20px; }
+.card-link { margin-top: auto; color: var(--blue); font-weight: 750; font-size: 14px; }
+.framework-strip {
+  width: min(1180px, calc(100% - 42px));
+  margin: 34px auto 70px;
+  padding: 22px 4px;
+}
+.framework-title { font-size: 12px; font-weight: 750; color: #60748a; margin-bottom: 14px; }
+.mechanism-row { display: flex; flex-wrap: wrap; gap: 10px 18px; }
+.mechanism-mini { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 720; color: #42596d; }
+.mechanism-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--mech); }
+
+.page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 30px; margin-bottom: 34px; }
+.page-head h2 { margin-bottom: 8px; }
+.path-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; margin: 36px 0 36px; }
+.path-card { padding: 30px; min-height: 210px; cursor: pointer; text-align: left; }
+.path-card .path-visual { width: 54px; height: 54px; border-radius: 17px; display:grid; place-items:center; background:#eef6fd; color: var(--blue); margin-bottom: 35px; font-weight: 850; }
+.path-card p { color: var(--muted); line-height: 1.5; }
+.path-card.disabled { cursor: default; opacity: .58; }
+.path-card.disabled:hover { transform:none; box-shadow:none; border-color:var(--line); }
+.browse-all { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; margin-top: 22px; }
+.browse-all::before, .browse-all::after { content:""; height:1px; background:var(--line); }
+.browse-label { font-size: 11px; text-transform: uppercase; letter-spacing: .16em; color: #7a8c9e; font-weight:800; }
+.secondary-actions { display:flex; gap:12px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
+.outline-btn, .ghost-btn, .primary-btn, .back-btn, .filter-btn {
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-weight: 720;
+  cursor: pointer;
+}
+.outline-btn { border: 1px solid #cbdbe8; background: white; color: #185a91; }
+.outline-btn:hover { border-color:#8fb9d9; background:#f8fcff; }
+.ghost-btn { border: 0; background: transparent; color: var(--blue); }
+.primary-btn { border:0; background:var(--blue); color:white; box-shadow:0 7px 18px rgba(20,121,210,.18); }
+.primary-btn:hover { background:#0d6cbc; }
+.back-btn { border:0; background:transparent; color: var(--blue); padding-left:0; display:inline-flex; align-items:center; gap:6px; }
+.back-btn svg { width:17px; height:17px; }
+
+.domain-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.domain-card { padding: 24px; min-height: 190px; cursor:pointer; text-align:left; display:flex; flex-direction:column; }
+.domain-card h3 { margin-bottom:10px; }
+.domain-card p { color: var(--muted); line-height:1.5; }
+.domain-card .chev { margin-top:auto; align-self:flex-end; color:var(--blue); }
+.domain-card .chev svg { width:19px; height:19px; }
+.domain-card.not-loaded { opacity:.62; }
+.domain-card.not-loaded:hover { opacity:.8; }
+
+.domain-title-row { display:flex; align-items:flex-start; justify-content:space-between; gap:24px; margin-bottom:26px; }
+.domain-heading { display:flex; gap:16px; align-items:flex-start; }
+.domain-heading .domain-icon { flex:0 0 auto; margin:0; }
+.domain-heading h2 { margin-bottom:8px; }
+.filter-btn { border:1px solid #bcd7ec; background:white; color:#1768a6; display:inline-flex; gap:8px; align-items:center; }
+.filter-btn svg { width:17px; height:17px; }
+.active-context { display:flex; flex-wrap:wrap; gap:8px; margin: -4px 0 22px; }
+.context-chip { border-radius:20px; background:#eef6fd; color:#245e8b; font-size:12px; font-weight:700; padding:7px 10px; }
+
+.blocker-list { display:flex; flex-direction:column; gap:10px; }
+.blocker-card { border:1px solid var(--line); background:white; border-radius:13px; overflow:hidden; transition:border-color .18s ease, box-shadow .18s ease; }
+.blocker-card.open { border-color:#bdd8ec; box-shadow:0 9px 25px rgba(16,42,67,.05); }
+.blocker-summary { width:100%; border:0; background:white; text-align:left; padding:20px 22px; display:grid; grid-template-columns:1fr auto; gap:18px; cursor:pointer; }
+.blocker-title-line { display:flex; align-items:center; flex-wrap:wrap; gap:9px; margin-bottom:5px; }
+.blocker-title-line strong { color:#17334c; font-size:16px; }
+.stage-badge { display:inline-flex; border-radius:20px; background:#eef6fd; color:#1769aa; font-size:11px; font-weight:780; padding:5px 8px; }
+.blocker-statement { color:#657a8c; line-height:1.48; margin:0; font-size:14px; }
+.chevron { color:#4f7b9b; transition:transform .2s; align-self:center; }
+.blocker-card.open .chevron { transform:rotate(90deg); }
+.chevron svg { width:19px; height:19px; }
+.blocker-detail { padding:0 22px 24px; border-top:1px solid var(--line-2); }
+.detail-actions { display:flex; justify-content:flex-end; padding:12px 0 4px; }
+.save-btn { border:0; background:transparent; color:#486b84; cursor:pointer; display:inline-flex; align-items:center; gap:6px; padding:7px 9px; border-radius:8px; }
+.save-btn:hover { background:#f3f8fb; }
+.save-btn.saved { color:var(--blue); background:#eef6fd; }
+.save-btn svg { width:17px; height:17px; }
+.detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:12px 0 16px; }
+.detail-panel { border:1px solid var(--line-2); background:#fbfdfe; border-radius:12px; padding:16px; }
+.detail-label { font-size:12px; font-weight:800; color:#28465d; margin-bottom:7px; }
+.detail-panel p { color:#5f7486; line-height:1.55; margin:0; font-size:13.5px; }
+.meta-row { display:grid; grid-template-columns:1.2fr .8fr 1fr; gap:12px; padding:13px 0 20px; border-bottom:1px solid var(--line-2); }
+.meta-item small { display:block; color:#8292a1; font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:5px; }
+.meta-item span { font-size:12.5px; color:#456075; line-height:1.4; }
+.enable-head { display:flex; justify-content:space-between; gap:18px; align-items:center; margin:22px 0 15px; }
+.enable-head h3 { margin:0; font-size:16px; }
+.mechanism-chips { display:flex; gap:7px; flex-wrap:wrap; }
+.mech-chip { border-radius:20px; padding:6px 10px; background: color-mix(in srgb, var(--mech) 10%, white); color:var(--mech); font-size:11px; font-weight:800; }
+.enabler-group { margin-top:13px; }
+.enabler-group-title { display:flex; align-items:center; gap:7px; color:var(--equip); font-size:12px; font-weight:820; margin:0 0 8px; }
+.enabler-group-title::before { content:""; width:8px; height:8px; border-radius:50%; background:currentColor; }
+.enabler-list { display:flex; flex-direction:column; gap:7px; }
+.enabler-card { border:1px solid var(--line); border-radius:10px; background:white; overflow:hidden; }
+.enabler-summary { width:100%; border:0; background:white; padding:14px 15px; text-align:left; display:grid; grid-template-columns:1fr auto; gap:16px; cursor:pointer; }
+.enabler-summary strong { display:block; color:#19364e; margin-bottom:5px; font-size:13.5px; }
+.enabler-summary p { margin:0; color:#6a7f90; line-height:1.45; font-size:12.5px; }
+.enabler-detail { padding:0 15px 16px; border-top:1px solid var(--line-2); }
+.enabler-detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding-top:14px; }
+.mini-section { background:#fafcfd; border-radius:9px; padding:12px; border:1px solid var(--line-2); }
+.mini-section b { display:block; font-size:11px; color:#38556b; margin-bottom:6px; }
+.mini-section p { margin:0; color:#64798a; line-height:1.5; font-size:12px; }
+.enabler-stakeholders { margin-top:10px; color:#6a7f90; font-size:12px; line-height:1.5; }
+.relevance-btn { border:0; padding:9px 0 0; background:transparent; color:var(--blue); font-size:12px; font-weight:750; cursor:pointer; }
+.rationale { margin:9px 0 0; padding:11px 12px; background:#f2f8fd; border-left:3px solid #8ec3ed; color:#587185; font-size:12px; line-height:1.5; border-radius:0 8px 8px 0; }
+.show-more { border:0; background:transparent; color:var(--blue); font-weight:730; font-size:12px; cursor:pointer; margin:9px 0 0 10px; }
+.empty-state { border:1px dashed #cddae4; border-radius:14px; padding:34px; text-align:center; color:#6c8192; background:#fbfdfe; }
+
+.role-modal, .search-modal, .filter-drawer {
+  position:fixed;
+  inset:0;
+  background:rgba(9,28,43,.36);
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  backdrop-filter: blur(4px);
+}
+.modal-card { width:min(650px,100%); max-height:min(760px,calc(100vh - 40px)); overflow:auto; background:white; border-radius:18px; box-shadow:0 26px 80px rgba(9,28,43,.24); padding:26px; }
+.modal-head { display:flex; justify-content:space-between; gap:18px; align-items:flex-start; margin-bottom:18px; }
+.modal-head h3 { margin-bottom:7px; font-size:22px; }
+.close-modal { border:0; width:38px; height:38px; border-radius:9px; background:#f3f6f8; cursor:pointer; display:grid; place-items:center; }
+.close-modal svg { width:18px; height:18px; }
+.check-list { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin:18px 0 24px; }
+.check-item { border:1px solid var(--line); border-radius:10px; padding:12px 13px; display:flex; gap:9px; align-items:flex-start; cursor:pointer; }
+.check-item input { margin-top:2px; accent-color:var(--blue); }
+.check-item span { font-size:13px; color:#425e73; }
+.modal-actions { display:flex; justify-content:flex-end; gap:10px; }
+
+.filter-drawer { justify-content:flex-end; padding:0; }
+.drawer { width:min(420px,100%); height:100%; background:white; padding:26px; box-shadow:-20px 0 65px rgba(9,28,43,.18); overflow:auto; }
+.filter-section { padding:18px 0; border-bottom:1px solid var(--line-2); }
+.filter-section label { display:block; font-weight:780; color:#27445b; margin-bottom:10px; font-size:13px; }
+.filter-section select { width:100%; border:1px solid #cddbe5; border-radius:9px; padding:10px 11px; background:white; color:#425c70; }
+.filter-section .check-list { grid-template-columns:1fr; margin:8px 0 0; }
+.disabled-filter { color:#8a99a6; font-size:12px; line-height:1.5; background:#f7f9fb; padding:11px; border-radius:9px; }
+
+.search-input-wrap { position:relative; margin:10px 0 18px; }
+.search-input-wrap svg { position:absolute; left:13px; top:50%; transform:translateY(-50%); width:18px; height:18px; color:#7890a3; }
+.search-input-wrap input { width:100%; border:1px solid #cbd9e4; border-radius:11px; padding:13px 14px 13px 42px; font-size:15px; outline:none; }
+.search-input-wrap input:focus { border-color:#75add8; box-shadow:0 0 0 3px #edf7ff; }
+.search-tabs { display:flex; gap:8px; margin-bottom:17px; }
+.search-tab { border:1px solid #d7e2ea; background:#fff; border-radius:18px; padding:6px 11px; cursor:pointer; color:#5d7386; font-size:12px; font-weight:760; }
+.search-tab.active { background:#eaf4ff; color:#1768a6; border-color:#bcd9ef; }
+.search-section { margin-top:16px; }
+.search-section h4 { margin:0 0 8px; color:#29475e; }
+.search-result { border-top:1px solid var(--line-2); padding:12px 2px; cursor:pointer; }
+.search-result strong { display:block; color:#17364f; margin-bottom:4px; font-size:13px; }
+.search-result span { color:#738697; font-size:12px; line-height:1.4; }
+
+.maturity-options { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:28px; }
+.maturity-card { border:1px solid var(--line); border-radius:15px; background:white; padding:25px; min-height:170px; }
+.maturity-card h3 { font-size:18px; }
+.mockup-note { margin-top:26px; border-radius:13px; background:#f1f7fc; border:1px solid #d6e9f7; padding:18px; color:#557086; line-height:1.55; }
+
+.selection-summary { display:flex; gap:8px; flex-wrap:wrap; margin:18px 0 28px; }
+.stat-chip { background:#eef5fa; color:#49677e; border-radius:18px; padding:7px 10px; font-size:12px; font-weight:760; }
+.selection-section { margin-top:30px; }
+.selection-list { display:grid; gap:9px; }
+.selection-item { border:1px solid var(--line); background:white; border-radius:11px; padding:16px; display:flex; justify-content:space-between; gap:18px; }
+.selection-item strong { color:#17364f; font-size:14px; }
+.selection-item small { display:block; margin-top:4px; color:#7a8d9d; }
+.remove-btn { border:0; background:#f6f8fa; color:#617789; border-radius:8px; padding:7px 10px; cursor:pointer; }
+
+.toast-root { position:fixed; right:22px; bottom:22px; z-index:120; display:flex; flex-direction:column; gap:9px; }
+.toast { background:#153750; color:white; border-radius:10px; padding:11px 14px; box-shadow:0 12px 30px rgba(9,28,43,.2); font-size:13px; animation:toastIn .2s ease; }
+@keyframes toastIn { from { opacity:0; transform:translateY(8px); } }
+
+@media (max-width: 880px) {
+  .topbar { grid-template-columns:1fr auto; padding:0 18px; }
+  .main-nav { display:none; }
+  .topbar-actions { grid-column:2; }
+  .page, .hero-inner, .home-cards, .framework-strip { width:min(100% - 28px, 720px); }
+  .home-cards { grid-template-columns:1fr; margin-top:-62px; }
+  .entry-card { min-height:160px; }
+  .domain-grid { grid-template-columns:1fr 1fr; }
+  .detail-grid, .meta-row, .enabler-detail-grid { grid-template-columns:1fr; }
+  .check-list { grid-template-columns:1fr; }
+}
+@media (max-width: 600px) {
+  .brand span:last-child { display:none; }
+  .topbar { height:60px; }
+  #app { min-height:calc(100vh - 60px); }
+  .page { padding-top:36px; }
+  .hero { margin-top:-36px; padding-top:48px; min-height:420px; }
+  .hero h1 { font-size:42px; }
+  .lead { font-size:16px; }
+  .domain-grid, .path-grid, .maturity-options { grid-template-columns:1fr; }
+  .page-head, .domain-title-row, .enable-head { flex-direction:column; align-items:stretch; }
+  .blocker-summary { padding:17px; }
+  .blocker-detail { padding:0 17px 20px; }
+  .modal-card { padding:20px; }
+}
+[hidden] { display: none !important; }
+#app:focus { outline: none; }
+
+</style>
 </head>
 <body>
-  <header class="app-header">
-    <div>
-      <p class="eyebrow">UIC AIST</p>
-      <h1>Blocker & Enabler Explorer</h1>
-      <p class="subtitle">
-        Explore AI scalability blockers, related enablers, dependency links and stage-gate candidates.
-      </p>
-    </div>
+  <svg class="svg-sprite" aria-hidden="true" width="0" height="0">
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M7 4.5h10v15l-5-3.1-5 3.1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="m14.5 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  </svg>
 
-    <div class="header-actions">
-      <button id="resetFiltersBtn" class="secondary-btn">Reset filters</button>
-      <button id="toggleDependenciesBtn" class="primary-btn" aria-pressed="true">
-        Hide dependencies
+  <header class="topbar">
+    <button class="brand" id="brandBtn" aria-label="Go to homepage">
+      <span class="brand-mark" aria-hidden="true"><span></span><span></span></span>
+      <span>AI Scalability Explorer</span>
+    </button>
+
+    <nav class="main-nav" aria-label="Primary navigation">
+      <button data-route="explore">Explore</button>
+      <button data-route="maturity">Maturity Assessment</button>
+    </nav>
+
+    <div class="topbar-actions">
+      <button class="icon-btn" id="selectionBtn" title="My selection" aria-label="My selection">
+        <svg><use href="#i-bookmark"></use></svg>
+        <span id="bookmarkCount" class="count-dot" hidden>0</span>
+      </button>
+      <button class="icon-btn" id="searchBtn" title="Search" aria-label="Search" hidden>
+        <svg><use href="#i-search"></use></svg>
       </button>
     </div>
   </header>
 
-  <main class="layout">
-    <aside class="filters-panel" aria-label="Filters">
-      <h2>Filters</h2>
+  <main id="app" tabindex="-1"></main>
 
-      <label class="filter-block">
-        Search
-        <input id="searchInput" type="search" placeholder="Search blockers, enablers, text..." />
-      </label>
+  <div id="modalRoot"></div>
+  <div id="toastRoot" class="toast-root" aria-live="polite"></div>
+<script>
+const app = document.getElementById('app');
+const modalRoot = document.getElementById('modalRoot');
+const searchBtn = document.getElementById('searchBtn');
+const selectionBtn = document.getElementById('selectionBtn');
+const bookmarkCount = document.getElementById('bookmarkCount');
+const brandBtn = document.getElementById('brandBtn');
+const navButtons = [...document.querySelectorAll('[data-route]')];
 
-      <label class="filter-block">
-        View
-        <select id="viewModeSelect">
-          <option value="blockers">Blocker front side</option>
-          <option value="enablers">Enabler flip side</option>
-        </select>
-      </label>
+const state = {
+  data: null,
+  route: 'home',
+  domain: null,
+  openBlocker: null,
+  openEnablers: new Set(),
+  expandedEnablerLimit: {},
+  stakeholders: [],
+  dimension: '',
+  bookmarks: loadBookmarks(),
+  searchType: 'all'
+};
 
-      <label class="filter-block">
-        Phase
-        <select id="phaseFilter">
-          <option value="">All phases</option>
-        </select>
-      </label>
+function loadBookmarks() {
+  try { return JSON.parse(localStorage.getItem('aistExplorerBookmarks') || '{"blockers":[],"enablers":[]}'); }
+  catch { return { blockers: [], enablers: [] }; }
+}
+function saveBookmarks() {
+  localStorage.setItem('aistExplorerBookmarks', JSON.stringify(state.bookmarks));
+  updateBookmarkCount();
+}
+function updateBookmarkCount() {
+  const n = state.bookmarks.blockers.length + state.bookmarks.enablers.length;
+  bookmarkCount.textContent = n;
+  bookmarkCount.hidden = !n;
+}
+function icon(name, cls='') { return `<svg class="${cls}"><use href="#i-${name}"></use></svg>`; }
+function escapeHtml(value='') {
+  return String(value).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+}
+function truncate(text, n=150) {
+  const s = String(text || '');
+  return s.length > n ? s.slice(0,n).trimEnd() + '…' : s;
+}
+function unique(arr) { return [...new Set(arr)].sort((a,b)=>a.localeCompare(b)); }
+function toast(message) {
+  const el = document.createElement('div');
+  el.className = 'toast'; el.textContent = message;
+  document.getElementById('toastRoot').appendChild(el);
+  setTimeout(()=>el.remove(), 2200);
+}
 
-      <label class="filter-block">
-        Dimension
-        <select id="dimensionFilter">
-          <option value="">All dimensions</option>
-        </select>
-      </label>
+async function init() {
+  if (window.__EXPLORER_DATA__) {
+    state.data = window.__EXPLORER_DATA__;
+  } else {
+    const res = await fetch('data/explorer-data.json');
+    state.data = await res.json();
+  }
+  updateBookmarkCount();
+  bindGlobal();
+  routeFromHash();
+}
 
-      <label class="filter-block">
-        Cluster
-        <select id="clusterFilter">
-          <option value="">All clusters</option>
-        </select>
-      </label>
+function bindGlobal() {
+  brandBtn.addEventListener('click', ()=>navigate('home'));
+  navButtons.forEach(btn => btn.addEventListener('click', ()=>navigate(btn.dataset.route)));
+  selectionBtn.addEventListener('click', ()=>navigate('selection'));
+  searchBtn.addEventListener('click', openSearch);
+  window.addEventListener('hashchange', routeFromHash);
+}
 
-      <label class="filter-block">
-        Stakeholder
-        <select id="stakeholderFilter">
-          <option value="">All stakeholders</option>
-        </select>
-      </label>
+function navigate(route) {
+  const map = { home:'#home', explore:'#explore', maturity:'#maturity', selection:'#selection', domains:'#domains', stage:'#stage-gates', domain:'#domain/data-foundations' };
+  location.hash = map[route] || `#${route}`;
+}
+function routeFromHash() {
+  const hash = location.hash || '#home';
+  if (hash.startsWith('#domain/')) { state.route='domain'; state.domain=hash.split('/')[1]; }
+  else state.route = hash.slice(1) || 'home';
+  state.openBlocker = null;
+  state.openEnablers.clear();
+  render();
+}
 
-      <label class="check-row">
-        <input id="stageGateOnly" type="checkbox" />
-        Stage-gate candidates only
-      </label>
+function render() {
+  searchBtn.hidden = !['explore','domains','domain','stage-gates'].includes(state.route);
+  navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.route === (state.route === 'home' ? '' : state.route === 'domain' || state.route === 'domains' || state.route === 'stage-gates' ? 'explore' : state.route)));
+  const renderers = { home:renderHome, explore:renderExplore, domains:renderDomains, domain:renderDomain, maturity:renderMaturity, selection:renderSelection, 'stage-gates':renderStageGates };
+  (renderers[state.route] || renderHome)();
+  app.focus({preventScroll:true});
+}
 
-      <hr />
-
-      <section class="legend">
-        <h3>Legend</h3>
-        <div><span class="legend-swatch technical"></span>Technical</div>
-        <div><span class="legend-swatch organisational"></span>Organisational</div>
-        <div><span class="legend-swatch cross-cutting"></span>Cross-cutting</div>
-        <div><span class="legend-swatch stage-gate"></span>Stage Gate candidate</div>
-      </section>
-
-      <section class="summary-box">
-        <h3>Current view</h3>
-        <p><strong id="visibleCount">0</strong> blockers visible</p>
-        <p><strong id="dependencyCount">0</strong> dependencies visible</p>
-      </section>
-    </aside>
-
-    <section class="roadmap-panel">
-      <div id="statusMessage" class="status-message">Loading data...</div>
-
-      <div class="roadmap-wrapper">
-        <svg id="dependencySvg" class="dependency-svg" aria-hidden="true"></svg>
-        <div id="roadmapGrid" class="roadmap-grid" aria-live="polite"></div>
+function renderHome() {
+  const mechs = state.data.mechanisms.map(m => `<span class="mechanism-mini" style="--mech:var(--${m.key.toLowerCase()})"><span class="mechanism-dot"></span>${m.key}</span>`).join('');
+  app.innerHTML = `
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">UIC AIST · Insight to impact</p>
+          <h1>Understand.<br>Overcome.<br>Scale AI.</h1>
+          <p class="lead">Explore what can block AI from scaling and what enables organisations to overcome those barriers.</p>
+        </div>
       </div>
     </section>
+    <section class="home-cards">
+      ${entryCard('Explore the landscape','Browse blockers and enablers across domains, stages and stakeholders.','Explore','explore','↗')}
+      ${entryCard('View for my role','Focus the landscape on the stakeholders and responsibilities most relevant to you.','Choose perspective','role','◎')}
+      ${entryCard('Maturity assessment','Assess the maturity of your organisation or AI initiative.','Open assessment','maturity','▥')}
+    </section>
+    <section class="framework-strip">
+      <div class="framework-title">Enablers act through six mechanisms</div>
+      <div class="mechanism-row">${mechs}</div>
+    </section>`;
+  app.querySelectorAll('[data-entry]').forEach(btn => btn.addEventListener('click', () => {
+    const action = btn.dataset.entry;
+    if (action === 'role') openRolePicker(); else navigate(action);
+  }));
+}
+function entryCard(title, text, link, action, symbol) {
+  return `<button class="entry-card" data-entry="${action}"><div class="entry-icon">${symbol}</div><h3>${title}</h3><p>${text}</p><span class="card-link">${link} →</span></button>`;
+}
 
-    <aside id="detailsPanel" class="details-panel" aria-label="Details">
-      <button id="closeDetailsBtn" class="close-btn" title="Close details">×</button>
-      <div id="detailsContent">
-        <p class="empty-details">Select a blocker card to see details.</p>
-      </div>
-    </aside>
-  </main>
+function renderExplore() {
+  app.innerHTML = `<section class="page narrow">
+    <div class="page-head"><div><p class="eyebrow">Explore</p><h2>Choose a path.</h2><p class="subtle">Start broad. Open detail only when it becomes useful.</p></div></div>
+    ${activePerspectiveHtml()}
+    <div class="path-grid">
+      <button class="path-card" id="byDomain"><div class="path-visual">▦</div><h3>By Domain</h3><p>Explore blockers and enablers by thematic domain.</p><span class="card-link">Choose a domain →</span></button>
+      <button class="path-card disabled" id="byStage" aria-disabled="true"><div class="path-visual">┈</div><h3>By Stage Gate</h3><p>Explore the landscape along the ISO 55001-aligned lifecycle.</p><span class="card-link">Mapping in progress</span></button>
+    </div>
+    <div class="browse-all"><span class="browse-label">or browse all</span></div>
+    <div class="secondary-actions"><button class="outline-btn" id="allBlockers">All Blockers →</button><button class="outline-btn" id="allEnablers">All Enablers →</button></div>
+  </section>`;
+  document.getElementById('byDomain').onclick = ()=>navigate('domains');
+  document.getElementById('allBlockers').onclick = ()=>toast('All Blockers will be activated when the full workbook is connected.');
+  document.getElementById('allEnablers').onclick = ()=>toast('All Enablers will be activated when all mechanism mappings are connected.');
+}
 
-  <template id="cardTemplate">
-    <article class="card" tabindex="0">
-      <div class="card-topline">
-        <span class="card-id"></span>
-        <span class="card-badge"></span>
-      </div>
-      <h3 class="card-title"></h3>
-      <p class="card-cluster"></p>
-      <div class="card-tags"></div>
-      <p class="card-summary"></p>
-      <div class="card-footer">
-        <span class="dependency-level"></span>
-        <span class="enabler-count"></span>
-      </div>
-    </article>
-  </template>
+function activePerspectiveHtml() {
+  if (!state.stakeholders.length) return '';
+  return `<div class="active-context"><span class="context-chip">Viewing as: ${escapeHtml(state.stakeholders.join(' + '))}</span><button class="ghost-btn" id="changePerspective">Change</button></div>`;
+}
 
-  <script src="app.js"></script>
+function renderDomains() {
+  const cards = state.data.domains.map(d => `<button class="domain-card ${d.enabled?'':'not-loaded'}" data-domain="${d.slug}">
+    <div class="domain-icon">${domainSymbol(d.slug)}</div><h3>${escapeHtml(d.title)}</h3><p>${escapeHtml(d.description)}</p><span class="chev">${icon('chevron')}</span>
+  </button>`).join('');
+  app.innerHTML = `<section class="page">
+    <button class="back-btn" id="backExplore">${icon('back')} Explore</button>
+    <div class="page-head"><div><p class="eyebrow">Explore by domain</p><h2>Where do you want to look?</h2><p class="subtle">Macro-domains organise the experience; the underlying clusters remain unchanged.</p></div></div>
+    ${activePerspectiveHtml()}
+    <div class="domain-grid">${cards}</div>
+  </section>`;
+  document.getElementById('backExplore').onclick = ()=>navigate('explore');
+  app.querySelectorAll('[data-domain]').forEach(card => card.onclick = () => {
+    const d = state.data.domains.find(x=>x.slug===card.dataset.domain);
+    if (d.enabled) location.hash = `#domain/${d.slug}`;
+    else toast(`${d.title} is reserved for the next data slice.`);
+  });
+  document.getElementById('changePerspective')?.addEventListener('click', openRolePicker);
+}
+function domainSymbol(slug) {
+  return ({'data-foundations':'◫','technology-infrastructure':'▣','governance-organisation':'◇','people-adoption':'●','legal-safety-assurance':'◆','value-delivery-scale':'▤'})[slug] || '○';
+}
+
+function filteredBlockers() {
+  let rows = state.data.blockers.filter(b => b.domain === state.domain);
+  if (state.stakeholders.length) rows = rows.filter(b => state.stakeholders.some(s => b.stakeholders.includes(s)));
+  if (state.dimension) rows = rows.filter(b => b.dimension === state.dimension);
+  return rows;
+}
+function relationsForBlocker(id) { return state.data.relationships.filter(r=>r.blockerId===id); }
+function enabler(id) { return state.data.enablers.find(e=>e.id===id); }
+function relationship(id, enablerId) { return state.data.relationships.find(r=>r.blockerId===id && r.enablerId===enablerId); }
+function visibleEnablersForBlocker(id) {
+  let items = relationsForBlocker(id).map(r => ({...enabler(r.enablerId), relationship:r})).filter(x=>x.id);
+  if (state.stakeholders.length) items = items.filter(e => state.stakeholders.some(s => e.stakeholders.includes(s)));
+  return items;
+}
+
+function renderDomain() {
+  const domain = state.data.domains.find(d=>d.slug===state.domain);
+  if (!domain) return renderDomains();
+  const blockers = filteredBlockers();
+  const blockerHtml = blockers.length ? blockers.map(renderBlockerCard).join('') : `<div class="empty-state">No blockers match the current filters.</div>`;
+  app.innerHTML = `<section class="page">
+    <button class="back-btn" id="backDomains">${icon('back')} Back to domains</button>
+    <div class="domain-title-row">
+      <div class="domain-heading"><div class="domain-icon">${domainSymbol(domain.slug)}</div><div><h2>${escapeHtml(domain.title)}</h2><p class="subtle">${escapeHtml(domain.description)} These foundations are critical to move from isolated pilots towards scalable AI.</p></div></div>
+      <button class="filter-btn" id="filterBtn">${icon('filter')} Filters</button>
+    </div>
+    ${activePerspectiveHtml()}
+    <div class="blocker-list">${blockerHtml}</div>
+  </section>`;
+  document.getElementById('backDomains').onclick = ()=>navigate('domains');
+  document.getElementById('filterBtn').onclick = openFilters;
+  document.getElementById('changePerspective')?.addEventListener('click', openRolePicker);
+  bindBlockerEvents();
+}
+
+function renderBlockerCard(b) {
+  const open = state.openBlocker === b.id;
+  return `<article class="blocker-card ${open?'open':''}" data-blocker-card="${b.id}">
+    <button class="blocker-summary" data-toggle-blocker="${b.id}">
+      <div><div class="blocker-title-line">${b.stageGate ? `<span class="stage-badge">${escapeHtml(b.stageGate)}</span>`:''}<strong>${escapeHtml(b.title)}</strong></div><p class="blocker-statement">${escapeHtml(b.statement)}</p></div>
+      <span class="chevron">${icon('chevron')}</span>
+    </button>
+    ${open ? renderBlockerDetail(b) : ''}
+  </article>`;
+}
+function renderBlockerDetail(b) {
+  const saved = state.bookmarks.blockers.includes(b.id);
+  const items = visibleEnablersForBlocker(b.id);
+  const groups = groupByMechanism(items);
+  const chips = Object.entries(groups).map(([m,arr])=>`<span class="mech-chip" style="--mech:var(--${m.toLowerCase()})">${m} ${arr.length}</span>`).join('');
+  const enablers = Object.entries(groups).map(([m,arr])=>renderEnablerGroup(b.id,m,arr)).join('');
+  return `<div class="blocker-detail">
+    <div class="detail-actions"><button class="save-btn ${saved?'saved':''}" data-save-blocker="${b.id}">${icon('bookmark')} ${saved?'Saved':'Save'}</button></div>
+    <div class="detail-grid">
+      <div class="detail-panel"><div class="detail-label">Why it matters</div><p>${escapeHtml(b.whyItMatters)}</p></div>
+      <div class="detail-panel"><div class="detail-label">Consequence</div><p>${escapeHtml(b.consequence)}</p></div>
+    </div>
+    <div class="meta-row">
+      <div class="meta-item"><small>Stakeholders</small><span>${escapeHtml(b.stakeholders.join(' · '))}</span></div>
+      <div class="meta-item"><small>Dimension</small><span>${escapeHtml(b.dimension)}</span></div>
+      <div class="meta-item"><small>Cluster</small><span>${escapeHtml(b.cluster.replace(/^\d+\)\s*/,''))}</span></div>
+    </div>
+    <div class="enable-head"><h3>What enables progress?</h3><div class="mechanism-chips">${chips || '<span class="subtle">No enablers for the selected role.</span>'}</div></div>
+    ${enablers}
+  </div>`;
+}
+function groupByMechanism(items) {
+  return items.reduce((acc,item)=>{ (acc[item.relationship.mechanism] ||= []).push(item); return acc; },{});
+}
+function renderEnablerGroup(blockerId, mechanism, items) {
+  const key = `${blockerId}-${mechanism}`;
+  const limit = state.expandedEnablerLimit[key] || 3;
+  const shown = items.slice(0, limit);
+  const cards = shown.map(e=>renderEnablerCard(blockerId,e)).join('');
+  const more = items.length > limit ? `<button class="show-more" data-more-enablers="${key}">Show ${items.length-limit} more enabler${items.length-limit===1?'':'s'}</button>` : '';
+  return `<section class="enabler-group"><div class="enabler-group-title" style="color:var(--${mechanism.toLowerCase()})">${mechanism}</div><div class="enabler-list">${cards}</div>${more}</section>`;
+}
+function renderEnablerCard(blockerId, e) {
+  const openKey = `${blockerId}:${e.id}`;
+  const open = state.openEnablers.has(openKey);
+  const saved = state.bookmarks.enablers.includes(e.id);
+  return `<article class="enabler-card">
+    <button class="enabler-summary" data-toggle-enabler="${openKey}"><div><strong>${escapeHtml(e.title)}</strong><p>${escapeHtml(e.description)}</p></div><span class="chevron" style="transform:${open?'rotate(90deg)':'none'}">${icon('chevron')}</span></button>
+    ${open ? `<div class="enabler-detail">
+      <div class="detail-actions"><button class="save-btn ${saved?'saved':''}" data-save-enabler="${e.id}">${icon('bookmark')} ${saved?'Saved':'Save'}</button></div>
+      <div class="enabler-detail-grid"><div class="mini-section"><b>Practical actions</b><p>${escapeHtml(e.practicalActions)}</p></div><div class="mini-section"><b>Expected outcome</b><p>${escapeHtml(e.expectedOutcome || '—')}</p></div></div>
+      <div class="enabler-stakeholders"><b>Stakeholders:</b> ${escapeHtml(e.stakeholders.join(' · '))}</div>
+      <button class="relevance-btn" data-relevance="${blockerId}:${e.id}">Why is this relevant?</button>
+      <div class="rationale" data-rationale="${blockerId}:${e.id}" hidden>${escapeHtml(e.relationship.rationale)}</div>
+    </div>`:''}
+  </article>`;
+}
+
+function bindBlockerEvents() {
+  app.querySelectorAll('[data-toggle-blocker]').forEach(btn => btn.onclick = () => {
+    const id = Number(btn.dataset.toggleBlocker);
+    state.openBlocker = state.openBlocker === id ? null : id;
+    state.openEnablers.clear();
+    renderDomain();
+    if (state.openBlocker) document.querySelector(`[data-blocker-card="${id}"]`)?.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+  app.querySelectorAll('[data-toggle-enabler]').forEach(btn => btn.onclick = () => {
+    const key = btn.dataset.toggleEnabler;
+    state.openEnablers.has(key) ? state.openEnablers.delete(key) : state.openEnablers.add(key);
+    renderDomain();
+  });
+  app.querySelectorAll('[data-save-blocker]').forEach(btn => btn.onclick = e => { e.stopPropagation(); toggleBookmark('blockers', Number(btn.dataset.saveBlocker)); renderDomain(); });
+  app.querySelectorAll('[data-save-enabler]').forEach(btn => btn.onclick = e => { e.stopPropagation(); toggleBookmark('enablers', Number(btn.dataset.saveEnabler)); renderDomain(); });
+  app.querySelectorAll('[data-relevance]').forEach(btn => btn.onclick = () => { const el=app.querySelector(`[data-rationale="${btn.dataset.relevance}"]`); el.hidden=!el.hidden; btn.textContent=el.hidden?'Why is this relevant?':'Hide rationale'; });
+  app.querySelectorAll('[data-more-enablers]').forEach(btn => btn.onclick = () => { const key=btn.dataset.moreEnablers; state.expandedEnablerLimit[key]=999; renderDomain(); });
+}
+function toggleBookmark(type,id) {
+  const arr = state.bookmarks[type];
+  const idx = arr.indexOf(id);
+  if (idx >= 0) { arr.splice(idx,1); toast('Removed from My Selection'); }
+  else { arr.push(id); toast('Saved to My Selection'); }
+  saveBookmarks();
+}
+
+function openRolePicker() {
+  const stakeholders = unique(state.data.blockers.flatMap(b=>b.stakeholders));
+  modalRoot.innerHTML = `<div class="role-modal"><div class="modal-card"><div class="modal-head"><div><p class="eyebrow">View for my role</p><h3>Which perspectives are relevant to you?</h3><p class="subtle">Select one or more. Items relevant to at least one selected profile will be shown.</p></div><button class="close-modal">${icon('close')}</button></div>
+    <div class="check-list">${stakeholders.map(s=>`<label class="check-item"><input type="checkbox" value="${escapeHtml(s)}" ${state.stakeholders.includes(s)?'checked':''}><span>${escapeHtml(s)}</span></label>`).join('')}</div>
+    <div class="modal-actions"><button class="outline-btn" id="allStakeholders">All stakeholders</button><button class="primary-btn" id="applyRoles">Continue to Explorer</button></div>
+  </div></div>`;
+  modalRoot.querySelector('.close-modal').onclick = closeModal;
+  document.getElementById('allStakeholders').onclick = () => { state.stakeholders=[]; closeModal(); navigate('explore'); };
+  document.getElementById('applyRoles').onclick = () => { state.stakeholders=[...modalRoot.querySelectorAll('input:checked')].map(x=>x.value); closeModal(); navigate('explore'); };
+  modalRoot.querySelector('.role-modal').addEventListener('click', e=>{ if(e.target===e.currentTarget) closeModal(); });
+}
+
+function openFilters() {
+  const stakeholders = unique(state.data.blockers.flatMap(b=>b.stakeholders));
+  const dimensions = unique(state.data.blockers.map(b=>b.dimension));
+  modalRoot.innerHTML = `<div class="filter-drawer"><aside class="drawer"><div class="modal-head"><div><p class="eyebrow">Filters</p><h3>Refine this domain</h3></div><button class="close-modal">${icon('close')}</button></div>
+    <div class="filter-section"><label>Stakeholder</label><div class="check-list">${stakeholders.map(s=>`<label class="check-item"><input type="checkbox" value="${escapeHtml(s)}" ${state.stakeholders.includes(s)?'checked':''}><span>${escapeHtml(s)}</span></label>`).join('')}</div></div>
+    <div class="filter-section"><label>Stage Gate</label><div class="disabled-filter">Stage Gate mapping is not yet available. The filter will activate automatically when the workbook is populated.</div></div>
+    <div class="filter-section"><label>Dimension</label><select id="dimensionSelect"><option value="">All dimensions</option>${dimensions.map(d=>`<option ${state.dimension===d?'selected':''}>${escapeHtml(d)}</option>`).join('')}</select></div>
+    <div class="modal-actions" style="margin-top:22px"><button class="outline-btn" id="clearFilters">Clear</button><button class="primary-btn" id="applyFilters">Apply filters</button></div>
+  </aside></div>`;
+  modalRoot.querySelector('.close-modal').onclick = closeModal;
+  document.getElementById('clearFilters').onclick=()=>{state.stakeholders=[]; state.dimension=''; closeModal(); renderDomain();};
+  document.getElementById('applyFilters').onclick=()=>{state.stakeholders=[...modalRoot.querySelectorAll('input:checked')].map(x=>x.value); state.dimension=document.getElementById('dimensionSelect').value; closeModal(); renderDomain();};
+  modalRoot.querySelector('.filter-drawer').addEventListener('click',e=>{if(e.target===e.currentTarget) closeModal();});
+}
+
+function openSearch() {
+  modalRoot.innerHTML = `<div class="search-modal"><div class="modal-card"><div class="modal-head"><div><p class="eyebrow">Search</p><h3>Find blockers and enablers</h3></div><button class="close-modal">${icon('close')}</button></div>
+    <div class="search-input-wrap">${icon('search')}<input id="searchInput" autocomplete="off" placeholder="Search the loaded knowledge base…"></div>
+    <div class="search-tabs"><button class="search-tab active" data-search-type="all">All</button><button class="search-tab" data-search-type="blockers">Blockers</button><button class="search-tab" data-search-type="enablers">Enablers</button></div>
+    <div id="searchResults"><div class="empty-state">Start typing to search.</div></div>
+  </div></div>`;
+  const input = document.getElementById('searchInput');
+  modalRoot.querySelector('.close-modal').onclick = closeModal;
+  modalRoot.querySelectorAll('[data-search-type]').forEach(b=>b.onclick=()=>{state.searchType=b.dataset.searchType; modalRoot.querySelectorAll('.search-tab').forEach(x=>x.classList.toggle('active',x===b)); updateSearch(input.value);});
+  input.addEventListener('input',()=>updateSearch(input.value));
+  input.focus();
+  modalRoot.querySelector('.search-modal').addEventListener('click',e=>{if(e.target===e.currentTarget) closeModal();});
+}
+function updateSearch(q) {
+  const box=document.getElementById('searchResults');
+  q=q.trim().toLowerCase();
+  if(!q){box.innerHTML='<div class="empty-state">Start typing to search.</div>'; return;}
+  const bs=state.data.blockers.filter(b=>[b.title,b.statement,b.whyItMatters].join(' ').toLowerCase().includes(q));
+  const es=state.data.enablers.filter(e=>[e.title,e.description,e.practicalActions].join(' ').toLowerCase().includes(q));
+  let html='';
+  if((state.searchType==='all'||state.searchType==='blockers')&&bs.length) html+=`<section class="search-section"><h4>Blockers</h4>${bs.map(b=>`<div class="search-result" data-search-blocker="${b.id}"><strong>${escapeHtml(b.title)}</strong><span>${escapeHtml(truncate(b.statement,140))}</span></div>`).join('')}</section>`;
+  if((state.searchType==='all'||state.searchType==='enablers')&&es.length) html+=`<section class="search-section"><h4>Enablers</h4>${es.map(e=>`<div class="search-result"><strong>${escapeHtml(e.title)}</strong><span>${escapeHtml(truncate(e.description,140))}</span></div>`).join('')}</section>`;
+  box.innerHTML=html||'<div class="empty-state">No matching items.</div>';
+  box.querySelectorAll('[data-search-blocker]').forEach(r=>r.onclick=()=>{state.domain='data-foundations'; state.openBlocker=Number(r.dataset.searchBlocker); closeModal(); location.hash='#domain/data-foundations'; setTimeout(()=>document.querySelector(`[data-blocker-card="${state.openBlocker}"]`)?.scrollIntoView({behavior:'smooth'}),100);});
+}
+
+function renderStageGates() {
+  app.innerHTML = `<section class="page narrow"><button class="back-btn" id="backExplore">${icon('back')} Explore</button><p class="eyebrow">By Stage Gate</p><h2>Lifecycle view is reserved.</h2><p class="lead">Stage Gates will act as a timeline and blocker aggregator aligned with ISO 55001 terminology.</p><div class="mockup-note"><strong>Mapping in progress.</strong><br>This page will activate when the Stage Gate attribute is populated in the source workbook.</div></section>`;
+  document.getElementById('backExplore').onclick=()=>navigate('explore');
+}
+
+function renderMaturity() {
+  app.innerHTML = `<section class="page narrow"><p class="eyebrow">Maturity Assessment</p><h2>Assess the context, not just the technology.</h2><p class="lead">This area is intentionally illustrative while the assessment framework is being finalised.</p>
+    <div class="maturity-options"><div class="maturity-card"><h3>Assess my company</h3><p class="subtle">Explore organisational maturity across future assessment dimensions.</p><button class="outline-btn" data-mock>Preview flow →</button></div><div class="maturity-card"><h3>Assess my project</h3><p class="subtle">Explore project readiness and identify areas that may need attention.</p><button class="outline-btn" data-mock>Preview flow →</button></div></div>
+    <div class="mockup-note"><strong>Illustrative assessment.</strong><br>The final form, scoring and radar profile will be generated from a structured assessment file once the framework is approved.</div>
+  </section>`;
+  app.querySelectorAll('[data-mock]').forEach(b=>b.onclick=()=>toast('Assessment questions will be connected in the next iteration.'));
+}
+
+function renderSelection() {
+  const bs=state.bookmarks.blockers.map(id=>state.data.blockers.find(b=>b.id===id)).filter(Boolean);
+  const es=state.bookmarks.enablers.map(id=>state.data.enablers.find(e=>e.id===id)).filter(Boolean);
+  const domains=unique(bs.map(b=>b.domain));
+  app.innerHTML=`<section class="page narrow"><p class="eyebrow">My Selection</p><h2>Saved for later.</h2><div class="selection-summary"><span class="stat-chip">${bs.length} blocker${bs.length===1?'':'s'}</span><span class="stat-chip">${es.length} enabler${es.length===1?'':'s'}</span><span class="stat-chip">${domains.length} domain${domains.length===1?'':'s'}</span></div>
+    <section class="selection-section"><h3>Saved blockers</h3><div class="selection-list">${bs.length?bs.map(b=>selectionItem('blocker',b.id,b.title,b.statement)).join(''):'<div class="empty-state">No saved blockers yet.</div>'}</div></section>
+    <section class="selection-section"><h3>Saved enablers</h3><div class="selection-list">${es.length?es.map(e=>selectionItem('enabler',e.id,e.title,e.description)).join(''):'<div class="empty-state">No saved enablers yet.</div>'}</div></section>
+  </section>`;
+  app.querySelectorAll('[data-remove]').forEach(btn=>btn.onclick=()=>{const [type,id]=btn.dataset.remove.split(':'); toggleBookmark(type==='blocker'?'blockers':'enablers',Number(id)); renderSelection();});
+}
+function selectionItem(type,id,title,text){return `<div class="selection-item"><div><strong>${escapeHtml(title)}</strong><small>${escapeHtml(truncate(text,150))}</small></div><button class="remove-btn" data-remove="${type}:${id}">Remove</button></div>`;}
+
+function closeModal(){ modalRoot.innerHTML=''; }
+
+init().catch(err => {
+  console.error(err);
+  app.innerHTML = `<section class="page narrow"><div class="empty-state">Could not load the prototype data. Run the folder through a local web server rather than opening the HTML file directly.</div></section>`;
+});
+
+</script>
 </body>
 </html>
