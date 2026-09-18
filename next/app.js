@@ -26,7 +26,7 @@ function BlockerNode({data}){
     <div className="node-kicker"><span>Gate ${blocker.stageGate} · ${domainTitle}</span><span>${relationLabel||""}</span></div>
     <strong>${blocker.title}</strong>
     ${showStatement?html`<p>${truncate(blocker.statement,selected?185:100)}</p>`:null}
-    ${selected?html`<div className="node-prompt">Click again or double-click for details & enablers →</div>`:null}
+    ${selected?html`<button className="deep-dive-plus" title="Open blocker details and enablers" aria-label="Open blocker details and enablers" onClick=${(e)=>{e.preventDefault();e.stopPropagation();data.onDeepDive?.(blocker)}}><span>+</span><em>Details & enablers</em></button>`:null}
     <${Handle} type="source" position=${Position.Right} style=${{opacity:0}} />
   </div>`;
 }
@@ -69,6 +69,15 @@ function AppCanvas({data}){
     return out;
   },[data]);
 
+  const openDeepDive=useCallback((blocker)=>{
+    if(!blocker)return;
+    setSelectedBlocker(blocker.id);
+    setSelectedGate(blocker.stageGate);
+    setDetailOpen(true);
+    setSelectedMechanism(null);
+    setSelectedEnabler(null);
+  },[]);
+
   const graph=useMemo(()=>{
     const nodes=[],edges=[];
     const edgeBase={type:"smoothstep",style:{stroke:"#aec7d7",strokeWidth:1.2},markerEnd:{type:MarkerType.ArrowClosed,width:14,height:14,color:"#aec7d7"}};
@@ -87,7 +96,7 @@ function AppCanvas({data}){
 
     if(selectedBlocker){
       const b=byId(data.blockers,selectedBlocker),deps=dependencyContext(b.id);
-      nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x:880,y:460},data:{blocker:b,selected:true,domainTitle:domains[b.domain]||"",zoom},zIndex:8});
+      nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x:880,y:460},data:{blocker:b,selected:true,domainTitle:domains[b.domain]||"",zoom,onDeepDive:openDeepDive},zIndex:8});
       const placeSide=(items,side)=>{const x=side==="up"?260:1510,label=side==="up"?"Depends on":"Depends on this";
         items.forEach((xBlock,i)=>{const y=280+i*155;
           nodes.push({id:`blocker-${xBlock.id}`,type:"blocker",position:{x,y},data:{blocker:xBlock,selected:false,domainTitle:domains[xBlock.domain]||"",zoom,relationLabel:label}});
@@ -113,7 +122,7 @@ function AppCanvas({data}){
       }
     }
     return{nodes,edges};
-  },[data,selectedGate,selectedBlocker,detailOpen,selectedMechanism,selectedEnabler,zoom,domains,dependencyContext,mechanismGroups]);
+  },[data,selectedGate,selectedBlocker,detailOpen,selectedMechanism,selectedEnabler,zoom,domains,dependencyContext,mechanismGroups,openDeepDive]);
 
   useEffect(()=>{const t=setTimeout(()=>flow.fitView({padding:selectedBlocker?.15:.18,duration:700,maxZoom:selectedBlocker?1.0:.82}),80);return()=>clearTimeout(t)},[selectedGate,selectedBlocker,detailOpen,selectedMechanism]);
 
@@ -121,45 +130,29 @@ function AppCanvas({data}){
   const back=()=>{if(selectedEnabler){setSelectedEnabler(null);return}if(selectedMechanism){setSelectedMechanism(null);return}if(detailOpen){setDetailOpen(false);return}if(selectedBlocker){setSelectedBlocker(null);return}if(selectedGate){setSelectedGate(null)}};
 
   const onNodeClick=(evt,node)=>{
-    if(node.type==="stage"){setSelectedGate(node.data.gate.id);setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null);return}
-    if(node.type==="blocker"){
-      const id=node.data.blocker.id;
-      if(node.data.selected){
-        setDetailOpen(true);
-        setSelectedMechanism(null);
-        setSelectedEnabler(null);
-        setTimeout(()=>{
-          const current=flow.getNode(`blocker-${id}`);
-          const p=current?.positionAbsolute || current?.position || node.position;
-          flow.setCenter((p?.x||0)+165,(p?.y||0)+110,{zoom:1.08,duration:500});
-        },80);
-      }else{
-        setSelectedBlocker(id);
-        setSelectedGate(node.data.blocker.stageGate);
-        setDetailOpen(false);
-        setSelectedMechanism(null);
-        setSelectedEnabler(null);
-      }
-      return
+    if(node.type==="stage"){
+      setSelectedGate(node.data.gate.id);
+      setSelectedBlocker(null);
+      setDetailOpen(false);
+      setSelectedMechanism(null);
+      setSelectedEnabler(null);
+      return;
     }
-    if(node.type==="mechanism"){setSelectedMechanism(node.data.mechanism);setSelectedEnabler(null);return}
-    if(node.type==="enabler")setSelectedEnabler(node.data.enabler.id);
-  };
-  const onNodeDoubleClick=(evt,node)=>{
-    if(node.type!=="blocker")return;
-    evt.preventDefault?.();
-    evt.stopPropagation?.();
-    const id=node.data.blocker.id;
-    setSelectedBlocker(id);
-    setSelectedGate(node.data.blocker.stageGate);
-    setDetailOpen(true);
-    setSelectedMechanism(null);
-    setSelectedEnabler(null);
-    setTimeout(()=>{
-      const current=flow.getNode(`blocker-${id}`);
-      const p=current?.positionAbsolute || current?.position || node.position;
-      flow.setCenter((p?.x||0)+165,(p?.y||0)+110,{zoom:1.08,duration:500});
-    },120);
+    if(node.type==="blocker"){
+      if(node.data.selected) return;
+      setSelectedBlocker(node.data.blocker.id);
+      setSelectedGate(node.data.blocker.stageGate);
+      setDetailOpen(false);
+      setSelectedMechanism(null);
+      setSelectedEnabler(null);
+      return;
+    }
+    if(node.type==="mechanism"){
+      setSelectedMechanism(node.data.mechanism);
+      setSelectedEnabler(null);
+      return;
+    }
+    if(node.type==="enabler") setSelectedEnabler(node.data.enabler.id);
   };
 
   const selectedBlockerObj=selectedBlocker?byId(data.blockers,selectedBlocker):null;
@@ -183,10 +176,10 @@ function AppCanvas({data}){
       </div>
     </header>
     <main className="workspace">
-      <div className=${"intro"+(selectedGate?" compact":"")}><div className="eyebrow">Semantic zoom</div><h1>${selectedGate?"Keep exploring.":"Start with the lifecycle."}</h1><p>${selectedGate?"Pan and zoom freely. Click a blocker to focus it, then click it again to reveal details, mechanisms and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it."}</p></div>
+      <div className=${"intro"+(selectedGate?" compact":"")}><div className="eyebrow">Semantic zoom</div><h1>${selectedGate?"Keep exploring.":"Start with the lifecycle."}</h1><p>${selectedGate?"Pan and zoom freely. Click a blocker to focus it, then use the + button on the central blocker to open details and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it."}</p></div>
       <div className="depth"><span>Overview</span><i></i><span>Deep dive</span></div>
       <div className="flow-wrap">
-        <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.25} maxZoom=${2.2} fitView fitViewOptions=${{padding:.18,maxZoom:.78}} onNodeClick=${onNodeClick} onNodeDoubleClick=${onNodeDoubleClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
+        <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.25} maxZoom=${2.2} fitView fitViewOptions=${{padding:.18,maxZoom:.78}} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
           <${Background} gap=${32} size=${1} color="#d9e5ec" />
           <${Controls} showInteractive=${false} position="bottom-left" />
         </${ReactFlow}>
