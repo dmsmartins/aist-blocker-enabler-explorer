@@ -26,7 +26,7 @@ function BlockerNode({data}){
     <div className="node-kicker"><span>Gate ${blocker.stageGate} · ${domainTitle}</span><span>${relationLabel||""}</span></div>
     <strong>${blocker.title}</strong>
     ${showStatement?html`<p>${truncate(blocker.statement,selected?185:100)}</p>`:null}
-    ${selected?html`<div className="node-prompt">Double-click to dive deeper</div>`:null}
+    ${selected?html`<div className="node-prompt">Click again for details & enablers →</div>`:null}
     <${Handle} type="source" position=${Position.Right} style=${{opacity:0}} />
   </div>`;
 }
@@ -122,13 +122,22 @@ function AppCanvas({data}){
 
   const onNodeClick=(evt,node)=>{
     if(node.type==="stage"){setSelectedGate(node.data.gate.id);setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null);return}
-    if(node.type==="blocker"){setSelectedBlocker(node.data.blocker.id);setSelectedGate(node.data.blocker.stageGate);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null);return}
+    if(node.type==="blocker"){
+      const id=node.data.blocker.id;
+      if(selectedBlocker===id){
+        setDetailOpen(true);setSelectedMechanism(null);setSelectedEnabler(null);
+        setTimeout(()=>flow.setCenter(node.position.x+165,node.position.y+110,{zoom:1.12,duration:550}),60);
+      }else{
+        setSelectedBlocker(id);setSelectedGate(node.data.blocker.stageGate);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null);
+      }
+      return
+    }
     if(node.type==="mechanism"){setSelectedMechanism(node.data.mechanism);setSelectedEnabler(null);return}
     if(node.type==="enabler")setSelectedEnabler(node.data.enabler.id);
   };
   const onNodeDoubleClick=(evt,node)=>{
     if(node.type!=="blocker")return;
-    setSelectedBlocker(node.data.blocker.id);setSelectedGate(node.data.blocker.stageGate);setDetailOpen(true);setSelectedMechanism(null);
+    setSelectedBlocker(node.data.blocker.id);setSelectedGate(node.data.blocker.stageGate);setDetailOpen(true);setSelectedMechanism(null);setSelectedEnabler(null);
     setTimeout(()=>flow.setCenter(node.position.x+165,node.position.y+110,{zoom:1.18,duration:650}),80);
   };
 
@@ -153,7 +162,7 @@ function AppCanvas({data}){
       </div>
     </header>
     <main className="workspace">
-      <div className=${"intro"+(selectedGate?" compact":"")}><div className="eyebrow">Semantic zoom</div><h1>${selectedGate?"Keep exploring.":"Start with the lifecycle."}</h1><p>${selectedGate?"Pan and zoom freely. Click to move deeper; double-click a blocker to reveal its full context.":"Choose a Stage Gate. Complexity only appears when you ask for it."}</p></div>
+      <div className=${"intro"+(selectedGate?" compact":"")}><div className="eyebrow">Semantic zoom</div><h1>${selectedGate?"Keep exploring.":"Start with the lifecycle."}</h1><p>${selectedGate?"Pan and zoom freely. Click a blocker to focus it, then click it again to reveal details, mechanisms and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it."}</p></div>
       <div className="depth"><span>Overview</span><i></i><span>Deep dive</span></div>
       <div className="flow-wrap">
         <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.25} maxZoom=${2.2} fitView fitViewOptions=${{padding:.18,maxZoom:.78}} onNodeClick=${onNodeClick} onNodeDoubleClick=${onNodeDoubleClick} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
