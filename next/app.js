@@ -192,12 +192,12 @@ function AppCanvas({data}){
         <div className="inspector-head"><div><div className="eyebrow">Gate ${selectedBlockerObj.stageGate} · blocker detail</div><h2>${selectedBlockerObj.title}</h2></div><button className="close-inspector" onClick=${()=>{setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}}>×</button></div>
         <div className="inspector-body">
           ${selectedEnablerPair?html`<div className="enabler-detail"><span className="tag">${selectedMechanism} enabler</span><h3>${selectedEnablerPair.enabler.title}</h3><p>${selectedEnablerPair.enabler.description}</p><div className="inspector-section"><h3>Practical actions</h3><p>${selectedEnablerPair.enabler.practicalActions}</p></div><div className="inspector-section"><h3>Expected outcome</h3><p>${selectedEnablerPair.enabler.expectedOutcome||"—"}</p></div><div className="inspector-section"><h3>Stakeholders</h3><p>${selectedEnablerPair.enabler.stakeholders.join(" · ")}</p></div><div className="rationale">${selectedEnablerPair.relationship.rationale||""}</div></div>`
-          :html`<><p className="inspector-statement">${selectedBlockerObj.statement}</p>
+          :html`<div className="blocker-inspector-content"><p className="inspector-statement">${selectedBlockerObj.statement}</p>
             <div className="info-grid"><div className="info-box"><small>Stage Gate</small><span>${selectedBlockerObj.stageGateDescription}</span></div><div className="info-box"><small>Dimension</small><span>${selectedBlockerObj.dimension}</span></div><div className="info-box"><small>Domain</small><span>${domains[selectedBlockerObj.domain]||"—"}</span></div><div className="info-box"><small>Cluster</small><span>${selectedBlockerObj.cluster.replace(/^\d+[.)]?\s*/,"")}</span></div></div>
             <div className="inspector-section"><h3>Why it matters</h3><p>${selectedBlockerObj.whyItMatters}</p></div><div className="inspector-section"><h3>Consequence</h3><p>${selectedBlockerObj.consequence}</p></div><div className="inspector-section"><h3>Stakeholders</h3><p>${selectedBlockerObj.stakeholders.join(" · ")}</p></div>
             <div className="inspector-section"><h3>Enabling mechanisms</h3><p>Choose one to reveal its enablers directly on the canvas.</p><div className="mechanism-chips">${data.mechanisms.filter(m=>groups[m.key]?.length).map(m=>html`<button className=${"mech-chip"+(selectedMechanism===m.key?" active":"")} style=${{"--mech":MECH_COLORS[m.key]||"#397db0"}} onClick=${()=>{setSelectedMechanism(m.key);setSelectedEnabler(null)}}>${m.key} · ${groups[m.key].length}</button>`)}</div></div>
             ${!selectedMechanism?html`<button className="deep-button" onClick=${()=>{const first=data.mechanisms.find(m=>groups[m.key]?.length);if(first)setSelectedMechanism(first.key)}}>Go one layer deeper → mechanisms & enablers</button>`:null}
-          </>`}
+          </div>`}
         </div>
       </aside>`:null}
     </main>
