@@ -124,9 +124,31 @@ function AppCanvas({data}){
     return{nodes,edges};
   },[data,selectedGate,selectedBlocker,detailOpen,selectedMechanism,selectedEnabler,zoom,domains,dependencyContext,mechanismGroups,openDeepDive]);
 
-  useEffect(()=>{const t=setTimeout(()=>flow.fitView({padding:selectedBlocker?.15:.18,duration:700,maxZoom:selectedBlocker?1.0:.82}),80);return()=>clearTimeout(t)},[selectedGate,selectedBlocker,detailOpen,selectedMechanism]);
+  useEffect(()=>{
+    const t=setTimeout(()=>{
+      const all=flow.getNodes();
+      let focus=[];
+      if(selectedBlocker){
+        // Once a blocker is selected, keep the lifecycle timeline out of the fit calculation.
+        // This lets the dependency graph use the viewport instead of shrinking to show all six gates.
+        focus=all.filter(n=>n.type!=="stage");
+      }else if(selectedGate){
+        // Focus the selected gate plus its blockers; other lifecycle gates remain available by panning.
+        focus=all.filter(n=>n.type!=="stage" || n.id===`stage-${selectedGate}`);
+      }else{
+        focus=all.filter(n=>n.type==="stage");
+      }
+      flow.fitView({
+        nodes:focus.length?focus:all,
+        padding:selectedBlocker?.08:selectedGate?.06:.10,
+        duration:700,
+        maxZoom:selectedBlocker?1.14:selectedGate?1.02:.92
+      });
+    },100);
+    return()=>clearTimeout(t);
+  },[selectedGate,selectedBlocker,detailOpen,selectedMechanism,selectedEnabler]);
 
-  const reset=()=>{setSelectedGate(null);setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null);setTimeout(()=>flow.fitView({padding:.18,duration:700,maxZoom:.78}),50)};
+  const reset=()=>{setSelectedGate(null);setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null);setTimeout(()=>{const stages=flow.getNodes().filter(n=>n.type==="stage");flow.fitView({nodes:stages,padding:.10,duration:700,maxZoom:.92})},70)};
   const back=()=>{if(selectedEnabler){setSelectedEnabler(null);return}if(selectedMechanism){setSelectedMechanism(null);return}if(detailOpen){setDetailOpen(false);return}if(selectedBlocker){setSelectedBlocker(null);return}if(selectedGate){setSelectedGate(null)}};
 
   const onNodeClick=(evt,node)=>{
@@ -179,7 +201,7 @@ function AppCanvas({data}){
       <div className=${"intro"+(selectedGate?" compact":"")}><div className="eyebrow">Semantic zoom</div><h1>${selectedGate?"Keep exploring.":"Start with the lifecycle."}</h1><p>${selectedGate?"Pan and zoom freely. Click a blocker to focus it, then use the + button on the central blocker to open details and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it."}</p></div>
       <div className="depth"><span>Overview</span><i></i><span>Deep dive</span></div>
       <div className="flow-wrap">
-        <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.25} maxZoom=${2.2} fitView fitViewOptions=${{padding:.18,maxZoom:.78}} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
+        <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.25} maxZoom=${2.2} fitView fitViewOptions=${{padding:.10,maxZoom:.92}} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
           <${Background} gap=${32} size=${1} color="#d9e5ec" />
           <${Controls} showInteractive=${false} position="bottom-left" />
         </${ReactFlow}>
