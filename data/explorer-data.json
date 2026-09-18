@@ -1,0 +1,3710 @@
+{
+  "meta": {
+    "title": "AI Scalability Explorer",
+    "version": "0.2 GitHub Pages MVP",
+    "sourceWorkbook": "Final_Blockers&Enablers_Explorer.xlsx",
+    "stageGateStatus": "Not yet mapped",
+    "counts": {
+      "blockers": 41,
+      "enablers": 109,
+      "relationships": 152
+    }
+  },
+  "mechanisms": [
+    {
+      "key": "Frame",
+      "description": "Define the problem, solution options and value logic"
+    },
+    {
+      "key": "Commit",
+      "description": "Create sponsorship, ownership, funding, and decision rights"
+    },
+    {
+      "key": "Equip",
+      "description": "Provide skills, data, platforms and integration paths"
+    },
+    {
+      "key": "Assure",
+      "description": "Clarify legal, safety and reliability expectations"
+    },
+    {
+      "key": "Operate",
+      "description": "Move from prototype to operational workflows"
+    },
+    {
+      "key": "Learn",
+      "description": "Monitor, retrain and adapt with users over time"
+    }
+  ],
+  "domains": [
+    {
+      "slug": "data-foundations",
+      "title": "Data Foundations",
+      "description": "Data availability, quality, integration and governance.",
+      "enabled": true
+    },
+    {
+      "slug": "technology-infrastructure",
+      "title": "Technology & Infrastructure",
+      "description": "Platforms, compute, integration, performance and technical foundations.",
+      "enabled": true
+    },
+    {
+      "slug": "governance-organisation",
+      "title": "Governance & Organisation",
+      "description": "Vision, decision rights, ownership and operating models.",
+      "enabled": true
+    },
+    {
+      "slug": "people-adoption",
+      "title": "People, Skills & Adoption",
+      "description": "Skills, trust, change and organisational readiness.",
+      "enabled": true
+    },
+    {
+      "slug": "legal-safety-assurance",
+      "title": "Legal, Safety & Assurance",
+      "description": "Regulatory, legal, safety and assurance expectations.",
+      "enabled": true
+    },
+    {
+      "slug": "value-delivery-scale",
+      "title": "Value, Delivery & Scale",
+      "description": "Problem framing, value, readiness, delivery and progression.",
+      "enabled": true
+    }
+  ],
+  "blockers": [
+    {
+      "id": 1024,
+      "title": "Inconsistent data quality management across AI use cases",
+      "statement": "The organisation lacks consistent practices, responsibilities and criteria for defining, assessing and maintaining the level of data quality required for different AI use cases.",
+      "cluster": "6) Data, Architecture, security & Sharing foundations (Organizational side.)",
+      "dimension": "Organisational",
+      "whyItMatters": "AI use cases have different requirements for accuracy, completeness, consistency and reliability. Railway infrastructure managers need agreed quality expectations, standards and responsibilities so that data is fit for its intended operational purpose and can be reused confidently across initiatives.",
+      "consequence": "AI initiatives may repeatedly spend effort assessing and correcting data, apply inconsistent quality thresholds, produce unreliable results or fail to scale because the suitability of data cannot be demonstrated consistently.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Maintenance / operations",
+        "Legal / safety / compliance"
+      ],
+      "source": null,
+      "domain": "data-foundations"
+    },
+    {
+      "id": 1043,
+      "title": "Weak MVP and incremental delivery discipline",
+      "statement": "AI initiatives lack a disciplined pathway from experimentation towards usable products, with insufficient focus on MVPs, intermediate prototypes and incremental validation in realistic operational conditions.",
+      "cluster": "9) Delivery approach, MVP Focus & Timing constraints",
+      "dimension": "Organisational",
+      "whyItMatters": "Scaling requires organisations to learn progressively whether a solution works technically, operationally and for its users. MVPs and intermediate prototypes provide opportunities to test assumptions, gather feedback and increase maturity before committing to full-scale deployment.",
+      "consequence": "Projects may remain as repeated PoCs or demonstrations, make large jumps in complexity towards production, and reach later stages without sufficient evidence of operational fit, user acceptance or readiness to scale.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams"
+      ],
+      "source": null,
+      "domain": "value-delivery-scale"
+    },
+    {
+      "id": 1114,
+      "title": "Technology-push AI initiatives without clear ownership",
+      "statement": "AI initiatives start from a technology push or unclarified goals rather than a clear business problem and accountable owner.",
+      "cluster": "1) Problem framing, value & business case",
+      "dimension": "Organisational",
+      "whyItMatters": "Railway infrastructure managers need AI initiatives to be anchored in validated operational or asset-management problems with clear business ownership, otherwise solutions may become disconnected from maintenance priorities, field realities and accountable decision-making.",
+      "consequence": "Projects may lose focus, fail to meet operational needs and struggle to move beyond pilots.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Data science / AI teams",
+        "Maintenance / operations"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "value-delivery-scale"
+    },
+    {
+      "id": 1133,
+      "title": "Unclear value articulation for stakeholder groups",
+      "statement": "Value is not clearly or consistently communicated to different stakeholder groups.",
+      "cluster": "1) Problem framing, value & business case",
+      "dimension": "Organisational",
+      "whyItMatters": "Stakeholders need to understand the specific value for their role, responsibilities and objectives before supporting scale-up. Different railway functions need to understand how AI creates value for their work through safer decisions, reduced manual effort, better asset planning, maintenance prioritisation, improved asset reliability and more effective operational decision-making.",
+      "consequence": "AI initiatives may stall during scaling because stakeholders do not see enough relevance, benefit or ownership.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "Change management / HR"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "value-delivery-scale"
+    },
+    {
+      "id": 1143,
+      "title": "Unclear financial implications, risks and investment logic",
+      "statement": "Financial implications, risks and investment logic are not explicitly addressed when preparing AI initiatives for scale, including how shared data, integration, platform and governance foundations should be funded and allocated across multiple use cases.",
+      "cluster": "1) Problem framing, value & business case",
+      "dimension": "Organisational",
+      "whyItMatters": "Decision-makers need a clear view of costs, benefits, risks and financial exposure before committing resources, particularly where AI investment competes with long-term infrastructure, maintenance and safety-related expenditure. This also requires recognising that some data, integration, platform and governance capabilities are shared foundations that create value across multiple AI initiatives rather than costs attributable to a single use case.",
+      "consequence": "Individual use cases may appear unnecessarily expensive or financially unattractive, shared capabilities may be underfunded or repeatedly rebuilt, and commitment to scale may weaken because stakeholders cannot justify investment or manage financial risk.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Legal / safety / compliance",
+        "Data science / AI teams"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "value-delivery-scale"
+    },
+    {
+      "id": 1211,
+      "title": "Lack of shared AI vision",
+      "statement": "A clear, shared vision for AI adoption is missing or not communicated consistently.",
+      "cluster": "2) Vision, strategy & Decision making",
+      "dimension": "Organisational",
+      "whyItMatters": "A shared AI vision helps align asset management, maintenance, operations, IT and leadership around where AI should support infrastructure decisions and where it should not, while allowing the organisation to respond coherently to a rapidly changing AI landscape and translating strategic goals into asset management, maintenance and operational improvement objectives.",
+      "consequence": "Adoption may slow, investment decisions may be delayed and initiatives may remain fragmented.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "Change management / HR"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "governance-organisation"
+    },
+    {
+      "id": 1223,
+      "title": "Fragmented AI priorities across silos",
+      "statement": "Competing initiatives and siloed priorities fragment AI efforts across the organisation.",
+      "cluster": "2) Vision, strategy & Decision making",
+      "dimension": "Organisational",
+      "whyItMatters": "Railway infrastructure data, assets and processes cut across organisational silos; fragmented priorities can lead to duplicated pilots, inconsistent tools and weak portfolio-level impact.",
+      "consequence": "AI work may become duplicated, underfunded or misaligned, reducing impact and slowing progress towards scale.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "IT / data platform"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "governance-organisation"
+    },
+    {
+      "id": 1233,
+      "title": "Slow or unclear AI governance",
+      "statement": "Organisational governance, decision rights and review responsibilities for AI are slow or unclear, preventing timely decisions on whether initiatives should scale, adapt or stop.",
+      "cluster": "2) Vision, strategy & Decision making",
+      "dimension": "Organisational",
+      "whyItMatters": "AI projects in railway infrastructure require timely decisions across business, technical, safety and compliance roles; unclear governance can leave promising initiatives stuck between pilot and operational use.",
+      "consequence": "Initiatives may remain stuck between pilot and operations, with repeated decision re-opening, weak ownership and delayed investment.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Legal / safety / compliance",
+        "Maintenance / operations"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "governance-organisation"
+    },
+    {
+      "id": 1243,
+      "title": "Insufficient sustained management commitment 'towards the end goal'",
+      "statement": "Management commitment is not sustained over time, weakening support for scaling AI initiatives.",
+      "cluster": "2) Vision, strategy & Decision making",
+      "dimension": "Organisational",
+      "whyItMatters": "Scaling AI needs visible sponsorship, long-term commitment, recurring executive attention and alignment with organisational priorities, particularly where railway asset cycles and operational deployment extend beyond short project horizons",
+      "consequence": "AI initiatives may lose momentum, funding and authority before they are embedded in operations.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "Change management / HR"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "governance-organisation"
+    },
+    {
+      "id": 1314,
+      "title": "No business ownership beyond prototype",
+      "statement": "Business ownership is not clearly assigned beyond the prototype phase.",
+      "cluster": "3) Ownership, Accountability & Operating model",
+      "dimension": "Organisational",
+      "whyItMatters": "AI initiatives need accountable business owners to validate the problem, support operational adoption and realise asset-management or maintenance benefits over time.",
+      "consequence": "Solutions may remain technical prototypes without operational adoption, benefit realisation or clear accountability for scale-up.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "IT / data platform"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "governance-organisation"
+    },
+    {
+      "id": 1323,
+      "title": "Unclear human accountability in AI-supported operational decisions",
+      "statement": "Human accountability is unclear when AI supports or influences operational decisions, including who exercises judgement, approves action, owns the outcome and handles escalation.",
+      "cluster": "3) Ownership, Accountability & Operating model",
+      "dimension": "Organisational",
+      "whyItMatters": "Human-AI decision chains need clear accountability so staff know who is responsible for judgement, approval, action and escalation. In railway infrastructure, AI-supported decisions may affect maintenance, safety, reliability and service continuity, making accountability and escalation responsibilities critical.",
+      "consequence": "Operational decisions may be delayed, challenged or unsafe because roles, responsibilities and liability are not understood.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Maintenance / operations",
+        "Asset management",
+        "Legal / safety / compliance",
+        "Data science / AI teams"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "governance-organisation"
+    },
+    {
+      "id": 1334,
+      "title": "No defined run model after go-live",
+      "statement": "A clear operating model is not defined for AI solutions after go-live.",
+      "cluster": "3) Ownership, Accountability & Operating model",
+      "dimension": "Organisational",
+      "whyItMatters": "Production AI needs ownership, support, monitoring, incident handling and maintenance funding; without this, infrastructure managers may introduce tools that create operational risk instead of reducing it.",
+      "consequence": "Solutions may enter production without clear support, funding or accountability, creating operational risk and weakening long-term value.",
+      "stageGate": null,
+      "stakeholders": [
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Executive / senior management"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "governance-organisation"
+    },
+    {
+      "id": 1413,
+      "title": "Insufficient AI and digital skills across the organisation",
+      "statement": "AI and digital skills are insufficient across the organisation, limiting adoption and effective use of AI solutions.",
+      "cluster": "4) People, change & organisational readiness",
+      "dimension": "Organisational",
+      "whyItMatters": "Infrastructure managers need enough AI literacy across technical, operational and management roles to interpret outputs, challenge assumptions and use AI safely in infrastructure decisions.",
+      "consequence": "AI initiatives may face weak adoption, poor interpretation of model outputs and limited ability to scale beyond specialist teams.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Change management / HR"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "people-adoption"
+    },
+    {
+      "id": 1424,
+      "title": "Low trust and cultural resistance to AI",
+      "statement": "Low trust and cultural resistance hinder adoption of AI solutions in operational settings.",
+      "cluster": "4) People, change & organisational readiness",
+      "dimension": "Organisational",
+      "whyItMatters": "AI adoption depends on user confidence, early involvement, visible benefits and evidence that solutions support existing work rather than add burden, particularly in maintenance, inspection and operational environments where staff must rely on AI-supported recommendations in daily practice.",
+      "consequence": "Operational teams may reject or bypass AI tools, slowing scale-up and reducing realised value.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "Change management / HR",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Executive / senior management"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "people-adoption"
+    },
+    {
+      "id": 1433,
+      "title": "Limited capacity to absorb continuous change",
+      "statement": "The organisation lacks the capacity and knowledge to absorb continuous change linked to AI adoption and evolving AI capabilities.",
+      "cluster": "4) People, change & organisational readiness",
+      "dimension": "Organisational",
+      "whyItMatters": "AI solutions often improve iteratively through user feedback, updated models and changing technologies. Organisations need the capability to adapt alongside the solution.",
+      "consequence": "Users may resist iterative releases, expectations may become unrealistic and AI solutions may lose relevance as technologies and operational needs evolve",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Change management / HR",
+        "Maintenance / operations",
+        "Asset management",
+        "Data science / AI teams",
+        "IT / data platform"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "people-adoption"
+    },
+    {
+      "id": 1511,
+      "title": "Unrealistic understanding of AI capabilities and limits among decision-makers",
+      "statement": "Decision-makers and business units lack a realistic view of what AI can and cannot deliver in railway asset management and maintenance contexts, including its data requirements, accuracy limits and assurance constraints.",
+      "cluster": "5) Technology awareness & Solutioning capability",
+      "dimension": "Organisational",
+      "whyItMatters": "Infrastructure managers commit long planning and procurement cycles to AI investments. Without an informed view of what current AI can achieve on railway data and in field conditions, prioritisation and funding decisions are made on the wrong assumptions.",
+      "consequence": "Initiatives may be over-promised, poorly prioritised or rejected because expectations are either inflated or too cautious.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "IT / data platform"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "people-adoption"
+    },
+    {
+      "id": 1524,
+      "title": "Solutions misaligned with operational context",
+      "statement": "AI solutions are designed without sufficient understanding of how railway field work is actually carried out - including access and possession windows, trackside working conditions, connectivity limits and shift-based responsibilities - or of the support the solution will need once in operation.",
+      "cluster": "5) Technology awareness & Solutioning capability",
+      "dimension": "Organisational",
+      "whyItMatters": "AI must fit real infrastructure management work: inspections, work orders, access constraints, maintenance windows, safety rules and field practices.",
+      "consequence": "Solutions may fail adoption, create operational burden, increase supplier dependency or enter operations without adequate support.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Legal / safety / compliance"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "people-adoption"
+    },
+    {
+      "id": 1614,
+      "title": "Fragmented or restrictive data governance",
+      "statement": "Data ownership, access rules and decision rights are defined differently across business units, and access decisions default to refusal in the absence of a clear rule, so AI initiatives cannot obtain data on consistent terms beyond a local prototype.",
+      "cluster": "6) Data, Architecture, security & Sharing foundations (Organizational side.)",
+      "dimension": "Organisational",
+      "whyItMatters": "AI scaling depends on governed but usable data access across asset, maintenance, inspection and operational systems; overly fragmented governance slows reuse and integration.",
+      "consequence": "Projects may face delays, duplicated data work, inconsistent controls and limited reuse across initiatives.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Legal / safety / compliance",
+        "Maintenance / operations"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "data-foundations"
+    },
+    {
+      "id": 1713,
+      "title": "Limited AI expertise in legal functions",
+      "statement": "Legal and compliance functions lack sufficient AI expertise and capacity to interpret and adapt to the changing legal AI landscape while guiding initiatives safely and effectively.",
+      "cluster": "7.1 Legal capability",
+      "dimension": "Organisational",
+      "whyItMatters": "Legal and compliance teams need enough AI understanding to guide safe deployment and adapt to the changing legal AI landscape without creating late approval bottlenecks or excessive risk avoidance.",
+      "consequence": "Projects may face late compliance challenges, delayed approvals, unclear regulatory interpretation or unsafe design choices.",
+      "stageGate": null,
+      "stakeholders": [
+        "Legal / safety / compliance",
+        "Executive / senior management",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Asset management"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "legal-safety-assurance"
+    },
+    {
+      "id": 1723,
+      "title": "Unclear regulatory interpretation increases perceived risk",
+      "statement": "Regulations affecting AI are not interpreted clearly or consistently, creating uncertainty and increasing perceived risk when designing, approving and scaling AI solutions in railway operations and asset management.",
+      "cluster": "7.2 Regulatory Uncertainty",
+      "dimension": "Organisational",
+      "whyItMatters": "Teams need clear regulatory guidance to make confident design, approval and scaling decisions.",
+      "consequence": "Projects may be delayed, over-constrained or stopped because compliance risks are misunderstood or addressed too late.",
+      "stageGate": null,
+      "stakeholders": [
+        "Legal / safety / compliance",
+        "Executive / senior management",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Asset management"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "legal-safety-assurance"
+    },
+    {
+      "id": 1811,
+      "title": "Ambiguous definition of scaling",
+      "statement": "There is no clear shared definition of what scaling means for each AI initiative.",
+      "cluster": "8) Scaling Logic, Readiness Frameworks & Stage gates",
+      "dimension": "Organisational",
+      "whyItMatters": "Teams need a common understanding of scale objectives, such as wider deployment, reuse, operational integration, user adoption or portfolio growth.",
+      "consequence": "Initiatives may appear successful in pilot form but fail to progress because stakeholders measure scale in different ways.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "IT / data platform"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "value-delivery-scale"
+    },
+    {
+      "id": 1823,
+      "title": "There is no shared understanding of AI project maturity and readiness across teams and decision-makers.",
+      "statement": "There is no shared understanding of AI project maturity and readiness across teams and decision-makers.",
+      "cluster": "8) Scaling Logic, Readiness Frameworks & Stage gates",
+      "dimension": "Organisational",
+      "whyItMatters": "A common readiness language helps infrastructure managers decide whether an AI initiative is still experimental, ready for operational testing or mature enough for broader deployment.",
+      "consequence": "Projects may be assessed inconsistently, creating confusion about whether they are ready to scale, adapt or stop.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Maintenance / operations"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "value-delivery-scale"
+    },
+    {
+      "id": 1833,
+      "title": "PoC to production transition stalls",
+      "statement": "AI projects stall when moving from PoC to production because transition criteria, resources and approval routes are unclear.",
+      "cluster": "8) Scaling Logic, Readiness Frameworks & Stage gates",
+      "dimension": "Technical",
+      "whyItMatters": "AI initiatives in railway infrastructure need clear progression criteria, dedicated resources and alignment across technical, operational, legal and funding decisions to move from PoC into operational use and real maintenance workflows",
+      "consequence": "Promising initiatives may remain as pilots, fail to operate in real workflows and lose momentum before delivering operational value.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Legal / safety / compliance"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "value-delivery-scale"
+    },
+    {
+      "id": 1921,
+      "title": "Unrealistic delivery timelines and scaling ambition",
+      "statement": "AI initiatives are planned with delivery timelines or levels of ambition that do not reflect technical maturity, operational integration, organisational change and assurance requirements.",
+      "cluster": "9) Delivery approach, MVP Focus & Timing constraints",
+      "dimension": "Organisational",
+      "whyItMatters": "Railway AI deployment must accommodate integration with operational systems, maintenance processes, legal and safety reviews and organisational change. Unrealistic schedules can undermine otherwise viable initiatives.",
+      "consequence": "Projects may become oversized, miss commitments, encounter late approval bottlenecks and lose credibility, sponsorship or funding before operational deployment.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Legal / safety / compliance"
+      ],
+      "source": null,
+      "domain": "value-delivery-scale"
+    },
+    {
+      "id": 2213,
+      "title": "Immature platform architecture and fragmented IT foundations",
+      "statement": "The organisation lacks a mature, coherent and appropriately governed IT foundation to support AI beyond isolated experiments.",
+      "cluster": "2) IT architecture, infrastructure & stack readiness",
+      "dimension": "Technical",
+      "whyItMatters": "AI scaling needs reliable data sources, processing environments, delivery channels, platform governance and operational IT capabilities.",
+      "consequence": "Projects may remain isolated, require repeated adaptation to changing IT environments and become outdated before they can scale.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Maintenance / operations",
+        "Executive / senior management"
+      ],
+      "source": "AIST_scalability_blockers_presentation v3",
+      "domain": "technology-infrastructure"
+    },
+    {
+      "id": 2123,
+      "title": "Data quality, consistency and semantic structure",
+      "statement": "Data quality, consistency and semantic structure are insufficient to support reliable AI analysis across systems and data sources.",
+      "cluster": "1) Data foundations, quality & access",
+      "dimension": "Technical",
+      "whyItMatters": "Infrastructure managers need consistent meaning across asset registers, inspections, defects, work orders and sensor streams so AI outputs are trusted and comparable across systems.",
+      "consequence": "AI outputs may be unreliable, difficult to integrate and hard to scale because data is interpreted differently across systems and teams.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Maintenance / operations"
+      ],
+      "source": "AIST_scalability_blockers_presentation v3",
+      "domain": "data-foundations"
+    },
+    {
+      "id": 2134,
+      "title": "Data architecture, access and controls",
+      "statement": "Data cannot move through the technical environment in a controlled, secure and usable way for AI.",
+      "cluster": "1) Data foundations, quality & access",
+      "dimension": "Technical",
+      "whyItMatters": "Within railway infrastructure management, scalable AI depends on secure and timely access to asset management, inspection, condition monitoring and operational data across multiple systems while maintaining appropriate governance and access controls.",
+      "consequence": "AI use cases may be blocked or delayed because teams cannot retrieve, integrate or govern the data needed for analysis and operations.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Legal / safety / compliance",
+        "Maintenance / operations"
+      ],
+      "source": "AIST_scalability_blockers_presentation v3",
+      "domain": "data-foundations"
+    },
+    {
+      "id": 2221,
+      "title": "Compute environment constraints for AI deployment",
+      "statement": "AI deployment requires the specification of a compute environment that matches the ressource requirements of the proposed implementation.",
+      "cluster": "2) IT architecture, infrastructure & stack readiness",
+      "dimension": "Technical",
+      "whyItMatters": "Railway AI use cases may require cloud, edge or hybrid deployment depending on latency, connectivity, hardware and operational constraints.",
+      "consequence": "Solutions may fail to meet operational performance needs, become difficult to scale or require costly rework when moving from pilot to deployment.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Maintenance / operations",
+        "Asset management",
+        "Systems engineering"
+      ],
+      "source": "AIST_scalability_blockers_presentation v3",
+      "domain": "technology-infrastructure"
+    },
+    {
+      "id": 2231,
+      "title": "Software stack, tooling and vendor dependency constraints",
+      "statement": "AI solutions are constrained by software stack choices, tooling limitations and dependency on specific vendors or platforms.",
+      "cluster": "2) IT architecture, infrastructure & stack readiness",
+      "dimension": "Technical",
+      "whyItMatters": "Infrastructure managers need AI tools that are maintainable, supportable and portable enough to avoid long-term vendor lock-in or unsustainable specialist dependencies.",
+      "consequence": "Scaling may prove to be impossible - or at least become difficult and costly - as it would be dependent on specialist vendor support. Infrastructure providers would have little ways of enforcing such support, limiting flexibility and long-term sustainability.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Systems engineering",
+        "Asset management",
+        "Executive / senior management"
+      ],
+      "source": "AIST_scalability_blockers_presentation v3",
+      "domain": "technology-infrastructure"
+    },
+    {
+      "id": 2313,
+      "title": "Enterprise and asset management system integration",
+      "statement": "AI delivers greater operational value when outputs, decisions and workflows connect with enterprise and asset management systems that manage asset records, inspections, work orders, interventions and maintenance planning.",
+      "cluster": "3) Integration with railway operations & enterprise systems",
+      "dimension": "Technical",
+      "whyItMatters": "AI creates more value when outputs are integrated into the systems used to manage asset records, interventions, work orders and maintenance decisions.",
+      "consequence": "AI solutions may remain isolated, rely on ad hoc interfaces and deliver only limited value because data exchange and operational integration are weak.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "Systems engineering"
+      ],
+      "source": "AIST_scalability_blockers_presentation v3",
+      "domain": "technology-infrastructure"
+    },
+    {
+      "id": 2323,
+      "title": "OT, monitoring systems and railway operations integration",
+      "statement": "AI solutions are not sufficiently integrated with operational technology, monitoring systems, alarm procedures and railway operational workflows.",
+      "cluster": "3) Integration with railway operations & enterprise systems",
+      "dimension": "Technical",
+      "whyItMatters": "AI solutions that depend on live monitoring or operational technology data must connect reliably with railway systems and procedures, such as condition-monitoring platforms, alarms and remote monitoring.",
+      "consequence": "AI solutions may remain disconnected from live operations, limiting real-time decision support, adoption and safe scaling.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "IT / data platform",
+        "Systems engineering",
+        "Asset management",
+        "Data science / AI teams",
+        "Legal / safety / compliance"
+      ],
+      "source": "AIST_scalability_blockers_presentation v3",
+      "domain": "technology-infrastructure"
+    },
+    {
+      "id": 2423,
+      "title": "Unsufficient Model monitoring, -retraining and -evolution",
+      "statement": "AI models are not sufficiently monitored, maintained or updated after deployment as operating conditions and data change.",
+      "cluster": "4) Model lifecycle & operationalisation",
+      "dimension": "Technical",
+      "whyItMatters": "Production AI needs continuous monitoring to detect drift, performance decay, degradation and changing data patterns as asset condition, maintenance history and operational environments evolve over time.",
+      "consequence": "Model outputs may become unreliable over time, reducing trust, operational value and safety of AI-supported decisions.",
+      "stageGate": null,
+      "stakeholders": [
+        "Data science / AI teams",
+        "IT / data platform",
+        "Maintenance / operations",
+        "Asset management",
+        "Legal / safety / compliance"
+      ],
+      "source": "AIST_scalability_blockers_presentation v3",
+      "domain": "value-delivery-scale"
+    },
+    {
+      "id": 2513,
+      "title": "Model performance degrades with scale",
+      "statement": "Model performance and accuracy may degrade when AI solutions move from controlled testing to larger and more variable operational environments.",
+      "cluster": "5) Model performance, explainability & trust",
+      "dimension": "Technical",
+      "whyItMatters": "Scaled AI must remain reliable under realistic operating conditions, with acceptable levels of false positives, missed detections, resource use and performance variation across larger asset populations, operational environments and maintenance conditions.",
+      "consequence": "Users may lose trust in AI outputs, operational decisions may be weakened, and solutions may fail readiness for production deployment.",
+      "stageGate": null,
+      "stakeholders": [
+        "Data science / AI teams",
+        "IT / data platform",
+        "Maintenance / operations",
+        "Asset management",
+        "Legal / safety / compliance"
+      ],
+      "source": "AIST_scalability_blockers_presentation v3",
+      "domain": "technology-infrastructure"
+    },
+    {
+      "id": 3114,
+      "title": "Data collection, storage and usable availability",
+      "statement": "Required data is not consistently collected, stored, retained or made available in a usable form for AI analysis and operational use.",
+      "cluster": "1) Data foundations, quality & access",
+      "dimension": "Cross-cutting",
+      "whyItMatters": "AI for infrastructure management depends on data being collected, retained and available at the right frequency, quality and granularity for asset condition assessment, inspection analysis, monitoring systems and maintenance decision support.",
+      "consequence": "AI projects may be delayed, limited to small pilots or unable to support operational workflows because the data foundation is not fit for use.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Maintenance / operations",
+        "Legal / safety / compliance"
+      ],
+      "source": "AIST_scalability_blockers_presentation v3",
+      "domain": "data-foundations"
+    },
+    {
+      "id": 3123,
+      "title": "Poor solution framing and technology selection",
+      "statement": "AI initiatives progress without adequately comparing and selecting solution approaches, technologies, algorithms and platforms against operational and scalability requirements.",
+      "cluster": "1) Problem framing, value & business case",
+      "dimension": "Cross-cutting",
+      "whyItMatters": "Railway IMs operate heterogeneous legacy systems and long-lived assets. Poor early solution choices can create technical dead ends, unnecessary vendor dependency or solutions that work in a pilot but cannot be integrated or scaled.",
+      "consequence": "Projects may require major redesign, become locked into unsuitable technologies or platforms, or reach technically successful pilots that cannot progress to scalable operational use.",
+      "stageGate": null,
+      "stakeholders": [
+        "Asset management",
+        "Maintenance / operations",
+        "Systems engineering",
+        "IT / data platform",
+        "Data science / AI teams"
+      ],
+      "source": null,
+      "domain": "value-delivery-scale"
+    },
+    {
+      "id": 3333,
+      "title": "Maintenance workflow integration and operator feedback loops",
+      "statement": "AI outputs are not sufficiently connected to maintenance workflows, work orders, asset records and operator feedback loops.",
+      "cluster": "3) Integration with railway operations & enterprise systems",
+      "dimension": "Cross-cutting",
+      "whyItMatters": "Within railway infrastructure management, AI recommendations should integrate with asset records, work-order processes and maintenance planning activities so that operational teams can act on them and provide feedback for continuous improvement.",
+      "consequence": "AI tools may not be accepted in operational reality, feedback from the field may not improve the system, and maintenance decisions may remain disconnected from AI outputs.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Systems engineering",
+        "Legal / safety / compliance"
+      ],
+      "source": "AIST_scalability_blockers_presentation v3",
+      "domain": "technology-infrastructure"
+    },
+    {
+      "id": 3413,
+      "title": "Production-grade AI operations and handover gap",
+      "statement": "Production AI requires clear deployment readiness criteria, operational accountability, production support ownership, monitoring capabilities and alignment with maintenance and safety practices before moving beyond pilot environments.",
+      "cluster": "4) Model lifecycle & operationalisation",
+      "dimension": "Cross-cutting",
+      "whyItMatters": "Infrastructure managers need reproducible deployment, logging, telemetry, support and handover so AI solutions can operate reliably beyond the pilot stage.",
+      "consequence": "Solutions may remain experimental, fail in live use or become difficult to maintain, monitor and improve over time.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Maintenance / operations",
+        "Asset management",
+        "Systems engineering"
+      ],
+      "source": "AIST_scalability_blockers_presentation v3",
+      "domain": "value-delivery-scale"
+    },
+    {
+      "id": 3523,
+      "title": "Limited explainability, interpretability and field trust",
+      "statement": "AI outputs are not sufficiently explainable or interpretable for the people who need to use and trust them in the field.",
+      "cluster": "5) Model performance, explainability & trust",
+      "dimension": "Cross-cutting",
+      "whyItMatters": "Field and asset management users need to understand AI outputs well enough to trust, challenge and act on them in safety-conscious infrastructure contexts.",
+      "consequence": "Users may reject or bypass AI tools, limiting adoption and preventing progression towards more autonomous AI-supported decisions.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "Data science / AI teams",
+        "Legal / safety / compliance",
+        "IT / data platform"
+      ],
+      "source": "AIST_scalability_blockers_presentation v3",
+      "domain": "technology-infrastructure"
+    },
+    {
+      "id": 3634,
+      "title": "Organisational data silos limiting reuse and scaling",
+      "statement": "Organisational data silos limit data reuse, interoperability and scaling across AI initiatives.",
+      "cluster": "6) Data, Architecture, security & Sharing foundations (Organizational side.)",
+      "dimension": "Cross-cutting",
+      "whyItMatters": "Railway assets and failures are cross-system by nature; siloed data prevents AI from connecting asset condition, interventions, operations and outcomes.",
+      "consequence": "Projects may duplicate data work, remain limited to local use cases and fail to exploit wider modelling or innovation opportunities.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Maintenance / operations",
+        "Executive / senior management",
+        "Legal / safety / compliance"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "data-foundations"
+    },
+    {
+      "id": 3744,
+      "title": "Safety implications not identified early",
+      "statement": "Safety implications, potential failure modes and the role of human oversight are not identified early enough when framing AI use cases.",
+      "cluster": "7) Legal, Safety, Compliance",
+      "dimension": "Cross-cutting",
+      "whyItMatters": "AI may influence maintenance or operational decisions with safety implications. Identifying these implications early allows assurance, accountability and evidence requirements to be designed into the initiative rather than discovered late.",
+      "consequence": "Safety requirements may emerge late, forcing redesign, limiting deployment scope, delaying approval or preventing the solution from progressing to operational use.",
+      "stageGate": null,
+      "stakeholders": [
+        "Legal / safety / compliance",
+        "Systems engineering",
+        "Maintenance / operations",
+        "Asset management",
+        "Data science / AI teams",
+        "IT / data platform"
+      ],
+      "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
+      "domain": "legal-safety-assurance"
+    },
+    {
+      "id": 3734,
+      "title": "Difficulty proving safety and reliability at scale",
+      "statement": "AI systems are difficult to prove safe and reliable when moving from pilots to scaled operational use.",
+      "cluster": "7) Legal, Safety, Compliance",
+      "dimension": "Cross-cutting",
+      "whyItMatters": "Safety-critical railway environments need clear assurance, applicable standards and validated evidence before AI can support operational decisions.",
+      "consequence": "AI initiatives may be delayed, restricted or rejected because safety, reliability and certification expectations cannot be demonstrated.",
+      "stageGate": null,
+      "stakeholders": [
+        "Legal / safety / compliance",
+        "Maintenance / operations",
+        "Asset management",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Executive / senior management"
+      ],
+      "source": null,
+      "domain": "legal-safety-assurance"
+    }
+  ],
+  "enablers": [
+    {
+      "id": 1,
+      "title": "Cross-functional problem-framing workshops",
+      "cluster": "Problem framing & business ownership",
+      "description": "Use cross-functional workshops to define the operational problem, its boundaries and the affected business process before launching AI work.",
+      "practicalActions": "Involve business, operations, IT/data and AI teams; clarify the operational pain point; define problem boundaries and success criteria",
+      "expectedOutcome": "AI initiatives start from real operational needs rather than technology push, improving alignment and ownership.",
+      "stageGate": null,
+      "stakeholders": [
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Executive / senior management"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Business-approved problem statement",
+      "cluster": "Problem framing & business ownership",
+      "description": "Require a formal problem statement approved by business leadership before an AI initiative is launched.",
+      "practicalActions": "Document the problem statement; confirm the affected process and decision owner; obtain approval from accountable business leadership before PoC approval",
+      "expectedOutcome": "AI initiatives have a clear purpose, accountable sponsorship and stronger business relevance from the start.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "IT / data platform"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Business-led cross-functional co-sponsorship",
+      "cluster": "Problem framing & business ownership",
+      "description": "Assign cross-functional co-sponsorship across relevant business domains, with sponsorship led by the business rather than IT alone.",
+      "practicalActions": "Identify business-domain sponsors; include maintenance, asset management or innovation where relevant; clarify that co-sponsorship supports adoption and ownership",
+      "expectedOutcome": "AI initiatives have stronger business pull, clearer ownership and better adoption prospects across affected domains.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Stakeholder-specific value metrics and KPIs",
+      "cluster": "Value articulation, benefits & business case",
+      "description": "Define value metrics and KPIs that are meaningful for each stakeholder group from the start of the AI initiative.",
+      "practicalActions": "Identify stakeholder groups; define role-specific value metrics; agree KPIs before scaling decisions",
+      "expectedOutcome": "Stakeholders understand how AI value applies to their objectives, increasing commitment and support for scaling.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Integrated AI business case",
+      "cluster": "Value articulation, benefits & business case",
+      "description": "Develop AI business cases that combine technical results, operational impact and required process changes.",
+      "practicalActions": "Include technical performance evidence; describe operational impact; document process changes needed for adoption",
+      "expectedOutcome": "Business cases show credible value beyond model performance, helping stakeholders understand what must change to realise benefits.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "IT / data platform"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Interfunctional value steering",
+      "cluster": "Value articulation, benefits & business case",
+      "description": "Use interfunctional steering mechanisms to assess, communicate and adjust realised AI value over time.",
+      "practicalActions": "Create cross-functional review forums; track realised value over time; communicate value evidence to relevant stakeholder groups",
+      "expectedOutcome": "Value remains visible after early delivery and scaling decisions are based on evidence from multiple functions.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "IT / data platform"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Operational sponsor for value validation",
+      "cluster": "Value articulation, benefits & business case",
+      "description": "Assign an operational sponsor accountable for validating AI value with peers across maintenance and operational functions.",
+      "practicalActions": "Formalise the operational sponsor role; validate value with maintenance and operations peers; assess whether work is removed, simplified or better integrated into asset programmes",
+      "expectedOutcome": "Operational value is assessed by the people affected by the change, improving credibility and adoption.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "Executive / senior management",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Multi-dimensional AI value assessment",
+      "cluster": "Value articulation, benefits & business case",
+      "description": "Assess AI value across multiple dimensions, including safety, availability, efficiency, lifecycle cost, decision quality, working conditions and competence development.",
+      "practicalActions": "Define quantitative value criteria; define qualitative value criteria; accept balanced evidence where full monetisation is not feasible",
+      "expectedOutcome": "AI value is communicated more completely and fairly, especially where benefits cannot be reduced to financial metrics alone.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Legal / safety / compliance",
+        "Change management / HR"
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Value narrative beyond headcount reduction",
+      "cluster": "Value articulation, benefits & business case",
+      "description": "Frame AI value around better decision support, work quality, safety, exposure reduction and team effectiveness, rather than mainly promising headcount reduction.",
+      "practicalActions": "Avoid headcount reduction as the primary value message; communicate benefits for frontline teams; show how AI improves safety, quality and decision support",
+      "expectedOutcome": "AI adoption is more credible and acceptable to operational teams and managers.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Maintenance / operations",
+        "Asset management",
+        "Change management / HR",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Multi-year funding for AI scaling",
+      "cluster": "Funding, investment logic & risk",
+      "description": "Create dedicated multi-year funding mechanisms to scale AI solutions that show clear evidence of value and readiness.",
+      "practicalActions": "Define funding routes for scaling; reserve budget beyond initial development; review funding against readiness and value evidence",
+      "expectedOutcome": "Successful AI initiatives have the financial continuity needed to move beyond pilots and into operational use.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Maintenance / operations"
+      ]
+    },
+    {
+      "id": 11,
+      "title": "AI-specific portfolio business case",
+      "cluster": "Funding, investment logic & risk",
+      "description": "Use an AI-specific business case approach based on portfolio logic, where individual use cases do not carry the full cost of shared foundations.",
+      "practicalActions": "Separate shared foundation costs from use-case costs; assess value across multiple use cases; include data, platforms, skills and governance as shared strategic investments",
+      "expectedOutcome": "AI investment decisions better reflect reusable foundations, long-term value and the economics of scaling across a portfolio.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Legal / safety / compliance"
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Risk-adjusted AI benefit logic",
+      "cluster": "Funding, investment logic & risk",
+      "description": "Assess AI benefits using risk-adjusted criteria that explicitly account for uncertainty, maturity, data dependencies and probability of success.",
+      "practicalActions": "Combine quantitative and qualitative benefits; include probability of success; assess technical, adoption, data and regulatory risk",
+      "expectedOutcome": "AI business cases become more credible and avoid overpromising deterministic benefits.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Data science / AI teams",
+        "Legal / safety / compliance",
+        "IT / data platform"
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Risk of inaction assessment",
+      "cluster": "Funding, investment logic & risk",
+      "description": "Complement traditional cost and risk analysis with an explicit assessment of the risk of not acting.",
+      "practicalActions": "Identify operational risks of inaction; compare inaction risk with delivery risk; include findings in investment decisions",
+      "expectedOutcome": "Decision-makers can compare the risk of scaling AI with the risk of delaying, rejecting or underfunding the initiative.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Legal / safety / compliance",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 14,
+      "title": "Readiness-aligned investment decisions",
+      "cluster": "Funding, investment logic & risk",
+      "description": "Align investment intensity with the maturity and readiness of the AI initiative to avoid premature or misaligned scaling.",
+      "practicalActions": "Define readiness levels; match funding to maturity evidence; adjust investment as technical, operational and organisational readiness improves",
+      "expectedOutcome": "Scaling decisions become more disciplined, reducing the risk of investing too early or underfunding initiatives that are ready to progress.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Maintenance / operations",
+        "Legal / safety / complianc"
+      ]
+    },
+    {
+      "id": 15,
+      "title": "Concise AI transformation vision",
+      "cluster": "AI vision & leadership alignment",
+      "description": "Define a concise and compelling vision for AI-driven transformation, anchored in business strategy rather than technology.",
+      "practicalActions": "Agree the strategic purpose of AI; keep the vision short and practical; link the vision to business outcomes",
+      "expectedOutcome": "Stakeholders understand why AI matters and how it supports organisational priorities.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "Change management / HR"
+      ]
+    },
+    {
+      "id": 16,
+      "title": "Repeated AI vision communication",
+      "cluster": "AI vision & leadership alignment",
+      "description": "Communicate the AI vision repeatedly through top-down channels and managerial cascades.",
+      "practicalActions": "Use senior leadership messages; cascade communication through managers; repeat the vision in planning, governance and change activities",
+      "expectedOutcome": "AI adoption is supported by consistent messaging and clearer understanding across organisational levels.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Change management / HR",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 17,
+      "title": "AI vision embedded in strategy and leadership objectives",
+      "cluster": "AI vision & leadership alignment",
+      "description": "Integrate the AI vision into strategic planning and leadership objectives.",
+      "practicalActions": "Reflect AI priorities in strategic plans; include AI adoption in leadership objectives; review progress through management forums",
+      "expectedOutcome": "AI receives clearer leadership attention, investment alignment and organisational commitment.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Change management / HR",
+        "IT / data platform",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 18,
+      "title": "Function-specific AI vision translation",
+      "cluster": "AI vision & leadership alignment",
+      "description": "Translate the AI vision into concrete operational changes for functions such as asset management, maintenance and safety.",
+      "practicalActions": "Define function-specific implications; describe expected operational changes; tailor communication to each stakeholder group",
+      "expectedOutcome": "Stakeholders can see how the AI vision affects their work, decisions and responsibilities",
+      "stageGate": null,
+      "stakeholders": [
+        "Asset management",
+        "Maintenance / operations",
+        "Legal / safety / compliance",
+        "Executive / senior management",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 19,
+      "title": "AI Vision Business Owner",
+      "cluster": "AI vision & leadership alignment",
+      "description": "Nominate a visible AI Vision Business Owner, or small coordination team, accountable for consistent and pragmatic AI vision communication.",
+      "practicalActions": "Assign the AI Vision Business Owner role; clarify whether ownership sits with one person or a small team; ensure communication remains business-led and not technology-led",
+      "expectedOutcome": "The AI vision has clear ownership, stronger consistency and better connection to business strategy.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Change management / HR",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 20,
+      "title": "Cross-functional AI prioritisation process",
+      "cluster": "Portfolio prioritisation & shared objectives",
+      "description": "Introduce cross-functional prioritisation processes for AI initiatives based on shared business, operational and technical criteria.",
+      "practicalActions": "Define common prioritisation criteria; involve business, operations, IT/data and AI teams; review priorities through shared governance forums",
+      "expectedOutcome": "AI initiatives are selected and sequenced against agreed value and readiness criteria, reducing fragmentation across silos.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 21,
+      "title": "Centralised AI transformation portfolio",
+      "cluster": "Portfolio prioritisation & shared objectives",
+      "description": "Support AI initiatives through a centralised transformation portfolio that provides visibility, coordination and prioritisation across use cases.",
+      "practicalActions": "Maintain a portfolio view of AI initiatives; track value, readiness and resource needs; coordinate investment and delivery priorities across functions",
+      "expectedOutcome": "AI efforts become more coherent, with clearer sequencing, reduced duplication and better alignment to strategic priorities.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Maintenance / operations"
+      ]
+    },
+    {
+      "id": 22,
+      "title": "Shared IT and business objectives",
+      "cluster": "Portfolio prioritisation & shared objectives",
+      "description": "Align IT and business incentives through shared objectives and KPIs for AI initiatives.",
+      "practicalActions": "Define shared business and IT KPIs; link objectives to value, adoption and delivery outcomes; review progress jointly across functions",
+      "expectedOutcome": "Business and IT teams work towards common outcomes, reducing siloed priorities and improving ownership of AI delivery.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Maintenance / operations"
+      ]
+    },
+    {
+      "id": 23,
+      "title": "Business-owned portfolio prioritisation",
+      "cluster": "Portfolio prioritisation & shared objectives",
+      "description": "Apply portfolio-based prioritisation where business or product ownership directs priorities, stop/go decisions and use-case pivots.",
+      "practicalActions": "Assign business ownership for prioritisation; allow AI teams or platforms to pivot across use cases; reallocate effort when a use case loses traction or stronger opportunities emerge",
+      "expectedOutcome": "AI teams remain focused on business priorities while retaining flexibility to redirect effort across the portfolio.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "IT / data platform"
+      ]
+    },
+    {
+      "id": 24,
+      "title": "Hybrid AI governance and coordination model",
+      "cluster": "Governance, decision rights & lifecycle forums",
+      "description": "Establish an empowered AI governance model that combines local business ownership with a central AI or analytics coordination function.",
+      "practicalActions": "Create an AI Council or Steering Committee; define a central support function for governance, safety, legal, compliance, standards and shared practices; keep delivery ownership with business units",
+      "expectedOutcome": "AI initiatives receive consistent governance support while remaining owned by the business areas responsible for adoption and value.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Legal / safety / compliance"
+      ]
+    },
+    {
+      "id": 25,
+      "title": "Lightweight decision rights and accountability",
+      "cluster": "Governance, decision rights & lifecycle forums",
+      "description": "Adopt lightweight governance with clear decision rights, delegated authority and explicit accountability within each AI initiative.",
+      "practicalActions": "Define RACI models; assign business accountability for business decisions; use time-boxed decision windows to decide, delegate or stop",
+      "expectedOutcome": "Scaling decisions are made faster, with fewer repeated reviews and less risk of IT being made implicitly accountable for business choices.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Legal / safety / compliance"
+      ]
+    },
+    {
+      "id": 26,
+      "title": "Progressive lifecycle validation forums",
+      "cluster": "Governance, decision rights & lifecycle forums",
+      "description": "Introduce formal validation forums throughout the AI lifecycle to review problem relevance, technical feasibility, benefit credibility, organisational readiness and scale decisions.",
+      "practicalActions": "Review initiatives at defined lifecycle points; assess whether to scale, adapt or stop; socialise decisions with relevant business, technical and compliance stakeholders",
+      "expectedOutcome": "Alignment and legitimacy are built progressively, reducing delays caused by late validation or unclear approval routes.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Legal / safety / compliance"
+      ]
+    },
+    {
+      "id": 27,
+      "title": "Visible executive sponsorship for AI scaling",
+      "cluster": "Sponsorship, ownership & product team",
+      "description": "Secure formal and visible top-management sponsorship for AI initiatives that need to scale beyond pilots.",
+      "practicalActions": "Nominate executive sponsors; communicate commitment visibly; review sponsorship at key scaling decisions",
+      "expectedOutcome": "AI initiatives maintain authority, attention and organisational support as they move towards operational adoption.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "IT / data platform"
+      ]
+    },
+    {
+      "id": 28,
+      "title": "Multi-year roadmap with executive checkpoints",
+      "cluster": "Sponsorship, ownership & product team",
+      "description": "Plan AI initiatives on a multi-year roadmap supported by recurring executive checkpoints and leadership incentives linked to adoption outcomes.",
+      "practicalActions": "Create a multi-year AI scaling roadmap; schedule recurring executive reviews; link leadership objectives or incentives to digital and AI adoption outcomes",
+      "expectedOutcome": "Management commitment is sustained over time, helping AI initiatives retain funding, direction and accountability through scaling.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Change management / HR",
+        "IT / data platform",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 29,
+      "title": "Clear business and technical ownership",
+      "cluster": "Sponsorship, ownership & product team",
+      "description": "Assign a clear business owner and technical owner for each AI initiative, with explicit roles and responsibilities beyond the prototype phase.",
+      "practicalActions": "Formally assign an AI Vision Business Owner; formally assign a Technical Owner; define roles and responsibilities through a RACI mod",
+      "expectedOutcome": "AI initiatives have clear accountability for business direction, technical delivery and progression towards operational use.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 30,
+      "title": "Cross-functional AI product team",
+      "cluster": "Sponsorship, ownership & product team",
+      "description": "Create a dedicated cross-functional product team for each AI initiative, led by the AI Vision Business Owner.",
+      "practicalActions": "Include business, operational, IT/data and AI roles; involve end users, middle management and budget owners early; use the team to validate adoption appetite and delivery feasibility",
+      "expectedOutcome": "AI initiatives are shaped by the people responsible for delivery, adoption and operational value, reducing the risk of prototype-only ownership.",
+      "stageGate": null,
+      "stakeholders": [
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Executive / senior management"
+      ]
+    },
+    {
+      "id": 31,
+      "title": "Explicit benefit ownership",
+      "cluster": "Sponsorship, ownership & product team",
+      "description": "Make benefit ownership explicit by identifying who is accountable for validating, supporting and realising expected value over time.",
+      "practicalActions": "Identify the benefit owner early; define who validates expected value; confirm who supports and realises benefits after delivery",
+      "expectedOutcome": "AI initiatives are accountable not only for delivering a solution, but also for achieving and sustaining business value.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "Change management / HR"
+      ]
+    },
+    {
+      "id": 32,
+      "title": "Human-AI accountability framework",
+      "cluster": "Accountability, run model & operational support",
+      "description": "Define and communicate clear accountability rules for decision processes where AI supports, recommends or influences human action.",
+      "practicalActions": "Define human-AI decision chains; clarify who reviews, approves, acts and escalates; communicate accountability guidelines to affected roles",
+      "expectedOutcome": "Staff understand their responsibilities when using AI-supported decisions, reducing uncertainty and improving safe adoption.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "Legal / safety / compliance",
+        "Data science / AI teams",
+        "Executive / senior management"
+      ]
+    },
+    {
+      "id": 33,
+      "title": "AI accountability embedded in procedures and governance",
+      "cluster": "Accountability, run model & operational support",
+      "description": "Embed AI accountability into operational procedures, role descriptions, governance, compliance and policy frameworks.",
+      "practicalActions": "Update operational procedures; revise role descriptions; include AI accountability requirements in governance, compliance and policy frameworks",
+      "expectedOutcome": "AI-supported decisions are managed through formal organisational controls rather than informal or unclear working practices.",
+      "stageGate": null,
+      "stakeholders": [
+        "Legal / safety / compliance",
+        "Maintenance / operations",
+        "Asset management",
+        "Executive / senior management",
+        "IT / data platform",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 34,
+      "title": "Minimum viable run model before go-live",
+      "cluster": "Accountability, run model & operational support",
+      "description": "Define a minimum viable run model before go-live, covering how the AI product will be operated, maintained and supported in steady state.",
+      "practicalActions": "Define steady-state ownership; specify monitoring, incident handling and intervention expectations; document maintenance and model update responsibilities",
+      "expectedOutcome": "AI solutions enter production with clear operational accountability and fewer gaps between deployment and long-term use.",
+      "stageGate": null,
+      "stakeholders": [
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Executive / senior management"
+      ]
+    },
+    {
+      "id": 35,
+      "title": "MLOps and operational support capability",
+      "cluster": "Accountability, run model & operational support",
+      "description": "Establish MLOps or equivalent operational support functions to manage AI solutions after deployment.",
+      "practicalActions": "Set up operational support roles; define model monitoring and update processes; provide incident response and lifecycle management support",
+      "expectedOutcome": "AI products can be monitored, maintained and improved reliably after deployment.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Maintenance / operations",
+        "Asset management"
+      ]
+    },
+    {
+      "id": 36,
+      "title": "Funded handover to steady-state operations",
+      "cluster": "Accountability, run model & operational support",
+      "description": "Plan and fund the handover of AI products into steady-state operations, including integration with asset management systems.",
+      "practicalActions": "Confirm O&M funding before go-live; plan handover to systems such as SAP, Maximo or GIS; identify who manages the AI product in steady state",
+      "expectedOutcome": "AI solutions move into production with sustainable funding, clear ownership and practical integration into operational systems.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 37,
+      "title": "Role-based AI literacy and upskilling programme",
+      "cluster": "AI literacy, skills & HR capability",
+      "description": "Assess AI and digital skill gaps across the organisation and launch structured, role-based upskilling for AI users, makers and decision-makers.",
+      "practicalActions": "Assess existing skill levels; distinguish skills needed by AI users and AI makers; deliver structured AI literacy and upskilling programmes across functions",
+      "expectedOutcome": "Staff have the practical knowledge needed to understand, use and support AI solutions in their roles.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Change management / HR"
+      ]
+    },
+    {
+      "id": 38,
+      "title": "Common AI language across business and technical teams",
+      "cluster": "AI literacy, skills & HR capability",
+      "description": "Create a shared AI language so business, operational and technical teams can discuss model value, uncertainty, accuracy, risk and adoption needs consistently.",
+      "practicalActions": "Define common AI terms; explain uncertainty, accuracy, risk and value in practical language; use socialisation and training to build shared understanding",
+      "expectedOutcome": "Teams make better decisions because they understand AI capabilities, limits and value in a consistent way.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 39,
+      "title": "Digital competencies embedded in HR and value narratives",
+      "cluster": "AI literacy, skills & HR capability",
+      "description": "Embed digital competencies into HR policies and career frameworks, and recognise competence uplift as part of the value proposition of AI initiatives.",
+      "practicalActions": "Update HR policies and career frameworks; include digital competencies in role development; treat improved skills, better tools and higher-quality decision-making as explicit AI benefits",
+      "expectedOutcome": "AI is seen not only as automation, but also as a way to strengthen worker competence, support specialists and improve operational decision-making.",
+      "stageGate": null,
+      "stakeholders": [
+        "Change management / HR",
+        "Executive / senior management",
+        "Maintenance / operations",
+        "Asset management",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 40,
+      "title": "Early operational and data stakeholder involvement",
+      "cluster": "Change adoption, operational involvement & learning",
+      "description": "Involve end users, field operatives and key data stakeholders from the earliest definition phase, not only during testing or deployment.",
+      "practicalActions": "Run workshops with field teams; use shadowing to understand real work practices; involve data stakeholders during problem framing and pilot design",
+      "expectedOutcome": "AI solutions better reflect operational reality, increasing user acceptance and reducing resistance during adoption.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Change management / HR"
+      ]
+    },
+    {
+      "id": 41,
+      "title": "Trust-focused change management and operational champions",
+      "cluster": "Change adoption, operational involvement & learning",
+      "description": "Use targeted change management and operational change champions to build trust, explain benefits and support adoption of AI solutions.",
+      "practicalActions": "Activate operational change champions; run trust-focused change activities; frame AI around better support, safer work and improved prioritisation",
+      "expectedOutcome": "Operational teams are more likely to understand, trust and request AI support rather than seeing it as a technology being pushed onto them.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Change management / HR",
+        "Asset management",
+        "Executive / senior management",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 42,
+      "title": "Evidence-led communication from real operational use",
+      "cluster": "Change adoption, operational involvement & learning",
+      "description": "Collect and communicate authentic evidence from operational use to show what is working, who benefits and why the initiative matters.",
+      "practicalActions": "Collect testimonials and frontline feedback; share visible small wins; maintain a communication plan alongside the technical delivery plan",
+      "expectedOutcome": "Credibility and trust increase because adoption is supported by visible operational proof, not only formal KPIs or abstract capability claims.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Maintenance / operations",
+        "Asset management",
+        "Change management / HR",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 43,
+      "title": "AI embedded in existing operational workflows",
+      "cluster": "Change adoption, operational involvement & learning",
+      "description": "Ensure AI solutions deliver value inside existing operational tools and workflows rather than relying on standalone dashboards or additional logins.",
+      "practicalActions": "Map existing operational workflows; integrate AI outputs into daily tools; avoid unnecessary standalone interfaces where workflow integration is possible",
+      "expectedOutcome": "Adoption improves because AI benefits are experienced naturally within daily work and do not create extra procedural burden.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Systems engineering"
+      ]
+    },
+    {
+      "id": 44,
+      "title": "Structured change capacity for AI adoption",
+      "cluster": "Change adoption, operational involvement & learning",
+      "description": "Assess and strengthen the organisation’s capacity to absorb continuous change as AI solutions evolve.",
+      "practicalActions": "Assess organisational change capacity; apply structured change management alongside technical delivery; promote agility and adaptability as core capabilities",
+      "expectedOutcome": "The organisation is better able to adopt, adapt and sustain AI-enabled ways of working over time.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Change management / HR",
+        "Maintenance / operations",
+        "Asset management",
+        "Data science / AI teams",
+        "IT / data platform"
+      ]
+    },
+    {
+      "id": 45,
+      "title": "Continuous AI learning practice",
+      "cluster": "Change adoption, operational involvement & learning",
+      "description": "Establish ongoing learning mechanisms to keep the organisation informed about AI developments and their practical implications.",
+      "practicalActions": "Set up internal knowledge sharing; participate in working groups; maintain a technology watch on fast-moving AI areas such as large language model",
+      "expectedOutcome": "Decision-makers and teams maintain realistic expectations and make more informed choices as AI capabilities evolve",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Change management / HR"
+      ]
+    },
+    {
+      "id": 46,
+      "title": "Iterative AI product improvement with user feedback",
+      "cluster": "Change adoption, operational involvement & learning",
+      "description": "Design AI solutions as products that improve over time through structured feedback from final users.",
+      "practicalActions": "Collect continuous feedback from final users; communicate that early versions are starting points; update the solution based on operational input",
+      "expectedOutcome": "Users understand and accept the iterative nature of AI products, improving adoption and long-term relevance.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Change management / HR"
+      ]
+    },
+    {
+      "id": 47,
+      "title": "Open AI awareness and experience-sharing sessions",
+      "cluster": "Knowledge sharing, technology watch & experience exchange",
+      "description": "Run open awareness and experience-sharing sessions across organisational levels to build realistic understanding of AI capabilities, limits and relevance.",
+      "practicalActions": "Invite teams with AI implementation experience; share what worked, what failed and what was learned; use concrete operational examples rather than abstract capability presentations",
+      "expectedOutcome": "Decision-makers and staff develop more realistic expectations and can better identify where AI is relevant to their own problems.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Change management / HR"
+      ]
+    },
+    {
+      "id": 48,
+      "title": "Continuous AI knowledge sharing and technology watch",
+      "cluster": "Knowledge sharing, technology watch & experience exchange",
+      "description": "Establish continuous technology watch and internal knowledge-sharing mechanisms to keep decision-makers informed about AI developments, limits and practical implications.",
+      "practicalActions": "Maintain an AI technology watch; share internal lessons learned; integrate AI and digital innovation topics into leadership development",
+      "expectedOutcome": "Leaders and decision-makers make better-informed AI decisions and avoid unrealistic expectations about emerging technologies.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Change management / HR"
+      ]
+    },
+    {
+      "id": 49,
+      "title": "Cross-organisation AI knowledge exchange",
+      "cluster": "Knowledge sharing, technology watch & experience exchange",
+      "description": "Promote knowledge exchange between infrastructure managers to share AI experiences, models, data and implementation lessons.",
+      "practicalActions": "Use UIC working groups or bilateral arrangements; encourage experts to share practices, experiences, models and data; communicate lessons to senior decision-makers",
+      "expectedOutcome": "Infrastructure managers can learn from each other, reduce duplicated effort and build stronger confidence in practical AI adoption.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "IT / data platform"
+      ]
+    },
+    {
+      "id": 50,
+      "title": "Operational problem discovery before solution design",
+      "cluster": "Operational fit, supplier steering & support package",
+      "description": "Analyse field operations and adopt a pull-driven approach before defining technical AI solutions.",
+      "practicalActions": "Analyse field operations and adopt a pull-driven approach before defining technical AI solutions.",
+      "expectedOutcome": "AI solutions are better aligned with real operational conditions and are more likely to be adopted in practice.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Systems engineering"
+      ]
+    },
+    {
+      "id": 51,
+      "title": "Internal capability to challenge and steer suppliers",
+      "cluster": "Operational fit, supplier steering & support package",
+      "description": "Retain enough internal capability to understand operational problems, assess supplier proposals, oversee delivery and avoid blind dependency on vendors.",
+      "practicalActions": "Define which capabilities must remain internal; assess vendor proposals against operational needs; identify reusable assets across projects",
+      "expectedOutcome": "The organisation can use external support without losing control of problem understanding, delivery quality or long-term scalability.",
+      "stageGate": null,
+      "stakeholders": [
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Executive / senior management"
+      ]
+    },
+    {
+      "id": 52,
+      "title": "Mandatory operational support package",
+      "cluster": "Operational fit, supplier steering & support package",
+      "description": "Define a mandatory support package for every AI solution entering operations, whether delivered internally or through a third-party subscription.",
+      "practicalActions": "Specify failure responsibility; define incident escalation routes; document supplier obligations and continuity arrangements",
+      "expectedOutcome": "AI solutions enter operations with clear support, accountability and continuity arrangements, especially where safety-relevant processes are affected.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "IT / data platform",
+        "Legal / safety / compliance",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 53,
+      "title": "Clarified data governance and access model",
+      "cluster": "Data governance, stewardship & data quality requirements",
+      "description": "Define a clear data governance model covering access, security, ownership, transparency and standards for AI use cases.",
+      "practicalActions": "Review data access and security policies; define governance roles and decision rights; align governance with recognised data and AI standards",
+      "expectedOutcome": "AI teams can access and use data more consistently while maintaining security, compliance and accountability.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Legal / safety / compliance",
+        "Maintenance / operations"
+      ]
+    },
+    {
+      "id": 54,
+      "title": "Central data platform with distributed stewardship",
+      "cluster": "Data governance, stewardship & data quality requirements",
+      "description": "Use centralised data platforms with built-in governance controls, supported by distributed data owners and data stewards in each domain.",
+      "practicalActions": "Use centralised platforms with access controls; nominate data owners per domain; involve data owners early in each AI project",
+      "expectedOutcome": "Data governance becomes scalable, with clear local accountability for data quality and central controls for secure reuse.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "Legal / safety / compliance"
+      ]
+    },
+    {
+      "id": 55,
+      "title": "Use-case based data quality requirements",
+      "cluster": "Data governance, stewardship & data quality requirements",
+      "description": "Define minimum data quality requirements for each AI use case, recognising that “good enough” data depends on the operational purpose.",
+      "practicalActions": "Define data quality thresholds per use case; apply appropriate levels of quality checks; avoid both over-engineering and under-delivering on data quality",
+      "expectedOutcome": "AI projects have clearer data expectations from the outset, improving model performance, trust and delivery efficiency.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Maintenance / operations"
+      ]
+    },
+    {
+      "id": 56,
+      "title": "Transparent data use and quality incentives",
+      "cluster": "Data governance, stewardship & data quality requirements",
+      "description": "Make data use visible to the people who enter and maintain data, so they understand how their data supports decisions and AI outcomes.",
+      "practicalActions": "Show downstream data use through dashboards, maps or simple visualisations; communicate better use cases of data; create incentives to break silos and improve data quality",
+      "expectedOutcome": "Data contributors are more motivated to improve quality because they can see how their data is used in operational decisions.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Change management / HR"
+      ]
+    },
+    {
+      "id": 57,
+      "title": "Data sourcing hierarchy and automated quality controls",
+      "cluster": "Data governance, stewardship & data quality requirements",
+      "description": "Adopt a data sourcing hierarchy that prioritises automatically generated data and applies validation controls where human input is unavoidable.",
+      "practicalActions": "Prioritise automated data capture; use human data input only where needed; apply lightweight validation rules and automated quality monitoring with human oversight",
+      "expectedOutcome": "AI input data becomes more reliable, consistent and traceable, reducing uncertainty caused by manual entry.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Maintenance / operations",
+        "Asset management",
+        "Legal / safety / compliance"
+      ]
+    },
+    {
+      "id": 58,
+      "title": "Enterprise-wide data integration strategy",
+      "cluster": "Data integration, sharing & reuse",
+      "description": "Define an enterprise-wide data integration strategy that improves interoperability across data sources and supports reuse across AI use cases.",
+      "practicalActions": "Map key data sources and interfaces; define interoperability requirements; prioritise integration patterns that support scalable modelling and reuse",
+      "expectedOutcome": "AI initiatives can access and combine data across organisational boundaries, improving modelling quality and reducing duplicated effort.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Maintenance / operations",
+        "Executive / senior manageme"
+      ]
+    },
+    {
+      "id": 59,
+      "title": "Cross-functional data-sharing pilots and incentives",
+      "cluster": "Data integration, sharing & reuse",
+      "description": "Launch cross-functional data-sharing pilot use cases and align governance or performance systems to encourage data sharing.",
+      "practicalActions": "Select pilot use cases requiring data from multiple functions; define shared data-sharing responsibilities; create incentives through governance and performance mechanisms",
+      "expectedOutcome": "Organisational silos are reduced through practical data-sharing examples that demonstrate value and build trust between functions.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 60,
+      "title": "Selective open data publication",
+      "cluster": "Data integration, sharing & reuse",
+      "description": "Publish selected datasets openly where appropriate, such as network models or geospatial data, to improve transparency, data quality and external innovation.",
+      "practicalActions": "Identify datasets suitable for open publication; assess legal, safety and security constraints; use public scrutiny and external reuse to incentivise internal data quality",
+      "expectedOutcome": "Selected open data supports better internal data discipline and enables SMEs, citizen developers and partners to create additional value.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Legal / safety / compliance",
+        "Asset management",
+        "Executive / senior management",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 61,
+      "title": "Early legal interpretation and regulatory playbook",
+      "cluster": "Legal, standards, certification & safety assurance",
+      "description": "Involve legal and compliance experts early to interpret relevant AI regulations and maintain an internal regulatory playbook.",
+      "practicalActions": "Engage legal experts during ideation and problem framing; document agreed regulatory interpretations; keep the regulatory playbook updated as rules and guidance evolve",
+      "expectedOutcome": "Teams have clearer regulatory guidance from the start, reducing perceived risk and avoiding late compliance uncertainty.",
+      "stageGate": null,
+      "stakeholders": [
+        "Legal / safety / compliance",
+        "Executive / senior management",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Asset management"
+      ]
+    },
+    {
+      "id": 62,
+      "title": "Compliance-by-design for AI solutions",
+      "cluster": "Legal, standards, certification & safety assurance",
+      "description": "Embed compliance requirements into AI solution design and development rather than treating them as a late approval step.",
+      "practicalActions": "Identify compliance requirements during design; include legal and compliance checks in development activities; document compliance evidence as the solution matures",
+      "expectedOutcome": "AI solutions are easier to approve, scale and operate because regulatory requirements are addressed progressively during delivery.",
+      "stageGate": null,
+      "stakeholders": [
+        "Legal / safety / compliance",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Asset management",
+        "Maintenance / operations"
+      ]
+    },
+    {
+      "id": 63,
+      "title": "Early standards and certification planning",
+      "cluster": "Legal, standards, certification & safety assurance",
+      "description": "Identify applicable safety, reliability, assurance and certification requirements early in AI initiatives.",
+      "practicalActions": "Map applicable standards; identify certification needs; involve safety and compliance experts during problem framing and solution design",
+      "expectedOutcome": "AI initiatives understand assurance expectations early, reducing delays when moving towards scaled operational use.",
+      "stageGate": null,
+      "stakeholders": [
+        "Legal / safety / compliance",
+        "Systems engineering",
+        "Maintenance / operations",
+        "Asset management",
+        "Data science / AI teams",
+        "IT / data platform"
+      ]
+    },
+    {
+      "id": 64,
+      "title": "Progressive AI safety assurance capability",
+      "cluster": "Legal, standards, certification & safety assurance",
+      "description": "Build and validate formal Safety Cases progressively while developing internal capability to assure AI systems.",
+      "practicalActions": "Develop Safety Case evidence throughout delivery; validate reliability and safety assumptions as the solution matures; build internal skills for AI safety assurance",
+      "expectedOutcome": "AI systems can demonstrate safety and reliability with stronger evidence before scaling into operational environments.",
+      "stageGate": null,
+      "stakeholders": [
+        "Legal / safety / compliance",
+        "Systems engineering",
+        "Maintenance / operations",
+        "Asset management",
+        "Data science / AI teams",
+        "Executive / senior management"
+      ]
+    },
+    {
+      "id": 65,
+      "title": "Common scalability framework and objectives",
+      "cluster": "Scaling framework, readiness language & metrics",
+      "description": "Define what scaling means for each AI initiative using a common organisational framework for scalability dimensions.",
+      "practicalActions": "Define scale objectives per initiative; agree common scalability dimensions; clarify whether scale means wider deployment, reuse, operational integration, user adoption or portfolio growth",
+      "expectedOutcome": "Teams and decision-makers share the same understanding of scale, reducing ambiguity when deciding whether an initiative is ready to progress.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 66,
+      "title": "Scale-related monitoring metrics",
+      "cluster": "Scaling framework, readiness language & metrics",
+      "description": "Track scale-related metrics as part of project monitoring to show whether AI initiatives are progressing beyond pilot success.",
+      "practicalActions": "Define scale metrics early; monitor adoption, reuse, integration and operational coverage; use scale evidence in project and portfolio reviews",
+      "expectedOutcome": "Scaling progress becomes visible and measurable, supporting clearer decisions on whether to scale, adapt or stop an initiative.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "IT / data platform"
+      ]
+    },
+    {
+      "id": 67,
+      "title": "Common AI readiness and maturity model",
+      "cluster": "Scaling framework, readiness language & metrics",
+      "description": "Define or adapt a common readiness and maturity model for AI initiatives across the organisation.",
+      "practicalActions": "gree readiness levels; define maturity criteria for technical, operational and organisational readiness; apply the model consistently across initiatives",
+      "expectedOutcome": "Teams and decision-makers have a shared language for assessing whether AI initiatives are ready to progress, scale, adapt or stop.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Legal / safety / compliance"
+      ]
+    },
+    {
+      "id": 68,
+      "title": "Readiness-based governance and funding decisions",
+      "cluster": "Scaling framework, readiness language & metrics",
+      "description": "Use readiness levels to support governance, prioritisation and funding decisions for AI initiatives.",
+      "practicalActions": "Train teams and leaders on readiness language; use readiness evidence in governance reviews; link funding decisions to maturity and readiness levels",
+      "expectedOutcome": "AI initiatives are assessed more consistently, reducing confusion about whether they are ready for further investment or scaling.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Maintenance / operations"
+      ]
+    },
+    {
+      "id": 69,
+      "title": "Clear lifecycle transition criteria",
+      "cluster": "Lifecycle transition criteria & phase funding",
+      "description": "Define clear criteria for moving AI initiatives between lifecycle phases, especially from PoC towards production.",
+      "practicalActions": "Define entry and exit criteria for each phase; assess technical, operational and legal readiness; use structured transition checklists before progression",
+      "expectedOutcome": "Projects progress more consistently from PoC to production, with fewer stalled initiatives and clearer readiness evidence.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "Maintenance / operations",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Legal / safety / compliance"
+      ]
+    },
+    {
+      "id": 70,
+      "title": "Formal prototype stage in real workflows",
+      "cluster": "Lifecycle transition criteria & phase funding",
+      "description": "Formalise an intermediate Prototype stage between PoC and productisation, with dedicated resources and operation in real workflows.",
+      "practicalActions": "Define Prototype entry and exit criteria; allocate dedicated resources; test the solution in real operational workflows before production approval",
+      "expectedOutcome": "The scalability gap between PoC and production is reduced, improving confidence in operational fit and readiness.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Legal / safety / compliance",
+        "Executive / senior management"
+      ]
+    },
+    {
+      "id": 71,
+      "title": "Portfolio-linked phase approval and funding",
+      "cluster": "Lifecycle transition criteria & phase funding",
+      "description": "Link phase approval decisions to portfolio management and budget allocation so promising AI initiatives receive the resources needed to progress.",
+      "practicalActions": "Review phase approvals at portfolio level; align budget allocation with readiness evidence; decide whether to scale, adapt or stop based on portfolio priorities",
+      "expectedOutcome": "AI initiatives that are ready to progress are less likely to stall because governance, prioritisation and funding decisions are connected.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "Asset management",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Maintenance / operations"
+      ]
+    },
+    {
+      "id": 72,
+      "title": "AI-ready data collection and formats",
+      "cluster": "Data collection, quality, semantics & retention",
+      "description": "Collect the right data in appropriate, usable formats so it can support valid AI analysis and operational use.",
+      "practicalActions": "Define required data for each use case; specify standard formats and metadata; validate that collected data can support analysis and operational workflows",
+      "expectedOutcome": "AI initiatives have usable input data from the start, reducing rework and improving model reliability.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Maintenance / operations"
+      ]
+    },
+    {
+      "id": 73,
+      "title": "Timely data availability and retention",
+      "cluster": "Data collection, quality, semantics & retention",
+      "description": "Ensure data is retained for the right duration and made available at the scale and speed needed for AI.",
+      "practicalActions": "Define retention requirements by use case; implement near-real-time or timely data pipelines; monitor data availability and delivery performance",
+      "expectedOutcome": "AI solutions can access data when needed, supporting scaling and operational decision-making.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Maintenance / operations",
+        "Asset management"
+      ]
+    },
+    {
+      "id": 74,
+      "title": "Integrated data architecture for AI use",
+      "cluster": "Data collection, quality, semantics & retention",
+      "description": "Use robust integration with third-party systems and a unified data architecture to support scalable AI deployment.",
+      "practicalActions": "Define a unified data architecture; integrate relevant third-party systems; establish clear data delivery guidelines and usability monitoring tools",
+      "expectedOutcome": "AI initiatives can reuse data across systems and scale more reliably into operational environments.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Maintenance / operations",
+        "Systems"
+      ]
+    },
+    {
+      "id": 75,
+      "title": "AI data quality framework",
+      "cluster": "Data collection, quality, semantics & retention",
+      "description": "Define what data quality means for AI use cases and apply consistent quality requirements across asset, enterprise and operational data.",
+      "practicalActions": "Define AI-specific data quality criteria; apply robust data management practices; monitor accuracy, completeness, consistency and usability across systems",
+      "expectedOutcome": "AI teams can work with data that is more reliable, trusted and suitable for integration and scaling.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Maintenance / operations"
+      ]
+    },
+    {
+      "id": 76,
+      "title": "Shared semantic layers and canonical data models",
+      "cluster": "Data collection, quality, semantics & retention",
+      "description": "Implement shared semantic layers and canonical data models to create common meaning across diverse data sources.",
+      "practicalActions": "Define common asset and operational data concepts; implement semantic layers; standardise canonical models across relevant systems",
+      "expectedOutcome": "Data can be interpreted consistently across systems and teams, improving AI trust, integration and reuse.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Systems engineering",
+        "Maintenance / operations"
+      ]
+    },
+    {
+      "id": 77,
+      "title": "Differentiated quality controls for enterprise and sensor data",
+      "cluster": "Data collection, quality, semantics & retention",
+      "description": "Apply differentiated data quality controls for enterprise asset management data and sensor inputs.",
+      "practicalActions": "Define quality checks for enterprise data; define quality checks for sensor data; automate controls where feasible and review exceptions",
+      "expectedOutcome": "AI models use data that is fit for purpose across both structured enterprise systems and variable operational sensor sources.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Maintenance / operations",
+        "Systems engineering"
+      ]
+    },
+    {
+      "id": 78,
+      "title": "Controlled data architecture for AI",
+      "cluster": "Data architecture, access mechanisms & controls",
+      "description": "Define the data architecture needed for data to move securely, efficiently and reliably through the technical environment for AI use.",
+      "practicalActions": "Map required data flows; define technical controls for secure data movement; clarify how architecture supports data ownership and governance",
+      "expectedOutcome": "AI initiatives can access and use data in a controlled way, improving usability, compliance and scalability.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Legal / safety / compliance",
+        "Maintenance / operations"
+      ]
+    },
+    {
+      "id": 79,
+      "title": "Standardised data access mechanisms",
+      "cluster": "Data architecture, access mechanisms & controls",
+      "description": "Standardise APIs, permissions and interfaces so AI teams can retrieve data from internal and third-party systems when authorised.",
+      "practicalActions": "Define standard API patterns; simplify access request processes; establish clear permissions and interfaces for third-party system data",
+      "expectedOutcome": "Data access becomes more transparent, consistent and operationally usable for AI initiatives.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Systems engineering",
+        "Asset management",
+        "Legal / safety / compliance"
+      ]
+    },
+    {
+      "id": 80,
+      "title": "Governance-aligned access controls",
+      "cluster": "Data architecture, access mechanisms & controls",
+      "description": "Align data access controls and enforcement mechanisms with organisational governance, compliance and scalability needs.",
+      "practicalActions": "Define governance rules for access; implement controls that enforce approved data use; review access mechanisms for compliance and scalability",
+      "expectedOutcome": "AI data access is controlled without becoming unnecessarily restrictive, supporting both compliance and scaling.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Legal / safety / compliance",
+        "Data science / AI teams",
+        "Asset management",
+        "Executive / senior management"
+      ]
+    },
+    {
+      "id": 81,
+      "title": "Coherent enterprise AI platform architecture",
+      "cluster": "Platform, compute, tooling & vendor strategy",
+      "description": "Establish a coherent and appropriately governed enterprise platform architecture that provides reusable foundations for AI development, deployment and operations across multiple use cases.",
+      "practicalActions": "Define reusable platform patterns for data access, processing, deployment and monitoring; clarify platform governance and ownership; align AI environments with enterprise IT architecture; provide shared services and interfaces that can be reused across AI initiatives.",
+      "expectedOutcome": "AI initiatives can build on stable and reusable technical foundations, reducing repeated project-specific integration work and making solutions easier to deploy, operate and scale across the organisation.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Asset management",
+        "Maintenance / operations",
+        "Executive / senior management"
+      ]
+    },
+    {
+      "id": 84,
+      "title": "Use-case aligned compute strategy",
+      "cluster": "Platform, compute, tooling & vendor strategy",
+      "description": "Define where AI should run for each use case, based on operational needs, latency, hardware availability and compute constraints.",
+      "practicalActions": "Assess whether cloud, edge or hybrid deployment is appropriate; define latency and real-time processing requirements; match compute choices to operational constraints",
+      "expectedOutcome": "AI solutions are deployed in environments that fit their operational purpose and can scale without avoidable performance or infrastructure issues.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Maintenance / operations",
+        "Asset management",
+        "Systems engineering"
+      ]
+    },
+    {
+      "id": 85,
+      "title": "Standardised and flexible AI infrastructure",
+      "cluster": "Platform, compute, tooling & vendor strategy",
+      "description": "Standardise infrastructure patterns for AI deployment while retaining flexibility to migrate between compute environments when needed.",
+      "practicalActions": "Define standard infrastructure patterns; support fast migration between cloud and edge environments; maintain reusable deployment templates and technical guidance",
+      "expectedOutcome": "AI deployments become more scalable, consistent and adaptable as operational needs or infrastructure constraints change.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Systems engineering",
+        "Asset management"
+      ]
+    },
+    {
+      "id": 86,
+      "title": "Compute readiness assessment before deployment",
+      "cluster": "Platform, compute, tooling & vendor strategy",
+      "description": "Assess compute readiness before deployment to confirm that the chosen environment can meet performance, reliability and operational requirements.",
+      "practicalActions": "Test edge hardware limits; assess cloud latency and connectivity risks; validate compute capacity against real-time or near-real-time use cases",
+      "expectedOutcome": "The selected compute environment is validated against performance, reliability and operational requirements before deployment, reducing the risk of late infrastructure constraints, rework or deployment failure.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Maintenance / operations",
+        "Systems engineering",
+        "Asset management"
+      ]
+    },
+    {
+      "id": 87,
+      "title": "Sustainable and supportable AI software stack",
+      "cluster": "Platform, compute, tooling & vendor strategy",
+      "description": "Assess and select software stacks that are suitable, maintainable and supportable for AI solutions beyond initial development.",
+      "practicalActions": "Assess stack sustainability for each business case; define support requirements before selection; consider code quality and long-term maintenance cost",
+      "expectedOutcome": "AI solutions are easier to maintain, scale and operate without excessive dependency on specialist or unsupported tools.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Systems engineering",
+        "Asset management",
+        "Executive / senior management"
+      ]
+    },
+    {
+      "id": 88,
+      "title": "Open and modular architecture to reduce vendor lock-in",
+      "cluster": "Platform, compute, tooling & vendor strategy",
+      "description": "Use open architectures, modular software stacks and standards-based interfaces to reduce dependency on specific vendors or platforms.",
+      "practicalActions": "Prefer open standards where feasible; design modular interfaces around vendor systems; ensure data can move reliably between platforms",
+      "expectedOutcome": "The organisation retains flexibility to scale, replace or integrate AI components without being locked into one provider.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Systems engineering",
+        "Asset management",
+        "Legal / safety / compliance"
+      ]
+    },
+    {
+      "id": 89,
+      "title": "Standardised tooling and purchasing alignment",
+      "cluster": "Platform, compute, tooling & vendor strategy",
+      "description": "Standardise AI tooling and involve purchasing early so software choices are portable, supportable and aligned with enterprise requirements.",
+      "practicalActions": "Define approved tool patterns; involve purchasing during technology selection; check supplier support, portability and integration requirements before commitmen",
+      "expectedOutcome": "AI solutions are procured and built on tools that can be supported, integrated and scaled across the organisation.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Executive / senior management",
+        "Asset management",
+        "Legal / safety / compliance"
+      ]
+    },
+    {
+      "id": 90,
+      "title": "Enterprise and asset management integration architecture",
+      "cluster": "Enterprise, asset management, OT & monitoring integration",
+      "description": "Design AI integration with enterprise and asset management systems as part of the overall architecture, not as ad hoc system connections.",
+      "practicalActions": "Define integration architecture early; identify required connections with systems such as SAP and IBM Maximo; use robust and standardised interfaces",
+      "expectedOutcome": "AI outputs can connect with asset records, maintenance processes and enterprise workflows, increasing operational value and decision-making efficiency.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Asset management",
+        "Maintenance / operations",
+        "Data science / AI teams",
+        "Systems engineering"
+      ]
+    },
+    {
+      "id": 91,
+      "title": "Standardised APIs and integration platforms",
+      "cluster": "Enterprise, asset management, OT & monitoring integration",
+      "description": "Use standardised APIs and integration platforms to connect AI solutions with enterprise and asset management systems.",
+      "practicalActions": "Define API standards; use reusable integration patterns; ensure data exchange is possible between AI components and core operational systems",
+      "expectedOutcome": "AI deployment is faster, more consistent and easier to scale across enterprise systems.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Systems engineering",
+        "Asset management",
+        "Maintenance / operations"
+      ]
+    },
+    {
+      "id": 92,
+      "title": "Integration requirements in planning and contracts",
+      "cluster": "Enterprise, asset management, OT & monitoring integration",
+      "description": "Include enterprise and asset management integration requirements in early architecture planning and supplier contracts.",
+      "practicalActions": "Define integration requirements before procurement; include interface and data exchange obligations in contracts; confirm integration feasibility before solution build",
+      "expectedOutcome": "AI solutions are more likely to connect with operational systems from the start, reducing rework and limiting isolated deployments.",
+      "stageGate": null,
+      "stakeholders": [
+        "Executive / senior management",
+        "IT / data platform",
+        "Asset management",
+        "Legal / safety / compliance",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 93,
+      "title": "Standardised OT and monitoring system integration",
+      "cluster": "Enterprise, asset management, OT & monitoring integration",
+      "description": "Standardise integration between AI solutions, operational technology, monitoring systems and railway operating systems.",
+      "practicalActions": "Define standard interfaces and APIs; align AI workflows with OT and monitoring systems; specify integration requirements for condition-based monitoring and railway operations system",
+      "expectedOutcome": "AI solutions can connect more reliably with operational systems, supporting scalable deployment and better operational decision-making.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "IT / data platform",
+        "Systems engineering",
+        "Asset management",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 94,
+      "title": "Live OT data access for AI operations",
+      "cluster": "Enterprise, asset management, OT & monitoring integration",
+      "description": "Improve live or near-real-time access to OT and monitoring data needed for AI-driven railway operations.",
+      "practicalActions": "Identify OT data required for each use case; define near-real-time access needs; implement secure and reliable data access mechanisms",
+      "expectedOutcome": "AI solutions can support operational decisions with timely data from railway systems and monitoring environments.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "IT / data platform",
+        "Systems engineering",
+        "Data science / AI teams",
+        "Asset management"
+      ]
+    },
+    {
+      "id": 95,
+      "title": "AI-enabled alarm and monitoring procedures",
+      "cluster": "Enterprise, asset management, OT & monitoring integration",
+      "description": "Define procedures for how AI outputs interact with monitoring centres, alarms and railway operational decision processes.",
+      "practicalActions": "Define alarm procedures; clarify escalation and intervention rules; align AI outputs with monitoring centre workflows and operational responsibilities",
+      "expectedOutcome": "AI-supported alerts and recommendations can be used consistently in railway operations, improving reliability and decision-making.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Systems engineering",
+        "Asset management",
+        "Legal / safety / compliance",
+        "IT / data platform",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 96,
+      "title": "AI outputs integrated into maintenance workflows",
+      "cluster": "Maintenance workflow integration, actionability & feedback",
+      "description": "Connect AI outputs to work orders, asset records and existing maintenance workflows so recommendations can be acted on in normal operational processes.",
+      "practicalActions": "Integrate AI outputs with work order systems; link recommendations to asset records; ensure AI tools are recognised in maintenance methods and working guidelines",
+      "expectedOutcome": "AI recommendations become actionable within existing maintenance processes, improving adoption and operational value.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "IT / data platform",
+        "Data science / AI teams",
+        "Systems engineering"
+      ]
+    },
+    {
+      "id": 97,
+      "title": "Structured operator feedback loops",
+      "cluster": "Maintenance workflow integration, actionability & feedback",
+      "description": "Establish structured feedback loops so operators can review AI outputs and provide field input that improves the AI solution over time.",
+      "practicalActions": "Define feedback procedures; capture operator judgement and field observations; translate human feedback into machine-usable signals where feasible",
+      "expectedOutcome": "AI tools improve through operational experience and gain stronger acceptance from field teams.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Change management / HR"
+      ]
+    },
+    {
+      "id": 98,
+      "title": "Maintenance methodology and safety alignment",
+      "cluster": "Maintenance workflow integration, actionability & feedback",
+      "description": "Align AI recommendations with established maintenance methodologies, reliability-centred maintenance analysis and safety expectations.",
+      "practicalActions": "Map AI recommendations to maintenance methodologies; involve safety experts early; define clear development, testing and acceptance guidelines",
+      "expectedOutcome": "AI-supported maintenance decisions are easier to trust, validate and embed into operational practice.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "Systems engineering",
+        "Legal / safety / compliance",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 99,
+      "title": "Clear responsibilities for AI-supported maintenance action",
+      "cluster": "Maintenance workflow integration, actionability & feedback",
+      "description": "Define responsibilities and accountabilities for how AI outputs are reviewed, accepted, challenged and acted on in maintenance workflows.",
+      "practicalActions": "Clarify who reviews AI recommendations; define who approves or rejects maintenance actions; document accountability for feedback, escalation and follow-up",
+      "expectedOutcome": "Operational teams know how to use AI outputs responsibly, reducing ambiguity and improving acceptance in daily maintenance work.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "Legal / safety / compliance",
+        "Executive / senior management",
+        "Data science / AI teams"
+      ]
+    },
+    {
+      "id": 100,
+      "title": "Production readiness criteria for AI deployment",
+      "cluster": "Production operations, monitoring, retraining & improvement",
+      "description": "Define the technical and operational criteria a PoC must meet before it can be considered for deployment.",
+      "practicalActions": "Define performance and throughput requirements; specify telemetry and monitoring expectations; agree deployment readiness criteria before productisation",
+      "expectedOutcome": "AI initiatives have a clear route from PoC to production, reducing uncertainty about when a solution is ready to scale.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Maintenance / operations",
+        "Asset management",
+        "Systems engineering"
+      ]
+    },
+    {
+      "id": 101,
+      "title": "Production-grade AI operations tooling",
+      "cluster": "Production operations, monitoring, retraining & improvement",
+      "description": "Implement production-grade tooling and technical methods to ensure AI solutions are stable, repeatable and reproducible in live environments.",
+      "practicalActions": "Standardise CI/CD pipelines; implement telemetry and centralised logging; use deployment tooling and lifecycle management procedures",
+      "expectedOutcome": "AI solutions can be deployed, monitored and maintained reliably beyond experimental PoC environments.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Systems engineering",
+        "Maintenance / operations"
+      ]
+    },
+    {
+      "id": 102,
+      "title": "Run responsibility and production support skills",
+      "cluster": "Production operations, monitoring, retraining & improvement",
+      "description": "Define production run responsibilities and required skillsets early so AI solutions can be managed effectively after deployment.",
+      "practicalActions": "Assign run responsibility before deployment; identify required production support skills; establish user feedback channels for operational improvement",
+      "expectedOutcome": "AI solutions have clear support ownership, the right skills in place and feedback routes for continuous improvement.",
+      "stageGate": null,
+      "stakeholders": [
+        "IT / data platform",
+        "Data science / AI teams",
+        "Maintenance / operations",
+        "Asset management",
+        "Change management / HR"
+      ]
+    },
+    {
+      "id": 103,
+      "title": "Post-deployment model monitoring",
+      "cluster": "Production operations, monitoring, retraining & improvement",
+      "description": "Continuously monitor AI models after deployment to detect drift, degradation, performance decay and changing data conditions.",
+      "practicalActions": "Define model performance indicators; monitor data drift and output quality; trigger alerts when performance falls below agreed thresholds",
+      "expectedOutcome": "Model reliability remains visible after deployment, allowing teams to identify when corrective action is needed.",
+      "stageGate": null,
+      "stakeholders": [
+        "Data science / AI teams",
+        "IT / data platform",
+        "Maintenance / operations",
+        "Asset management",
+        "Legal / safety / compliance"
+      ]
+    },
+    {
+      "id": 104,
+      "title": "Structured retraining and model update process",
+      "cluster": "Production operations, monitoring, retraining & improvement",
+      "description": "Define a controlled process for retraining, updating and validating AI models as conditions change over time.",
+      "practicalActions": "Define retraining triggers; maintain evaluation datasets; test model updates before release using production-like conditions",
+      "expectedOutcome": "Models can evolve safely and effectively without uncontrolled changes to operational performance.",
+      "stageGate": null,
+      "stakeholders": [
+        "Data science / AI teams",
+        "IT / data platform",
+        "Maintenance / operations",
+        "Asset management"
+      ]
+    },
+    {
+      "id": 105,
+      "title": "Field feedback converted into model improvement signals",
+      "cluster": "Performance testing & scalability assurance",
+      "description": "Translate operational field feedback into usable signals that support model maintenance, retraining and improvement.",
+      "practicalActions": "Capture feedback from operational users; structure field observations into machine-usable data; link feedback to model monitoring and retraining decisions",
+      "expectedOutcome": "Model evolution is informed by real operational experience, improving reliability, relevance and user trust over time.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Change management / HR"
+      ]
+    },
+    {
+      "id": 106,
+      "title": "Performance, scaling and accuracy at scale",
+      "cluster": "Explainability, documentation & trust validation",
+      "description": "Model performance and accuracy may degrade when AI solutions move from controlled testing to larger and more variable operational environments.",
+      "practicalActions": "Scaled AI must remain reliable under realistic operating conditions, with acceptable levels of false positives, missed detections, resource use and performance variation.",
+      "expectedOutcome": "Users may lose trust in AI outputs, operational decisions may be weakened, and solutions may fail readiness for production deployment.",
+      "stageGate": null,
+      "stakeholders": [
+        "Data science / AI teams",
+        "IT / data platform",
+        "Maintenance / operations",
+        "Asset management",
+        "Legal / safety / compliance"
+      ]
+    },
+    {
+      "id": 107,
+      "title": "Field-oriented explainability for AI outputs",
+      "cluster": "Explainability, documentation & trust validation",
+      "description": "Provide explanations that help field users understand AI outputs and relate them to operational judgement, site experience and maintenance decisions.",
+      "practicalActions": "Define explanation needs with operational users; present model outputs in practical field language; show the main factors behind recommendations or alerts",
+      "expectedOutcome": "Users can interpret AI outputs more confidently, improving trust and acceptance in real operational settings.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Legal / safety / compliance"
+      ]
+    },
+    {
+      "id": 108,
+      "title": "Trust-building testing, documentation and review",
+      "cluster": "Explainability, documentation & trust validation",
+      "description": "Use testing, documentation, logging and periodic review to demonstrate that AI outputs are reliable and understandable in practice.",
+      "practicalActions": "Document model assumptions and limitations; maintain extensive logs of inputs, outputs and decisions; review model behaviour periodically with operational and technical experts",
+      "expectedOutcome": "AI reliability becomes easier to verify, challenge and improve, strengthening trust in operational use.",
+      "stageGate": null,
+      "stakeholders": [
+        "Data science / AI teams",
+        "Maintenance / operations",
+        "Asset management",
+        "IT / data platform",
+        "Legal / safety / compliance"
+      ]
+    },
+    {
+      "id": 109,
+      "title": "Progressive trust validation for autonomous AI use",
+      "cluster": "Explainability, documentation & trust validation",
+      "description": "Validate user trust and interpretability progressively as AI moves from decision support towards more autonomous operational use.",
+      "practicalActions": "Start with AI-assisted decision support; test whether users understand and accept outputs; increase autonomy only when explainability, reliability and accountability are sufficient",
+      "expectedOutcome": "The organisation avoids premature autonomy and builds field trust through evidence, experience and controlled progression.",
+      "stageGate": null,
+      "stakeholders": [
+        "Maintenance / operations",
+        "Asset management",
+        "Legal / safety / compliance",
+        "Data science / AI teams",
+        "Executive / senior management"
+      ]
+    },
+    {
+      "id": 110,
+      "title": "Structured solution framing and technology assessment",
+      "cluster": "Operational fit, supplier steering & support package",
+      "description": "Use a structured assessment process to compare candidate technologies, algorithms, platforms and delivery approaches before committing to a solution.",
+      "practicalActions": "Compare alternative technologies and algorithms against operational requirements; assess off-the-shelf versus bespoke solutions; evaluate scalability, integration, supportability and vendor dependency; assess platform compatibility; test promising options with users before committing to more advanced development.",
+      "expectedOutcome": "AI initiatives select solutions that better fit operational needs and have a clearer pathway to integration, support and scaling, reducing the risk of technical dead ends or costly redesign.",
+      "stageGate": null,
+      "stakeholders": [
+        "Asset management",
+        "Maintenance / operations",
+        "Systems engineering",
+        "IT / data platform",
+        "Data science / AI team"
+      ]
+    },
+    {
+      "id": 111,
+      "title": "Early AI safety impact framing",
+      "cluster": "Legal, standards, certification & safety assurance",
+      "description": "Assess safety implications at the earliest stages of an AI initiative to determine whether the use case may influence safety-relevant decisions and what level of assurance and human oversight may be required.",
+      "practicalActions": "Identify safety-relevant outputs and decisions; consider credible failure modes and consequences; define human oversight and escalation needs; identify affected operational procedures; anticipate likely safety evidence and assurance requirements early.",
+      "expectedOutcome": "Safety implications are understood before significant development decisions are made, allowing assurance, human oversight and evidence requirements to be incorporated progressively rather than discovered late in the project.",
+      "stageGate": null,
+      "stakeholders": [
+        "Legal / safety / compliance",
+        "Systems engineering",
+        "Maintenance / operations",
+        "Asset management",
+        "Data science / AI teams",
+        "IT / data platform"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": 1,
+      "blockerId": 1024,
+      "enablerId": 55,
+      "mechanism": "Equip",
+      "rationale": "Directly addresses inconsistent quality expectations by defining minimum and fit-for-purpose data quality requirements for each AI use case."
+    },
+    {
+      "id": 2,
+      "blockerId": 1024,
+      "enablerId": 56,
+      "mechanism": "Equip",
+      "rationale": "Encourages data owners and contributors to improve data quality by making downstream use and value more visible."
+    },
+    {
+      "id": 3,
+      "blockerId": 1024,
+      "enablerId": 57,
+      "mechanism": "Equip",
+      "rationale": "Establishes practical controls for improving consistency and reliability of input data, including validation of unavoidable human input."
+    },
+    {
+      "id": 4,
+      "blockerId": 1024,
+      "enablerId": 75,
+      "mechanism": "Equip",
+      "rationale": "Creates consistent organisational criteria for assessing and monitoring data quality across AI initiatives and data sources."
+    },
+    {
+      "id": 5,
+      "blockerId": 1024,
+      "enablerId": 77,
+      "mechanism": "Equip",
+      "rationale": "Applies fit-for-purpose quality controls to different data types rather than relying on a single generic quality approach."
+    },
+    {
+      "id": 6,
+      "blockerId": 1043,
+      "enablerId": 26,
+      "mechanism": "Commit",
+      "rationale": "Provides regular opportunities to validate progress, adapt the solution or stop before unnecessary development continues."
+    },
+    {
+      "id": 7,
+      "blockerId": 1043,
+      "enablerId": 46,
+      "mechanism": "Learn",
+      "rationale": "Encourages incremental product development and structured learning from users instead of repeated isolated demonstrations."
+    },
+    {
+      "id": 8,
+      "blockerId": 1043,
+      "enablerId": 69,
+      "mechanism": "Operate",
+      "rationale": "Creates explicit progression criteria between PoC, prototype and production, supporting a more disciplined incremental delivery pathway."
+    },
+    {
+      "id": 9,
+      "blockerId": 1043,
+      "enablerId": 70,
+      "mechanism": "Operate",
+      "rationale": "Directly encourages an intermediate production-like stage where assumptions, operational fit and readiness can be tested before full deployment."
+    },
+    {
+      "id": 10,
+      "blockerId": 1114,
+      "enablerId": 1,
+      "mechanism": "Frame",
+      "rationale": "Cross-functional problem-framing workshops supports the response to 'Technology-push AI initiatives without clear ownership' by improving alignment, adoption or readiness, but is not sufficient on its own."
+    },
+    {
+      "id": 11,
+      "blockerId": 1114,
+      "enablerId": 2,
+      "mechanism": "Frame",
+      "rationale": "Business-approved problem statement directly reduces the blocker by addressing a key condition behind 'Technology-push AI initiatives without clear ownership'."
+    },
+    {
+      "id": 12,
+      "blockerId": 1114,
+      "enablerId": 3,
+      "mechanism": "Commit",
+      "rationale": "Business-led cross-functional co-sponsorship directly reduces the blocker by addressing a key condition behind 'Technology-push AI initiatives without clear ownership'."
+    },
+    {
+      "id": 13,
+      "blockerId": 1114,
+      "enablerId": 24,
+      "mechanism": "Commit",
+      "rationale": "Hybrid AI governance and coordination model supports the response to 'Technology-push AI initiatives without clear ownership' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 14,
+      "blockerId": 1114,
+      "enablerId": 25,
+      "mechanism": "Commit",
+      "rationale": "Lightweight decision rights and accountability supports the response to 'Technology-push AI initiatives without clear ownership' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 15,
+      "blockerId": 1114,
+      "enablerId": 26,
+      "mechanism": "Commit",
+      "rationale": "Progressive lifecycle validation forums supports the response to 'Technology-push AI initiatives without clear ownership' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 16,
+      "blockerId": 1133,
+      "enablerId": 4,
+      "mechanism": "Frame",
+      "rationale": "Stakeholder-specific value metrics and KPIs supports the response to 'Unclear value articulation for stakeholder groups' by improving alignment, adoption or readiness, but is not sufficient on its own."
+    },
+    {
+      "id": 17,
+      "blockerId": 1133,
+      "enablerId": 5,
+      "mechanism": "Frame",
+      "rationale": "Integrated AI business case directly reduces the blocker by addressing a key condition behind 'Unclear value articulation for stakeholder groups'."
+    },
+    {
+      "id": 18,
+      "blockerId": 1133,
+      "enablerId": 6,
+      "mechanism": "Frame",
+      "rationale": "Interfunctional value steering supports the response to 'Unclear value articulation for stakeholder groups' by improving alignment, adoption or readiness, but is not sufficient on its own."
+    },
+    {
+      "id": 19,
+      "blockerId": 1133,
+      "enablerId": 7,
+      "mechanism": "Commit",
+      "rationale": "Operational sponsor for value validation directly reduces the blocker by addressing a key condition behind 'Unclear value articulation for stakeholder groups'."
+    },
+    {
+      "id": 20,
+      "blockerId": 1133,
+      "enablerId": 8,
+      "mechanism": "Frame",
+      "rationale": "Multi-dimensional AI value assessment directly reduces the blocker by addressing a key condition behind 'Unclear value articulation for stakeholder groups'."
+    },
+    {
+      "id": 21,
+      "blockerId": 1133,
+      "enablerId": 9,
+      "mechanism": "Frame",
+      "rationale": "Value narrative beyond headcount reduction directly reduces the blocker by addressing a key condition behind 'Unclear value articulation for stakeholder groups'."
+    },
+    {
+      "id": 22,
+      "blockerId": 1143,
+      "enablerId": 10,
+      "mechanism": "Commit",
+      "rationale": "Multi-year funding for AI scaling addresses part of 'Unclear financial implications and risks', but additional enablers are likely needed for a full response."
+    },
+    {
+      "id": 23,
+      "blockerId": 1143,
+      "enablerId": 11,
+      "mechanism": "Frame",
+      "rationale": "AI-specific portfolio business case directly reduces the blocker by addressing a key condition behind 'Unclear financial implications and risks'."
+    },
+    {
+      "id": 24,
+      "blockerId": 1143,
+      "enablerId": 12,
+      "mechanism": "Frame",
+      "rationale": "Risk-adjusted AI benefit logic directly reduces the blocker by addressing a key condition behind 'Unclear financial implications and risks'."
+    },
+    {
+      "id": 25,
+      "blockerId": 1143,
+      "enablerId": 13,
+      "mechanism": "Frame",
+      "rationale": "Risk of inaction assessment directly reduces the blocker by addressing a key condition behind 'Unclear financial implications and risks'."
+    },
+    {
+      "id": 26,
+      "blockerId": 1143,
+      "enablerId": 14,
+      "mechanism": "Commit",
+      "rationale": "Readiness-aligned investment decisions addresses part of 'Unclear financial implications and risks', but additional enablers are likely needed for a full response."
+    },
+    {
+      "id": 27,
+      "blockerId": 1143,
+      "enablerId": 58,
+      "mechanism": "Equip",
+      "rationale": "Enterprise-wide data integration strategy directly reduces the blocker by addressing a key condition behind 'Unclear financial implications, risks and investment logic'."
+    },
+    {
+      "id": 28,
+      "blockerId": 1143,
+      "enablerId": 59,
+      "mechanism": "Equip",
+      "rationale": "Cross-functional data-sharing pilots and incentives directly reduces the blocker by addressing a key condition behind 'Unclear financial implications, risks and investment logic'."
+    },
+    {
+      "id": 29,
+      "blockerId": 1143,
+      "enablerId": 60,
+      "mechanism": "Equip",
+      "rationale": "Selective open data publication directly reduces the blocker by addressing a key condition behind 'Unclear financial implications, risks and investment logic'."
+    },
+    {
+      "id": 30,
+      "blockerId": 1211,
+      "enablerId": 15,
+      "mechanism": "Commit",
+      "rationale": "Concise AI transformation vision directly reduces the blocker by addressing a key condition behind 'Lack of shared AI vision'."
+    },
+    {
+      "id": 31,
+      "blockerId": 1211,
+      "enablerId": 16,
+      "mechanism": "Commit",
+      "rationale": "Repeated AI vision communication supports the response to 'Lack of shared AI vision' by improving alignment, adoption or readiness, but is not sufficient on its own."
+    },
+    {
+      "id": 32,
+      "blockerId": 1211,
+      "enablerId": 17,
+      "mechanism": "Commit",
+      "rationale": "AI vision embedded in strategy and leadership objectives addresses part of 'Lack of shared AI vision', but additional enablers are likely needed for a full response."
+    },
+    {
+      "id": 33,
+      "blockerId": 1211,
+      "enablerId": 18,
+      "mechanism": "Commit",
+      "rationale": "Function-specific AI vision translation directly reduces the blocker by addressing a key condition behind 'Lack of shared AI vision'."
+    },
+    {
+      "id": 34,
+      "blockerId": 1211,
+      "enablerId": 19,
+      "mechanism": "Commit",
+      "rationale": "AI Vision Business Owner supports the response to 'Lack of shared AI vision' by improving alignment, adoption or readiness, but is not sufficient on its own."
+    },
+    {
+      "id": 35,
+      "blockerId": 1223,
+      "enablerId": 20,
+      "mechanism": "Commit",
+      "rationale": "Cross-functional AI prioritisation process directly reduces the blocker by addressing a key condition behind 'Fragmented AI priorities across silos'."
+    },
+    {
+      "id": 36,
+      "blockerId": 1223,
+      "enablerId": 21,
+      "mechanism": "Commit",
+      "rationale": "Centralised AI transformation portfolio addresses part of 'Fragmented AI priorities across silos', but additional enablers are likely needed for a full response."
+    },
+    {
+      "id": 37,
+      "blockerId": 1223,
+      "enablerId": 22,
+      "mechanism": "Commit",
+      "rationale": "Shared IT and business objectives supports the response to 'Fragmented AI priorities across silos' by improving alignment, adoption or readiness, but is not sufficient on its own."
+    },
+    {
+      "id": 38,
+      "blockerId": 1223,
+      "enablerId": 23,
+      "mechanism": "Commit",
+      "rationale": "Business-owned portfolio prioritisation directly reduces the blocker by addressing a key condition behind 'Fragmented AI priorities across silos'."
+    },
+    {
+      "id": 39,
+      "blockerId": 1233,
+      "enablerId": 14,
+      "mechanism": "Commit",
+      "rationale": "Readiness-aligned investment decisions supports the response to 'Slow or unclear AI governance' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 40,
+      "blockerId": 1233,
+      "enablerId": 23,
+      "mechanism": "Commit",
+      "rationale": "Business-owned portfolio prioritisation supports the response to 'Slow or unclear AI governance' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 41,
+      "blockerId": 1233,
+      "enablerId": 24,
+      "mechanism": "Commit",
+      "rationale": "Hybrid AI governance and coordination model directly reduces the blocker by addressing a key condition behind 'Slow or unclear AI governance'."
+    },
+    {
+      "id": 42,
+      "blockerId": 1233,
+      "enablerId": 25,
+      "mechanism": "Commit",
+      "rationale": "Lightweight decision rights and accountability directly reduces the blocker by addressing a key condition behind 'Slow or unclear AI governance'."
+    },
+    {
+      "id": 43,
+      "blockerId": 1233,
+      "enablerId": 26,
+      "mechanism": "Commit",
+      "rationale": "Progressive lifecycle validation forums directly reduces the blocker by addressing a key condition behind 'Slow or unclear AI governance'."
+    },
+    {
+      "id": 44,
+      "blockerId": 1233,
+      "enablerId": 28,
+      "mechanism": "Commit",
+      "rationale": "Multi-year roadmap with executive checkpoints supports the response to 'Slow or unclear AI governance' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 45,
+      "blockerId": 1243,
+      "enablerId": 27,
+      "mechanism": "Commit",
+      "rationale": "Visible executive sponsorship for AI scaling directly reduces the blocker by addressing a key condition behind 'Insufficient sustained management commitment'."
+    },
+    {
+      "id": 46,
+      "blockerId": 1243,
+      "enablerId": 28,
+      "mechanism": "Commit",
+      "rationale": "Multi-year roadmap with executive checkpoints addresses part of 'Insufficient sustained management commitment', but additional enablers are likely needed for a full response."
+    },
+    {
+      "id": 47,
+      "blockerId": 1314,
+      "enablerId": 29,
+      "mechanism": "Commit",
+      "rationale": "Clear business and technical ownership directly reduces the blocker by addressing a key condition behind 'No business ownership beyond prototype'."
+    },
+    {
+      "id": 48,
+      "blockerId": 1314,
+      "enablerId": 30,
+      "mechanism": "Commit",
+      "rationale": "Cross-functional AI product team directly reduces the blocker by addressing a key condition behind 'No business ownership beyond prototype'."
+    },
+    {
+      "id": 49,
+      "blockerId": 1314,
+      "enablerId": 31,
+      "mechanism": "Commit",
+      "rationale": "Explicit benefit ownership directly reduces the blocker by addressing a key condition behind 'No business ownership beyond prototype'."
+    },
+    {
+      "id": 50,
+      "blockerId": 1323,
+      "enablerId": 32,
+      "mechanism": "Commit",
+      "rationale": "Human-AI accountability framework directly reduces the blocker by addressing a key condition behind 'Unclear accountability in AI-supported decisions'."
+    },
+    {
+      "id": 51,
+      "blockerId": 1323,
+      "enablerId": 33,
+      "mechanism": "Commit",
+      "rationale": "AI accountability embedded in procedures and governance directly reduces the blocker by addressing a key condition behind 'Unclear accountability in AI-supported decisions'."
+    },
+    {
+      "id": 52,
+      "blockerId": 1334,
+      "enablerId": 34,
+      "mechanism": "Operate",
+      "rationale": "Minimum viable run model before go-live directly reduces the blocker by addressing a key condition behind 'No defined run model after go-live'."
+    },
+    {
+      "id": 53,
+      "blockerId": 1334,
+      "enablerId": 35,
+      "mechanism": "Operate",
+      "rationale": "MLOps and operational support capability directly reduces the blocker by addressing a key condition behind 'No defined run model after go-live'."
+    },
+    {
+      "id": 54,
+      "blockerId": 1334,
+      "enablerId": 36,
+      "mechanism": "Operate",
+      "rationale": "Funded handover to steady-state operations directly reduces the blocker by addressing a key condition behind 'No defined run model after go-live'."
+    },
+    {
+      "id": 55,
+      "blockerId": 1334,
+      "enablerId": 100,
+      "mechanism": "Operate",
+      "rationale": "Production readiness criteria for AI deployment directly addresses a key condition behind 'No defined run model after go-live', so it can reduce the blocker when implemented."
+    },
+    {
+      "id": 56,
+      "blockerId": 1334,
+      "enablerId": 101,
+      "mechanism": "Operate",
+      "rationale": "Production-grade AI operations tooling directly addresses a key condition behind 'No defined run model after go-live', so it can reduce the blocker when implemented."
+    },
+    {
+      "id": 57,
+      "blockerId": 1334,
+      "enablerId": 102,
+      "mechanism": "Operate",
+      "rationale": "Run responsibility and production support skills supports the response to 'No defined run model after go-live' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 58,
+      "blockerId": 1413,
+      "enablerId": 37,
+      "mechanism": "Equip",
+      "rationale": "Role-based AI literacy and upskilling programme supports the response to 'Insufficient AI and digital skills across the organisation' by improving alignment, adoption or readiness, but is not sufficient on its own."
+    },
+    {
+      "id": 59,
+      "blockerId": 1413,
+      "enablerId": 38,
+      "mechanism": "Equip",
+      "rationale": "Common AI language across business and technical teams addresses part of 'Insufficient AI and digital skills across the organisation', but additional enablers are likely needed for a full response."
+    },
+    {
+      "id": 60,
+      "blockerId": 1413,
+      "enablerId": 39,
+      "mechanism": "Equip",
+      "rationale": "Digital competencies embedded in HR and value narratives directly reduces the blocker by addressing a key condition behind 'Insufficient AI and digital skills across the organisation'."
+    },
+    {
+      "id": 61,
+      "blockerId": 1424,
+      "enablerId": 40,
+      "mechanism": "Learn",
+      "rationale": "Early operational and data stakeholder involvement directly reduces the blocker by addressing a key condition behind 'Low trust and cultural resistance to AI'."
+    },
+    {
+      "id": 62,
+      "blockerId": 1424,
+      "enablerId": 41,
+      "mechanism": "Learn",
+      "rationale": "Trust-focused change management and operational champions supports the response to 'Low trust and cultural resistance to AI' by improving alignment, adoption or readiness, but is not sufficient on its own."
+    },
+    {
+      "id": 63,
+      "blockerId": 1424,
+      "enablerId": 42,
+      "mechanism": "Learn",
+      "rationale": "Evidence-led communication from real operational use supports the response to 'Low trust and cultural resistance to AI' by improving alignment, adoption or readiness, but is not sufficient on its own."
+    },
+    {
+      "id": 64,
+      "blockerId": 1424,
+      "enablerId": 43,
+      "mechanism": "Operate",
+      "rationale": "AI embedded in existing operational workflows directly reduces the blocker by addressing a key condition behind 'Low trust and cultural resistance to AI'."
+    },
+    {
+      "id": 65,
+      "blockerId": 1424,
+      "enablerId": 44,
+      "mechanism": "Learn",
+      "rationale": "Structured change capacity for AI adoption directly reduces the blocker by addressing a key condition behind 'Low trust and cultural resistance to AI'."
+    },
+    {
+      "id": 66,
+      "blockerId": 1433,
+      "enablerId": 45,
+      "mechanism": "Learn",
+      "rationale": "ontinuous AI learning practice directly reduces the blocker by addressing a key condition behind 'Limited capacity to absorb continuous change'."
+    },
+    {
+      "id": 67,
+      "blockerId": 1433,
+      "enablerId": 46,
+      "mechanism": "Learn",
+      "rationale": "Iterative AI product improvement with user feedback directly reduces the blocker by addressing a key condition behind 'Limited capacity to absorb continuous change'."
+    },
+    {
+      "id": 68,
+      "blockerId": 1511,
+      "enablerId": 47,
+      "mechanism": "Equip",
+      "rationale": "Open AI awareness and experience-sharing sessions supports the response to 'Unrealistic understanding of AI capabilities and limits' by improving alignment, adoption or readiness, but is not sufficient on its own."
+    },
+    {
+      "id": 69,
+      "blockerId": 1511,
+      "enablerId": 48,
+      "mechanism": "Equip",
+      "rationale": "Continuous AI knowledge sharing and technology watch supports the response to 'Unrealistic understanding of AI capabilities and limits' by improving alignment, adoption or readiness, but is not sufficient on its own."
+    },
+    {
+      "id": 70,
+      "blockerId": 1511,
+      "enablerId": 49,
+      "mechanism": "Equip",
+      "rationale": "Cross-organisation AI knowledge exchange supports the response to 'Unrealistic understanding of AI capabilities and limits' by improving alignment, adoption or readiness, but is not sufficient on its own."
+    },
+    {
+      "id": 71,
+      "blockerId": 1524,
+      "enablerId": 50,
+      "mechanism": "Frame",
+      "rationale": "Operational problem discovery before solution design directly reduces the blocker by addressing a key condition behind 'Solutions misaligned with operational context'."
+    },
+    {
+      "id": 72,
+      "blockerId": 1524,
+      "enablerId": 51,
+      "mechanism": "Frame",
+      "rationale": "Internal capability to challenge and steer suppliers directly reduces the blocker by addressing a key condition behind 'Solutions misaligned with operational context'."
+    },
+    {
+      "id": 73,
+      "blockerId": 1524,
+      "enablerId": 52,
+      "mechanism": "Operate",
+      "rationale": "Mandatory operational support package directly reduces the blocker by addressing a key condition behind 'Solutions misaligned with operational context'."
+    },
+    {
+      "id": 74,
+      "blockerId": 1614,
+      "enablerId": 53,
+      "mechanism": "Equip",
+      "rationale": "Clarified data governance and access model directly reduces the blocker by addressing a key condition behind 'Fragmented or restrictive data governance'."
+    },
+    {
+      "id": 75,
+      "blockerId": 1614,
+      "enablerId": 54,
+      "mechanism": "Equip",
+      "rationale": "Central data platform with distributed stewardship directly reduces the blocker by addressing a key condition behind 'Fragmented or restrictive data governance'."
+    },
+    {
+      "id": 76,
+      "blockerId": 1614,
+      "enablerId": 55,
+      "mechanism": "Equip",
+      "rationale": "Use-case based data quality requirements directly reduces the blocker by addressing a key condition behind 'Fragmented or restrictive data governance'."
+    },
+    {
+      "id": 77,
+      "blockerId": 1614,
+      "enablerId": 56,
+      "mechanism": "Equip",
+      "rationale": "Transparent data use and quality incentives directly reduces the blocker by addressing a key condition behind 'Fragmented or restrictive data governance'."
+    },
+    {
+      "id": 78,
+      "blockerId": 1614,
+      "enablerId": 57,
+      "mechanism": "Equip",
+      "rationale": "Data sourcing hierarchy and automated quality controls directly reduces the blocker by addressing a key condition behind 'Fragmented or restrictive data governance'."
+    },
+    {
+      "id": 79,
+      "blockerId": 1614,
+      "enablerId": 58,
+      "mechanism": "Equip",
+      "rationale": "Enterprise-wide data integration strategy addresses part of 'Fragmented or restrictive data governance', but other enablers are likely needed for a complete response."
+    },
+    {
+      "id": 80,
+      "blockerId": 1614,
+      "enablerId": 76,
+      "mechanism": "Equip",
+      "rationale": "Shared semantic layers and canonical data models supports the response to 'Fragmented or restrictive data governance' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 81,
+      "blockerId": 1713,
+      "enablerId": 63,
+      "mechanism": "Assure",
+      "rationale": "Early standards and certification planning directly reduces the blocker by addressing a key condition behind 'Limited AI expertise in legal functions'."
+    },
+    {
+      "id": 82,
+      "blockerId": 1713,
+      "enablerId": 64,
+      "mechanism": "Assure",
+      "rationale": "Progressive AI safety assurance capability directly reduces the blocker by addressing a key condition behind 'Limited AI expertise in legal functions'."
+    },
+    {
+      "id": 83,
+      "blockerId": 1723,
+      "enablerId": 61,
+      "mechanism": "Assure",
+      "rationale": "Directly reduces regulatory uncertainty by involving legal expertise early and establishing documented and reusable interpretations of relevant AI regulation."
+    },
+    {
+      "id": 84,
+      "blockerId": 1723,
+      "enablerId": 62,
+      "mechanism": "Assure",
+      "rationale": "Converts regulatory interpretation into design and development requirements, reducing the risk of late compliance barriers."
+    },
+    {
+      "id": 85,
+      "blockerId": 1723,
+      "enablerId": 63,
+      "mechanism": "Assure",
+      "rationale": "Provides early clarity on relevant standards, assurance and certification expectations, reducing part of the uncertainty surrounding scaled deployment."
+    },
+    {
+      "id": 86,
+      "blockerId": 1811,
+      "enablerId": 65,
+      "mechanism": "Frame",
+      "rationale": "Common scalability framework and objectives directly reduces the blocker by addressing a key condition behind 'Ambiguous definition of scaling'."
+    },
+    {
+      "id": 87,
+      "blockerId": 1811,
+      "enablerId": 66,
+      "mechanism": "Learn",
+      "rationale": "Scale-related monitoring metrics directly reduces the blocker by addressing a key condition behind 'Ambiguous definition of scaling'."
+    },
+    {
+      "id": 88,
+      "blockerId": 1823,
+      "enablerId": 67,
+      "mechanism": "Commit",
+      "rationale": "Common AI readiness and maturity model addresses part of 'No shared maturity and readiness language', but additional enablers are likely needed for a full response."
+    },
+    {
+      "id": 89,
+      "blockerId": 1823,
+      "enablerId": 68,
+      "mechanism": "Commit",
+      "rationale": "Readiness-based governance and funding decisions directly reduces the blocker by addressing a key condition behind 'No shared maturity and readiness language'."
+    },
+    {
+      "id": 90,
+      "blockerId": 1833,
+      "enablerId": 69,
+      "mechanism": "Operate",
+      "rationale": "Clear lifecycle transition criteria directly reduces the blocker by addressing a key condition behind 'PoC to production transition stalls'."
+    },
+    {
+      "id": 91,
+      "blockerId": 1833,
+      "enablerId": 70,
+      "mechanism": "Operate",
+      "rationale": "Formal prototype stage in real workflows directly reduces the blocker by addressing a key condition behind 'PoC to production transition stalls'."
+    },
+    {
+      "id": 92,
+      "blockerId": 1833,
+      "enablerId": 71,
+      "mechanism": "Commit",
+      "rationale": "Portfolio-linked phase approval and funding directly reduces the blocker by addressing a key condition behind 'PoC to production transition stalls'."
+    },
+    {
+      "id": 93,
+      "blockerId": 1921,
+      "enablerId": 14,
+      "mechanism": "Commit",
+      "rationale": "Helps align the pace and scale of investment with actual project maturity rather than predetermined delivery ambitions."
+    },
+    {
+      "id": 94,
+      "blockerId": 1921,
+      "enablerId": 26,
+      "mechanism": "Commit",
+      "rationale": "Allows timelines and ambitions to be reassessed as evidence of technical, operational and organisational readiness develops."
+    },
+    {
+      "id": 95,
+      "blockerId": 1921,
+      "enablerId": 28,
+      "mechanism": "Commit",
+      "rationale": "Encourages realistic sequencing and sustained planning rather than assuming that experimentation, integration and operational adoption can be achieved within overly ambitious timelines."
+    },
+    {
+      "id": 96,
+      "blockerId": 1921,
+      "enablerId": 67,
+      "mechanism": "Commit",
+      "rationale": "Provides a shared basis for judging realistic progression and preventing expectations from running ahead of technical and organisational maturity."
+    },
+    {
+      "id": 97,
+      "blockerId": 2213,
+      "enablerId": 81,
+      "mechanism": "Equip",
+      "rationale": "Immature platform architecture and fragmented IT foundations directly reduces the blocker by addressing a key condition behind 'Immature platform architecture and fragmented IT foundations'."
+    },
+    {
+      "id": 98,
+      "blockerId": 2123,
+      "enablerId": 75,
+      "mechanism": "Equip",
+      "rationale": "AI data quality framework directly reduces the blocker by addressing a key condition behind 'Data quality, consistency and semantic structure'."
+    },
+    {
+      "id": 99,
+      "blockerId": 2123,
+      "enablerId": 76,
+      "mechanism": "Equip",
+      "rationale": "Shared semantic layers and canonical data models directly reduces the blocker by addressing a key condition behind 'Data quality, consistency and semantic structure'."
+    },
+    {
+      "id": 100,
+      "blockerId": 2123,
+      "enablerId": 77,
+      "mechanism": "Equip",
+      "rationale": "Differentiated quality controls for enterprise and sensor data directly reduces the blocker by addressing a key condition behind 'Data quality, consistency and semantic structure'."
+    },
+    {
+      "id": 101,
+      "blockerId": 2134,
+      "enablerId": 78,
+      "mechanism": "Equip",
+      "rationale": "Controlled data architecture for AI directly reduces the blocker by addressing a key condition behind 'Data architecture, access and controls'."
+    },
+    {
+      "id": 102,
+      "blockerId": 2134,
+      "enablerId": 79,
+      "mechanism": "Equip",
+      "rationale": "Standardised data access mechanisms directly reduces the blocker by addressing a key condition behind 'Data architecture, access and controls'."
+    },
+    {
+      "id": 103,
+      "blockerId": 2134,
+      "enablerId": 80,
+      "mechanism": "Equip",
+      "rationale": "Governance-aligned access controls directly reduces the blocker by addressing a key condition behind 'Data architecture, access and controls'."
+    },
+    {
+      "id": 104,
+      "blockerId": 2221,
+      "enablerId": 84,
+      "mechanism": "Equip",
+      "rationale": "Use-case aligned compute strategy directly reduces the blocker by addressing a key condition behind 'Compute environment constraints for AI deployment'."
+    },
+    {
+      "id": 105,
+      "blockerId": 2221,
+      "enablerId": 85,
+      "mechanism": "Equip",
+      "rationale": "Standardised and flexible AI infrastructure directly reduces the blocker by addressing a key condition behind 'Compute environment constraints for AI deployment'."
+    },
+    {
+      "id": 106,
+      "blockerId": 2221,
+      "enablerId": 86,
+      "mechanism": "Equip",
+      "rationale": "Compute readiness assessment before deployment directly reduces the blocker by addressing a key condition behind 'Compute environment constraints for AI deployment'."
+    },
+    {
+      "id": 107,
+      "blockerId": 2231,
+      "enablerId": 87,
+      "mechanism": "Equip",
+      "rationale": "Sustainable and supportable AI software stack addresses part of 'Software stack, tooling and vendor dependency constraints', but additional enablers are likely needed for a full response."
+    },
+    {
+      "id": 108,
+      "blockerId": 2231,
+      "enablerId": 88,
+      "mechanism": "Equip",
+      "rationale": "Open and modular architecture to reduce vendor lock-in directly reduces the blocker by addressing a key condition behind 'Software stack, tooling and vendor dependency constraints'."
+    },
+    {
+      "id": 109,
+      "blockerId": 2231,
+      "enablerId": 89,
+      "mechanism": "Equip",
+      "rationale": "Standardised tooling and purchasing alignment directly reduces the blocker by addressing a key condition behind 'Software stack, tooling and vendor dependency constraints'."
+    },
+    {
+      "id": 110,
+      "blockerId": 2313,
+      "enablerId": 90,
+      "mechanism": "Equip",
+      "rationale": "Enterprise and asset management integration architecture directly reduces the blocker by addressing a key condition behind 'Enterprise and asset management system integration'."
+    },
+    {
+      "id": 111,
+      "blockerId": 2313,
+      "enablerId": 91,
+      "mechanism": "Equip",
+      "rationale": "Standardised APIs and integration platforms directly reduces the blocker by addressing a key condition behind 'Enterprise and asset management system integration'."
+    },
+    {
+      "id": 112,
+      "blockerId": 2313,
+      "enablerId": 92,
+      "mechanism": "Equip",
+      "rationale": "Integration requirements in planning and contracts directly reduces the blocker by addressing a key condition behind 'Enterprise and asset management system integration'."
+    },
+    {
+      "id": 113,
+      "blockerId": 2323,
+      "enablerId": 93,
+      "mechanism": "Equip",
+      "rationale": "Standardised OT and monitoring system integration directly reduces the blocker by addressing a key condition behind 'OT, monitoring systems and railway operations integration'."
+    },
+    {
+      "id": 114,
+      "blockerId": 2323,
+      "enablerId": 94,
+      "mechanism": "Equip",
+      "rationale": "Live OT data access for AI operations directly reduces the blocker by addressing a key condition behind 'OT, monitoring systems and railway operations integration'."
+    },
+    {
+      "id": 115,
+      "blockerId": 2323,
+      "enablerId": 95,
+      "mechanism": "Operate",
+      "rationale": "AI-enabled alarm and monitoring procedures directly reduces the blocker by addressing a key condition behind 'OT, monitoring systems and railway operations integration'."
+    },
+    {
+      "id": 116,
+      "blockerId": 2423,
+      "enablerId": 101,
+      "mechanism": "Operate",
+      "rationale": "Production-grade AI operations tooling supports the response to 'Monitoring, retraining and model evolution' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 117,
+      "blockerId": 2423,
+      "enablerId": 102,
+      "mechanism": "Operate",
+      "rationale": "Run responsibility and production support skills supports the response to 'Monitoring, retraining and model evolution' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 118,
+      "blockerId": 2423,
+      "enablerId": 103,
+      "mechanism": "Learn",
+      "rationale": "Post-deployment model monitoring supports the response to 'Monitoring, retraining and model evolution' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 119,
+      "blockerId": 2513,
+      "enablerId": 104,
+      "mechanism": "Learn",
+      "rationale": "Structured retraining and model update process supports the response to 'Performance, scaling and accuracy at scale' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 120,
+      "blockerId": 3114,
+      "enablerId": 72,
+      "mechanism": "Equip",
+      "rationale": "AI-ready data collection and formats addresses part of 'Data collection, storage and usable availability', but additional enablers are likely needed for a full response."
+    },
+    {
+      "id": 121,
+      "blockerId": 3114,
+      "enablerId": 73,
+      "mechanism": "Equip",
+      "rationale": "Timely data availability and retention directly reduces the blocker by addressing a key condition behind 'Data collection, storage and usable availability'."
+    },
+    {
+      "id": 122,
+      "blockerId": 3114,
+      "enablerId": 74,
+      "mechanism": "Equip",
+      "rationale": "Integrated data architecture for AI use directly reduces the blocker by addressing a key condition behind 'Data collection, storage and usable availability'."
+    },
+    {
+      "id": 123,
+      "blockerId": 3123,
+      "enablerId": 26,
+      "mechanism": "Commit",
+      "rationale": "Provides structured points to reassess technical feasibility and solution suitability before further investment or scaling."
+    },
+    {
+      "id": 124,
+      "blockerId": 3123,
+      "enablerId": 50,
+      "mechanism": "Frame",
+      "rationale": "Supports better solution selection by ensuring that candidate solutions are assessed against a clearly understood operational problem."
+    },
+    {
+      "id": 125,
+      "blockerId": 3123,
+      "enablerId": 51,
+      "mechanism": "Frame",
+      "rationale": "Strengthens the organisation's ability to assess technology and supplier proposals against operational, integration and scalability needs."
+    },
+    {
+      "id": 126,
+      "blockerId": 3123,
+      "enablerId": 110,
+      "mechanism": "Frame",
+      "rationale": "Directly addresses the blocker by systematically comparing technologies, algorithms, platforms and delivery approaches before committing to a solution."
+    },
+    {
+      "id": 127,
+      "blockerId": 3333,
+      "enablerId": 96,
+      "mechanism": "Operate",
+      "rationale": "AI outputs integrated into maintenance workflows directly reduces the blocker by addressing a key condition behind 'Maintenance workflow integration and operator feedback loops'."
+    },
+    {
+      "id": 128,
+      "blockerId": 3333,
+      "enablerId": 97,
+      "mechanism": "Learn",
+      "rationale": "Structured operator feedback loops directly reduces the blocker by addressing a key condition behind 'Maintenance workflow integration and operator feedback loops'."
+    },
+    {
+      "id": 129,
+      "blockerId": 3333,
+      "enablerId": 98,
+      "mechanism": "Assure",
+      "rationale": "Maintenance methodology and safety alignment directly reduces the blocker by addressing a key condition behind 'Maintenance workflow integration and operator feedback loops'."
+    },
+    {
+      "id": 130,
+      "blockerId": 3333,
+      "enablerId": 99,
+      "mechanism": "Commit",
+      "rationale": "Clear responsibilities for AI-supported maintenance action addresses part of 'Maintenance workflow integration and operator feedback loops', but additional enablers are likely needed for a full response."
+    },
+    {
+      "id": 131,
+      "blockerId": 3413,
+      "enablerId": 100,
+      "mechanism": "Operate",
+      "rationale": "Production readiness criteria for AI deployment directly reduces the blocker by addressing a key condition behind 'PoC-to-production and production-grade operations gap'."
+    },
+    {
+      "id": 132,
+      "blockerId": 3523,
+      "enablerId": 40,
+      "mechanism": "Learn",
+      "rationale": "Early operational and data stakeholder involvement supports the response to 'Limited explainability, interpretability and field trust' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 133,
+      "blockerId": 3523,
+      "enablerId": 41,
+      "mechanism": "Learn",
+      "rationale": "Trust-focused change management and operational champions supports the response to 'Limited explainability, interpretability and field trust' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 134,
+      "blockerId": 3523,
+      "enablerId": 42,
+      "mechanism": "Learn",
+      "rationale": "Evidence-led communication from real operational use supports the response to 'Limited explainability, interpretability and field trust' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 135,
+      "blockerId": 3523,
+      "enablerId": 105,
+      "mechanism": "Learn",
+      "rationale": "Field feedback converted into model improvement signals supports the response to 'Limited explainability, interpretability and field trust' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 136,
+      "blockerId": 3523,
+      "enablerId": 106,
+      "mechanism": "Assure",
+      "rationale": "The relationship between 'Limited explainability, interpretability and field trust' and Performance, scaling and accuracy at scale is unclear or potentially misclassified and should be reviewed."
+    },
+    {
+      "id": 137,
+      "blockerId": 3634,
+      "enablerId": 58,
+      "mechanism": "Equip",
+      "rationale": "Enterprise-wide data integration strategy directly reduces the blocker by addressing a key condition behind 'Organisational data silos limiting reuse and scaling'."
+    },
+    {
+      "id": 138,
+      "blockerId": 3634,
+      "enablerId": 59,
+      "mechanism": "Equip",
+      "rationale": "Cross-functional data-sharing pilots and incentives directly reduces the blocker by addressing a key condition behind 'Organisational data silos limiting reuse and scaling'."
+    },
+    {
+      "id": 139,
+      "blockerId": 3634,
+      "enablerId": 60,
+      "mechanism": "Equip",
+      "rationale": "Selective open data publication directly reduces the blocker by addressing a key condition behind 'Organisational data silos limiting reuse and scaling'."
+    },
+    {
+      "id": 140,
+      "blockerId": 3744,
+      "enablerId": 62,
+      "mechanism": "Assure",
+      "rationale": "Ensures identified safety and compliance requirements are progressively incorporated into solution design rather than treated as late approval issues."
+    },
+    {
+      "id": 141,
+      "blockerId": 3744,
+      "enablerId": 63,
+      "mechanism": "Assure",
+      "rationale": "Helps translate early safety concerns into applicable assurance, standards and certification requirements before development progresses too far."
+    },
+    {
+      "id": 142,
+      "blockerId": 3744,
+      "enablerId": 64,
+      "mechanism": "Assure",
+      "rationale": "Builds evidence and Safety Cases progressively once safety implications and assurance needs have been identified."
+    },
+    {
+      "id": 143,
+      "blockerId": 3744,
+      "enablerId": 111,
+      "mechanism": "Assure",
+      "rationale": "Directly addresses the blocker by identifying safety relevance, credible failure modes, human oversight and likely assurance needs during early framing."
+    },
+    {
+      "id": 144,
+      "blockerId": 3734,
+      "enablerId": 62,
+      "mechanism": "Assure",
+      "rationale": "Compliance-by-design for AI solutions supports the response to 'Difficulty proving safety and reliability at scale' by improving alignment, adoption, readiness or operational maturity, but is not sufficient on its own."
+    },
+    {
+      "id": 145,
+      "blockerId": 3734,
+      "enablerId": 63,
+      "mechanism": "Assure",
+      "rationale": "Early standards and certification planning directly addresses a key condition behind 'Difficulty proving safety and reliability at scale', so it can reduce the blocker when implemented."
+    },
+    {
+      "id": 146,
+      "blockerId": 3734,
+      "enablerId": 64,
+      "mechanism": "Assure",
+      "rationale": "Progressive AI safety assurance capability directly addresses a key condition behind 'Difficulty proving safety and reliability at scale', so it can reduce the blocker when implemented."
+    },
+    {
+      "id": 147,
+      "blockerId": 3523,
+      "enablerId": 107,
+      "mechanism": "Assure",
+      "rationale": "Field-oriented explanations directly address the lack of interpretability by helping operational users understand AI outputs in the context of field judgement, site experience and maintenance decisions."
+    },
+    {
+      "id": 148,
+      "blockerId": 1424,
+      "enablerId": 107,
+      "mechanism": "Assure",
+      "rationale": "Making AI outputs understandable in practical operational terms can support user confidence and acceptance, although explainability alone does not address broader cultural resistance."
+    },
+    {
+      "id": 149,
+      "blockerId": 3523,
+      "enablerId": 108,
+      "mechanism": "Assure",
+      "rationale": "Testing, documentation, logging and periodic review provide evidence that AI behaviour can be understood, verified and challenged, directly strengthening interpretability and field trust."
+    },
+    {
+      "id": 150,
+      "blockerId": 3734,
+      "enablerId": 108,
+      "mechanism": "Assure",
+      "rationale": "Structured testing, documentation and review provide supporting evidence of reliable model behaviour at scale, although they do not replace formal safety assurance or certification processes."
+    },
+    {
+      "id": 151,
+      "blockerId": 3523,
+      "enablerId": 109,
+      "mechanism": "Assure",
+      "rationale": "Progressive validation directly addresses field trust by increasing AI autonomy only when users can understand, challenge and accept its outputs and sufficient evidence of reliability has been established."
+    },
+    {
+      "id": 152,
+      "blockerId": 1323,
+      "enablerId": 109,
+      "mechanism": "Assure",
+      "rationale": "Progressive movement towards autonomy provides a point at which human oversight and accountability must be demonstrated before greater decision authority is transferred to AI."
+    }
+  ],
+  "stageGates": [
+    {
+      "id": 1,
+      "label": "Stage Gate 1"
+    },
+    {
+      "id": 2,
+      "label": "Stage Gate 2"
+    },
+    {
+      "id": 3,
+      "label": "Stage Gate 3"
+    },
+    {
+      "id": 4,
+      "label": "Stage Gate 4"
+    },
+    {
+      "id": 5,
+      "label": "Stage Gate 5"
+    },
+    {
+      "id": 6,
+      "label": "Stage Gate 6"
+    }
+  ]
+}
