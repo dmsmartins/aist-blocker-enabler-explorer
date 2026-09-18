@@ -84,16 +84,19 @@ button { color: inherit; }
 .brand-mark span:first-child { height: 20px; transform: rotate(29deg); left: 8px; }
 .brand-mark span:last-child { height: 16px; transform: rotate(-29deg); left: 11px; }
 .main-nav { display: flex; height: 100%; align-items: stretch; gap: 8px; }
-.main-nav button {
+.main-nav button, .main-nav .timeline-nav-link {
   border: 0;
   background: none;
   color: rgba(255,255,255,.78);
   padding: 0 15px;
   cursor: pointer;
   position: relative;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }
-.main-nav button:hover, .main-nav button.active { color: white; }
-.main-nav button.active::after {
+.main-nav button:hover, .main-nav button.active, .main-nav .timeline-nav-link:hover { color: white; }
+.main-nav button.active::after, .main-nav .timeline-nav-link.active::after {
   content: "";
   position: absolute;
   height: 3px;
@@ -593,7 +596,7 @@ h3 { font-size: 18px; color: #17334c; }
 
     <nav class="main-nav" aria-label="Primary navigation">
       <button data-route="explore">Explore</button>
-      <button data-route="timeline">Timeline</button>
+      <a class="timeline-nav-link" href="./timeline/">Timeline</a>
       <button data-route="maturity">Maturity Assessment</button>
     </nav>
 
@@ -684,20 +687,14 @@ async function init() {
 
 function bindGlobal() {
   brandBtn.addEventListener('click', ()=>navigate('home'));
-  navButtons.forEach(btn => btn.addEventListener('click', () => {
-    if (btn.dataset.route === 'timeline') {
-      window.location.href = './timeline/';
-      return;
-    }
-    navigate(btn.dataset.route);
-  }));
+  navButtons.forEach(btn => btn.addEventListener('click', ()=>navigate(btn.dataset.route)));
   selectionBtn.addEventListener('click', ()=>navigate('selection'));
   searchBtn.addEventListener('click', openSearch);
   window.addEventListener('hashchange', routeFromHash);
 }
 
 function navigate(route) {
-  const map = { home:'#home', explore:'#explore', timeline:'#timeline', maturity:'#maturity', selection:'#selection', domains:'#domains', stage:'#stage-gates', domain:'#domain/data-foundations' };
+  const map = { home:'#home', explore:'#explore', maturity:'#maturity', selection:'#selection', domains:'#domains', stage:'#stage-gates', domain:'#domain/data-foundations' };
   location.hash = map[route] || `#${route}`;
 }
 function routeFromHash() {
@@ -715,9 +712,9 @@ function routeFromHash() {
 }
 
 function render() {
-  searchBtn.hidden = !['explore','domains','domain','all-blockers','all-enablers','stage-gates','timeline'].includes(state.route);
+  searchBtn.hidden = !['explore','domains','domain','all-blockers','all-enablers','stage-gates'].includes(state.route);
   navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.route === (state.route === 'home' ? '' : state.route === 'domain' || state.route === 'domains' || state.route === 'all-blockers' || state.route === 'all-enablers' || state.route === 'stage-gates' ? 'explore' : state.route)));
-  const renderers = { home:renderHome, explore:renderExplore, domains:renderDomains, domain:renderDomain, 'all-blockers':renderAllBlockers, 'all-enablers':renderAllEnablers, timeline:renderTimeline, maturity:renderMaturity, selection:renderSelection, 'stage-gates':renderStageGates };
+  const renderers = { home:renderHome, explore:renderExplore, domains:renderDomains, domain:renderDomain, 'all-blockers':renderAllBlockers, 'all-enablers':renderAllEnablers, maturity:renderMaturity, selection:renderSelection, 'stage-gates':renderStageGates };
   (renderers[state.route] || renderHome)();
   app.focus({preventScroll:true});
 }
