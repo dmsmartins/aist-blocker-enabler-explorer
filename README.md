@@ -1,28 +1,92 @@
 # AIST Blocker & Enabler Explorer
 
-Static HTML explorer for the UIC AIST Blocker & Enabler roadmap.
+Static GitHub Pages application for exploring AI scalability blockers, enablers, lifecycle Stage Gates and blocker dependencies.
 
-## Files
+## Current experience
+
+- **Explore by Domain**
+- **Explore by Stage Gate**
+- **All Blockers**
+- **All Enablers**, organised by enabling mechanism
+- **Blocker dependencies** with upstream/downstream navigation
+- **Timeline**, a lightweight semantic-zoom experience:
+  Stage Gate → blockers → dependency map → blocker detail → mechanisms → enablers
+- **View for my role**
+- **My Selection**
+- Illustrative **Maturity Assessment** placeholder
+
+The interface deliberately uses progressive disclosure: the first view stays light and additional detail appears only as the user explores deeper.
+
+## Data model
+
+The live application reads:
 
 ```text
-index.html
-style.css
-app.js
-data/aist_roadmap_data.json
+data/explorer-data.json
 ```
 
-The file `data/aist_roadmap_data.json` should be generated from Excel using the R script.
+Current schema: **2.0**
+
+It contains:
+
+- `stageGates`
+- `mechanisms`
+- `domains`
+- `blockers`
+- `enablers`
+- `relationships` (Blocker ↔ Enabler + enabling mechanism)
+- `blockerDependencies` (Blocker → Blocker)
+
+Internal blocker/enabler IDs are used for relationships but are not displayed in the UI.
+
+## Excel → JSON workflow
+
+The converter is stored at:
+
+```text
+tools/excel_to_explorer_json_v2.py
+```
+
+Typical workflow:
+
+1. Update the Excel source.
+2. Validate it:
+
+```bash
+python tools/excel_to_explorer_json_v2.py "Final_Blockers&Enablers_Explorer.xlsx" --check-only
+```
+
+3. Generate the live JSON:
+
+```bash
+python tools/excel_to_explorer_json_v2.py "Final_Blockers&Enablers_Explorer.xlsx" "explorer-data.json"
+```
+
+4. Replace `data/explorer-data.json` with the generated file.
+5. Commit and push to `main`.
+6. GitHub Pages updates automatically.
+
+## Main source tables
+
+The converter currently expects the workbook structure used by the Explorer, including:
+
+- `Blockers`
+- `Blocker_Dependency_map`
+- `Enablers`
+- `Enablers_Dependency_Map`
+
+Both Blockers and Enablers include:
+
+- `Stage Gate`
+- `Stage Gate - Description`
 
 ## Local preview
 
-Because the app loads JSON with `fetch()`, do not open `index.html` directly by double-clicking.
+Because the app loads JSON with `fetch()`, use a local web server rather than opening `index.html` directly.
 
-Use a local server:
-
-### Option 1 — Python
+### Python
 
 ```bash
-cd aist_explorer_project
 python -m http.server 8000
 ```
 
@@ -32,39 +96,12 @@ Then open:
 http://localhost:8000
 ```
 
-### Option 2 — VS Code
+## GitHub Pages
 
-Install the Live Server extension and click **Go Live**.
+The application is served from the repository root on the `main` branch.
 
-## GitHub Pages deploy
-
-1. Create a GitHub repository, for example:
-   `aist-blocker-enabler-explorer`
-
-2. Upload these files to the repository root:
+Live site:
 
 ```text
-index.html
-style.css
-app.js
-data/aist_roadmap_data.json
-.nojekyll
+https://dmsmartins.github.io/aist-blocker-enabler-explorer/
 ```
-
-3. In GitHub:
-   - Go to **Settings**
-   - Go to **Pages**
-   - Under **Build and deployment**, choose **Deploy from a branch**
-   - Branch: `main`
-   - Folder: `/root`
-   - Save
-
-4. After GitHub publishes the site, open the Pages URL.
-
-## Updating the roadmap
-
-1. Update the Excel file.
-2. Run the R script to regenerate `data/aist_roadmap_data.json`.
-3. Replace the JSON file in GitHub.
-4. Commit changes.
-5. GitHub Pages updates automatically.
