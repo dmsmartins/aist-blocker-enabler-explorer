@@ -8,22 +8,35 @@ const MECH_COLORS={Frame:"#6e68d8",Commit:"#c67b2b",Equip:"#2478b5",Assure:"#a05
 const truncate=(s,n=120)=>{s=String(s||"");return s.length>n?s.slice(0,n).trimEnd()+"…":s};
 const byId=(rows,id)=>rows.find(x=>x.id===Number(id));
 const uniq=arr=>[...new Set(arr)];
+const ASSESSMENT_KEY="aistCompanyAssessmentV1";
+function readCompanyAssessment(){
+  try{
+    const requested=new URLSearchParams(window.location.search).get("assessment")==="company";
+    if(!requested)return null;
+    const raw=JSON.parse(localStorage.getItem(ASSESSMENT_KEY)||"null");
+    return raw&&raw.blockerStatuses?raw:null;
+  }catch{return null}
+}
 
 function StageNode({data}){
-  const {gate,count,selected}=data;
-  return html`<div className=${"stage-node"+(selected?" selected":"")}>
+  const {gate,count,selected,assessmentState,remaining}=data;
+  const cls="stage-node"+(selected?" selected":"")+(assessmentState?` assessment-${assessmentState}`:"");
+  const countLabel=assessmentState==="done"?"✓ Done":assessmentState==="empty"?"No blockers mapped":assessmentState?`${remaining} remaining`:`${count} blocker${count===1?"":"s"}`;
+  return html`<div className=${cls}>
     <${Handle} type="target" position=${Position.Left} style=${{opacity:0}} />
-    <div className="stage-top"><span className="stage-number">${gate.id}</span><span className="stage-count">${count} blocker${count===1?"":"s"}</span></div>
-    <strong>${gate.label}</strong><p>${data.zoom>0.62?"Click to reveal the blockers at this stage.":""}</p>
+    <div className="stage-top"><span className="stage-number">${assessmentState==="done"?"✓":gate.id}</span><span className="stage-count">${countLabel}</span></div>
+    <strong>${gate.label}</strong><p>${data.zoom>0.62?(assessmentState==="done"?"All mapped blockers were marked resolved.":assessmentState==="empty"?"No blockers are currently mapped to this gate.":"Click to reveal the blockers at this stage."):""}</p>
     <${Handle} type="source" position=${Position.Right} style=${{opacity:0}} />
   </div>`;
 }
 function BlockerNode({data}){
-  const {blocker,selected,domainTitle,zoom,relationLabel}=data;
+  const {blocker,selected,domainTitle,zoom,relationLabel,status}=data;
   const showStatement=selected||zoom>0.92;
-  return html`<div className=${"blocker-node"+(selected?" selected":"")}>
+  const statusCls=status?` status-${status}`:"";
+  return html`<div className=${"blocker-node"+(selected?" selected":"")+statusCls}>
     <${Handle} type="target" position=${Position.Left} style=${{opacity:0}} />
     <div className="node-kicker"><span>Gate ${blocker.stageGate} · ${domainTitle}</span><span>${relationLabel||""}</span></div>
+    ${status?html`<div className="assessment-status">${status==="resolved"?"✓ Resolved":status==="partial"?"◐ Partial":"● Open"}</div>`:null}
     <strong>${blocker.title}</strong>
     ${showStatement?html`<p>${truncate(blocker.statement,selected?185:100)}</p>`:null}
     ${selected?html`<button className="deep-dive-plus" title="Open blocker details and enablers" aria-label="Open blocker details and enablers" onClick=${(e)=>{e.preventDefault();e.stopPropagation();data.onDeepDive?.(blocker)}}><span>+</span><em>Details & enablers</em></button>`:null}
@@ -54,8 +67,18 @@ function AppCanvas({data}){
   const [detailOpen,setDetailOpen]=useState(false);
   const [selectedMechanism,setSelectedMechanism]=useState(null);
   const [selectedEnabler,setSelectedEnabler]=useState(null);
+  const [showCompleted,setShowCompleted]=useState(false);
+  const assessment=useMemo(()=>readCompanyAssessment(),[]);
+  const assessmentMode=!!assessment;
   const stageX=id=>(id-1)*430;
   const domains=useMemo(()=>Object.fromEntries(data.domains.map(d=>[d.slug,d.title])),[data]);
+const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[assessment]);
+  const gateAssessment=useCallback(gateId=>{
+    const bs=data.blockers.filter(b=>b.stageGate===gateId);
+    if(!bs.length)return{state:"empty",remaining:0};
+    const remaining=bs.filter(b=>blockerStatus(b.id)!=="resolved").length;
+    return{state:remaining===0?"done":"active",remaining};
+  },[data,blockerStatus]);
 
   const dependencyContext=useCallback(id=>{
     const upstreamIds=uniq(data.blockerDependencies.filter(d=>d.blockerId===id).map(d=>d.dependsOnBlockerId));
@@ -82,24 +105,25 @@ function AppCanvas({data}){
     const nodes=[],edges=[];
     const edgeBase={type:"smoothstep",style:{stroke:"#aec7d7",strokeWidth:1.2},markerEnd:{type:MarkerType.ArrowClosed,width:14,height:14,color:"#aec7d7"}};
     data.stageGates.forEach(g=>{
-      nodes.push({id:`stage-${g.id}`,type:"stage",position:{x:stageX(g.id),y:0},data:{gate:g,count:data.blockers.filter(b=>b.stageGate===g.id).length,selected:selectedGate===g.id,zoom},zIndex:selectedGate===g.id?5:1});
+      const ga=assessmentMode?gateAssessment(g.id):null;
+      nodes.push({id:`stage-${g.id}`,type:"stage",position:{x:stageX(g.id),y:0},data:{gate:g,count:data.blockers.filter(b=>b.stageGate===g.id).length,selected:selectedGate===g.id,zoom,assessmentState:ga?.state,remaining:ga?.remaining},zIndex:selectedGate===g.id?5:1});
       if(g.id<data.stageGates.length)edges.push({id:`stage-edge-${g.id}`,source:`stage-${g.id}`,target:`stage-${g.id+1}`,...edgeBase,style:{stroke:"#c9dce8",strokeWidth:2}});
     });
 
     if(selectedGate&&!selectedBlocker){
-      const blockers=data.blockers.filter(b=>b.stageGate===selectedGate),baseX=stageX(selectedGate)-380,cols=3;
+      const blockers=data.blockers.filter(b=>b.stageGate===selectedGate && (!assessmentMode || showCompleted || blockerStatus(b.id)!=="resolved")),baseX=stageX(selectedGate)-380,cols=3;
       blockers.forEach((b,i)=>{const row=Math.floor(i/cols),col=i%cols,x=baseX+col*310,y=310+row*175;
-        nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x,y},data:{blocker:b,selected:false,domainTitle:domains[b.domain]||"",zoom}});
+        nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x,y},data:{blocker:b,selected:false,domainTitle:domains[b.domain]||"",zoom,status:assessmentMode?blockerStatus(b.id):null}});
         edges.push({id:`gate-blocker-${b.id}`,source:`stage-${selectedGate}`,target:`blocker-${b.id}`,...edgeBase,style:{stroke:"#d8e6ee",strokeWidth:1}});
       });
     }
 
     if(selectedBlocker){
       const b=byId(data.blockers,selectedBlocker),deps=dependencyContext(b.id);
-      nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x:880,y:460},data:{blocker:b,selected:true,domainTitle:domains[b.domain]||"",zoom,onDeepDive:openDeepDive},zIndex:8});
+      nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x:880,y:460},data:{blocker:b,selected:true,domainTitle:domains[b.domain]||"",zoom,onDeepDive:openDeepDive,status:assessmentMode?blockerStatus(b.id):null},zIndex:8});
       const placeSide=(items,side)=>{const x=side==="up"?260:1510,label=side==="up"?"Depends on":"Depends on this";
-        items.forEach((xBlock,i)=>{const y=280+i*155;
-          nodes.push({id:`blocker-${xBlock.id}`,type:"blocker",position:{x,y},data:{blocker:xBlock,selected:false,domainTitle:domains[xBlock.domain]||"",zoom,relationLabel:label}});
+        items.filter(xBlock=>!assessmentMode || showCompleted || blockerStatus(xBlock.id)!=="resolved").forEach((xBlock,i)=>{const y=280+i*155;
+          nodes.push({id:`blocker-${xBlock.id}`,type:"blocker",position:{x,y},data:{blocker:xBlock,selected:false,domainTitle:domains[xBlock.domain]||"",zoom,relationLabel:label,status:assessmentMode?blockerStatus(xBlock.id):null}});
           const edge=side==="up"?{source:`blocker-${xBlock.id}`,target:`blocker-${b.id}`}:{source:`blocker-${b.id}`,target:`blocker-${xBlock.id}`};
           edges.push({id:`dep-${side}-${xBlock.id}`,...edge,...edgeBase,animated:true,style:{stroke:side==="up"?"#6e97b3":"#3b86b7",strokeWidth:1.5}});
         });
@@ -122,7 +146,7 @@ function AppCanvas({data}){
       }
     }
     return{nodes,edges};
-  },[data,selectedGate,selectedBlocker,detailOpen,selectedMechanism,selectedEnabler,zoom,domains,dependencyContext,mechanismGroups,openDeepDive]);
+  },[data,selectedGate,selectedBlocker,detailOpen,selectedMechanism,selectedEnabler,zoom,domains,dependencyContext,mechanismGroups,openDeepDive,assessmentMode,showCompleted,blockerStatus,gateAssessment]);
 
   useEffect(()=>{
     const t=setTimeout(()=>{
@@ -191,14 +215,15 @@ function AppCanvas({data}){
   return html`<div className="shell">
     <header className="topbar">
       <div className="brand"><span className="brand-mark"></span><span>AI Scalability Explorer</span></div>
-      <div className="top-title">Spatial Timeline · React prototype</div>
+      <div className="top-title">${assessmentMode?"My AI Scalability Timeline":"Spatial Timeline"}</div>
       <div className="top-actions">
         ${selectedGate?html`<button className="ghost-top" onClick=${back}>← Back one level</button>`:null}
-        <button className="ghost-top" onClick=${reset}>Reset</button><a className="top-link" href="../">Current Explorer ↗</a>
+        ${assessmentMode?html`<button className=${"ghost-top"+(showCompleted?" active-toggle":"")} onClick=${()=>setShowCompleted(v=>!v)}>${showCompleted?"Hide completed":"Show completed"}</button>`:null}
+        <button className="ghost-top" onClick=${reset}>Reset</button><a className="top-link" href="../#maturity">Explorer ↗</a>
       </div>
     </header>
     <main className="workspace">
-      <div className=${"intro"+(selectedGate?" compact":"")}><div className="eyebrow">Semantic zoom</div><h1>${selectedGate?"Keep exploring.":"Start with the lifecycle."}</h1><p>${selectedGate?"Pan and zoom freely. Click a blocker to focus it, then use the + button on the central blocker to open details and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it."}</p></div>
+      <div className=${"intro"+(selectedGate?" compact":"")}><div className="eyebrow">${assessmentMode?"Assessment result · illustrative":"Semantic zoom"}</div><h1>${assessmentMode?(selectedGate?"Focus on what remains.":"Your AI scalability path."):(selectedGate?"Keep exploring.":"Start with the lifecycle.")}</h1><p>${assessmentMode?(selectedGate?"Resolved blockers are hidden by default. Open a remaining blocker to explore dependencies and enablers.":"Done gates have all currently mapped blockers resolved. Other gates show what remains."):(selectedGate?"Pan and zoom freely. Click a blocker to focus it, then use the + button on the central blocker to open details and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it.")}</p></div>
       <div className="depth"><span>Overview</span><i></i><span>Deep dive</span></div>
       <div className="flow-wrap">
         <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.25} maxZoom=${2.2} fitView fitViewOptions=${{padding:.10,maxZoom:.92}} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
@@ -206,7 +231,7 @@ function AppCanvas({data}){
           <${Controls} showInteractive=${false} position="bottom-left" />
         </${ReactFlow}>
       </div>
-      ${!selectedGate?html`<div className="hint"><strong>Click a Stage Gate</strong><span>Then keep zooming into what interests you.</span></div>`:null}
+      ${!selectedGate?html`<div className="hint"><strong>${assessmentMode?"Your personalised timeline":"Click a Stage Gate"}</strong><span>${assessmentMode?"Open a gate to explore remaining blockers.":"Then keep zooming into what interests you."}</span></div>`:null}
       <div className="breadcrumbs"><button onClick=${reset}>Timeline</button>${crumbs.map((c,i)=>html`<${React.Fragment} key=${i}><i>›</i>${c.action?html`<button onClick=${c.action}>${c.label}</button>`:html`<span>${c.label}</span>`}</${React.Fragment}>`)}</div>
       <div className="zoom-readout">Zoom ${Math.round(zoom*100)}%</div>
 
