@@ -684,7 +684,13 @@ async function init() {
 
 function bindGlobal() {
   brandBtn.addEventListener('click', ()=>navigate('home'));
-  navButtons.forEach(btn => btn.addEventListener('click', ()=>navigate(btn.dataset.route)));
+  navButtons.forEach(btn => btn.addEventListener('click', () => {
+    if (btn.dataset.route === 'timeline') {
+      window.location.href = './timeline/';
+      return;
+    }
+    navigate(btn.dataset.route);
+  }));
   selectionBtn.addEventListener('click', ()=>navigate('selection'));
   searchBtn.addEventListener('click', openSearch);
   window.addEventListener('hashchange', routeFromHash);
@@ -696,6 +702,10 @@ function navigate(route) {
 }
 function routeFromHash() {
   const hash = location.hash || '#home';
+  if (hash === '#timeline') {
+    window.location.replace('./timeline/');
+    return;
+  }
   if (hash.startsWith('#domain/')) { state.route='domain'; state.domain=hash.split('/')[1]; }
   else state.route = hash.slice(1) || 'home';
   state.openBlocker = null;
