@@ -379,6 +379,15 @@ h3 { font-size: 18px; color: #17334c; }
 .maturity-card h3 { font-size:18px; }
 .mockup-note { margin-top:26px; border-radius:13px; background:#f1f7fc; border:1px solid #d6e9f7; padding:18px; color:#557086; line-height:1.55; }
 
+.prototype-badge{display:inline-flex;border-radius:20px;padding:5px 8px;background:#eef7fd;color:#2675a8;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.maturity-card-featured{border-color:#bcd9eb;box-shadow:0 12px 32px rgba(28,85,123,.07)}
+.muted-card{background:#fbfcfd}.assessment-card-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.text-action{display:block;margin-top:15px;border:0;background:transparent;color:var(--blue);padding:0;cursor:pointer;font-weight:750}.coming-soon{display:inline-block;margin-top:20px;color:#8b9aa5;font-size:12px;font-weight:750}
+.assessment-shell{max-width:900px;margin:0 auto;padding-top:34px}.assessment-topline{display:flex;justify-content:space-between;align-items:center;color:#7c8f9d;font-size:12px}.assessment-progress{height:5px;background:#e9f0f4;border-radius:10px;overflow:hidden;margin:18px 0 10px}.assessment-progress i{display:block;height:100%;background:var(--blue);border-radius:10px;transition:width .25s ease}.assessment-question-meta{display:flex;justify-content:space-between;color:#7d909f;font-size:11px;font-weight:760;text-transform:uppercase;letter-spacing:.07em;margin-bottom:18px}
+.assessment-question-card{background:white;border:1px solid #d7e4ec;border-radius:18px;padding:34px;box-shadow:0 16px 44px rgba(24,61,86,.06)}.assessment-question-card h2{font-size:25px;line-height:1.28;max-width:760px;margin-bottom:25px}.assessment-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}.assessment-option{display:flex;gap:12px;align-items:flex-start;text-align:left;border:1px solid #d9e4eb;background:#fff;border-radius:12px;padding:15px;cursor:pointer;color:#27485e}.assessment-option:hover{border-color:#9ec4dc;background:#f9fcfe}.assessment-option.selected{border-color:#2d83bb;background:#eef8fe;box-shadow:0 0 0 3px rgba(45,131,187,.08)}.answer-radio{flex:0 0 auto;width:17px;height:17px;border:2px solid #b8c9d4;border-radius:50%;margin-top:2px}.assessment-option.selected .answer-radio{border:5px solid #2d83bb}.assessment-option strong{display:block;font-size:13px}.assessment-option small{display:block;color:#83949f;margin-top:3px;font-size:10.5px}
+.assessment-trace{border-top:1px solid #e6edf2;margin-top:25px;padding-top:16px}.trace-toggle{border:0;background:transparent;color:#39789f;font-weight:760;padding:0;cursor:pointer}.trace-toggle span{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#edf5fa;margin-left:5px}.trace-body{margin-top:13px;color:#718693;font-size:12px}.trace-blockers{display:flex;flex-wrap:wrap;gap:7px}.trace-blockers span{background:#f2f6f9;border:1px solid #e0e9ee;border-radius:18px;padding:6px 9px;color:#526e80;font-size:10.5px}.assessment-nav{display:flex;justify-content:space-between;margin-top:26px}.assessment-nav button:disabled{opacity:.4;cursor:not-allowed}
+.assessment-results{max-width:980px;margin:0 auto}.results-head{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end}.result-summary{min-width:180px;background:#f0f7fb;border:1px solid #d6e8f2;border-radius:16px;padding:18px;text-align:center}.result-summary strong{display:block;font-size:34px;color:#1e6f9f}.result-summary span,.result-summary small{display:block;color:#688091}.result-summary span{font-weight:760;font-size:12px}.result-summary small{margin-top:5px;font-size:10.5px}.assessment-gate-list{display:grid;gap:9px;margin:30px 0}.assessment-gate-row{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:14px;border:1px solid #dce6ec;background:white;border-radius:13px;padding:14px 16px}.gate-result-number{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#edf5fa;color:#2a739f;font-weight:850}.assessment-gate-row strong{display:block;color:#294b62;font-size:13px}.assessment-gate-row small{display:block;margin-top:3px;color:#8496a2;font-size:10.5px}.gate-result-badge{border-radius:18px;background:#f3f6f8;color:#68808f;padding:6px 9px;font-size:10px;font-weight:800}.assessment-gate-row.done{border-color:#c8e3d1;background:#fbfefc}.assessment-gate-row.done .gate-result-number,.assessment-gate-row.done .gate-result-badge{background:#e6f5ea;color:#398354}.assessment-gate-row.empty{opacity:.66}.results-actions{display:flex;gap:10px;flex-wrap:wrap}
+@media(max-width:760px){.assessment-options{grid-template-columns:1fr}.assessment-question-card{padding:22px}.results-head{grid-template-columns:1fr}.assessment-gate-row{grid-template-columns:38px 1fr}.gate-result-badge{grid-column:2}.maturity-options{grid-template-columns:1fr}}
+
 .selection-summary { display:flex; gap:8px; flex-wrap:wrap; margin:18px 0 28px; }
 .stat-chip { background:#eef5fa; color:#49677e; border-radius:18px; padding:7px 10px; font-size:12px; font-weight:760; }
 .selection-section { margin-top:30px; }
@@ -1457,12 +1466,202 @@ function renderTimeline() {
   bindTimelineEvents();
 }
 
+const COMPANY_ASSESSMENT_KEY = 'aistCompanyAssessmentV1';
+const COMPANY_ASSESSMENT_QUESTIONS = [
+  {gate:1, title:'Ownership, value and investment logic', text:'Are AI initiatives consistently tied to a business problem, a clear owner, stakeholder value and a credible investment logic?', blockerIds:[1114,1133,1143]},
+  {gate:1, title:'Shared vision, priorities and governance', text:'Is there a shared AI vision, aligned priorities across functions, clear governance and sustained management commitment?', blockerIds:[1211,1223,1233,1243]},
+  {gate:1, title:'Realistic solution framing', text:'Do decision-makers understand AI capabilities and limits, and are solutions framed around the operational context before technology is selected?', blockerIds:[1511,1524,3123]},
+  {gate:1, title:'Scaling readiness and delivery ambition', text:'Does the organisation share a practical definition of scaling, project readiness and realistic delivery ambition?', blockerIds:[1811,1823,1921]},
+  {gate:1, title:'Early safety impact framing', text:'Are potential safety implications identified at the earliest stage, before major solution decisions are made?', blockerIds:[3744]},
+  {gate:2, title:'Data governance, quality and access', text:'Are data ownership, access, quality requirements, architecture and reuse practices sufficiently consistent for AI use cases?', blockerIds:[1024,1614,2134,3114,3634]},
+  {gate:2, title:'Skills, legal capability and regulatory interpretation', text:'Are the necessary AI skills available and can legal or compliance functions interpret relevant requirements with confidence?', blockerIds:[1413,1713,1723]},
+  {gate:2, title:'Platform, compute and tooling foundations', text:'Are platform architecture, compute environments and the software/tooling stack ready to support repeatable AI deployment?', blockerIds:[2213,2221,2231]},
+  {gate:3, title:'Incremental build and verification discipline', text:'Are solutions built incrementally with a clear MVP discipline and verified against usable, consistent data?', blockerIds:[1043,2123]},
+  {gate:3, title:'Safety and reliability evidence', text:'Can the organisation generate sufficient evidence to demonstrate safety and reliability as an AI solution scales?', blockerIds:[3734]},
+  {gate:4, title:'Operational ownership and run model', text:'Before go-live, are business ownership, human accountability and the steady-state run model clearly defined?', blockerIds:[1314,1323,1334]},
+  {gate:4, title:'Trust and organisational adoption', text:'Can teams absorb the change, trust AI-supported decisions and understand outputs well enough to use them in the field?', blockerIds:[1424,1433,3523]},
+  {gate:4, title:'Production transition and systems integration', text:'Can AI move from PoC to production and integrate with enterprise, asset management, OT and operational systems?', blockerIds:[1833,2313,2323,3413]},
+  {gate:4, title:'Maintenance workflow and operator feedback', text:'Are AI outputs embedded in maintenance workflows with a structured feedback loop from operators?', blockerIds:[3333]},
+  {gate:5, title:'Monitoring, retraining and performance at scale', text:'After deployment, are model performance, drift, retraining and evolution continuously monitored and managed?', blockerIds:[2423,2513]}
+];
+const COMPANY_ASSESSMENT_OPTIONS = [
+  {key:'yes',label:'Yes, consistently',status:'resolved',hint:'Established and used consistently'},
+  {key:'partly',label:'Partly',status:'partial',hint:'Exists, but not consistently'},
+  {key:'no',label:'No / not yet',status:'open',hint:'Still needs to be established'},
+  {key:'unsure',label:'Unsure',status:'open',hint:'Treat as needing validation'}
+];
+let companyAssessmentSession = {view:'start',step:0,answers:{}};
+
+function companyAssessmentResultFromAnswers(answers) {
+  const blockerStatuses = {};
+  COMPANY_ASSESSMENT_QUESTIONS.forEach((q,i)=>{
+    const answer = answers[i] || 'unsure';
+    const option = COMPANY_ASSESSMENT_OPTIONS.find(o=>o.key===answer) || COMPANY_ASSESSMENT_OPTIONS[3];
+    q.blockerIds.forEach(id=>blockerStatuses[id]=option.status);
+  });
+  return {version:1,kind:'company',illustrative:true,completedAt:new Date().toISOString(),answers:{...answers},blockerStatuses};
+}
+function saveCompanyAssessment(result) {
+  localStorage.setItem(COMPANY_ASSESSMENT_KEY, JSON.stringify(result));
+}
+function loadCompanyAssessment() {
+  try { return JSON.parse(localStorage.getItem(COMPANY_ASSESSMENT_KEY) || 'null'); }
+  catch { return null; }
+}
+function demoCompanyAnswers() {
+  const answers={};
+  [0,1,2,3,4].forEach(i=>answers[i]='yes');
+  answers[5]='partly'; answers[6]='yes'; answers[7]='no';
+  answers[8]='partly'; answers[9]='no';
+  answers[10]='partly'; answers[11]='partly'; answers[12]='no'; answers[13]='partly';
+  answers[14]='no';
+  return answers;
+}
+function assessmentMappedBlockers(q) {
+  return q.blockerIds.map(id=>state.data.blockers.find(b=>b.id===id)).filter(Boolean);
+}
+function companyAssessmentGateSummary(result,gateId) {
+  const blockers=state.data.blockers.filter(b=>b.stageGate===gateId);
+  if(!blockers.length) return {kind:'empty',total:0,resolved:0,partial:0,open:0,remaining:0};
+  let resolved=0,partial=0,open=0;
+  blockers.forEach(b=>{
+    const s=result.blockerStatuses[b.id] || 'open';
+    if(s==='resolved')resolved++; else if(s==='partial')partial++; else open++;
+  });
+  const remaining=partial+open;
+  return {kind:remaining===0?'done':'active',total:blockers.length,resolved,partial,open,remaining};
+}
+
 function renderMaturity() {
-  app.innerHTML = `<section class="page narrow"><p class="eyebrow">Maturity Assessment</p><h2>Assess the context, not just the technology.</h2><p class="lead">This area is intentionally illustrative while the assessment framework is being finalised.</p>
-    <div class="maturity-options"><div class="maturity-card"><h3>Assess my company</h3><p class="subtle">Explore organisational maturity across future assessment dimensions.</p><button class="outline-btn" data-mock>Preview flow →</button></div><div class="maturity-card"><h3>Assess my project</h3><p class="subtle">Explore project readiness and identify areas that may need attention.</p><button class="outline-btn" data-mock>Preview flow →</button></div></div>
-    <div class="mockup-note"><strong>Illustrative assessment.</strong><br>The final form, scoring and radar profile will be generated from a structured assessment file once the framework is approved.</div>
+  const last=loadCompanyAssessment();
+  if(companyAssessmentSession.view==='question') return renderCompanyAssessmentQuestion();
+  if(companyAssessmentSession.view==='results') return renderCompanyAssessmentResults(companyAssessmentSession.result || last);
+
+  app.innerHTML = `<section class="page narrow assessment-home">
+    <p class="eyebrow">Maturity Assessment</p>
+    <h2>Assess the context, not just the technology.</h2>
+    <p class="lead">Use a short illustrative assessment to turn the blocker landscape into a company-specific path through the lifecycle.</p>
+    <div class="maturity-options">
+      <div class="maturity-card maturity-card-featured">
+        <span class="prototype-badge">Illustrative prototype</span>
+        <h3>Assess my company</h3>
+        <p class="subtle">15 questions across Stage Gates 1–5. Responses are mapped transparently to the blockers already in the Explorer.</p>
+        <div class="assessment-card-actions">
+          <button class="primary-btn" id="startCompanyAssessment">Start assessment →</button>
+          <button class="outline-btn" id="loadDemoCompany">Load demo company</button>
+        </div>
+        ${last?`<button class="text-action" id="viewLastAssessment">View last result →</button>`:''}
+      </div>
+      <div class="maturity-card muted-card">
+        <h3>Assess my project</h3>
+        <p class="subtle">Project readiness will be connected when the final assessment framework is available.</p>
+        <span class="coming-soon">Not yet connected</span>
+      </div>
+    </div>
+    <div class="mockup-note"><strong>Illustrative assessment.</strong><br>This prototype demonstrates the interaction and traceability to blockers. It is not the final UIC AIST maturity methodology or scoring framework.</div>
   </section>`;
-  app.querySelectorAll('[data-mock]').forEach(b=>b.onclick=()=>toast('Assessment questions will be connected in the next iteration.'));
+  document.getElementById('startCompanyAssessment').onclick=()=>{
+    companyAssessmentSession={view:'question',step:0,answers:{}};
+    renderMaturity();
+  };
+  document.getElementById('loadDemoCompany').onclick=()=>{
+    const answers=demoCompanyAnswers();
+    const result=companyAssessmentResultFromAnswers(answers);
+    saveCompanyAssessment(result);
+    companyAssessmentSession={view:'results',step:0,answers,result};
+    renderMaturity();
+  };
+  document.getElementById('viewLastAssessment')?.addEventListener('click',()=>{
+    companyAssessmentSession={view:'results',step:0,answers:last.answers||{},result:last};
+    renderMaturity();
+  });
+}
+
+function renderCompanyAssessmentQuestion() {
+  const i=companyAssessmentSession.step;
+  const q=COMPANY_ASSESSMENT_QUESTIONS[i];
+  const selected=companyAssessmentSession.answers[i] || '';
+  const blockers=assessmentMappedBlockers(q);
+  const pct=Math.round((i/COMPANY_ASSESSMENT_QUESTIONS.length)*100);
+  app.innerHTML=`<section class="page assessment-shell">
+    <div class="assessment-topline"><button class="back-btn" id="exitAssessment">← Assessment</button><span>Illustrative company assessment</span></div>
+    <div class="assessment-progress"><i style="width:${pct}%"></i></div>
+    <div class="assessment-question-meta"><span>Question ${i+1} of ${COMPANY_ASSESSMENT_QUESTIONS.length}</span><span>Stage Gate ${q.gate}</span></div>
+    <div class="assessment-question-card">
+      <p class="eyebrow">${escapeHtml(q.title)}</p>
+      <h2>${escapeHtml(q.text)}</h2>
+      <div class="assessment-options">
+        ${COMPANY_ASSESSMENT_OPTIONS.map(o=>`<button class="assessment-option ${selected===o.key?'selected':''}" data-answer="${o.key}">
+          <span class="answer-radio"></span><span><strong>${escapeHtml(o.label)}</strong><small>${escapeHtml(o.hint)}</small></span>
+        </button>`).join('')}
+      </div>
+      <div class="assessment-trace">
+        <button class="trace-toggle" id="traceToggle">Why this question? <span>+</span></button>
+        <div class="trace-body" id="traceBody" hidden>
+          <p>This response informs the status of ${blockers.length} blocker${blockers.length===1?'':'s'}:</p>
+          <div class="trace-blockers">${blockers.map(b=>`<span>${escapeHtml(b.title)}</span>`).join('')}</div>
+        </div>
+      </div>
+      <div class="assessment-nav">
+        <button class="outline-btn" id="prevAssessment" ${i===0?'disabled':''}>← Back</button>
+        <button class="primary-btn" id="nextAssessment" ${selected?'':'disabled'}>${i===COMPANY_ASSESSMENT_QUESTIONS.length-1?'See my timeline':'Next question →'}</button>
+      </div>
+    </div>
+  </section>`;
+  app.querySelectorAll('[data-answer]').forEach(btn=>btn.onclick=()=>{
+    companyAssessmentSession.answers[i]=btn.dataset.answer;
+    renderCompanyAssessmentQuestion();
+  });
+  document.getElementById('traceToggle').onclick=()=>{
+    const body=document.getElementById('traceBody'); body.hidden=!body.hidden;
+    document.querySelector('#traceToggle span').textContent=body.hidden?'+':'−';
+  };
+  document.getElementById('exitAssessment').onclick=()=>{companyAssessmentSession.view='start';renderMaturity();};
+  document.getElementById('prevAssessment').onclick=()=>{if(i>0){companyAssessmentSession.step=i-1;renderCompanyAssessmentQuestion();}};
+  document.getElementById('nextAssessment').onclick=()=>{
+    if(!companyAssessmentSession.answers[i])return;
+    if(i<COMPANY_ASSESSMENT_QUESTIONS.length-1){companyAssessmentSession.step=i+1;renderCompanyAssessmentQuestion();return;}
+    const result=companyAssessmentResultFromAnswers(companyAssessmentSession.answers);
+    saveCompanyAssessment(result);
+    companyAssessmentSession.result=result;
+    companyAssessmentSession.view='results';
+    renderCompanyAssessmentResults(result);
+  };
+}
+
+function renderCompanyAssessmentResults(result) {
+  if(!result){companyAssessmentSession.view='start';return renderMaturity();}
+  const gates=state.data.stageGates.map(g=>({gate:g,summary:companyAssessmentGateSummary(result,g.id)}));
+  const total=state.data.blockers.length;
+  const resolved=state.data.blockers.filter(b=>(result.blockerStatuses[b.id]||'open')==='resolved').length;
+  const partial=state.data.blockers.filter(b=>(result.blockerStatuses[b.id]||'open')==='partial').length;
+  const open=total-resolved-partial;
+  app.innerHTML=`<section class="page assessment-results">
+    <div class="results-head">
+      <div><p class="eyebrow">Illustrative company assessment</p><h2>Your AI scalability path.</h2><p class="lead">The result is expressed as remaining blockers rather than a maturity score. Open the personalised Timeline to explore dependencies and enablers.</p></div>
+      <div class="result-summary"><strong>${resolved}</strong><span>blockers resolved</span><small>${partial} partial · ${open} open</small></div>
+    </div>
+    <div class="assessment-gate-list">
+      ${gates.map(({gate,summary})=>{
+        const badge=summary.kind==='done'?'✓ Done':summary.kind==='empty'?'No blockers mapped':`${summary.remaining} blocker${summary.remaining===1?'':'s'} remaining`;
+        return `<div class="assessment-gate-row ${summary.kind}">
+          <span class="gate-result-number">${gate.id}</span>
+          <div><strong>${escapeHtml(gate.label)}</strong><small>${summary.kind==='empty'?'No blockers are currently mapped to this gate.':`${summary.resolved}/${summary.total} resolved${summary.partial?` · ${summary.partial} partial`:''}`}</small></div>
+          <span class="gate-result-badge">${badge}</span>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="results-actions">
+      <button class="primary-btn" id="openPersonalTimeline">Explore my remaining blockers →</button>
+      <button class="outline-btn" id="retakeAssessment">Retake assessment</button>
+    </div>
+    <div class="mockup-note"><strong>Prototype interpretation.</strong><br>“Done” means that all blockers currently mapped to that Stage Gate were marked resolved by this illustrative assessment. Gate 6 is never inferred as done when no blockers are mapped.</div>
+  </section>`;
+  document.getElementById('openPersonalTimeline').onclick=()=>{window.location.href='./timeline/?assessment=company';};
+  document.getElementById('retakeAssessment').onclick=()=>{
+    companyAssessmentSession={view:'question',step:0,answers:{...(result.answers||{})}};
+    renderCompanyAssessmentQuestion();
+  };
 }
 
 function renderSelection() {
