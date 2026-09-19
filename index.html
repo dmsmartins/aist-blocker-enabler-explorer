@@ -96,6 +96,18 @@ button { color: inherit; }
   text-decoration: none;
 }
 .main-nav button:hover, .main-nav button.active, .main-nav .timeline-nav-link:hover { color: white; }
+.main-nav .timeline-nav-link.nav-timeline-pill {
+  align-self: center;
+  height: 38px;
+  margin-right: 6px;
+  padding: 0 18px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.14);
+  font-weight: 750;
+  color: white;
+}
+.main-nav .timeline-nav-link.nav-timeline-pill:hover { background: rgba(255,255,255,.22); }
+.main-nav .timeline-nav-link.nav-timeline-pill::after { content: none; }
 .main-nav button.active::after, .main-nav .timeline-nav-link.active::after {
   content: "";
   position: absolute;
@@ -163,6 +175,7 @@ h3 { font-size: 18px; color: #17334c; }
 .hero {
   margin-top: -54px;
   padding-top: 70px;
+  padding-bottom: 56px;
   min-height: 470px;
   position: relative;
   overflow: hidden;
@@ -239,6 +252,125 @@ h3 { font-size: 18px; color: #17334c; }
 .mechanism-row { display: flex; flex-wrap: wrap; gap: 10px 18px; }
 .mechanism-mini { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 720; color: #42596d; }
 .mechanism-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--mech); }
+
+.mechanism-explainer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 10px;
+}
+.mechanism-explainer {
+  --mech: var(--blue);
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.88);
+  border-radius: 12px;
+  padding: 12px 13px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 9px;
+  align-items: start;
+}
+.mechanism-explainer .mechanism-dot { margin-top: 4px; }
+.mechanism-explainer strong {
+  color: #29475e;
+  font-size: 12px;
+  line-height: 1.2;
+}
+.mechanism-explainer small {
+  grid-column: 2;
+  color: #718595;
+  font-size: 10.5px;
+  line-height: 1.35;
+}
+
+
+.hero-grid { display: grid; grid-template-columns: minmax(0,440px) minmax(0,1fr); align-items: center; gap: 40px; }
+.hero-actions { display: flex; align-items: center; gap: 22px; margin-top: 30px; flex-wrap: wrap; }
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--navy);
+  color: #fff;
+  text-decoration: none;
+  padding: 15px 24px;
+  border-radius: 14px;
+  font-weight: 750;
+  font-size: 15px;
+  box-shadow: 0 14px 30px rgba(16,42,67,.22);
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.hero-cta:hover { background: var(--navy-2); transform: translateY(-2px); box-shadow: 0 18px 36px rgba(16,42,67,.28); }
+.hero-cta-arrow { display: inline-block; transition: transform .18s ease; }
+.hero-cta:hover .hero-cta-arrow { transform: translateX(3px); }
+.hero-secondary {
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-weight: 650;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line);
+}
+.hero-secondary:hover { color: var(--ink); text-decoration-color: var(--muted); }
+
+.hero-visual { position: relative; }
+.hero-visual svg { width: 100%; height: auto; display: block; overflow: visible; }
+.hero-visual-tag {
+  position: absolute;
+  right: 4px;
+  bottom: -10px;
+  background: rgba(16,42,67,.92);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 20px;
+  box-shadow: 0 10px 24px rgba(16,42,67,.22);
+}
+.hv-card { fill: rgba(255,255,255,.98); stroke: var(--line); stroke-width: 1; }
+.hv-card-selected { fill: rgba(255,255,255,.98); stroke: var(--blue); stroke-width: 2; filter: drop-shadow(0 12px 22px rgba(20,121,210,.16)); }
+.hv-chip { fill: rgba(255,255,255,.98); }
+.hv-num-circle { fill: var(--blue-soft); }
+.hv-num-text { fill: var(--blue); font-weight: 800; font-size: 13px; text-anchor: middle; }
+.hv-heading { fill: var(--ink); font-weight: 800; font-size: 12.5px; }
+.hv-title { fill: var(--ink); font-weight: 750; font-size: 13px; }
+.hv-muted { fill: var(--muted); font-size: 10px; }
+.hv-kicker { fill: var(--blue); font-weight: 800; font-size: 9.5px; letter-spacing: .04em; }
+.hv-chip-title { fill: var(--ink); font-weight: 700; font-size: 10.5px; }
+.hv-crumb-bg { fill: var(--blue-soft); }
+.hv-crumb-text { fill: var(--blue); font-weight: 800; font-size: 10.5px; }
+.hv-frame-line { stroke: var(--frame); }
+.hv-frame-fill { fill: var(--frame); }
+.hv-frame-text { fill: var(--frame); font-weight: 850; font-size: 9px; letter-spacing: .05em; }
+.hv-commit-line { stroke: var(--commit); }
+.hv-commit-fill { fill: var(--commit); }
+.hv-commit-text { fill: var(--commit); font-weight: 850; font-size: 9px; letter-spacing: .05em; }
+.hv-equip-line { stroke: var(--equip); }
+.hv-equip-fill { fill: var(--equip); }
+.hv-equip-text { fill: var(--equip); font-weight: 850; font-size: 9px; letter-spacing: .05em; }
+.hv-edge { fill: none; stroke: #c3d5e0; stroke-width: 2; }
+.hv-edge-anim { stroke-dasharray: 420; stroke-dashoffset: 420; animation: hvDraw .85s ease forwards; }
+.hv-edge-1 { animation-delay: .1s; }
+.hv-edge-2 { animation-delay: .45s; }
+.hv-edge-3 { animation-delay: .55s; }
+.hv-edge-4 { animation-delay: .65s; }
+@keyframes hvDraw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .hv-edge-anim { animation: none; stroke-dashoffset: 0; }
+}
+
+.explore-more { width: min(1180px, calc(100% - 42px)); margin: 12px auto 0; }
+.explore-more-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.explore-more-head h2 { font-size: 17px; margin: 0; }
+.explore-more-head p { margin: 0; color: var(--muted); font-size: 13px; }
+.home-cards.home-cards--secondary { width: auto; margin: 0; position: static; grid-template-columns: repeat(3, 1fr); }
+.home-cards--secondary .entry-card { min-height: auto; padding: 20px 22px; }
+.home-cards--secondary .entry-icon { width: 34px; height: 34px; margin-bottom: 12px; font-size: 13px; }
+.home-cards--secondary h3 { font-size: 15px; margin: 0 0 5px; }
+.home-cards--secondary p { font-size: 12.5px; margin-bottom: 10px; line-height: 1.45; }
 
 .page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 30px; margin-bottom: 34px; }
 .page-head h2 { margin-bottom: 8px; }
@@ -543,9 +675,14 @@ h3 { font-size: 18px; color: #17334c; }
   .topbar { grid-template-columns:1fr auto; padding:0 18px; }
   .main-nav { display:none; }
   .topbar-actions { grid-column:2; }
-  .page, .hero-inner, .home-cards, .framework-strip { width:min(100% - 28px, 720px); }
+  .page, .hero-inner, .home-cards, .framework-strip, .explore-more { width:min(100% - 28px, 720px); }
   .home-cards { grid-template-columns:1fr; margin-top:-62px; }
+  .home-cards.home-cards--secondary { grid-template-columns:1fr; }
+  .mechanism-explainer-grid { grid-template-columns:1fr 1fr; }
   .entry-card { min-height:160px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 34px; }
+  .hero-visual { order: -1; max-width: 420px; margin: 0 auto; }
+  .hero-visual-tag { display: none; }
   .domain-grid { grid-template-columns:1fr 1fr; }
   .detail-grid, .meta-row, .enabler-detail-grid { grid-template-columns:1fr; }
   .check-list { grid-template-columns:1fr; }
@@ -558,7 +695,10 @@ h3 { font-size: 18px; color: #17334c; }
   .hero { margin-top:-36px; padding-top:48px; min-height:420px; }
   .hero h1 { font-size:42px; }
   .lead { font-size:16px; }
+  .hero-actions { gap:14px; }
+  .hero-cta { padding:13px 20px; font-size:14px; }
   .domain-grid, .path-grid, .maturity-options { grid-template-columns:1fr; }
+  .mechanism-explainer-grid { grid-template-columns:1fr; }
   .page-head, .domain-title-row, .enable-head { flex-direction:column; align-items:stretch; }
   .blocker-summary { padding:17px; }
   .blocker-detail { padding:0 17px 20px; }
@@ -604,8 +744,8 @@ h3 { font-size: 18px; color: #17334c; }
     </button>
 
     <nav class="main-nav" aria-label="Primary navigation">
+      <a class="timeline-nav-link nav-timeline-pill" href="./timeline/">Timeline</a>
       <button data-route="explore">Explore</button>
-      <a class="timeline-nav-link" href="./timeline/">Timeline</a>
       <button data-route="maturity">Maturity Assessment</button>
     </nav>
 
@@ -729,25 +869,47 @@ function render() {
 }
 
 function renderHome() {
-  const mechs = state.data.mechanisms.map(m => `<span class="mechanism-mini" style="--mech:var(--${m.key.toLowerCase()})"><span class="mechanism-dot"></span>${m.key}</span>`).join('');
+  const mechanismShort = {
+    Frame: 'Define the problem and value.',
+    Commit: 'Create ownership and decision rights.',
+    Equip: 'Provide skills, data and platforms.',
+    Assure: 'Clarify safety, legal and reliability needs.',
+    Operate: 'Embed AI in operational workflows.',
+    Learn: 'Monitor, retrain and improve over time.'
+  };
+  const mechs = state.data.mechanisms.map(m => `<div class="mechanism-explainer" style="--mech:var(--${m.key.toLowerCase()})"><span class="mechanism-dot"></span><strong>${m.key}</strong><small>${mechanismShort[m.key] || ''}</small></div>`).join('');
   app.innerHTML = `
     <section class="hero">
-      <div class="hero-inner">
+      <div class="hero-inner hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">UIC AIST · Insight to impact</p>
           <h1>Understand.<br>Overcome.<br>Scale AI.</h1>
-          <p class="lead">Explore what can block AI from scaling and what enables organisations to overcome those barriers.</p>
+          <p class="lead">Pan through the six lifecycle Stage Gates on one canvas and watch each blocker resolve into the enablers that overcome it.</p>
+          <div class="hero-actions">
+            <a class="hero-cta" href="./timeline/">Open the Timeline <span class="hero-cta-arrow">→</span></a>
+            <button class="hero-secondary" data-entry="explore">Browse the explorer instead</button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          ${timelinePreviewSvg()}
+          <span class="hero-visual-tag">Live, explorable canvas</span>
         </div>
       </div>
     </section>
-    <section class="home-cards">
-      ${entryCard('Explore the landscape','Browse blockers and enablers across domains, stages and stakeholders.','Explore','explore','↗')}
-      ${entryCard('View for my role','Focus the landscape on the stakeholders and responsibilities most relevant to you.','Choose perspective','role','◎')}
-      ${entryCard('Maturity assessment','Assess the maturity of your organisation or AI initiative.','Open assessment','maturity','▥')}
+    <section class="explore-more">
+      <div class="explore-more-head">
+        <h2>Other ways into the same data</h2>
+        <p>Same underlying dataset, different lenses.</p>
+      </div>
+      <div class="home-cards home-cards--secondary">
+        ${entryCard('Explore the landscape','Browse blockers and enablers across domains, stages and stakeholders.','Explore','explore','↗')}
+        ${entryCard('View for my role','Focus the landscape on the stakeholders most relevant to you.','Choose perspective','role','◎')}
+        ${entryCard('Maturity assessment','Assess the maturity of your organisation or AI initiative.','Open assessment','maturity','▥')}
+      </div>
     </section>
     <section class="framework-strip">
       <div class="framework-title">Enablers act through six mechanisms</div>
-      <div class="mechanism-row">${mechs}</div>
+      <div class="mechanism-explainer-grid">${mechs}</div>
     </section>`;
   app.querySelectorAll('[data-entry]').forEach(btn => btn.addEventListener('click', () => {
     const action = btn.dataset.entry;
@@ -756,6 +918,51 @@ function renderHome() {
 }
 function entryCard(title, text, link, action, symbol) {
   return `<button class="entry-card" data-entry="${action}"><div class="entry-icon">${symbol}</div><h3>${title}</h3><p>${text}</p><span class="card-link">${link} →</span></button>`;
+}
+
+
+function timelinePreviewSvg() {
+  return `<svg viewBox="0 0 620 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Preview of the Timeline: Stage Gate 1 expanding into a blocker and three enablers">
+    <rect class="hv-crumb-bg" x="6" y="6" width="228" height="27" rx="13.5"></rect>
+    <text class="hv-crumb-text" x="20" y="24">Stage Gate → Blocker → Enablers</text>
+
+    <path class="hv-edge hv-edge-anim hv-edge-1" d="M176,202 C208,202 214,196 250,196"></path>
+    <path class="hv-edge hv-edge-anim hv-edge-2" d="M460,202 C495,202 495,75 468,75"></path>
+    <path class="hv-edge hv-edge-anim hv-edge-3" d="M460,202 C495,202 495,195 468,195"></path>
+    <path class="hv-edge hv-edge-anim hv-edge-4" d="M460,202 C495,202 495,317 468,317"></path>
+
+    <rect class="hv-card" x="6" y="148" width="170" height="108" rx="18"></rect>
+    <circle class="hv-num-circle" cx="42" cy="180" r="16"></circle>
+    <text class="hv-num-text" x="42" y="185">1</text>
+    <text class="hv-heading" x="68" y="177">Stage Gate 1</text>
+    <text class="hv-muted" x="26" y="208">Strategic Alignment</text>
+    <text class="hv-muted" x="26" y="222">&amp; Idea Validation</text>
+
+    <rect class="hv-card-selected" x="250" y="140" width="210" height="124" rx="16"></rect>
+    <text class="hv-kicker" x="270" y="168">STAGE 1 · BLOCKER</text>
+    <text class="hv-title" x="270" y="190">Unclear financial</text>
+    <text class="hv-title" x="270" y="207">implications, risks and</text>
+    <text class="hv-title" x="270" y="224">investment logic</text>
+    <text class="hv-muted" x="270" y="248">Resolved by 3 enablers</text>
+
+    <rect class="hv-chip" x="468" y="40" width="146" height="70" rx="14" stroke-width="1.5" style="stroke:var(--frame)"></rect>
+    <circle class="hv-frame-fill" cx="486" cy="58" r="4"></circle>
+    <text class="hv-frame-text" x="498" y="61">FRAME</text>
+    <text class="hv-chip-title" x="482" y="80">AI-specific portfolio</text>
+    <text class="hv-chip-title" x="482" y="94">business case</text>
+
+    <rect class="hv-chip" x="468" y="160" width="146" height="70" rx="14" stroke-width="1.5" style="stroke:var(--commit)"></rect>
+    <circle class="hv-commit-fill" cx="486" cy="178" r="4"></circle>
+    <text class="hv-commit-text" x="498" y="181">COMMIT</text>
+    <text class="hv-chip-title" x="482" y="200">Multi-year funding for</text>
+    <text class="hv-chip-title" x="482" y="214">AI scaling</text>
+
+    <rect class="hv-chip" x="468" y="280" width="146" height="78" rx="14" stroke-width="1.5" style="stroke:var(--equip)"></rect>
+    <circle class="hv-equip-fill" cx="486" cy="298" r="4"></circle>
+    <text class="hv-equip-text" x="498" y="301">EQUIP</text>
+    <text class="hv-chip-title" x="482" y="320">Enterprise-wide data</text>
+    <text class="hv-chip-title" x="482" y="334">integration strategy</text>
+  </svg>`;
 }
 
 function renderExplore() {
