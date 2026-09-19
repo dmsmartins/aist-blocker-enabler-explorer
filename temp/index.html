@@ -253,6 +253,35 @@ h3 { font-size: 18px; color: #17334c; }
 .mechanism-mini { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 720; color: #42596d; }
 .mechanism-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--mech); }
 
+.mechanism-explainer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 10px;
+}
+.mechanism-explainer {
+  --mech: var(--blue);
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.88);
+  border-radius: 12px;
+  padding: 12px 13px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 9px;
+  align-items: start;
+}
+.mechanism-explainer .mechanism-dot { margin-top: 4px; }
+.mechanism-explainer strong {
+  color: #29475e;
+  font-size: 12px;
+  line-height: 1.2;
+}
+.mechanism-explainer small {
+  grid-column: 2;
+  color: #718595;
+  font-size: 10.5px;
+  line-height: 1.35;
+}
+
 
 .hero-grid { display: grid; grid-template-columns: minmax(0,440px) minmax(0,1fr); align-items: center; gap: 40px; }
 .hero-actions { display: flex; align-items: center; gap: 22px; margin-top: 30px; flex-wrap: wrap; }
@@ -649,6 +678,7 @@ h3 { font-size: 18px; color: #17334c; }
   .page, .hero-inner, .home-cards, .framework-strip, .explore-more { width:min(100% - 28px, 720px); }
   .home-cards { grid-template-columns:1fr; margin-top:-62px; }
   .home-cards.home-cards--secondary { grid-template-columns:1fr; }
+  .mechanism-explainer-grid { grid-template-columns:1fr 1fr; }
   .entry-card { min-height:160px; }
   .hero-grid { grid-template-columns: 1fr; gap: 34px; }
   .hero-visual { order: -1; max-width: 420px; margin: 0 auto; }
@@ -668,6 +698,7 @@ h3 { font-size: 18px; color: #17334c; }
   .hero-actions { gap:14px; }
   .hero-cta { padding:13px 20px; font-size:14px; }
   .domain-grid, .path-grid, .maturity-options { grid-template-columns:1fr; }
+  .mechanism-explainer-grid { grid-template-columns:1fr; }
   .page-head, .domain-title-row, .enable-head { flex-direction:column; align-items:stretch; }
   .blocker-summary { padding:17px; }
   .blocker-detail { padding:0 17px 20px; }
@@ -838,7 +869,15 @@ function render() {
 }
 
 function renderHome() {
-  const mechs = state.data.mechanisms.map(m => `<span class="mechanism-mini" style="--mech:var(--${m.key.toLowerCase()})"><span class="mechanism-dot"></span>${m.key}</span>`).join('');
+  const mechanismShort = {
+    Frame: 'Define the problem and value.',
+    Commit: 'Create ownership and decision rights.',
+    Equip: 'Provide skills, data and platforms.',
+    Assure: 'Clarify safety, legal and reliability needs.',
+    Operate: 'Embed AI in operational workflows.',
+    Learn: 'Monitor, retrain and improve over time.'
+  };
+  const mechs = state.data.mechanisms.map(m => `<div class="mechanism-explainer" style="--mech:var(--${m.key.toLowerCase()})"><span class="mechanism-dot"></span><strong>${m.key}</strong><small>${mechanismShort[m.key] || ''}</small></div>`).join('');
   app.innerHTML = `
     <section class="hero">
       <div class="hero-inner hero-grid">
@@ -870,7 +909,7 @@ function renderHome() {
     </section>
     <section class="framework-strip">
       <div class="framework-title">Enablers act through six mechanisms</div>
-      <div class="mechanism-row">${mechs}</div>
+      <div class="mechanism-explainer-grid">${mechs}</div>
     </section>`;
   app.querySelectorAll('[data-entry]').forEach(btn => btn.addEventListener('click', () => {
     const action = btn.dataset.entry;
