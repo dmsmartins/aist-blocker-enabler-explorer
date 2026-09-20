@@ -202,6 +202,8 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
     if(node.type==="enabler") setSelectedEnabler(node.data.enabler.id);
   };
 
+  useEffect(()=>{if(selectedBlocker&&!detailOpen)requestAnimationFrame(()=>document.querySelector(`[data-blocker-node="${selectedBlocker}"]`)?.focus())},[selectedBlocker,detailOpen]);
+
   const selectedBlockerObj=selectedBlocker?byId(data.blockers,selectedBlocker):null;
   const groups=selectedBlockerObj?mechanismGroups(selectedBlockerObj.id):{};
   const selectedEnablerPair=selectedBlockerObj&&selectedEnabler?Object.values(groups).flat().find(x=>x.enabler.id===selectedEnabler):null;
@@ -239,8 +241,8 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       <div className="breadcrumbs"><button onClick=${reset}>Timeline</button>${crumbs.map((c,i)=>html`<${React.Fragment} key=${i}><i>›</i>${c.action?html`<button onClick=${c.action}>${c.label}</button>`:html`<span>${c.label}</span>`}</${React.Fragment}>`)}</div>
       <div className="zoom-readout">Zoom ${Math.round(zoom*100)}%</div>
 
-      ${detailOpen&&selectedBlockerObj?html`<aside className="inspector">
-        <div className="inspector-head"><div><div className="eyebrow">Gate ${selectedBlockerObj.stageGate} · blocker detail</div><h2>${selectedBlockerObj.title}</h2></div><button className="close-inspector" onClick=${closeDetail} aria-label="Close" title="Close">×</button></div>
+      ${detailOpen&&selectedBlockerObj?html`<aside className="inspector" aria-labelledby="timeline-inspector-title">
+        <div className="inspector-head"><div><div className="eyebrow">Gate ${selectedBlockerObj.stageGate} · blocker detail</div><h2 id="timeline-inspector-title">${selectedBlockerObj.title}</h2></div><button className="close-inspector" onClick=${closeDetail} aria-label="Close" title="Close">×</button></div>
         <div className="inspector-body">
           ${selectedEnablerPair?html`<div className="enabler-detail"><span className="tag">${selectedMechanism} enabler</span><h3>${selectedEnablerPair.enabler.title}</h3><p>${selectedEnablerPair.enabler.description}</p><div className="inspector-section"><h3>Practical actions</h3><p>${selectedEnablerPair.enabler.practicalActions}</p></div><div className="inspector-section"><h3>Expected outcome</h3><p>${selectedEnablerPair.enabler.expectedOutcome||"—"}</p></div><div className="inspector-section"><h3>Stakeholders</h3><p>${selectedEnablerPair.enabler.stakeholders.join(" · ")}</p></div><div className="rationale">${selectedEnablerPair.relationship.rationale||""}</div></div>`
           :html`<div className="blocker-inspector-content"><p className="inspector-statement">${selectedBlockerObj.statement}</p>
