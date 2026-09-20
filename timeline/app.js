@@ -131,9 +131,9 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
 
     if(selectedBlocker){
       const b=byId(data.blockers,selectedBlocker),deps=dependencyContext(b.id);
-      nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x:880,y:460},data:{blocker:b,selected:true,domainTitle:domains[b.domain]||"",zoom,onDeepDive:openDeepDive,status:assessmentMode?blockerStatus(b.id):null,keyboardActivate:()=>openDeepDive(b)},zIndex:8});
-      const placeSide=(items,side)=>{const x=side==="up"?260:1510,label=side==="up"?"Depends on":"Depends on this";
-        items.filter(xBlock=>!assessmentMode || showCompleted || blockerStatus(xBlock.id)!=="resolved").forEach((xBlock,i)=>{const y=280+i*155;
+      nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x:760,y:350},data:{blocker:b,selected:true,domainTitle:domains[b.domain]||"",zoom,onDeepDive:openDeepDive,status:assessmentMode?blockerStatus(b.id):null,keyboardActivate:()=>openDeepDive(b)},zIndex:8});
+      const placeSide=(items,side)=>{const x=side==="up"?380:1140,label=side==="up"?"Depends on":"Depends on this";
+        items.filter(xBlock=>!assessmentMode || showCompleted || blockerStatus(xBlock.id)!=="resolved").forEach((xBlock,i)=>{const y=210+i*145;
           nodes.push({id:`blocker-${xBlock.id}`,type:"blocker",position:{x,y},data:{blocker:xBlock,selected:false,domainTitle:domains[xBlock.domain]||"",zoom,relationLabel:label,status:assessmentMode?blockerStatus(xBlock.id):null,keyboardActivate:()=>{setSelectedBlocker(xBlock.id);setSelectedGate(xBlock.stageGate);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}}});
           const edge=side==="up"?{source:`blocker-${xBlock.id}`,target:`blocker-${b.id}`}:{source:`blocker-${b.id}`,target:`blocker-${xBlock.id}`};
           edges.push({id:`dep-${side}-${xBlock.id}`,...edge,...edgeBase,animated:true,style:{stroke:side==="up"?"#6e97b3":"#3b86b7",strokeWidth:1.5}});
@@ -142,15 +142,15 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       placeSide(deps.upstream,"up");placeSide(deps.downstream,"down");
 
       if(detailOpen){
-        const groups=mechanismGroups(b.id),mechanisms=data.mechanisms.filter(m=>groups[m.key]?.length),startX=880-((mechanisms.length-1)*215)/2;
+        const groups=mechanismGroups(b.id),mechanisms=data.mechanisms.filter(m=>groups[m.key]?.length),startX=760-((mechanisms.length-1)*205)/2;
         mechanisms.forEach((m,i)=>{
-          nodes.push({id:`mechanism-${m.key}`,type:"mechanism",position:{x:startX+i*215,y:900},data:{mechanism:m.key,description:m.description,count:groups[m.key].length,selected:selectedMechanism===m.key,keyboardActivate:()=>{setSelectedMechanism(m.key);setSelectedEnabler(null)}}});
+          nodes.push({id:`mechanism-${m.key}`,type:"mechanism",position:{x:startX+i*205,y:760},data:{mechanism:m.key,description:m.description,count:groups[m.key].length,selected:selectedMechanism===m.key,keyboardActivate:()=>{setSelectedMechanism(m.key);setSelectedEnabler(null)}}});
           edges.push({id:`blocker-mech-${m.key}`,source:`blocker-${b.id}`,target:`mechanism-${m.key}`,...edgeBase,style:{stroke:MECH_COLORS[m.key]||"#7a9bb1",strokeWidth:1.3}});
         });
         if(selectedMechanism&&groups[selectedMechanism]){
-          const items=groups[selectedMechanism],cols=Math.min(4,Math.max(1,items.length)),center=880,width=(cols-1)*285,base=center-width/2;
+          const items=groups[selectedMechanism],cols=Math.min(4,Math.max(1,items.length)),center=760,width=(cols-1)*270,base=center-width/2;
           items.forEach((item,i)=>{const row=Math.floor(i/cols),col=i%cols;
-            nodes.push({id:`enabler-${item.enabler.id}`,type:"enabler",position:{x:base+col*285,y:1190+row*155},data:{enabler:item.enabler,mechanism:selectedMechanism,selected:selectedEnabler===item.enabler.id,keyboardActivate:()=>setSelectedEnabler(item.enabler.id)}});
+            nodes.push({id:`enabler-${item.enabler.id}`,type:"enabler",position:{x:base+col*270,y:1010+row*150},data:{enabler:item.enabler,mechanism:selectedMechanism,selected:selectedEnabler===item.enabler.id,keyboardActivate:()=>setSelectedEnabler(item.enabler.id)}});
             edges.push({id:`mech-enabler-${item.enabler.id}`,source:`mechanism-${selectedMechanism}`,target:`enabler-${item.enabler.id}`,...edgeBase,style:{stroke:MECH_COLORS[selectedMechanism]||"#7a9bb1",strokeWidth:1.1}});
           });
         }
@@ -165,7 +165,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
     const raf1=requestAnimationFrame(()=>{raf2=requestAnimationFrame(()=>{
       const all=flow.getNodes();
       let focus=[];
-      if(selectedBlocker)focus=all.filter(n=>n.type!=="stage");
+      if(selectedBlocker)focus=all.filter(n=>n.type==="blocker");
       else if(selectedGate)focus=all.filter(n=>n.type!=="stage" || n.id===`stage-${selectedGate}`);
       else focus=all.filter(n=>n.type==="stage");
       flow.fitView({nodes:focus.length?focus:all,padding:selectedBlocker?.10:selectedGate?.08:.08,duration:window.matchMedia("(prefers-reduced-motion: reduce)").matches?0:420,maxZoom:selectedBlocker?1.08:selectedGate?1:.96});
