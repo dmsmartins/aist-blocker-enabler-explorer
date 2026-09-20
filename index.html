@@ -725,6 +725,82 @@ h3 { font-size: 18px; color: #17334c; }
 [hidden] { display: none !important; }
 #app:focus { outline: none; }
 
+
+/* UX-A11Y-REFINEMENT */
+.main-nav .timeline-nav-link.nav-timeline-pill{
+  align-self:stretch;height:auto;margin-right:0;padding:0 15px;border-radius:0;
+  background:transparent;font-weight:650;color:rgba(255,255,255,.78)
+}
+.main-nav .timeline-nav-link.nav-timeline-pill:hover{background:transparent;color:#fff}
+.main-nav .timeline-nav-link.nav-timeline-pill::after{content:none}
+.icon-btn.active{background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{
+  outline:3px solid rgba(69,163,255,.58);outline-offset:3px
+}
+body.modal-open{overflow:hidden}
+.home-cards--secondary .entry-card:nth-child(3){
+  border-color:#b9d7ec;box-shadow:0 10px 28px rgba(20,121,210,.07)
+}
+.home-cards--secondary .entry-card:nth-child(3) .entry-icon{
+  background:#e7f3fd;box-shadow:0 0 0 5px rgba(20,121,210,.05)
+}
+.entry-card:active,.domain-card:active,.path-card:active{transform:translateY(0)}
+.stage-badge{
+  display:inline-grid;place-items:center;min-width:28px;min-height:28px;border-radius:50%;
+  background:#f1f6fa;color:#1769aa;border:1px solid #d5e5f0;font-size:11px;font-weight:820;
+  padding:4px;flex:0 0 auto
+}
+.blocker-detail,.enabler-detail{animation:detailReveal .18s ease both}
+@keyframes detailReveal{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.blocker-card.flash,.enabler-card.flash{animation:blockerFlash 1.35s ease both}
+@keyframes blockerFlash{
+  0%,100%{box-shadow:0 9px 25px rgba(16,42,67,.05)}
+  35%{box-shadow:0 0 0 5px rgba(20,121,210,.10),0 12px 30px rgba(16,42,67,.08)}
+}
+.filter-btn.active{border-color:#77afd6;background:#f5fbff;box-shadow:inset 0 0 0 1px rgba(20,121,210,.06)}
+.filter-btn.active::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--blue)}
+.search-result[role="button"]:hover,.search-result[role="button"]:focus-visible{background:#f5faff;border-radius:8px}
+.search-result .stage-badge{margin-right:9px;vertical-align:middle}
+.selection-main{min-width:0;cursor:pointer;border-radius:9px;padding:8px;margin:-8px}
+.selection-main:hover,.selection-main:focus-visible{background:#f6fafc}
+.selection-meta{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-bottom:6px;color:#718595;font-size:10.5px}
+.selection-item{align-items:center}
+.remove-btn{min-height:40px;flex:0 0 auto}
+.stage-rail{
+  grid-template-columns:repeat(6,minmax(148px,1fr));overflow-x:auto;overscroll-behavior-inline:contain;
+  scrollbar-width:thin;padding:6px 4px 12px
+}
+.stage-step.empty .stage-step-dot{border-style:dashed;background:#fbfcfd;color:#8b9aa6}
+.stage-step.done .stage-step-dot{border-color:#95c7a6;background:#edf8f0;color:#367d4e}
+.stage-step.done .stage-step-copy strong{color:#47765a}
+.stage-step.active .stage-step-dot{border-style:solid}
+@media(max-width:880px){
+  .stage-rail{grid-template-columns:repeat(6,minmax(158px,1fr));gap:0}
+  .stage-rail::before{display:block;left:79px;right:79px}
+}
+@media(max-width:760px){
+  .topbar{grid-template-columns:auto minmax(0,1fr) auto;padding:0 12px;gap:6px}
+  .brand>span:last-child{display:none}
+  .main-nav{min-width:0;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:none;gap:0}
+  .main-nav::-webkit-scrollbar{display:none}
+  .main-nav button,.main-nav .timeline-nav-link{flex:0 0 auto;padding:0 9px;white-space:nowrap}
+  .topbar-actions{min-width:0;gap:4px}
+  .icon-btn{min-width:42px;min-height:42px}
+}
+@media(max-width:600px){
+  .topbar{padding:0 10px;gap:5px}
+  .main-nav button,.main-nav .timeline-nav-link{padding:0 8px;font-size:12px}
+  .brand>span:last-child{display:none}
+  .page{width:min(100% - 28px,1180px);padding-top:34px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1884,6 +1960,376 @@ function renderSelection() {
 function selectionItem(type,id,title,text){return `<div class="selection-item"><div><strong>${escapeHtml(title)}</strong><small>${escapeHtml(truncate(text,150))}</small></div><button class="remove-btn" data-remove="${type}:${id}">Remove</button></div>`;}
 
 function closeModal(){ modalRoot.innerHTML=''; }
+
+
+/* UX-A11Y-LOGIC */
+state.gateFilters = state.gateFilters || [];
+state.blockerHistory = state.blockerHistory || [];
+state.highlightBlocker = null;
+
+function uxReducedMotion(){
+  return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+function uxScrollTo(el,block){
+  if(!el)return;
+  el.scrollIntoView({behavior:uxReducedMotion()?"auto":"smooth",block:block||"start"});
+}
+function uxGate(id){
+  return state.data && state.data.stageGates ? state.data.stageGates.find(function(g){return Number(g.id)===Number(id);}) : null;
+}
+function uxHasFilters(){
+  return !!((state.stakeholders&&state.stakeholders.length)||state.dimension||(state.gateFilters&&state.gateFilters.length));
+}
+function uxStageBadgeNode(blocker){
+  var span=document.createElement("span");
+  span.className="stage-badge";
+  span.textContent=blocker.stageGate;
+  var gate=uxGate(blocker.stageGate);
+  var full=gate&&gate.label ? "Stage Gate "+blocker.stageGate+": "+gate.label : "Stage Gate "+blocker.stageGate;
+  span.setAttribute("aria-label",full);
+  span.title=full;
+  return span;
+}
+function uxEnhanceStageBadges(root){
+  (root||document).querySelectorAll("[data-blocker-card]").forEach(function(card){
+    var b=blockerById(Number(card.dataset.blockerCard));
+    var badge=card.querySelector(".stage-badge");
+    if(!b||!badge)return;
+    var gate=uxGate(b.stageGate);
+    var full=gate&&gate.label ? "Stage Gate "+b.stageGate+": "+gate.label : "Stage Gate "+b.stageGate;
+    badge.setAttribute("aria-label",full);
+    badge.title=full;
+  });
+}
+function uxEnhanceView(){
+  searchBtn.hidden = state.route === "home";
+  selectionBtn.classList.toggle("active",state.route==="selection");
+  if(state.route==="selection")selectionBtn.setAttribute("aria-current","page");else selectionBtn.removeAttribute("aria-current");
+  navButtons.forEach(function(btn){
+    var activeRoute=(state.route==="domain"||state.route==="domains"||state.route==="all-blockers"||state.route==="all-enablers"||state.route==="stage-gates")?"explore":state.route;
+    var active=btn.dataset.route===activeRoute;
+    btn.classList.toggle("active",active);
+    if(active)btn.setAttribute("aria-current","page");else btn.removeAttribute("aria-current");
+  });
+  document.querySelectorAll("[data-toggle-blocker]").forEach(function(btn){
+    var id=Number(btn.dataset.toggleBlocker);
+    btn.setAttribute("aria-expanded",state.openBlocker===id?"true":"false");
+  });
+  document.querySelectorAll("[data-toggle-enabler]").forEach(function(btn){
+    btn.setAttribute("aria-expanded",state.openEnablers.has(btn.dataset.toggleEnabler)?"true":"false");
+  });
+  document.querySelectorAll("[data-save-blocker],[data-save-enabler]").forEach(function(btn){
+    btn.setAttribute("aria-pressed",btn.classList.contains("saved")?"true":"false");
+  });
+  document.querySelectorAll("[data-toggle-dependencies]").forEach(function(btn){
+    btn.setAttribute("aria-expanded",state.openDependencies.has(Number(btn.dataset.toggleDependencies))?"true":"false");
+  });
+  var filter=document.getElementById("filterBtn");
+  if(filter){
+    filter.classList.toggle("active",uxHasFilters());
+    filter.setAttribute("aria-pressed",uxHasFilters()?"true":"false");
+  }
+  uxEnhanceStageBadges(document);
+  if(state.route==="stage-gates"){
+    var result=loadCompanyAssessment();
+    document.querySelectorAll("[data-stage-gate]").forEach(function(step){
+      var id=Number(step.dataset.stageGate);
+      var count=state.data.blockers.filter(function(b){return b.stageGate===id;}).length;
+      var active=id===state.stageGateView;
+      step.classList.toggle("empty",count===0);
+      step.classList.toggle("done",!!result&&count>0&&companyAssessmentGateSummary(result,id).kind==="done");
+      step.setAttribute("aria-current",active?"step":"false");
+      var g=uxGate(id); if(g)step.title=g.label;
+    });
+  }
+}
+var uxObserverPending=false;
+var uxObserver=new MutationObserver(function(){
+  if(uxObserverPending)return;
+  uxObserverPending=true;
+  requestAnimationFrame(function(){uxObserverPending=false;uxEnhanceView();});
+});
+uxObserver.observe(app,{childList:true,subtree:true});
+uxObserver.observe(modalRoot,{childList:true,subtree:true});
+
+var uxModalReturnFocus=null;
+var uxModalKeyHandler=null;
+function uxActivateModal(dialog){
+  if(!dialog)return;
+  document.body.classList.add("modal-open");
+  dialog.setAttribute("role","dialog");
+  dialog.setAttribute("aria-modal","true");
+  var heading=dialog.querySelector("h3");
+  if(heading){if(!heading.id)heading.id="ux-modal-title";dialog.setAttribute("aria-labelledby",heading.id);}
+  var close=dialog.querySelector(".close-modal");
+  if(close){close.setAttribute("aria-label","Close");close.title="Close";}
+  function focusable(){return Array.from(dialog.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])')).filter(function(x){return !x.hidden&&x.offsetParent!==null;});}
+  uxModalKeyHandler=function(e){
+    if(e.key==="Escape"){e.preventDefault();closeModal();return;}
+    if(e.key!=="Tab")return;
+    var items=focusable();if(!items.length)return;
+    var first=items[0],last=items[items.length-1];
+    if(!dialog.contains(document.activeElement)){e.preventDefault();first.focus();}
+    else if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  };
+  document.addEventListener("keydown",uxModalKeyHandler);
+  requestAnimationFrame(function(){if(!dialog.contains(document.activeElement)){var items=focusable();if(items[0])items[0].focus();}});
+}
+var uxCloseModal=closeModal;
+closeModal=function(){
+  if(uxModalKeyHandler){document.removeEventListener("keydown",uxModalKeyHandler);uxModalKeyHandler=null;}
+  document.body.classList.remove("modal-open");
+  uxCloseModal();
+  var target=uxModalReturnFocus;uxModalReturnFocus=null;
+  if(target&&document.contains(target))requestAnimationFrame(function(){target.focus();});
+};
+
+var uxOpenRolePicker=openRolePicker;
+openRolePicker=function(){
+  uxModalReturnFocus=document.activeElement;
+  uxOpenRolePicker();
+  uxActivateModal(modalRoot.querySelector(".role-modal"));
+};
+var uxOpenSearch=openSearch;
+openSearch=function(){
+  uxModalReturnFocus=document.activeElement;
+  uxOpenSearch();
+  var dialog=modalRoot.querySelector(".search-modal");
+  uxActivateModal(dialog);
+  var input=document.getElementById("searchInput");
+  if(input)requestAnimationFrame(function(){input.focus();});
+};
+
+openFilters=function(){
+  uxModalReturnFocus=document.activeElement;
+  var stakeholders=unique(state.data.blockers.flatMap(function(b){return b.stakeholders;}));
+  var dimensions=unique(state.data.blockers.map(function(b){return b.dimension;}));
+  var stakeholderHtml=stakeholders.map(function(s){
+    return '<label class="check-item"><input data-filter-stakeholder type="checkbox" value="'+escapeHtml(s)+'" '+(state.stakeholders.includes(s)?"checked":"")+'><span>'+escapeHtml(s)+'</span></label>';
+  }).join("");
+  var gateHtml=state.data.stageGates.map(function(g){
+    return '<label class="check-item"><input data-filter-gate type="checkbox" value="'+g.id+'" '+(state.gateFilters.includes(Number(g.id))?"checked":"")+'><span>'+g.id+' · '+escapeHtml(g.label)+'</span></label>';
+  }).join("");
+  var dimensionHtml=dimensions.map(function(d){
+    return '<option '+(state.dimension===d?"selected":"")+'>'+escapeHtml(d)+'</option>';
+  }).join("");
+  modalRoot.innerHTML='<div class="filter-drawer"><aside class="drawer"><div class="modal-head"><div><p class="eyebrow">Filters</p><h3>Refine this view</h3></div><button class="close-modal">'+icon("close")+'</button></div>'+
+    '<div class="filter-section"><label>Stakeholder</label><div class="check-list">'+stakeholderHtml+'</div></div>'+
+    '<div class="filter-section"><label>Stage Gate</label><div class="check-list">'+gateHtml+'</div><div class="disabled-filter" hidden>Stage Gate mapping is not yet available. The filter will activate automatically when the workbook is populated.</div></div>'+
+    '<div class="filter-section"><label>Dimension</label><select id="dimensionSelect"><option value="">All dimensions</option>'+dimensionHtml+'</select></div>'+
+    '<div class="modal-actions" style="margin-top:22px"><button class="outline-btn" id="clearFilters">Clear</button><button class="primary-btn" id="applyFilters">Apply filters</button></div></aside></div>';
+  var drawer=modalRoot.querySelector(".filter-drawer");
+  var clear=document.getElementById("clearFilters");
+  var apply=document.getElementById("applyFilters");
+  function formState(){
+    return {
+      stakeholders:Array.from(modalRoot.querySelectorAll("[data-filter-stakeholder]:checked")).map(function(x){return x.value;}).sort(),
+      gates:Array.from(modalRoot.querySelectorAll("[data-filter-gate]:checked")).map(function(x){return Number(x.value);}).sort(function(a,b){return a-b;}),
+      dimension:document.getElementById("dimensionSelect").value
+    };
+  }
+  function sync(){
+    var next=formState();
+    var same=JSON.stringify(next.stakeholders)===JSON.stringify(Array.from(state.stakeholders).sort())&&JSON.stringify(next.gates)===JSON.stringify(Array.from(state.gateFilters).sort(function(a,b){return a-b;}))&&next.dimension===state.dimension;
+    apply.disabled=same;
+    clear.disabled=!(next.stakeholders.length||next.gates.length||next.dimension);
+  }
+  modalRoot.querySelector(".close-modal").onclick=closeModal;
+  clear.onclick=function(){modalRoot.querySelectorAll("input:checked").forEach(function(x){x.checked=false;});document.getElementById("dimensionSelect").value="";sync();};
+  apply.onclick=function(){
+    var next=formState();state.stakeholders=next.stakeholders;state.gateFilters=next.gates;state.dimension=next.dimension;
+    closeModal();rerenderCurrentExploreView();
+  };
+  drawer.addEventListener("click",function(e){if(e.target===e.currentTarget)closeModal();});
+  drawer.addEventListener("change",sync);
+  sync();uxActivateModal(drawer);
+};
+
+var uxFilteredBlockers=filteredBlockers;
+filteredBlockers=function(){
+  var rows=uxFilteredBlockers();
+  if(state.gateFilters.length)rows=rows.filter(function(b){return state.gateFilters.includes(Number(b.stageGate));});
+  return rows;
+};
+var uxRenderAllBlockers=renderAllBlockers;
+renderAllBlockers=function(){
+  if(!state.gateFilters.length)return uxRenderAllBlockers();
+  var originalDimension=state.dimension;
+  var allowed=new Set(state.gateFilters);
+  var dataBlockers=state.data.blockers;
+  state.data.blockers=dataBlockers.filter(function(b){return allowed.has(Number(b.stageGate));});
+  try{return uxRenderAllBlockers();}finally{state.data.blockers=dataBlockers;state.dimension=originalDimension;}
+};
+
+var uxRouteFromHash=routeFromHash;
+routeFromHash=function(){
+  var hash=location.hash||"#home";
+  if(hash==="#timeline"){window.location.replace("./timeline/");return;}
+  var m=hash.match(/^#domain\/([^/]+)(?:\/blocker\/(\d+))?(?:\/enabler\/(\d+))?$/);
+  if(!m)return uxRouteFromHash();
+  state.route="domain";state.domain=m[1];state.openBlocker=m[2]?Number(m[2]):null;
+  state.openEnablers.clear();state.openDependencies.clear();
+  if(m[2]&&m[3]){
+    state.openEnablers.add(m[2]+":"+m[3]);
+    var deepRel=state.data.relationships.find(function(r){return r.blockerId===Number(m[2])&&r.enablerId===Number(m[3]);});
+    if(deepRel)state.expandedEnablerLimit[m[2]+"-"+deepRel.mechanism]=999;
+  }
+  state.highlightBlocker=state.openBlocker;
+  render();
+  if(state.openBlocker){
+    var id=state.openBlocker;
+    var enablerId=m[3]?Number(m[3]):null;
+    setTimeout(function(){
+      var el=document.querySelector('[data-blocker-card="'+id+'"]');
+      var target=enablerId?document.querySelector('[data-toggle-enabler="'+id+':'+enablerId+'"]'):null;
+      if(el)el.classList.add("flash");
+      if(target){var card=target.closest(".enabler-card");if(card)card.classList.add("flash");uxScrollTo(target,"start");}
+      else uxScrollTo(el,"start");
+      setTimeout(function(){if(el)el.classList.remove("flash");var card=target&&target.closest(".enabler-card");if(card)card.classList.remove("flash");},1350);
+      state.highlightBlocker=null;
+    },70);
+  }
+};
+focusBlocker=function(id,remember){
+  if(remember===undefined)remember=true;
+  var target=blockerById(id);if(!target)return;
+  if(remember&&state.openBlocker&&state.openBlocker!==target.id)state.blockerHistory.push(state.openBlocker);
+  var hash="#domain/"+target.domain+"/blocker/"+target.id;
+  if(location.hash===hash)routeFromHash();else location.hash=hash;
+};
+function uxFocusEnabler(id){
+  var rel=state.data.relationships.find(function(r){return r.enablerId===Number(id);});
+  var blocker=rel?blockerById(rel.blockerId):null;
+  if(blocker){
+    var hash="#domain/"+blocker.domain+"/blocker/"+blocker.id+"/enabler/"+id;
+    if(location.hash===hash)routeFromHash();else location.hash=hash;
+    return;
+  }
+  location.hash="#all-enablers";
+}
+function uxBackBlocker(){
+  var id=state.blockerHistory.pop();if(id)focusBlocker(id,false);
+}
+
+var uxBindBlockerEvents=bindBlockerEvents;
+bindBlockerEvents=function(){
+  uxBindBlockerEvents();
+  var detail=state.openBlocker?document.querySelector('[data-blocker-card="'+state.openBlocker+'"] .detail-actions'):null;
+  if(detail&&state.blockerHistory.length&&!detail.querySelector("[data-blocker-back]")){
+    var back=document.createElement("button");back.className="back-btn";back.setAttribute("data-blocker-back","");back.title="Back";back.setAttribute("aria-label","Back");back.innerHTML=icon("back");
+    back.onclick=function(e){e.stopPropagation();uxBackBlocker();};detail.prepend(back);
+  }
+  uxEnhanceView();
+};
+
+var uxUpdateSearch=updateSearch;
+updateSearch=function(q){
+  uxUpdateSearch(q);
+  var query=(q||"").trim().toLowerCase();
+  if(!query)return;
+  var es=state.data.enablers.filter(function(e){return [e.title,e.description,e.practicalActions].join(" ").toLowerCase().includes(query);});
+  var sections=Array.from(document.querySelectorAll("#searchResults .search-section"));
+  sections.forEach(function(section){
+    var h=section.querySelector("h4");if(!h)return;
+    var results=Array.from(section.querySelectorAll(".search-result"));
+    if(h.textContent==="Blockers"){
+      results.forEach(function(r){
+        r.setAttribute("role","button");r.tabIndex=0;
+        var id=Number(r.dataset.searchBlocker),b=blockerById(id);
+        if(b&&!r.querySelector(".stage-badge"))r.insertBefore(uxStageBadgeNode(b),r.firstChild);
+        r.onclick=function(){closeModal();focusBlocker(id,false);};
+        r.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();r.click();}};
+      });
+    }
+    if(h.textContent==="Enablers"){
+      results.forEach(function(r,i){
+        var e=es[i];if(!e)return;
+        r.setAttribute("role","button");r.tabIndex=0;r.dataset.searchEnabler=e.id;
+        r.onclick=function(){closeModal();uxFocusEnabler(e.id);};
+        r.onkeydown=function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();r.click();}};
+      });
+    }
+  });
+};
+
+var uxRenderSelection=renderSelection;
+renderSelection=function(){
+  uxRenderSelection();
+  var bs=state.bookmarks.blockers.map(function(id){return state.data.blockers.find(function(b){return b.id===id;});}).filter(Boolean);
+  var es=state.bookmarks.enablers.map(function(id){return state.data.enablers.find(function(e){return e.id===id;});}).filter(Boolean);
+  var sections=document.querySelectorAll(".selection-section");
+  if(sections[0]){
+    Array.from(sections[0].querySelectorAll(".selection-item")).forEach(function(item,i){
+      var b=bs[i];if(!b)return;
+      var main=item.firstElementChild;main.classList.add("selection-main");main.setAttribute("role","button");main.tabIndex=0;
+      var meta=document.createElement("div");meta.className="selection-meta";meta.appendChild(uxStageBadgeNode(b));
+      var domain=state.data.domains.find(function(d){return d.slug===b.domain;});
+      if(domain){var span=document.createElement("span");span.textContent=domain.title;meta.appendChild(span);}
+      main.insertBefore(meta,main.firstChild);
+      main.onclick=function(){focusBlocker(b.id,false);};main.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();main.click();}};
+    });
+  }
+  if(sections[1]){
+    Array.from(sections[1].querySelectorAll(".selection-item")).forEach(function(item,i){
+      var e=es[i];if(!e)return;
+      var main=item.firstElementChild;main.classList.add("selection-main");main.setAttribute("role","button");main.tabIndex=0;
+      var rel=state.data.relationships.find(function(r){return r.enablerId===e.id;});
+      if(rel){var meta=document.createElement("div");meta.className="selection-meta";var span=document.createElement("span");span.textContent=rel.mechanism;meta.appendChild(span);main.insertBefore(meta,main.firstChild);}
+      main.onclick=function(){uxFocusEnabler(e.id);};main.onkeydown=function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();main.click();}};
+    });
+  }
+  document.querySelectorAll(".selection-item .remove-btn").forEach(function(btn){btn.addEventListener("click",function(e){e.stopPropagation();});});
+  uxEnhanceView();
+};
+
+var uxToggleBookmark=toggleBookmark;
+toggleBookmark=function(type,id){
+  uxToggleBookmark(type,id);
+  updateBookmarkCount();
+};
+
+var UX_ASSESSMENT_DRAFT_KEY="aistCompanyAssessmentDraftV1";
+try{
+  var uxDraft=JSON.parse(localStorage.getItem(UX_ASSESSMENT_DRAFT_KEY)||"null");
+  if(uxDraft&&uxDraft.view==="question"&&uxDraft.answers)companyAssessmentSession=uxDraft;
+}catch(e){}
+var uxRenderAssessmentQuestion=renderCompanyAssessmentQuestion;
+renderCompanyAssessmentQuestion=function(){
+  try{localStorage.setItem(UX_ASSESSMENT_DRAFT_KEY,JSON.stringify({view:"question",step:companyAssessmentSession.step,answers:companyAssessmentSession.answers}));}catch(e){}
+  var result=uxRenderAssessmentQuestion();
+  document.querySelectorAll(".assessment-option").forEach(function(btn){btn.setAttribute("aria-pressed",btn.classList.contains("selected")?"true":"false");});
+  var trace=document.getElementById("traceToggle");
+  if(trace){trace.setAttribute("aria-expanded","false");trace.setAttribute("aria-controls","traceBody");trace.addEventListener("click",function(){var body=document.getElementById("traceBody");trace.setAttribute("aria-expanded",body&&body.hidden?"false":"true");});}
+  return result;
+};
+var uxRenderAssessmentResults=renderCompanyAssessmentResults;
+renderCompanyAssessmentResults=function(result){
+  try{localStorage.removeItem(UX_ASSESSMENT_DRAFT_KEY);}catch(e){}
+  return uxRenderAssessmentResults(result);
+};
+
+window.addEventListener("storage",function(e){
+  if(e.key==="aistExplorerBookmarks"){state.bookmarks=loadBookmarks();updateBookmarkCount();if(state.route==="selection")renderSelection();}
+});
+
+var uxRender=render;
+render=function(){
+  var result=uxRender();
+  uxEnhanceView();
+  return result;
+};
+
+var uxInit=init;
+init=async function(){
+  await uxInit();
+  if(new URLSearchParams(location.search).get("search")==="1"){
+    setTimeout(openSearch,0);
+    var url=new URL(location.href);url.searchParams.delete("search");
+    history.replaceState(null,"",url.pathname+(url.search||"")+url.hash);
+  }
+};
+
 
 init().catch(err => {
   console.error(err);
