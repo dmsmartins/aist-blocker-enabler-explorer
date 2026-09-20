@@ -2050,18 +2050,22 @@ function uxActivateModal(dialog){
   document.body.classList.add("modal-open");
   dialog.setAttribute("role","dialog");
   dialog.setAttribute("aria-modal","true");
+  var heading=dialog.querySelector("h3");
+  if(heading){if(!heading.id)heading.id="ux-modal-title";dialog.setAttribute("aria-labelledby",heading.id);}
   var close=dialog.querySelector(".close-modal");
   if(close){close.setAttribute("aria-label","Close");close.title="Close";}
+  function focusable(){return Array.from(dialog.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])')).filter(function(x){return !x.hidden&&x.offsetParent!==null;});}
   uxModalKeyHandler=function(e){
     if(e.key==="Escape"){e.preventDefault();closeModal();return;}
     if(e.key!=="Tab")return;
-    var items=Array.from(dialog.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])')).filter(function(x){return !x.hidden&&x.offsetParent!==null;});
-    if(!items.length)return;
+    var items=focusable();if(!items.length)return;
     var first=items[0],last=items[items.length-1];
-    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    if(!dialog.contains(document.activeElement)){e.preventDefault();first.focus();}
+    else if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
     else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
   };
   document.addEventListener("keydown",uxModalKeyHandler);
+  requestAnimationFrame(function(){if(!dialog.contains(document.activeElement)){var items=focusable();if(items[0])items[0].focus();}});
 }
 var uxCloseModal=closeModal;
 closeModal=function(){
