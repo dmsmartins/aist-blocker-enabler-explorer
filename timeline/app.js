@@ -1,7 +1,7 @@
 import React,{useEffect,useMemo,useState,useCallback,useRef} from "https://esm.sh/react@18.3.1";
 import {createRoot} from "https://esm.sh/react-dom@18.3.1/client";
 import htm from "https://esm.sh/htm@3.1.1";
-import {ReactFlow,ReactFlowProvider,Background,Controls,Handle,Position,MarkerType,useReactFlow,useNodesInitialized} from "https://esm.sh/@xyflow/react@12?deps=react@18.3.1,react-dom@18.3.1";
+import {ReactFlow,ReactFlowProvider,Background,Controls,Handle,Position,MarkerType,useReactFlow} from "https://esm.sh/@xyflow/react@12?deps=react@18.3.1,react-dom@18.3.1";
 
 const html=htm.bind(React.createElement);
 const MECH_COLORS={Frame:"#6e68d8",Commit:"#c67b2b",Equip:"#2478b5",Assure:"#a05486",Operate:"#27865e",Learn:"#73883c"};
@@ -61,7 +61,6 @@ const nodeTypes={stage:StageNode,blocker:BlockerNode,mechanism:MechanismNode,ena
 
 function AppCanvas({data}){
   const flow=useReactFlow();
-  const nodesInitialized=useNodesInitialized();
   const lastFocusedBlocker=useRef(null);
   const [savedCount,setSavedCount]=useState(()=>{try{const x=JSON.parse(localStorage.getItem("aistExplorerBookmarks")||"{\"blockers\":[],\"enablers\":[]}");return (x.blockers?.length||0)+(x.enablers?.length||0)}catch{return 0}});
   const [zoom,setZoom]=useState(.72);
@@ -166,10 +165,11 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
   },[data,selectedGate,selectedBlocker,detailOpen,selectedMechanism,selectedEnabler,zoom,domains,dependencyContext,mechanismGroups,openDeepDive,assessmentMode,showCompleted,blockerStatus,gateAssessment]);
 
   useEffect(()=>{
-    if(!nodesInitialized)return;
-    let raf2=0;
-    const raf1=requestAnimationFrame(()=>{raf2=requestAnimationFrame(()=>{
+    let cancelled=false,raf2=0,retry=0;
+    const fit=()=>{
+      if(cancelled)return;
       const all=flow.getNodes();
+      if(!all.length){retry=setTimeout(fit,60);return;}
       let focus=[];
       const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const phone=window.innerWidth<600;
@@ -192,9 +192,10 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
         minZoom:selectedBlocker?(phone?.88:.56):selectedGate?(phone?.78:tablet?.64:.52):(phone?.76:tablet?.62:.48),
         maxZoom:selectedBlocker?(phone?1.02:1.05):selectedGate?(phone?.96:.92):(phone?.92:.90)
       });
-    })});
-    return()=>{cancelAnimationFrame(raf1);if(raf2)cancelAnimationFrame(raf2)};
-  },[nodesInitialized,selectedGate,selectedBlocker,detailOpen,showCompleted]);
+    };
+    const raf1=requestAnimationFrame(()=>{raf2=requestAnimationFrame(fit)});
+    return()=>{cancelled=true;cancelAnimationFrame(raf1);if(raf2)cancelAnimationFrame(raf2);if(retry)clearTimeout(retry)};
+  },[selectedGate,selectedBlocker,detailOpen,showCompleted,graph.nodes.length]);
 
   const reset=()=>{setSelectedGate(null);setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)};
   const back=()=>{if(selectedEnabler){setSelectedEnabler(null);return}if(selectedMechanism){setSelectedMechanism(null);return}if(detailOpen){closeDetail();return}if(selectedBlocker){setSelectedBlocker(null);return}if(selectedGate){setSelectedGate(null)}};
@@ -254,7 +255,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       <div className=${"intro"+(selectedGate?" compact":"")}><div className="eyebrow">${assessmentMode?"Assessment result · illustrative":"Semantic zoom"}</div><h1>${assessmentMode?(selectedGate?"Focus on what remains.":"Your AI scalability path."):(selectedGate?"Keep exploring.":"Start with the lifecycle.")}</h1><p>${assessmentMode?(selectedGate?"Resolved blockers are hidden by default. Open a remaining blocker to explore dependencies and enablers.":"Done gates have all currently mapped blockers resolved. Other gates show what remains."):(selectedGate?"Pan and zoom freely. Click a blocker to focus it, then use the + button on the central blocker to open details and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it.")}</p></div>
       <div className="depth"><span>Overview</span><i></i><span>Deep dive</span></div>
       <div className="flow-wrap">
-        <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.35} maxZoom=${1.7} fitView fitViewOptions=${{padding:.08,maxZoom:.96}} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
+        <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.35} maxZoom=${1.7} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
           <${Background} gap=${32} size=${1} color="#d9e5ec" />
           <${Controls} showInteractive=${false} position="bottom-left" />
         </${ReactFlow}>
