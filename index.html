@@ -778,8 +778,17 @@ body.modal-open{overflow:hidden}
   .stage-rail{grid-template-columns:repeat(6,minmax(158px,1fr));gap:0}
   .stage-rail::before{display:block;left:79px;right:79px}
 }
+@media(max-width:760px){
+  .topbar{grid-template-columns:auto minmax(0,1fr) auto;padding:0 12px;gap:6px}
+  .brand>span:last-child{display:none}
+  .main-nav{min-width:0;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:none;gap:0}
+  .main-nav::-webkit-scrollbar{display:none}
+  .main-nav button,.main-nav .timeline-nav-link{flex:0 0 auto;padding:0 9px;white-space:nowrap}
+  .topbar-actions{min-width:0;gap:4px}
+  .icon-btn{min-width:42px;min-height:42px}
+}
 @media(max-width:600px){
-  .topbar{padding:0 12px;gap:8px}
+  .topbar{padding:0 10px;gap:5px}
   .main-nav button,.main-nav .timeline-nav-link{padding:0 8px;font-size:12px}
   .brand>span:last-child{display:none}
   .page{width:min(100% - 28px,1180px);padding-top:34px}
