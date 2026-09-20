@@ -39,3 +39,115 @@
 .stage-node.assessment-empty{opacity:.62}.stage-node.assessment-active .stage-count{color:#2d7fae}
 .blocker-node.status-resolved{border-color:#c4dfcc;background:#fbfefc}.blocker-node.status-partial{border-color:#e5d7aa;background:#fffdf7}.blocker-node.status-open{border-color:#d4e2eb}.assessment-status{display:inline-flex;margin:-1px 0 7px;border-radius:14px;padding:4px 7px;font-size:8.5px;font-weight:850;text-transform:uppercase;letter-spacing:.06em;background:#eef3f6;color:#607888}.status-resolved .assessment-status{background:#e5f4e9;color:#3c8253}.status-partial .assessment-status{background:#f7f0d8;color:#9a7725}.status-open .assessment-status{background:#edf5fa;color:#2c76a4}
 .ghost-top.active-toggle{background:rgba(110,188,139,.18);border-color:rgba(160,222,182,.35)}
+
+
+/* TIMELINE-UX-A11Y */
+.brand{color:inherit;text-decoration:none;cursor:pointer}
+.workspace{
+  position:relative;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);
+  grid-template-rows:auto minmax(0,1fr);gap:10px;padding:14px 16px 16px;overflow:hidden
+}
+.workspace.detail-open{grid-template-columns:minmax(0,1fr) minmax(340px,410px)}
+.intro{
+  position:relative;z-index:20;top:auto;left:auto;grid-column:1;grid-row:1;
+  width:min(520px,100%);padding:14px 16px;box-shadow:0 8px 26px rgba(19,54,79,.05)
+}
+.depth{
+  position:relative;z-index:21;top:auto;right:auto;grid-column:1;grid-row:1;
+  justify-self:end;align-self:start;margin:3px 3px 0 0
+}
+.flow-wrap{
+  position:relative;inset:auto;grid-column:1;grid-row:2;min-height:0;overflow:hidden;
+  border:1px solid rgba(213,227,236,.78);border-radius:17px;background:rgba(255,255,255,.24)
+}
+.workspace.detail-open .flow-wrap{grid-column:1}
+.inspector{
+  position:relative;z-index:30;right:auto;top:auto;bottom:auto;grid-column:2;grid-row:1/3;
+  width:auto;min-width:0;margin:0;height:100%;max-height:100%
+}
+.hint{
+  position:relative;z-index:19;left:auto;top:auto;bottom:auto;transform:none;grid-column:1;grid-row:1;
+  justify-self:center;align-self:end;max-width:300px;margin-left:500px;margin-right:170px;
+  padding:8px 12px;background:transparent;border:0;backdrop-filter:none
+}
+.breadcrumbs{left:28px;bottom:28px;max-width:calc(100% - 245px)}
+.workspace.detail-open .breadcrumbs{max-width:calc(100% - 475px)}
+.zoom-readout{right:28px;bottom:30px}
+.workspace.detail-open .zoom-readout{right:438px}
+.icon-top{
+  position:relative;width:36px;height:36px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.035);border-radius:9px;color:#fff;text-decoration:none;flex:0 0 auto
+}
+.icon-top:hover{background:rgba(255,255,255,.1)}
+.icon-top svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.saved-count{
+  position:absolute;right:-4px;top:-5px;min-width:16px;height:16px;padding:0 4px;display:grid;place-items:center;
+  border-radius:9px;background:#45a3ff;color:#fff;font-size:8px;font-weight:850;border:2px solid var(--navy)
+}
+.stage-node.dimmed{opacity:.34;filter:saturate(.65)}
+.stage-node[role="button"]:focus-visible,.blocker-node[role="button"]:focus-visible,
+.mechanism-node[role="button"]:focus-visible,.enabler-node[role="button"]:focus-visible{
+  outline:3px solid rgba(25,118,185,.42);outline-offset:4px
+}
+.blocker-node.selected{
+  border-width:2px;border-color:#237bb5;
+  box-shadow:0 0 0 8px rgba(41,129,190,.09),0 20px 50px rgba(24,61,86,.15)
+}
+.deep-dive-plus{min-height:44px;padding:10px 12px}
+.close-inspector{min-width:40px;min-height:40px}
+.close-inspector:focus-visible,.ghost-top:focus-visible,.top-link:focus-visible,.icon-top:focus-visible,
+.breadcrumbs button:focus-visible,.mech-chip:focus-visible,.deep-button:focus-visible{
+  outline:3px solid rgba(69,163,255,.48);outline-offset:2px
+}
+.timeline-loading{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;gap:11px;
+  font-family:system-ui;color:#587185
+}
+.loading-spinner{
+  width:22px;height:22px;border-radius:50%;border:2px solid #d3e1ea;border-top-color:#1976b9;
+  animation:timelineSpin .7s linear infinite
+}
+@keyframes timelineSpin{to{transform:rotate(360deg)}}
+.react-flow__node{outline:none}
+.react-flow__controls-button{min-width:32px;min-height:32px}
+@media(max-width:1100px){
+  .hint{display:none}
+  .intro{width:min(480px,calc(100% - 180px))}
+}
+@media(max-width:900px){
+  .topbar{grid-template-columns:auto minmax(0,1fr);padding:0 12px;gap:8px}
+  .brand>span:last-child{display:none}
+  .top-actions{justify-self:stretch;justify-content:flex-end;min-width:0;overflow-x:auto;scrollbar-width:none}
+  .top-actions::-webkit-scrollbar{display:none}
+  .top-link,.ghost-top{white-space:nowrap}
+  .workspace,.workspace.detail-open{
+    grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(190px,42%) minmax(0,1fr);
+    padding:10px;gap:8px
+  }
+  .workspace:not(.detail-open){grid-template-rows:auto minmax(0,1fr)}
+  .intro{grid-column:1;grid-row:1;width:100%;max-width:none;top:auto;left:auto;padding:11px 13px}
+  .intro h1{font-size:18px}.intro p{font-size:11px}
+  .depth{display:none}
+  .flow-wrap,.workspace.detail-open .flow-wrap{grid-column:1;grid-row:2}
+  .inspector{
+    position:relative;right:auto;top:auto;bottom:auto;grid-column:1;grid-row:3;width:100%;height:100%;
+    max-height:none;border-radius:14px
+  }
+  .breadcrumbs{left:20px;bottom:20px;max-width:calc(100% - 135px)}
+  .workspace.detail-open .breadcrumbs{left:20px;bottom:calc(58% + 18px);max-width:calc(100% - 135px)}
+  .zoom-readout,.workspace.detail-open .zoom-readout{right:20px}
+  .workspace.detail-open .zoom-readout{bottom:calc(58% + 20px)}
+}
+@media(max-width:600px){
+  .top-actions{gap:5px}
+  .ghost-top,.top-link{padding:7px 8px;font-size:10.5px}
+  .icon-top{width:34px;height:34px}
+  .intro p{line-height:1.4}
+  .stage-node{width:220px}
+  .blocker-node{width:240px}.blocker-node.selected{width:290px}
+  .breadcrumbs{max-width:calc(100% - 120px);overflow:hidden;white-space:nowrap;flex-wrap:nowrap}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .loading-spinner{animation:none;border-top-color:#d3e1ea}
+}
