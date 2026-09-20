@@ -20,7 +20,7 @@ function readCompanyAssessment(){
 
 function StageNode({data}){
   const {gate,count,selected,assessmentState,remaining}=data;
-  const cls="stage-node"+(selected?" selected":"")+(assessmentState?` assessment-${assessmentState}`:"");
+  const cls="stage-node"+(selected?" selected":"")+(count===0?" empty":"")+(assessmentState?` assessment-${assessmentState}`:"");
   const countLabel=assessmentState==="done"?"✓ Done":assessmentState==="empty"?"No blockers mapped":assessmentState?`${remaining} remaining`:`${count} blocker${count===1?"":"s"}`;
   return html`<div className=${cls+(data.dimmed?" dimmed":"")} role="button" tabIndex="0" aria-pressed=${selected?"true":"false"} onKeyDown=${e=>{if((e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}>
     <${Handle} type="target" position=${Position.Left} style=${{opacity:0}} />
@@ -33,7 +33,7 @@ function BlockerNode({data}){
   const {blocker,selected,domainTitle,zoom,relationLabel,status}=data;
   const showStatement=selected||zoom>0.92;
   const statusCls=status?` status-${status}`:"";
-  return html`<div className=${"blocker-node"+(selected?" selected":"")+statusCls+(data.dimmed?" dimmed":"")} role="button" tabIndex="0" data-blocker-node=${blocker.id} aria-pressed=${selected?"true":"false"} onKeyDown=${e=>{if((e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}>
+  return html`<div className=${"blocker-node"+(selected?" selected":"")+statusCls+(data.dimmed?" dimmed":"")} role=${selected?"group":"button"} tabIndex=${selected?-1:0} data-blocker-node=${blocker.id} aria-pressed=${selected?undefined:"false"} onKeyDown=${e=>{if(!selected&&(e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}>
     <${Handle} type="target" position=${Position.Left} style=${{opacity:0}} />
     <div className="node-kicker"><span>Gate ${blocker.stageGate} · ${domainTitle}</span><span>${relationLabel||""}</span></div>
     ${status?html`<div className="assessment-status">${status==="resolved"?"✓ Resolved":status==="partial"?"◐ Partial":"● Open"}</div>`:null}
@@ -74,7 +74,7 @@ function AppCanvas({data}){
   const assessment=useMemo(()=>readCompanyAssessment(),[]);
   const assessmentMode=!!assessment;
   useEffect(()=>{const sync=()=>{try{const x=JSON.parse(localStorage.getItem("aistExplorerBookmarks")||"{\"blockers\":[],\"enablers\":[]}");setSavedCount((x.blockers?.length||0)+(x.enablers?.length||0))}catch{setSavedCount(0)}};window.addEventListener("storage",sync);return()=>window.removeEventListener("storage",sync)},[]);
-  const stageX=id=>(id-1)*300;
+  const stageX=id=>(id-1)*270;
   const domains=useMemo(()=>Object.fromEntries(data.domains.map(d=>[d.slug,d.title])),[data]);
 const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[assessment]);
   const gateAssessment=useCallback(gateId=>{
@@ -234,6 +234,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
           <${Controls} showInteractive=${false} position="bottom-left" />
         </${ReactFlow}>
       </div>
+      ${!nodesInitialized?html`<div className="canvas-loading" aria-hidden="true"><span className="loading-spinner"></span></div>`:null}
       ${!selectedGate?html`<div className="hint"><strong>${assessmentMode?"Your personalised timeline":"Click a Stage Gate"}</strong><span>${assessmentMode?"Open a gate to explore remaining blockers.":"Then keep zooming into what interests you."}</span></div>`:null}
       <div className="breadcrumbs"><button onClick=${reset}>Timeline</button>${crumbs.map((c,i)=>html`<${React.Fragment} key=${i}><i>›</i>${c.action?html`<button onClick=${c.action}>${c.label}</button>`:html`<span>${c.label}</span>`}</${React.Fragment}>`)}</div>
       <div className="zoom-readout">Zoom ${Math.round(zoom*100)}%</div>
