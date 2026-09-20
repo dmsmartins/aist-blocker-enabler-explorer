@@ -68,21 +68,14 @@ button { color: inherit; }
   justify-self: start;
 }
 .brand-mark {
-  width: 23px;
-  height: 23px;
+  width: 28px;
+  height: 28px;
   position: relative;
   display: inline-block;
+  flex: 0 0 auto;
+  background: url("assets/ai-scalability-logo.png") center/contain no-repeat;
 }
-.brand-mark span {
-  position: absolute;
-  width: 5px;
-  border-radius: 5px;
-  background: linear-gradient(180deg, #30d5c8, #3c9cff);
-  bottom: 2px;
-  transform-origin: bottom;
-}
-.brand-mark span:first-child { height: 20px; transform: rotate(29deg); left: 8px; }
-.brand-mark span:last-child { height: 16px; transform: rotate(-29deg); left: 11px; }
+.brand-mark span { display:none; }
 .main-nav { display: flex; height: 100%; align-items: stretch; gap: 8px; }
 .main-nav button, .main-nav .timeline-nav-link {
   border: 0;
