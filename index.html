@@ -752,7 +752,7 @@ body.modal-open{overflow:hidden}
 }
 .blocker-detail,.enabler-detail{animation:detailReveal .18s ease both}
 @keyframes detailReveal{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-.blocker-card.flash{animation:blockerFlash 1.35s ease both}
+.blocker-card.flash,.enabler-card.flash{animation:blockerFlash 1.35s ease both}
 @keyframes blockerFlash{
   0%,100%{box-shadow:0 9px 25px rgba(16,42,67,.05)}
   35%{box-shadow:0 0 0 5px rgba(20,121,210,.10),0 12px 30px rgba(16,42,67,.08)}
@@ -2157,14 +2157,23 @@ routeFromHash=function(){
   if(!m)return uxRouteFromHash();
   state.route="domain";state.domain=m[1];state.openBlocker=m[2]?Number(m[2]):null;
   state.openEnablers.clear();state.openDependencies.clear();
-  if(m[2]&&m[3])state.openEnablers.add(m[2]+":"+m[3]);
+  if(m[2]&&m[3]){
+    state.openEnablers.add(m[2]+":"+m[3]);
+    var deepRel=state.data.relationships.find(function(r){return r.blockerId===Number(m[2])&&r.enablerId===Number(m[3]);});
+    if(deepRel)state.expandedEnablerLimit[m[2]+"-"+deepRel.mechanism]=999;
+  }
   state.highlightBlocker=state.openBlocker;
   render();
   if(state.openBlocker){
     var id=state.openBlocker;
+    var enablerId=m[3]?Number(m[3]):null;
     setTimeout(function(){
       var el=document.querySelector('[data-blocker-card="'+id+'"]');
-      if(el){el.classList.add("flash");uxScrollTo(el,"start");setTimeout(function(){el.classList.remove("flash");},1350);}
+      var target=enablerId?document.querySelector('[data-toggle-enabler="'+id+':'+enablerId+'"]'):null;
+      if(el)el.classList.add("flash");
+      if(target){var card=target.closest(".enabler-card");if(card)card.classList.add("flash");uxScrollTo(target,"start");}
+      else uxScrollTo(el,"start");
+      setTimeout(function(){if(el)el.classList.remove("flash");var card=target&&target.closest(".enabler-card");if(card)card.classList.remove("flash");},1350);
       state.highlightBlocker=null;
     },70);
   }
