@@ -1,7 +1,7 @@
-import React,{useEffect,useMemo,useState,useCallback} from "https://esm.sh/react@18.3.1";
+import React,{useEffect,useMemo,useState,useCallback,useRef} from "https://esm.sh/react@18.3.1";
 import {createRoot} from "https://esm.sh/react-dom@18.3.1/client";
 import htm from "https://esm.sh/htm@3.1.1";
-import {ReactFlow,ReactFlowProvider,Background,Controls,Handle,Position,MarkerType,useReactFlow} from "https://esm.sh/@xyflow/react@12?deps=react@18.3.1,react-dom@18.3.1";
+import {ReactFlow,ReactFlowProvider,Background,Controls,Handle,Position,MarkerType,useReactFlow,useNodesInitialized} from "https://esm.sh/@xyflow/react@12?deps=react@18.3.1,react-dom@18.3.1";
 
 const html=htm.bind(React.createElement);
 const MECH_COLORS={Frame:"#6e68d8",Commit:"#c67b2b",Equip:"#2478b5",Assure:"#a05486",Operate:"#27865e",Learn:"#73883c"};
@@ -22,7 +22,7 @@ function StageNode({data}){
   const {gate,count,selected,assessmentState,remaining}=data;
   const cls="stage-node"+(selected?" selected":"")+(assessmentState?` assessment-${assessmentState}`:"");
   const countLabel=assessmentState==="done"?"✓ Done":assessmentState==="empty"?"No blockers mapped":assessmentState?`${remaining} remaining`:`${count} blocker${count===1?"":"s"}`;
-  return html`<div className=${cls}>
+  return html`<div className=${cls+(data.dimmed?" dimmed":"")} role="button" tabIndex="0" aria-pressed=${selected?"true":"false"} onKeyDown=${e=>{if((e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}>
     <${Handle} type="target" position=${Position.Left} style=${{opacity:0}} />
     <div className="stage-top"><span className="stage-number">${assessmentState==="done"?"✓":gate.id}</span><span className="stage-count">${countLabel}</span></div>
     <strong>${gate.label}</strong><p>${data.zoom>0.62?(assessmentState==="done"?"All mapped blockers were marked resolved.":assessmentState==="empty"?"No blockers are currently mapped to this gate.":"Click to reveal the blockers at this stage."):""}</p>
@@ -33,7 +33,7 @@ function BlockerNode({data}){
   const {blocker,selected,domainTitle,zoom,relationLabel,status}=data;
   const showStatement=selected||zoom>0.92;
   const statusCls=status?` status-${status}`:"";
-  return html`<div className=${"blocker-node"+(selected?" selected":"")+statusCls}>
+  return html`<div className=${"blocker-node"+(selected?" selected":"")+statusCls+(data.dimmed?" dimmed":"")} role="button" tabIndex="0" data-blocker-node=${blocker.id} aria-pressed=${selected?"true":"false"} onKeyDown=${e=>{if((e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}>
     <${Handle} type="target" position=${Position.Left} style=${{opacity:0}} />
     <div className="node-kicker"><span>Gate ${blocker.stageGate} · ${domainTitle}</span><span>${relationLabel||""}</span></div>
     ${status?html`<div className="assessment-status">${status==="resolved"?"✓ Resolved":status==="partial"?"◐ Partial":"● Open"}</div>`:null}
@@ -45,14 +45,14 @@ function BlockerNode({data}){
 }
 function MechanismNode({data}){
   const color=MECH_COLORS[data.mechanism]||"#397db0";
-  return html`<div className=${"mechanism-node"+(data.selected?" selected":"")} style=${{"--mech":color}}>
+  return html`<div className=${"mechanism-node"+(data.selected?" selected":"")} style=${{"--mech":color}} role="button" tabIndex="0" aria-pressed=${data.selected?"true":"false"} onKeyDown=${e=>{if((e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}>
     <${Handle} type="target" position=${Position.Top} style=${{opacity:0}} />
     <div className="mech-top"><strong>${data.mechanism}</strong><span>${data.count}</span></div><p>${data.description}</p>
     <${Handle} type="source" position=${Position.Bottom} style=${{opacity:0}} />
   </div>`;
 }
 function EnablerNode({data}){
-  return html`<div className=${"enabler-node"+(data.selected?" selected":"")}>
+  return html`<div className=${"enabler-node"+(data.selected?" selected":"")} role="button" tabIndex="0" aria-pressed=${data.selected?"true":"false"} onKeyDown=${e=>{if((e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}>
     <${Handle} type="target" position=${Position.Top} style=${{opacity:0}} />
     <div className="mini-label">${data.mechanism} enabler</div><strong>${data.enabler.title}</strong><p>${truncate(data.enabler.description,110)}</p>
   </div>`;
@@ -61,6 +61,9 @@ const nodeTypes={stage:StageNode,blocker:BlockerNode,mechanism:MechanismNode,ena
 
 function AppCanvas({data}){
   const flow=useReactFlow();
+  const nodesInitialized=useNodesInitialized();
+  const lastFocusedBlocker=useRef(null);
+  const [savedCount,setSavedCount]=useState(()=>{try{const x=JSON.parse(localStorage.getItem("aistExplorerBookmarks")||"{\"blockers\":[],\"enablers\":[]}");return (x.blockers?.length||0)+(x.enablers?.length||0)}catch{return 0}});
   const [zoom,setZoom]=useState(.72);
   const [selectedGate,setSelectedGate]=useState(null);
   const [selectedBlocker,setSelectedBlocker]=useState(null);
@@ -70,7 +73,7 @@ function AppCanvas({data}){
   const [showCompleted,setShowCompleted]=useState(false);
   const assessment=useMemo(()=>readCompanyAssessment(),[]);
   const assessmentMode=!!assessment;
-  const stageX=id=>(id-1)*430;
+  const stageX=id=>(id-1)*300;
   const domains=useMemo(()=>Object.fromEntries(data.domains.map(d=>[d.slug,d.title])),[data]);
 const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[assessment]);
   const gateAssessment=useCallback(gateId=>{
