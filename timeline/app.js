@@ -66,6 +66,7 @@ function AppCanvas({data}){
   const [savedCount,setSavedCount]=useState(()=>{try{const x=JSON.parse(localStorage.getItem("aistExplorerBookmarks")||"{\"blockers\":[],\"enablers\":[]}");return (x.blockers?.length||0)+(x.enablers?.length||0)}catch{return 0}});
   const [zoom,setZoom]=useState(.72);
   const [graphReady,setGraphReady]=useState(false);
+  const readyTimer=useRef(null);
   const [selectedGate,setSelectedGate]=useState(null);
   const [selectedBlocker,setSelectedBlocker]=useState(null);
   const [detailOpen,setDetailOpen]=useState(false);
@@ -74,6 +75,10 @@ function AppCanvas({data}){
   const [showCompleted,setShowCompleted]=useState(false);
   const assessment=useMemo(()=>readCompanyAssessment(),[]);
   const assessmentMode=!!assessment;
+  useEffect(()=>{
+    readyTimer.current=setTimeout(()=>setGraphReady(true),700);
+    return()=>{if(readyTimer.current)clearTimeout(readyTimer.current)};
+  },[]);
   useEffect(()=>{const sync=()=>{try{const x=JSON.parse(localStorage.getItem("aistExplorerBookmarks")||"{\"blockers\":[],\"enablers\":[]}");setSavedCount((x.blockers?.length||0)+(x.enablers?.length||0))}catch{setSavedCount(0)}};window.addEventListener("storage",sync);return()=>window.removeEventListener("storage",sync)},[]);
   const compactViewport=window.innerWidth<700;
   const stageX=id=>(id-1)*(compactViewport?240:270);
@@ -162,6 +167,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
   },[data,selectedGate,selectedBlocker,detailOpen,selectedMechanism,selectedEnabler,zoom,domains,dependencyContext,mechanismGroups,openDeepDive,assessmentMode,showCompleted,blockerStatus,gateAssessment]);
 
   useEffect(()=>{
+    if(flow.getNodes().length) setGraphReady(true);
     if(!nodesInitialized)return;
     let raf2=0;
     const raf1=requestAnimationFrame(()=>{raf2=requestAnimationFrame(()=>{
@@ -249,7 +255,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       <div className=${"intro"+(selectedGate?" compact":"")}><div className="eyebrow">${assessmentMode?"Assessment result · illustrative":"Semantic zoom"}</div><h1>${assessmentMode?(selectedGate?"Focus on what remains.":"Your AI scalability path."):(selectedGate?"Keep exploring.":"Start with the lifecycle.")}</h1><p>${assessmentMode?(selectedGate?"Resolved blockers are hidden by default. Open a remaining blocker to explore dependencies and enablers.":"Done gates have all currently mapped blockers resolved. Other gates show what remains."):(selectedGate?"Pan and zoom freely. Click a blocker to focus it, then use the + button on the central blocker to open details and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it.")}</p></div>
       <div className="depth"><span>Overview</span><i></i><span>Deep dive</span></div>
       <div className="flow-wrap">
-        <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.35} maxZoom=${1.7} fitView fitViewOptions=${{padding:.08,maxZoom:.96}} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
+        <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.35} maxZoom=${1.7} fitView fitViewOptions=${{padding:.08,maxZoom:.96}} onInit=${()=>setGraphReady(true)} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
           <${Background} gap=${32} size=${1} color="#d9e5ec" />
           <${Controls} showInteractive=${false} position="bottom-left" />
         </${ReactFlow}>
