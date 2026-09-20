@@ -2173,12 +2173,17 @@ focusBlocker=function(id,remember){
   if(remember===undefined)remember=true;
   var target=blockerById(id);if(!target)return;
   if(remember&&state.openBlocker&&state.openBlocker!==target.id)state.blockerHistory.push(state.openBlocker);
-  location.hash="#domain/"+target.domain+"/blocker/"+target.id;
+  var hash="#domain/"+target.domain+"/blocker/"+target.id;
+  if(location.hash===hash)routeFromHash();else location.hash=hash;
 };
 function uxFocusEnabler(id){
   var rel=state.data.relationships.find(function(r){return r.enablerId===Number(id);});
   var blocker=rel?blockerById(rel.blockerId):null;
-  if(blocker){location.hash="#domain/"+blocker.domain+"/blocker/"+blocker.id+"/enabler/"+id;return;}
+  if(blocker){
+    var hash="#domain/"+blocker.domain+"/blocker/"+blocker.id+"/enabler/"+id;
+    if(location.hash===hash)routeFromHash();else location.hash=hash;
+    return;
+  }
   location.hash="#all-enablers";
 }
 function uxBackBlocker(){
