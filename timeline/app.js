@@ -65,8 +65,6 @@ function AppCanvas({data}){
   const lastFocusedBlocker=useRef(null);
   const [savedCount,setSavedCount]=useState(()=>{try{const x=JSON.parse(localStorage.getItem("aistExplorerBookmarks")||"{\"blockers\":[],\"enablers\":[]}");return (x.blockers?.length||0)+(x.enablers?.length||0)}catch{return 0}});
   const [zoom,setZoom]=useState(.72);
-  const [graphReady,setGraphReady]=useState(false);
-  const readyTimer=useRef(null);
   const [selectedGate,setSelectedGate]=useState(null);
   const [selectedBlocker,setSelectedBlocker]=useState(null);
   const [detailOpen,setDetailOpen]=useState(false);
@@ -75,13 +73,10 @@ function AppCanvas({data}){
   const [showCompleted,setShowCompleted]=useState(false);
   const assessment=useMemo(()=>readCompanyAssessment(),[]);
   const assessmentMode=!!assessment;
-  useEffect(()=>{
-    readyTimer.current=setTimeout(()=>setGraphReady(true),700);
-    return()=>{if(readyTimer.current)clearTimeout(readyTimer.current)};
-  },[]);
   useEffect(()=>{const sync=()=>{try{const x=JSON.parse(localStorage.getItem("aistExplorerBookmarks")||"{\"blockers\":[],\"enablers\":[]}");setSavedCount((x.blockers?.length||0)+(x.enablers?.length||0))}catch{setSavedCount(0)}};window.addEventListener("storage",sync);return()=>window.removeEventListener("storage",sync)},[]);
-  const compactViewport=window.innerWidth<700;
-  const stageX=id=>(id-1)*(compactViewport?240:270);
+  const phoneViewport=window.innerWidth<600;
+  const compactViewport=window.innerWidth<900;
+  const stageX=id=>(id-1)*(phoneViewport?250:compactViewport?260:270);
   const domains=useMemo(()=>Object.fromEntries(data.domains.map(d=>[d.slug,d.title])),[data]);
 const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[assessment]);
   const gateAssessment=useCallback(gateId=>{
@@ -129,8 +124,11 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
     });
 
     if(selectedGate&&!selectedBlocker){
-      const blockers=data.blockers.filter(b=>b.stageGate===selectedGate && (!assessmentMode || showCompleted || blockerStatus(b.id)!=="resolved")),baseX=stageX(selectedGate)-(compactViewport?220:280),cols=3;
-      blockers.forEach((b,i)=>{const row=Math.floor(i/cols),col=i%cols,x=baseX+col*(compactViewport?270:300),y=205+row*160;
+      const blockers=data.blockers.filter(b=>b.stageGate===selectedGate && (!assessmentMode || showCompleted || blockerStatus(b.id)!=="resolved"));
+      const cols=phoneViewport?1:compactViewport?2:3;
+      const stepX=phoneViewport?0:compactViewport?275:300;
+      const baseX=phoneViewport?stageX(selectedGate):stageX(selectedGate)-(compactViewport?138:280);
+      blockers.forEach((b,i)=>{const row=Math.floor(i/cols),col=i%cols,x=baseX+col*stepX,y=(phoneViewport?180:195)+row*(phoneViewport?150:165);
         nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x,y},data:{blocker:b,selected:false,domainTitle:domains[b.domain]||"",zoom,status:assessmentMode?blockerStatus(b.id):null,keyboardActivate:()=>{setSelectedBlocker(b.id);setSelectedGate(b.stageGate);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}}});
         edges.push({id:`gate-blocker-${b.id}`,source:`stage-${selectedGate}`,target:`blocker-${b.id}`,...edgeBase,style:{stroke:"#d8e6ee",strokeWidth:1}});
       });
@@ -138,9 +136,10 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
 
     if(selectedBlocker){
       const b=byId(data.blockers,selectedBlocker),deps=dependencyContext(b.id);
-      nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x:760,y:350},data:{blocker:b,selected:true,domainTitle:domains[b.domain]||"",zoom,onDeepDive:openDeepDive,status:assessmentMode?blockerStatus(b.id):null,keyboardActivate:()=>openDeepDive(b)},zIndex:8});
-      const placeSide=(items,side)=>{const x=side==="up"?380:1140,label=side==="up"?"Depends on":"Depends on this";
-        items.filter(xBlock=>!assessmentMode || showCompleted || blockerStatus(xBlock.id)!=="resolved").forEach((xBlock,i)=>{const y=210+i*145;
+      const focusX=phoneViewport?stageX(b.stageGate):compactViewport?620:760;
+      nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x:focusX,y:phoneViewport?235:350},data:{blocker:b,selected:true,domainTitle:domains[b.domain]||"",zoom,onDeepDive:openDeepDive,status:assessmentMode?blockerStatus(b.id):null,keyboardActivate:()=>openDeepDive(b)},zIndex:8});
+      const placeSide=(items,side)=>{const x=phoneViewport?(side==="up"?focusX-285:focusX+315):(side==="up"?380:1140),label=side==="up"?"Depends on":"Depends on this";
+        items.filter(xBlock=>!assessmentMode || showCompleted || blockerStatus(xBlock.id)!=="resolved").forEach((xBlock,i)=>{const y=(phoneViewport?180:210)+i*(phoneViewport?138:145);
           nodes.push({id:`blocker-${xBlock.id}`,type:"blocker",position:{x,y},data:{blocker:xBlock,selected:false,domainTitle:domains[xBlock.domain]||"",zoom,relationLabel:label,status:assessmentMode?blockerStatus(xBlock.id):null,keyboardActivate:()=>{setSelectedBlocker(xBlock.id);setSelectedGate(xBlock.stageGate);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}}});
           const edge=side==="up"?{source:`blocker-${xBlock.id}`,target:`blocker-${b.id}`}:{source:`blocker-${b.id}`,target:`blocker-${xBlock.id}`};
           edges.push({id:`dep-${side}-${xBlock.id}`,...edge,...edgeBase,animated:true,style:{stroke:side==="up"?"#6e97b3":"#3b86b7",strokeWidth:1.5}});
@@ -149,15 +148,15 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       placeSide(deps.upstream,"up");placeSide(deps.downstream,"down");
 
       if(detailOpen){
-        const groups=mechanismGroups(b.id),mechanisms=data.mechanisms.filter(m=>groups[m.key]?.length),startX=760-((mechanisms.length-1)*205)/2;
+        const groups=mechanismGroups(b.id),mechanisms=data.mechanisms.filter(m=>groups[m.key]?.length),centerX=phoneViewport?focusX:760,startX=centerX-((mechanisms.length-1)*(phoneViewport?195:205))/2;
         mechanisms.forEach((m,i)=>{
-          nodes.push({id:`mechanism-${m.key}`,type:"mechanism",position:{x:startX+i*205,y:760},data:{mechanism:m.key,description:m.description,count:groups[m.key].length,selected:selectedMechanism===m.key,keyboardActivate:()=>{setSelectedMechanism(m.key);setSelectedEnabler(null)}}});
+          nodes.push({id:`mechanism-${m.key}`,type:"mechanism",position:{x:startX+i*(phoneViewport?195:205),y:phoneViewport?650:760},data:{mechanism:m.key,description:m.description,count:groups[m.key].length,selected:selectedMechanism===m.key,keyboardActivate:()=>{setSelectedMechanism(m.key);setSelectedEnabler(null)}}});
           edges.push({id:`blocker-mech-${m.key}`,source:`blocker-${b.id}`,target:`mechanism-${m.key}`,...edgeBase,style:{stroke:MECH_COLORS[m.key]||"#7a9bb1",strokeWidth:1.3}});
         });
         if(selectedMechanism&&groups[selectedMechanism]){
-          const items=groups[selectedMechanism],cols=Math.min(4,Math.max(1,items.length)),center=760,width=(cols-1)*270,base=center-width/2;
-          items.forEach((item,i)=>{const row=Math.floor(i/cols),col=i%cols;
-            nodes.push({id:`enabler-${item.enabler.id}`,type:"enabler",position:{x:base+col*270,y:1010+row*150},data:{enabler:item.enabler,mechanism:selectedMechanism,selected:selectedEnabler===item.enabler.id,keyboardActivate:()=>setSelectedEnabler(item.enabler.id)}});
+          const items=groups[selectedMechanism],enablerCols=phoneViewport?1:Math.min(4,Math.max(1,items.length)),center=centerX,width=(enablerCols-1)*(phoneViewport?250:270),base=center-width/2;
+          items.forEach((item,i)=>{const row=Math.floor(i/enablerCols),col=i%enablerCols;
+            nodes.push({id:`enabler-${item.enabler.id}`,type:"enabler",position:{x:base+col*(phoneViewport?250:270),y:(phoneViewport?890:1010)+row*(phoneViewport?145:150)},data:{enabler:item.enabler,mechanism:selectedMechanism,selected:selectedEnabler===item.enabler.id,keyboardActivate:()=>setSelectedEnabler(item.enabler.id)}});
             edges.push({id:`mech-enabler-${item.enabler.id}`,source:`mechanism-${selectedMechanism}`,target:`enabler-${item.enabler.id}`,...edgeBase,style:{stroke:MECH_COLORS[selectedMechanism]||"#7a9bb1",strokeWidth:1.1}});
           });
         }
@@ -167,32 +166,32 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
   },[data,selectedGate,selectedBlocker,detailOpen,selectedMechanism,selectedEnabler,zoom,domains,dependencyContext,mechanismGroups,openDeepDive,assessmentMode,showCompleted,blockerStatus,gateAssessment]);
 
   useEffect(()=>{
-    if(flow.getNodes().length) setGraphReady(true);
     if(!nodesInitialized)return;
     let raf2=0;
     const raf1=requestAnimationFrame(()=>{raf2=requestAnimationFrame(()=>{
       const all=flow.getNodes();
       let focus=[];
       const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const mobile=window.innerWidth<700;
+      const phone=window.innerWidth<600;
+      const tablet=window.innerWidth<900;
       if(selectedBlocker){
-        focus=all.filter(n=>n.type==="blocker");
+        const selected=all.find(n=>n.id===`blocker-${selectedBlocker}`);
+        focus=phone?[selected].filter(Boolean):all.filter(n=>n.type==="blocker");
       }else if(selectedGate){
         const gate=all.find(n=>n.id===`stage-${selectedGate}`);
         const blockers=all.filter(n=>n.type==="blocker");
-        focus=[gate,...blockers.slice(0,mobile?3:6)].filter(Boolean);
+        focus=[gate,...blockers.slice(0,phone?2:tablet?4:6)].filter(Boolean);
       }else{
         const stages=all.filter(n=>n.type==="stage");
-        focus=mobile?stages.slice(0,3):stages;
+        focus=phone?stages.slice(0,2):tablet?stages.slice(0,3):stages;
       }
       flow.fitView({
         nodes:focus.length?focus:all,
-        padding:selectedBlocker?.12:selectedGate?.10:.10,
-        duration:reduced?0:360,
-        minZoom:selectedBlocker?.52:selectedGate?(mobile?.58:.52):(mobile?.58:.48),
-        maxZoom:selectedBlocker?1.05:selectedGate?.92:.90
+        padding:selectedBlocker?(phone?.22:.12):selectedGate?(phone?.16:.10):.10,
+        duration:reduced?0:320,
+        minZoom:selectedBlocker?(phone?.88:.56):selectedGate?(phone?.78:tablet?.64:.52):(phone?.76:tablet?.62:.48),
+        maxZoom:selectedBlocker?(phone?1.02:1.05):selectedGate?(phone?.96:.92):(phone?.92:.90)
       });
-      setGraphReady(true);
     })});
     return()=>{cancelAnimationFrame(raf1);if(raf2)cancelAnimationFrame(raf2)};
   },[nodesInitialized,selectedGate,selectedBlocker,detailOpen,showCompleted]);
@@ -255,12 +254,11 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       <div className=${"intro"+(selectedGate?" compact":"")}><div className="eyebrow">${assessmentMode?"Assessment result · illustrative":"Semantic zoom"}</div><h1>${assessmentMode?(selectedGate?"Focus on what remains.":"Your AI scalability path."):(selectedGate?"Keep exploring.":"Start with the lifecycle.")}</h1><p>${assessmentMode?(selectedGate?"Resolved blockers are hidden by default. Open a remaining blocker to explore dependencies and enablers.":"Done gates have all currently mapped blockers resolved. Other gates show what remains."):(selectedGate?"Pan and zoom freely. Click a blocker to focus it, then use the + button on the central blocker to open details and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it.")}</p></div>
       <div className="depth"><span>Overview</span><i></i><span>Deep dive</span></div>
       <div className="flow-wrap">
-        <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.35} maxZoom=${1.7} fitView fitViewOptions=${{padding:.08,maxZoom:.96}} onInit=${()=>setGraphReady(true)} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
+        <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.35} maxZoom=${1.7} fitView fitViewOptions=${{padding:.08,maxZoom:.96}} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
           <${Background} gap=${32} size=${1} color="#d9e5ec" />
           <${Controls} showInteractive=${false} position="bottom-left" />
         </${ReactFlow}>
       </div>
-      ${!graphReady?html`<div className="canvas-loading" aria-hidden="true"><span className="loading-spinner"></span></div>`:null}
       ${!selectedGate?html`<div className="hint"><strong>${assessmentMode?"Your personalised timeline":"Click a Stage Gate"}</strong><span>${assessmentMode?"Open a gate to explore remaining blockers.":"Then keep zooming into what interests you."}</span></div>`:null}
       <div className="breadcrumbs"><button onClick=${reset}>Timeline</button>${crumbs.map((c,i)=>html`<${React.Fragment} key=${i}><i>›</i>${c.action?html`<button onClick=${c.action}>${c.label}</button>`:html`<span>${c.label}</span>`}</${React.Fragment}>`)}</div>
       <div className="zoom-readout">Zoom ${Math.round(zoom*100)}%</div>
