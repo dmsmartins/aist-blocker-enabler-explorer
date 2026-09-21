@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="AI Scalability Explorer">
+  <defs>
+    <linearGradient id="g1" x1="16" y1="82" x2="67" y2="13" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0a55c7"/>
+      <stop offset=".52" stop-color="#0d8ee9"/>
+      <stop offset="1" stop-color="#29e6df"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="8" y1="60" x2="90" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1261d0"/>
+      <stop offset=".48" stop-color="#0799e8"/>
+      <stop offset="1" stop-color="#39e8d5"/>
+    </linearGradient>
+    <linearGradient id="g3" x1="58" y1="20" x2="79" y2="12" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0960d5"/>
+      <stop offset="1" stop-color="#25e7e3"/>
+    </linearGradient>
+  </defs>
+  <path d="M8 69c12 8 30 11 47 8 17-3 29-10 35-18-4 15-18 26-36 30C36 93 17 86 8 69Z" fill="url(#g2)"/>
+  <path d="M13 62c7-12 21-18 38-18-15 2-27 7-34 15 7 6 17 9 28 9-14 2-26 0-32-6Z" fill="url(#g2)" opacity=".94"/>
+  <path d="M15 83c15-7 28-17 38-31 7-10 12-20 15-31l10 9c-3 14-9 27-18 38-11 13-26 20-45 15Z" fill="url(#g1)"/>
+  <path d="M58 23 79 7l1 27-9-8-13-3Z" fill="url(#g3)"/>
+</svg>
