@@ -787,6 +787,30 @@ body.modal-open{overflow:hidden}
   .brand>span:last-child{display:none}
   .page{width:min(100% - 28px,1180px);padding-top:34px}
 }
+/* RESPONSIVE-HEADER */
+@media(max-width:1180px){
+  .topbar{grid-template-columns:minmax(150px,.9fr) minmax(0,1.35fr) auto;gap:10px;padding-inline:18px}
+  .brand{min-width:0}
+  .brand>span:last-child{font-size:clamp(12px,1.2vw,15px);overflow:hidden;text-overflow:ellipsis}
+  .main-nav{min-width:0;gap:2px}
+  .main-nav button,.main-nav .timeline-nav-link{padding-inline:clamp(7px,1vw,13px);font-size:clamp(11px,1.05vw,14px);white-space:nowrap}
+  .topbar-actions{gap:5px}
+}
+@media(max-width:920px){
+  .topbar{grid-template-columns:auto minmax(0,1fr) auto;padding-inline:12px;gap:6px}
+  .brand>span:last-child{display:none!important}
+  .main-nav{display:flex;min-width:0;overflow-x:auto;scrollbar-width:none;overscroll-behavior-inline:contain}
+  .main-nav::-webkit-scrollbar{display:none}
+  .main-nav button,.main-nav .timeline-nav-link{flex:0 0 auto;padding-inline:9px;font-size:12px}
+  .topbar-actions{grid-column:auto}
+}
+@media(max-width:560px){
+  .topbar{padding-inline:8px}
+  .brand-mark{width:25px;height:25px}
+  .main-nav button,.main-nav .timeline-nav-link{padding-inline:7px;font-size:11px}
+  .icon-btn{min-width:36px;min-height:36px}
+}
+
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{
