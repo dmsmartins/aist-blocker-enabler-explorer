@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#102a43">
+  <meta name="description" content="Play through the AI lifecycle. Discover real blockers and activate the enablers that help overcome them.">
+  <title>Scale Run — AI Scalability Explorer</title>
+  <link rel="icon" href="../assets/ai-scalability-logo-v2.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <a class="skip" href="#game">Skip to game</a>
+  <header class="topbar">
+    <a class="brand" href="../#home" aria-label="AI Scalability Explorer home"><img src="../assets/ai-scalability-logo-v2.svg" alt="" width="36" height="36"><span>AI Scalability Explorer</span></a>
+    <nav aria-label="Primary navigation"><a href="../timeline/">Timeline</a><a href="../#explore">Explore</a><a href="../#maturity">Maturity Assessment</a><a href="./" aria-current="page">Play</a></nav>
+  </header>
+  <main>
+    <section class="intro"><div><p class="eyebrow">UIC AIST · PLAY TO UNDERSTAND</p><h1>Small spark. <span>Real potential.</span></h1><p>Find what enables progress. Carry your AI initiative through the lifecycle.</p></div><button class="subtle" id="help">How to play <span aria-hidden="true">↗</span></button></section>
+    <nav id="gates" class="gates" aria-label="Game levels"></nav>
+    <section class="game-shell" aria-label="Scale Run platform game">
+      <div class="game-top"><div><span class="overline" id="gateNumber">SCALE RUN</span><h2 id="gateTitle">A journey through six Stage Gates</h2></div><div class="game-actions"><span id="progress">0 / 6 gates</span><button id="pause" disabled aria-label="Pause game">Ⅱ</button><button id="restart" disabled aria-label="Restart this level">↻</button></div></div>
+      <div class="viewport">
+        <canvas id="game" width="960" height="510" tabindex="0" aria-label="Scale Run. Arrow keys or A and D to move, Space to jump, E to activate an enabler, P to pause. Touch controls are below." aria-describedby="controls-summary">Your browser needs Canvas support to play. You can still explore the same blockers and enablers using the Explorer link above.</canvas>
+        <div id="overlay" class="overlay"><div class="overlay-card"><span class="overline">AN EXPLORER EXPERIENCE</span><h2 id="overlayTitle">Scale Run<span class="title-dot">.</span></h2><p id="overlayText">You are the spark. The path is full of barriers.<br>Collect an enabler. Change what is possible.</p><div class="mini-journey" aria-hidden="true"><span>↗</span><i></i><span>◇</span><i></i><span>◎</span></div><button id="start" class="primary" disabled>Loading Explorer data…</button><p id="overlayNote" class="fine">A playful interpretation of the AIST knowledge base.</p></div></div>
+        <div id="toast" class="toast" role="status" aria-live="polite"></div>
+      </div>
+      <div class="game-bottom"><div id="powerTray" class="powers" aria-label="Enabling mechanisms"></div><p id="objective">Collect → activate → advance</p></div>
+      <div class="touch-controls" aria-label="Touch controls"><div><button data-hold="left" aria-label="Move left">←</button><button data-hold="right" aria-label="Move right">→</button></div><div><button data-hold="jump" aria-label="Jump">Jump ↑</button><button data-hold="action" aria-label="Activate enabler">Use ◇</button></div></div>
+    </section>
+    <div class="under-game"><p id="controls-summary"><kbd>←</kbd> <kbd>→</kbd> move <span>·</span> <kbd>Space</kbd> jump <span>·</span> <kbd>E</kbd> use enabler <span>·</span> <kbd>P</kbd> pause</p><button id="knowledge" class="text-button" disabled>Behind this challenge <span aria-hidden="true">↗</span></button></div>
+    <p class="scope-note">Selected challenges from the live Explorer. Game progress is saved on this device and is not a maturity assessment.</p>
+    <section class="legend" aria-label="Six ways to change the path"><div><p class="eyebrow">SIX WAYS TO CHANGE THE PATH</p><h2>Every power has a purpose.</h2></div><div id="legendItems" class="legend-items"></div></section>
+    <footer><span>Scale Run · AIST experimental learning experience</span><a href="../#explore">Back to the Explorer ↗</a></footer>
+  </main>
+  <dialog id="details"><div class="dialog-head"><span class="eyebrow" id="dialogKicker">SCALE RUN</span><button id="closeDialog" aria-label="Close dialog">×</button></div><div id="dialogBody"></div></dialog>
+  <script type="module" src="./game.mjs"></script>
+</body>
+</html>

@@ -13,6 +13,7 @@ Static GitHub Pages application for exploring AI scalability blockers, enablers,
   Stage Gate → blockers → dependency map → blocker detail → mechanisms → enablers
 - **View for my role**
 - **My Selection**
+- **Play — Scale Run**, an abstract platformer using the same blockers and enablers across the six Stage Gates (see `play/README.md`)
 - Illustrative **Maturity Assessment** placeholder
 
 The interface deliberately uses progressive disclosure: the first view stays light and additional detail appears only as the user explores deeper.
