@@ -21,6 +21,8 @@ The current final gate has no mapped blockers. Its handover signals are explicit
 
 The luminous sphere acquires geometry as mechanism families are discovered, gradually echoing the Explorer logo. The official Stage Gate labels remain visible alongside artistic aliases defined in `config.mjs`.
 
+Restart is available in the game header, including on mobile. After confirmation it returns to Stage Gate 1, clears only Scale Run progress and keeps the same challenges and sound/motion preferences. Cancelling resumes the previous state. The ending also offers a new seeded path.
+
 ## Controls and accessibility
 
 Arrows / A / D move; Space / W / Up jump; Down / S drop through a platform; E use; Q cycle individual capabilities; 1–6 open a mechanism family; K knowledge; M map; P / Escape pause. Touch controls support simultaneous movement and jumping. Coyote time, buffered jumps, safe checkpoints and return shortcuts make exploration forgiving. Blur and hidden-page events pause play and release held controls.

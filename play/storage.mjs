@@ -18,3 +18,5 @@ export function captureProgress(progress,run,data) {
   const applied=new Map(progress.applied.map(p=>[p.blockerId,p]));run.encounters.filter(e=>e.opened).forEach(e=>applied.set(e.id,{blockerId:e.id,enablerId:e.chosen}));
   return reconcileProgress({...progress,encountered:[...encountered],capabilities:[...run.inventory],applied:[...applied.values()],mechanisms:[...run.mechanisms],settings:{...progress.settings,currentGate:run.world.gate.id}},data);
 }
+
+export function restartProgress(progress,data,seed=progress.seed){return reconcileProgress({...freshProgress(seed),settings:{...progress.settings,currentGate:null}},data);}

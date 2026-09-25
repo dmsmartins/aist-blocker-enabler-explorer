@@ -4,7 +4,7 @@ import {prepareData,strongComponents,selectJourneyChallenges} from './data.mjs';
 import {buildJourney,platformGraph,routeBetween} from './world-builder.mjs';
 import {createRun,step,activate,platforms} from './engine.mjs';
 import {knowledgeHTML,esc,gateURL,finaleHTML} from './ui.mjs';
-import {freshProgress,reconcileProgress,readProgress,writeProgress,captureProgress} from './storage.mjs';
+import {freshProgress,reconcileProgress,readProgress,writeProgress,captureProgress,restartProgress} from './storage.mjs';
 const raw=JSON.parse(readFileSync(new URL('../data/explorer-data.json',import.meta.url),'utf8'));
 const original=JSON.stringify(raw),data=prepareData(raw),worlds=buildJourney(data);
 assert.equal(data.warnings.length,0);
@@ -54,13 +54,24 @@ function navigate(run,targetId){ const avoided=new Set();
   }
   throw Error(`Navigation exhausted to ${targetId}: ${JSON.stringify(run.player)}`);
 }
-for(const world of worlds){const run=createRun(world);
+let campaign=freshProgress();
+for(const world of worlds){const run=createRun(world,campaign);
+  assert.notEqual(activate(run).type,"complete","A fresh chapter must not finish at its entrance");
   for(const e of run.encounters){navigate(run,'approach-'+e.id);assert.ok(e.encountered);const pickups=world.pickups.filter(p=>p.encounterId===e.id);for(const pickup of pickups){navigate(run,pickup.platformId);assert.ok(run.inventory.has(pickup.enabler.id),'Capability not collected');navigate(run,'approach-'+e.id);}run.selected=pickups[0].enabler.id;assert.equal(activate(run).type,'open');navigate(run,'landing-'+e.id);assert.equal(activate(run).type,'return');}
   for(const signal of world.signals)navigate(run,signal.platformId);
-  navigate(run,'home');assert.equal(activate(run).type,'complete');console.log(`PASS physics journey Gate ${world.gate.id}: ${run.encounters.length} source challenges`);
+  navigate(run,'home');assert.equal(activate(run).type,'complete');assert.equal(run.complete,true);campaign.completed.push(world.gate.id);campaign=reconcileProgress(JSON.parse(JSON.stringify(captureProgress(campaign,run,data))),data);console.log(`PASS physics journey Gate ${world.gate.id}: ${run.encounters.length} source challenges`);
 }
 console.log(`PASS ${totalFrames} physics frames, 60 seeds, source relationships, alternative enablers, cycles, changed data, persistence and fall recovery`);
 
 for(const world of worlds){const run=createRun(world);for(const e of run.encounters){const html=knowledgeHTML(data,run,e);assert.ok(html.includes(esc(e.blocker.statement)));assert.ok(html.includes(esc(e.alternatives[0].enabler.description)));assert.ok(html.includes(esc(e.alternatives[0].relation.rationale)));}assert.ok(gateURL(world.gate).endsWith(world.gate.id));assert.ok(finaleHTML(run).includes('<svg'));}
 const supportedWorld=worlds.find(w=>w.encounters.some(e=>e.upstream.length));const dependent=supportedWorld.encounters.find(e=>e.upstream.length);const supportedRun=createRun(supportedWorld,{applied:[{blockerId:dependent.upstream[0],enablerId:'irrelevant'}]});assert.ok(supportedRun.encounters.find(e=>e.id===dependent.id).support>0);assert.ok(!supportedRun.encounters.find(e=>e.id===dependent.id).opened);
 console.log('PASS verbatim source panels, chapter deep links, finale and dependency support without automatic activation');
+
+assert.deepEqual(campaign.completed,data.gates.map(g=>g.id),'Every chapter reaches its exit in sequence');
+campaign.settings.sound=true;campaign.settings.reducedMotion=true;
+const restarted=restartProgress(campaign,data);
+for(const field of ['completed','capabilities','encountered','applied','mechanisms'])assert.deepEqual(restarted[field],[],field+' must reset');
+assert.equal(restarted.seed,campaign.seed);assert.equal(restarted.settings.sound,true);assert.equal(restarted.settings.reducedMotion,true);assert.equal(restarted.settings.currentGate,null);
+const replay=createRun(buildJourney(data,restarted.seed)[0],restarted);assert.equal(replay.inventory.size,0);assert.ok(replay.encounters.every(e=>!e.opened));assert.notEqual(activate(replay).type,'complete');
+assert.equal(restartProgress(campaign,data,'another-path').seed,'another-path');
+console.log('PASS full sequential campaign, reload between chapters, ending and clean restart with preferences preserved');
