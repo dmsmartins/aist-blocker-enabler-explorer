@@ -1,4 +1,4 @@
-import {esc} from './ui.mjs?v=3';
+import {esc} from './ui.mjs?v=4';
 export function excerpt(text,limit=240){const s=String(text||'').trim();if(s.length<=limit)return s;const end=s.lastIndexOf(' ',limit);return s.slice(0,end>0?end:limit)+'…';}
 export function discoveryNotice(event){return event.type==='encounter'?`! ${event.encounter.blocker.title}\n${excerpt(event.encounter.blocker.statement,210)}`:event.type==='collect'?`! ${event.pickup.enabler.title}\n${excerpt(event.pickup.enabler.description,210)}`:'';}
 export function learningCard(event,run){

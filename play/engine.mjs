@@ -1,5 +1,5 @@
-import {PHYSICS} from './config.mjs?v=3';
-import {bridgePlatforms} from './world-builder.mjs?v=3';
+import {PHYSICS} from './config.mjs?v=4';
+import {bridgePlatforms} from './world-builder.mjs?v=4';
 export function createRun(world,progress={}) {
   const inventory=new Set(progress.capabilities||[]),applied=new Map((progress.applied||[]).map(x=>[x.blockerId,x.enablerId]));
   const encounters=world.encounters.map(e=>{const enablerId=applied.get(e.id),relation=e.relations.find(r=>r.enablerId===enablerId&&inventory.has(enablerId)&&(!e.requiredAll||e.alternatives.every(a=>inventory.has(a.enabler.id))));return {...e,encountered:(progress.encountered||[]).includes(e.id)||!!relation,opened:!!relation,chosen:relation?.enablerId||null,mechanism:relation?.mechanism||null,animation:relation?1:0,support:0,crossed:false};});
@@ -18,8 +18,14 @@ export function platforms(run) {
   for(const e of run.encounters){if(e.opened)result.push(...bridgePlatforms(e,e.mechanism));if(e.support)result.push({id:'support-'+e.id,x:e.x-e.dir*145-65,y:e.y-48,w:130,kind:'support',encounterId:e.id});}
   return result;
 }
+export function portalOpen(run,portal){const opened=new Set([...run.priorOpened,...run.encounters.filter(e=>e.opened).map(e=>e.id)]);return (!portal.hostId||opened.has(portal.hostId))&&(portal.any?portal.requirements.some(id=>opened.has(id)):portal.requirements.every(id=>opened.has(id)));}
+export function portalZones(run){
+ const zones=(run.world.portals||[]).filter(p=>!portalOpen(run,p)).map(p=>({x:p.x-35,y:p.y-65,w:70,h:115,portal:p})).sort((a,b)=>a.y-b.y||a.x-b.x),merged=[];
+ for(const z of zones){const previous=merged.at(-1);if(previous&&previous.y===z.y&&z.x-previous.x-previous.w<PHYSICS.width){previous.w=z.x+z.w-previous.x;previous.portals.push(z.portal);}else merged.push({...z,portals:[z.portal]});}return merged;
+}
 export function activate(run) {
   const p=centre(run.player);
+  const portal=(run.world.portals||[]).find(portal=>distance(p,portal)<44);if(portal)return portalOpen(run,portal)?{type:'travel',portal}:{type:'portal-locked',portal};
   const node=run.encounters.filter(e=>distance(p,{x:e.x,y:e.y-20})<95).sort((a,b)=>distance(p,{x:a.x,y:a.y})-distance(p,{x:b.x,y:b.y}))[0];
   if(node){
     run.focusId=node.id;
@@ -32,7 +38,7 @@ export function activate(run) {
   }
   const anchor=run.encounters.find(e=>e.opened&&distance(p,{x:e.anchorX,y:e.y-25})<85);
   if(anchor){returnHome(run);return {type:'return',encounter:anchor};}
-  if(distance(p,{x:run.world.exit.x,y:run.world.exit.y-20})<110){const opened=new Set([...run.priorOpened,...run.encounters.filter(e=>e.opened).map(e=>e.id)]),ready=run.encounters.length?(run.world.chapterIds||run.encounters.map(e=>e.id)).every(id=>opened.has(id)):run.signals.size===run.world.signals.length;if(ready){run.complete=true;return {type:'complete'};}return {type:run.world.roomCount>1?'portals':'home',remaining:run.encounters.filter(e=>!e.opened).length};}
+  if(distance(p,{x:run.world.exit.x,y:run.world.exit.y-20})<110){const opened=new Set([...run.priorOpened,...run.encounters.filter(e=>e.opened).map(e=>e.id)]),ready=run.encounters.length?(run.world.chapterIds||run.encounters.map(e=>e.id)).every(id=>opened.has(id)):run.signals.size===run.world.signals.length;if(ready){run.complete=true;return {type:'complete'};}return {type:'home',remaining:run.encounters.filter(e=>!e.opened).length};}
   return {type:'distant'};
 }
 export function returnHome(run){Object.assign(run.player,{x:run.world.entrance.x-12,y:run.world.entrance.y-28,vx:0,vy:0,grounded:true,platformId:'home',dropTimer:0,coyote:0,jumpBuffer:0});run.downHeld=false;run.jumpHeld=false;run.checkpoint={x:run.player.x,y:run.player.y};}
@@ -51,8 +57,11 @@ export function step(run,input,dt) {
   for(const e of run.encounters){if(e.opened)continue;const left=e.dir>0?e.x+105:e.x-305,right=e.dir>0?e.x+305:e.x-105;
     if(p.y+p.h>e.y-155&&p.y<e.y+30&&p.x+p.w>left&&p.x<right){if(oldX+p.w<=left+2){p.x=left-p.w;p.vx=0;}else if(oldX>=right-2){p.x=right;p.vx=0;}}
   }
+  for(const z of portalZones(run)){if(p.y+p.h>z.y&&p.y<z.y+z.h&&p.x+p.w>z.x&&p.x<z.x+z.w){p.x=oldX+p.w<=z.x+2?z.x-p.w:oldX>=z.x+z.w-2?z.x+z.w:p.x; if(p.x!==oldX+p.vx*dt)p.vx=0;}}
+  const oldTop=p.y;
   p.vy+=PHYSICS.gravity*dt;if(run.timers.Assure>run.time&&p.vy>150)p.vy=150;p.y+=p.vy*dt;p.grounded=false;p.platformId=null;
   if(p.vy>=0){const landings=platforms(run).filter(f=>!(p.dropTimer>0&&Math.abs(f.y-p.dropY)<4)&&p.x+p.w>f.x+2&&p.x<f.x+f.w-2&&oldBottom<=f.y+2&&p.y+p.h>=f.y).sort((a,b)=>a.y-b.y);if(landings.length){const f=landings[0];p.y=f.y-p.h;p.vy=0;p.grounded=true;p.airBoostUsed=false;p.platformId=f.id;}}
+  for(const z of portalZones(run)){if(p.x+p.w>z.x&&p.x<z.x+z.w&&p.y+p.h>z.y&&p.y<z.y+z.h){if(oldBottom<=z.y+2){p.y=z.y-p.h;p.vy=0;p.grounded=true;p.platformId=null;}else if(oldTop>=z.y+z.h-2){p.y=z.y+z.h;p.vy=Math.max(0,p.vy);}else {p.x=p.x+p.w/2<z.x+z.w/2?z.x-p.w:z.x+z.w;p.vx=0;}}}
   const pc=centre(p);
   for(const e of run.encounters){
     if(distance(pc,{x:e.x,y:e.y-25})<165){run.focusId=e.id;if(!e.encountered){e.encountered=true;events.push({type:'encounter',encounter:e});}}
@@ -67,7 +76,7 @@ export function step(run,input,dt) {
 export function objective(run) {
   if(run.world.epilogue||run.world.unavailable)return `${run.signals.size} / ${run.world.signals.length} handover signals · Return to the central portal`;
   const remaining=run.encounters.filter(e=>!e.opened).length,e=currentEncounter(run);
-  if(!remaining)return run.world.roomCount>1?'This mini-map is open. Return to its central portal: E opens the next mini-map or finishes the Stage Gate.':'All paths are open. Return to the central portal and use E.';
+  if(!remaining)return run.world.roomCount>1?'Cross an opened passage to its dark portal. Use E there to enter another mini-map. The central portal finishes the Stage Gate once every blocker is open.':'All paths are open. Return to the central portal and use E.';
   if(e&&!e.opened&&e.requiredAll){const found=e.alternatives.filter(a=>run.inventory.has(a.enabler.id)).length;return `${found} / ${e.alternatives.length} tools for this blocker. ${found===e.alternatives.length?'Return to its round node and use E or a linked ability.':'Explore its gold lights; collect the missing tools.'}`;}
   if(e&&!e.opened)return availableRelations(run,e).length?'Return to this node. Choose a linked capability and use E.':'Path incomplete. Explore the glowing branches for an enabling capability.';
   return 'Follow the stepping stones. Find an incomplete system.';

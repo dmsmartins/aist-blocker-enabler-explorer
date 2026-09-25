@@ -1,0 +1,6 @@
+export function installFullscreen(shell,button,onChange=()=>{}){
+ const active=()=>document.fullscreenElement===shell||shell.classList.contains('fullscreen-fallback');
+ function update(){const on=active();button.setAttribute('aria-pressed',String(on));button.setAttribute('aria-label',on?'Exit full screen':'Enter full screen');button.title=on?'Exit full screen (Esc)':'Full screen';button.innerHTML=on?'⛶ <span>Exit</span>':'⛶ <span>Full screen</span>';document.body.classList.toggle('fullscreen-open',on);onChange(on);}
+ async function toggle(){if(document.fullscreenElement===shell){try{await document.exitFullscreen();}catch{}return;}if(shell.classList.contains('fullscreen-fallback')){shell.classList.remove('fullscreen-fallback');update();return;}try{if(!shell.requestFullscreen)throw Error('Unsupported');await shell.requestFullscreen();}catch{shell.classList.add('fullscreen-fallback');update();}}
+ button.addEventListener('click',toggle);document.addEventListener('fullscreenchange',update);document.addEventListener('keydown',event=>{if(event.key==='Escape'&&active()){event.preventDefault();event.stopImmediatePropagation();if(document.fullscreenElement===shell){document.exitFullscreen().catch(()=>{});}else{shell.classList.remove('fullscreen-fallback');update();}}},true);update();return {toggle,active};
+}

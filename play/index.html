@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#102a43"><meta name="description" content="An atmospheric exploration game through the AI scalability lifecycle. Discover enabling capabilities, connect systems and carry learning forward.">
-<title>Scale Run — AI Scalability Explorer</title><link rel="icon" href="../assets/ai-scalability-logo-v2.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css?v=3">
+<title>Scale Run — AI Scalability Explorer</title><link rel="icon" href="../assets/ai-scalability-logo-v2.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css?v=4">
 </head><body>
 <a class="skip" href="#game">Skip to game</a>
 <header class="topbar"><a class="brand" href="../#home" aria-label="AI Scalability Explorer home"><img src="../assets/ai-scalability-logo-v2.svg" width="34" height="34" alt=""><span>AI Scalability Explorer</span></a><nav aria-label="Primary navigation"><a href="../#explore">Explore</a><a href="../#maturity">Assess</a><a href="../timeline/">Timeline</a><a href="./" aria-current="page">Play</a></nav></header>
@@ -9,8 +9,8 @@
  <section class="intro"><div><p class="eyebrow">UIC AIST · PLAY TO UNDERSTAND</p><h1>Scale Run<span>Small spark. Real potential.</span></h1></div><button id="help" class="text-button">How it works <span aria-hidden="true">↗</span></button></section>
  <nav id="gates" class="gates" aria-label="Stage Gates"></nav>
  <section id="gameShell" class="game-shell" aria-label="Scale Run learning experience">
-  <div class="game-top"><div class="chapter"><span id="chapterAlias" class="eyebrow">THE JOURNEY</span><h2 id="gateTitle">Loading the knowledge network</h2></div><div class="game-actions"><button id="mapButton" disabled aria-label="Open journey map" title="Journey map (M)">⌘ <span>Map</span></button><button id="restart" disabled aria-label="Restart journey" title="Restart journey">↻ <span>Restart</span></button><button id="sound" aria-label="Enable music and sound" aria-pressed="false" title="Music and sound off">♫ <span>Music</span></button><button id="pause" disabled aria-label="Pause game" title="Pause (P)">Ⅱ</button></div></div>
-  <div class="viewport"><canvas id="game" width="1200" height="600" tabindex="0" aria-label="Scale Run game. Arrows or A and D move; Space jumps; E activates; Q changes capability; K opens knowledge; M opens map; 1 to 6 use abilities; T opens portals; P pauses." aria-describedby="objective">This browser cannot display the game canvas. Read the same knowledge using the Explorer link above.</canvas>
+  <div class="game-top"><div class="chapter"><span id="chapterAlias" class="eyebrow">THE JOURNEY</span><h2 id="gateTitle">Loading the knowledge network</h2></div><div class="game-actions"><button id="fullscreen" aria-label="Enter full screen" aria-pressed="false" title="Full screen">⛶ <span>Full screen</span></button><button id="mapButton" disabled aria-label="Open journey map" title="Journey map (M)">⌘ <span>Map</span></button><button id="restart" disabled aria-label="Restart journey" title="Restart journey">↻ <span>Restart</span></button><button id="sound" aria-label="Enable music and sound" aria-pressed="false" title="Music and sound off">♫ <span>Music</span></button><button id="pause" disabled aria-label="Pause game" title="Pause (P)">Ⅱ</button></div></div>
+  <div class="viewport"><canvas id="game" width="1200" height="600" tabindex="0" aria-label="Scale Run game. Arrows or A and D move; Space jumps; E activates; Q changes capability; K opens knowledge; M opens map; 1 to 6 use abilities; T locates portals; P pauses." aria-describedby="objective">This browser cannot display the game canvas. Read the same knowledge using the Explorer link above.</canvas>
    <div id="overlay" class="overlay"><div class="overlay-card"><p id="overlayKicker" class="eyebrow">A LIVING KNOWLEDGE LANDSCAPE</p><h2 id="overlayTitle">A little light.<br>A world of possibility.</h2><p id="overlayText">The knowledge network is taking shape.</p><div id="overlayExtra"></div><div class="overlay-actions"><button id="start" class="primary" disabled>Loading…</button><button id="overlayMap" class="secondary" hidden>View the journey</button></div><p id="overlayNote" class="fine">Challenges are generated from the live AI Scalability Explorer knowledge base.</p></div></div>
    <section id="delivery" class="delivery-card" hidden aria-live="polite"></section><div id="toast" class="toast" role="status" aria-live="polite"></div>
    <button id="orientation" class="orientation" title="Open map to find your route" aria-label="Open map and locate your spark" disabled>⌘ <span>Find your way</span></button>
@@ -24,5 +24,5 @@
  <footer><span>Explore → Assess → Timeline → Play</span><a href="../#explore">Explore the knowledge ↗</a></footer>
 </main>
 <dialog id="details"><div class="dialog-head"><p id="dialogKicker" class="eyebrow">SCALE RUN</p><button id="closeDialog" aria-label="Close panel">×</button></div><div id="dialogBody"></div></dialog>
-<script type="module" src="./game.mjs?v=3"></script>
+<script type="module" src="./game.mjs?v=4"></script>
 </body></html>

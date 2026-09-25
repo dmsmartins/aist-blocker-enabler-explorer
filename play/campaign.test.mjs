@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';
-import {prepareData} from './data.mjs';import {buildCampaign,roomUnlocked,canTravel,reconcileCampaign,arriveAt} from './campaign.mjs';import {platformGraph,routeBetween} from './world-builder.mjs';import {createRun,step,activate,platforms,useAbility} from './engine.mjs';import {freshProgress,captureProgress,reconcileProgress,restartProgress} from './storage.mjs';
+import {prepareData} from './data.mjs';import {buildCampaign,roomUnlocked,canTravel,reconcileCampaign,arriveAt} from './campaign.mjs';import {platformGraph,routeBetween} from './world-builder.mjs';import {createRun,step,activate,platforms,useAbility,portalOpen,portalZones} from './engine.mjs';import {freshProgress,captureProgress,reconcileProgress,restartProgress} from './storage.mjs';
 const data=prepareData(JSON.parse(readFileSync(new URL('../data/explorer-data.json',import.meta.url))));const chapters=buildCampaign(data);
 assert.equal(chapters.flatMap(c=>c.allChallenges).length,data.blockers.filter(b=>data.relationsByBlocker.get(b.id).length).length);
 for(const c of chapters)for(const e of c.allChallenges)assert.equal(e.alternatives.length,new Set(e.relations.map(r=>r.enablerId)).size);
@@ -32,10 +32,11 @@ for(const chapter of chapters){
    navigate(run,'approach-'+e.id);assert.ok(e.encountered);
    if(e.alternatives.some(a=>!run.inventory.has(a.enabler.id)))assert.equal(activate(run).type,'tools-missing');
    for(const pickup of room.pickups.filter(p=>p.encounterId===e.id)){if(run.inventory.has(pickup.enabler.id))continue;navigate(run,pickup.platformId);settle(run,pickup.x);assert.ok(run.inventory.has(pickup.enabler.id),'Not collected '+pickup.id);pickupsVisited++;}
-   navigate(run,'approach-'+e.id);run.selected=e.alternatives[0].enabler.id;assert.equal(activate(run).type,'open');navigate(run,'landing-'+e.id);assert.equal(activate(run).type,'return');visited++;
+   navigate(run,'approach-'+e.id);run.selected=e.alternatives[0].enabler.id;assert.equal(activate(run).type,'open');navigate(run,'landing-'+e.id);navigate(run,'home');visited++;
   }
+  for(const portal of room.portals||[]){if(!portalOpen(run,portal))continue;navigate(run,portal.platformId);settle(run,portal.x);assert.equal(activate(run).type,'travel');navigate(run,'home');}
   for(const signal of room.signals)navigate(run,signal.platformId);
-  navigate(run,'home');const end=activate(run);assert.equal(end.type,room.roomIndex===chapter.rooms.length-1?'complete':'portals');
+  navigate(run,'home');const end=activate(run);assert.equal(end.type,room.roomIndex===chapter.rooms.length-1?'complete':'home');
   progress=captureProgress(progress,run,data);if(end.type==='complete')progress.completed.push(chapter.gate.id);progress=reconcileProgress(JSON.parse(JSON.stringify(progress)),data);
  }
  console.log(`PASS full Stage Gate ${chapter.gate.id}: ${chapter.rooms.length} mini-maps, ${chapter.allChallenges.length} blockers`);
@@ -56,3 +57,13 @@ const handoverRun=createRun(chapters.at(-1).rooms[0]);handoverRun.signals.add(ha
 
 for(const chapter of chapters)for(const room of chapter.rooms){if(room.sourceGate)assert.ok(room.entryRequirements.every(id=>room.encounters.some(e=>e.upstream.includes(id))));for(const e of room.encounters){const trial=createRun(room);e.alternatives.forEach(a=>trial.inventory.add(a.enabler.id));const family=e.relations[0].mechanism;trial.mechanisms.add(family);arriveAt(trial,e.id);step(trial,{},1/120);assert.equal(useAbility(trial,family).type,'open');assert.equal(trial.encounters.filter(n=>n.opened).length,1);}}
 console.log('PASS linked ability barrier activation and authoritative dependency gate direction');
+
+for(const chapter of chapters){
+ const reached=new Set([0]);let changed=true;while(changed){changed=false;for(const i of [...reached])for(const p of chapter.rooms[i].portals||[]){if(!reached.has(p.targetRoom)){reached.add(p.targetRoom);changed=true;}}}assert.equal(reached.size,chapter.rooms.length,'Physical portal network must reach every room');
+ for(const room of chapter.rooms)for(const portal of (room.portals||[]).filter(p=>p.hostId)){
+  const trial=createRun(room),z=portalZones(trial).find(z=>z.portals.some(p=>p.id===portal.id));assert.ok(z);trial.player.x=portal.x-12;trial.player.y=portal.y-14;assert.equal(activate(trial).type,'portal-locked');
+  for(const direction of [-1,1]){trial.player.x=direction===1?z.x-24:z.x+z.w;trial.player.y=portal.y-14;trial.player.vx=direction*600;trial.dashUntil=trial.time+1;step(trial,{left:direction<0,right:direction>0},1/30);const p=trial.player;assert.ok(p.x+p.w<=z.x||p.x>=z.x+z.w,'Sealed portal blocks a dash');}
+  trial.player.x=portal.x-12;trial.player.y=z.y-29;trial.player.vy=700;step(trial,{},1/30);assert.ok(trial.player.y+trial.player.h<=z.y,'Sealed portal blocks landing from above');
+ }
+}
+console.log('PASS physical portal network reachability and sealed portal collisions');
