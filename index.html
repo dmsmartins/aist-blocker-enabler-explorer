@@ -2186,6 +2186,10 @@ var uxRouteFromHash=routeFromHash;
 routeFromHash=function(){
   var hash=location.hash||"#home";
   if(hash==="#timeline"){window.location.replace("./timeline/");return;}
+  var stageMatch=hash.match(/^#stage-gates\/(\d+)$/);
+  if(stageMatch&&state.data.stageGates.some(function(g){return Number(g.id)===Number(stageMatch[1]);})){
+    state.route="stage-gates";state.stageGateView=Number(stageMatch[1]);render();return;
+  }
   var m=hash.match(/^#domain\/([^/]+)(?:\/blocker\/(\d+))?(?:\/enabler\/(\d+))?$/);
   if(!m)return uxRouteFromHash();
   state.route="domain";state.domain=m[1];state.openBlocker=m[2]?Number(m[2]):null;

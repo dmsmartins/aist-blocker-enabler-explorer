@@ -1,73 +1,71 @@
-// Pure game rules. The Explorer dataset remains the source of all knowledge cards.
-export const POWERS = {
-  Frame:   {color:'#b4a0ff', glyph:'◎', verb:'Reveal', effect:'Reveal a hidden route.'},
-  Commit:  {color:'#ffc778', glyph:'◇', verb:'Connect', effect:'Connect the divided path.'},
-  Equip:   {color:'#63ceff', glyph:'↑', verb:'Build', effect:'Build the missing capability.'},
-  Assure:  {color:'#f5a7d4', glyph:'⬡', verb:'Shield', effect:'Make the crossing safe.'},
-  Operate: {color:'#65e2b7', glyph:'≋', verb:'Stabilise', effect:'Stabilise the moving system.'},
-  Learn:   {color:'#d1e88b', glyph:'↻', verb:'Adapt', effect:'Adapt the route to change.'}
-};
-export const GROUND = 430;
-export const WIDTH = 960;
-export const HEIGHT = 510;
-
-export function buildLevels(data) {
-  if (!Array.isArray(data.stageGates) || !Array.isArray(data.blockers) || !Array.isArray(data.relationships) || !Array.isArray(data.enablers)) throw new Error('Explorer data is incomplete.');
-  const enablers = new Map(data.enablers.map(e=>[e.id,e]));
-  const preferred = [['Frame','Commit','Assure'],['Equip','Frame','Assure'],['Operate','Equip','Assure'],['Operate','Commit','Learn'],['Learn','Equip']];
-  return [...data.stageGates].sort((a,b)=>a.id-b.id).map((gate, i)=>{
-    const candidates=data.blockers.filter(b=>Number(b.stageGate)===Number(gate.id)).map(blocker=>({blocker,relations:data.relationships.filter(r=>r.blockerId===blocker.id && enablers.has(r.enablerId) && POWERS[r.mechanism])})).filter(c=>c.relations.length);
-    const selected=[];
-    for(const mechanism of preferred[i] || Object.keys(POWERS)) {
-      if(selected.length===3) break;
-      const c=candidates.find(c=>!selected.some(s=>s.blocker.id===c.blocker.id) && c.relations.some(r=>r.mechanism===mechanism));
-      if(c){const relation=c.relations.find(r=>r.mechanism===mechanism);selected.push({blocker:c.blocker,relation,enabler:enablers.get(relation.enablerId),mechanism:relation.mechanism});}
-    }
-    for(const c of candidates){if(selected.length===3)break;if(!selected.some(s=>s.blocker.id===c.blocker.id)){const relation=c.relations[0];selected.push({blocker:c.blocker,relation,enabler:enablers.get(relation.enablerId),mechanism:relation.mechanism});}}
-    const unmapped=data.blockers.filter(b=>Number(b.stageGate)===Number(gate.id)).length;
-    if(unmapped && !selected.length)throw new Error(`No playable relationships for Stage Gate ${gate.id}.`);
-    return {gate, encounters:selected, mappedCount:unmapped, transition:unmapped===0};
-  });
+import {PHYSICS} from './config.mjs';
+import {bridgePlatforms} from './world-builder.mjs';
+export function createRun(world,progress={}) {
+  const inventory=new Set(progress.capabilities||[]),applied=new Map((progress.applied||[]).map(x=>[x.blockerId,x.enablerId]));
+  const encounters=world.encounters.map(e=>{const enablerId=applied.get(e.id),relation=e.relations.find(r=>r.enablerId===enablerId&&inventory.has(enablerId));return {...e,encountered:(progress.encountered||[]).includes(e.id)||!!relation,opened:!!relation,chosen:relation?.enablerId||null,mechanism:relation?.mechanism||null,animation:relation?1:0,support:0,crossed:false};});
+  const player={x:world.entrance.x-12,y:world.entrance.y-28,w:PHYSICS.width,h:PHYSICS.height,vx:0,vy:0,grounded:true,platformId:'home',coyote:0,jumpBuffer:0,jumpTime:0};
+  const run={world,encounters,inventory,priorOpened:new Set((progress.applied||[]).map(a=>a.blockerId)),mechanisms:new Set(progress.mechanisms||[]),selected:inventory.values().next().value||null,player,checkpoint:{x:player.x,y:player.y},signals:new Set(),complete:false,time:0,actionHeld:false,jumpHeld:false,focusId:null};
+  updateSupports(run);return run;
 }
-
-export function createRun(level) {
-  const encounters=level.encounters.map((e,i)=>({...e,x:100+i*740,collected:false,resolved:false}));
-  const length=level.transition?2100:Math.max(1100,encounters.length*740+260);
-  return {level,encounters,length,player:{x:45,y:GROUND-34,w:28,h:34,vx:0,vy:0,grounded:true},checkpoint:45,complete:false,jumpHeld:false,actionHeld:false,time:0,beacons:level.transition?[{x:420,label:'Preserve knowledge',collected:false},{x:1030,label:'Transfer responsibility',collected:false},{x:1610,label:'Close with care',collected:false}]:[]};
-}
-
+const centre=p=>({x:p.x+p.w/2,y:p.y+p.h/2});
+const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+export function currentEncounter(run) {return run.encounters.find(e=>e.id===run.focusId)||null;}
+export function availableRelations(run,encounter=currentEncounter(run)) {return encounter?encounter.relations.filter(r=>run.inventory.has(r.enablerId)):[];}
+export function cycleCapability(run) {const relevant=availableRelations(run).map(r=>r.enablerId),ids=[...new Set([...relevant,...run.inventory])];if(!ids.length)return null;run.selected=ids[(ids.indexOf(run.selected)+1)%ids.length];return run.selected;}
+function updateSupports(run){for(const e of run.encounters)e.support=e.upstream.filter(id=>run.priorOpened.has(id)||run.encounters.some(other=>other.id===id&&other.opened)).length;}
 export function platforms(run) {
-  if(run.level.transition)return [{x:0,y:GROUND,w:680},{x:790,y:GROUND,w:580},{x:1480,y:GROUND,w:run.length-1480},{x:360,y:350,w:120},{x:970,y:350,w:120},{x:1550,y:350,w:120}];
-  const p=[];let start=0;
-  for(const e of run.encounters){p.push({x:start,y:GROUND,w:e.x+430-start});p.push({x:e.x+125,y:350,w:130});if(e.resolved)p.push({x:e.x+430,y:GROUND,w:120,bridge:true,mechanism:e.mechanism});start=e.x+550;}
-  p.push({x:start,y:GROUND,w:run.length-start});return p;
+  const result=[...run.world.platforms];
+  for(const e of run.encounters){if(e.opened)result.push(...bridgePlatforms(e,e.mechanism));if(e.support)result.push({id:'support-'+e.id,x:e.x-e.dir*145-65,y:e.y-48,w:130,kind:'support',encounterId:e.id});}
+  return result;
 }
-
-export function currentEncounter(run) {
-  return run.encounters.find(e=>!e.resolved) || run.encounters.at(-1) || null;
+export function activate(run) {
+  const p=centre(run.player);
+  const node=run.encounters.filter(e=>distance(p,{x:e.x,y:e.y-20})<95).sort((a,b)=>distance(p,{x:a.x,y:a.y})-distance(p,{x:b.x,y:b.y}))[0];
+  if(node){
+    run.focusId=node.id;
+    if(node.opened){returnHome(run);return {type:'return',encounter:node};}
+    const relation=node.relations.find(r=>r.enablerId===run.selected&&run.inventory.has(r.enablerId));
+    if(!relation)return {type:'unavailable',encounter:node,hasAlternative:availableRelations(run,node).length>0};
+    node.opened=true;node.encountered=true;node.chosen=relation.enablerId;node.mechanism=relation.mechanism;node.animation=0;run.mechanisms.add(relation.mechanism);updateSupports(run);
+    run.checkpoint={x:node.x-12,y:node.y-28};return {type:'open',encounter:node,relation,supported:run.encounters.filter(e=>e.upstream.includes(node.id))};
+  }
+  const anchor=run.encounters.find(e=>e.opened&&distance(p,{x:e.anchorX,y:e.y-25})<85);
+  if(anchor){returnHome(run);return {type:'return',encounter:anchor};}
+  if(distance(p,{x:run.world.exit.x,y:run.world.exit.y-20})<110){const ready=run.encounters.length?run.encounters.every(e=>e.opened):run.signals.size===run.world.signals.length;if(ready){run.complete=true;return {type:'complete'};}return {type:'home',remaining:run.encounters.filter(e=>!e.opened).length};}
+  return {type:'distant'};
 }
-
+function returnHome(run){Object.assign(run.player,{x:run.world.entrance.x-12,y:run.world.entrance.y-28,vx:0,vy:0,grounded:true,platformId:'home',dropTimer:0,coyote:0,jumpBuffer:0});run.downHeld=false;run.jumpHeld=false;run.checkpoint={x:run.player.x,y:run.player.y};}
 export function step(run,input,dt) {
   if(run.complete)return [];
-  dt=Math.min(Math.max(dt,0),1/30);run.time+=dt;
-  const p=run.player,events=[],oldBottom=p.y+p.h;
-  const jump=!!input.jump&&!run.jumpHeld;run.jumpHeld=!!input.jump;
-  if(jump && p.grounded){p.vy=-590;p.grounded=false;}
-  p.vx=((input.right?1:0)-(input.left?1:0))*255;
-  p.x=Math.max(0,Math.min(run.length-p.w,p.x+p.vx*dt));
-  for(const e of run.encounters){const wall=e.x+385;if(!e.resolved && p.x+p.w>wall && p.x<wall+30){p.x=p.vx>=0?wall-p.w:wall+30;p.vx=0;}}
-  p.vy+=1550*dt;p.y+=p.vy*dt;p.grounded=false;
-  if(p.vy>=0)for(const platform of platforms(run)){if(p.x+p.w>platform.x && p.x<platform.x+platform.w && oldBottom<=platform.y+1 && p.y+p.h>=platform.y){p.y=platform.y-p.h;p.vy=0;p.grounded=true;break;}}
-  for(const e of run.encounters){
-    if(!e.collected && Math.abs(p.x+p.w/2-(e.x+190))<38 && Math.abs(p.y+p.h/2-301)<45){e.collected=true;events.push({type:'collect',encounter:e});}
-    if(e.resolved && p.x>e.x+570 && run.checkpoint<e.x+570){run.checkpoint=e.x+580;events.push({type:'checkpoint'});}
+  dt=Math.max(0,Math.min(Number.isFinite(dt)?dt:0,1/30));run.time+=dt;const events=[],p=run.player;
+  const wasGrounded=p.grounded,oldBottom=p.y+p.h,oldX=p.x;
+  p.dropTimer=Math.max(0,(p.dropTimer||0)-dt);if(input.down&&p.grounded&&!run.downHeld){p.dropY=p.y+p.h;p.dropTimer=.25;p.grounded=false;p.coyote=0;}run.downHeld=!!input.down;
+  const press=!!input.jump&&!run.jumpHeld;run.jumpHeld=!!input.jump;
+  p.coyote=wasGrounded&&!p.dropTimer?PHYSICS.coyote:Math.max(0,p.coyote-dt);p.jumpBuffer=press?PHYSICS.buffer:Math.max(0,p.jumpBuffer-dt);
+  if(p.jumpBuffer>0&&p.coyote>0){p.vy=-PHYSICS.jump;p.grounded=false;p.coyote=0;p.jumpBuffer=0;p.jumpTime=0;events.push({type:'jump'});}
+  p.jumpTime+=dt;if(!input.jump&&p.jumpTime>.14&&p.vy< -330)p.vy=-330;
+  const direction=Number(!!input.right)-Number(!!input.left),target=direction*PHYSICS.speed,acceleration=direction?PHYSICS.acceleration:PHYSICS.friction;
+  p.vx+=Math.sign(target-p.vx)*Math.min(Math.abs(target-p.vx),acceleration*dt);p.x=Math.max(35,Math.min(run.world.width-p.w-35,p.x+p.vx*dt));
+  for(const e of run.encounters){if(e.opened)continue;const left=e.dir>0?e.x+105:e.x-305,right=e.dir>0?e.x+305:e.x-105;
+    if(p.y+p.h>e.y-155&&p.y<e.y+30&&p.x+p.w>left&&p.x<right){if(oldX+p.w<=left+2){p.x=left-p.w;p.vx=0;}else if(oldX>=right-2){p.x=right;p.vx=0;}}
   }
-  const action=!!input.action&&!run.actionHeld;run.actionHeld=!!input.action;
-  if(action){const e=run.encounters.find(e=>!e.resolved && Math.abs(p.x+p.w/2-(e.x+400))<145);if(e){if(e.collected){e.resolved=true;events.push({type:'resolve',encounter:e});}else events.push({type:'missing',encounter:e});}else events.push({type:'outOfRange'});}
-  for(const b of run.beacons){if(!b.collected && Math.abs(p.x+p.w/2-b.x)<38 && Math.abs(p.y+p.h/2-301)<45){b.collected=true;events.push({type:'beacon',beacon:b});}}
-  if(p.y>HEIGHT+110){p.x=run.checkpoint;p.y=GROUND-p.h;p.vx=0;p.vy=0;p.grounded=true;events.push({type:'respawn'});}
-  const ready=run.level.transition?run.beacons.every(b=>b.collected):run.encounters.every(e=>e.resolved);
-  if(p.x>run.length-150 && ready){run.complete=true;events.push({type:'complete'});}
-  else if(p.x>run.length-155 && !ready){p.x=run.length-156;events.push({type:'unfinished'});}
+  p.vy+=PHYSICS.gravity*dt;p.y+=p.vy*dt;p.grounded=false;p.platformId=null;
+  if(p.vy>=0){const landings=platforms(run).filter(f=>!(p.dropTimer>0&&Math.abs(f.y-p.dropY)<4)&&p.x+p.w>f.x+2&&p.x<f.x+f.w-2&&oldBottom<=f.y+2&&p.y+p.h>=f.y).sort((a,b)=>a.y-b.y);if(landings.length){const f=landings[0];p.y=f.y-p.h;p.vy=0;p.grounded=true;p.platformId=f.id;}}
+  const pc=centre(p);
+  for(const e of run.encounters){
+    if(distance(pc,{x:e.x,y:e.y-25})<165){run.focusId=e.id;if(!e.encountered){e.encountered=true;events.push({type:'encounter',encounter:e});}}
+    if(e.opened){e.animation=Math.min(1,e.animation+dt/1.2);if(!e.crossed&&distance(pc,{x:e.anchorX,y:e.y-25})<70){e.crossed=true;run.checkpoint={x:e.anchorX-12,y:e.y-28};events.push({type:'crossed',encounter:e});}}
+  }
+  for(const pickup of run.world.pickups){const e=run.encounters.find(e=>e.id===pickup.encounterId);if(!e.encountered||run.inventory.has(pickup.enabler.id))continue;if(distance(pc,{x:pickup.x,y:pickup.y-28})<42){run.inventory.add(pickup.enabler.id);run.selected=pickup.enabler.id;run.mechanisms.add(pickup.relation.mechanism);run.checkpoint={x:pickup.x-12,y:pickup.y-28};events.push({type:'collect',pickup,encounter:e});}}
+  for(const signal of run.world.signals)if(!run.signals.has(signal.key)&&distance(pc,signal)<45){run.signals.add(signal.key);run.checkpoint={x:signal.x-12,y:signal.y+2};events.push({type:'signal',signal});}
+  if(input.action&&!run.actionHeld)events.push(activate(run));run.actionHeld=!!input.action;
+  if(p.y>run.world.height+100){Object.assign(p,{x:run.checkpoint.x,y:run.checkpoint.y,vx:0,vy:0,grounded:true,coyote:0,jumpBuffer:0});events.push({type:'respawn'});}
   return events;
+}
+export function objective(run) {
+  if(run.world.epilogue||run.world.unavailable)return `${run.signals.size} / ${run.world.signals.length} handover signals · Return to the central portal`;
+  const remaining=run.encounters.filter(e=>!e.opened).length,e=currentEncounter(run);
+  if(!remaining)return 'All selected paths are open. Return to the central portal and use E.';
+  if(e&&!e.opened)return availableRelations(run,e).length?'Return to this node. Choose a linked capability and use E.':'Path incomplete. Explore the glowing branches for an enabling capability.';
+  return 'Follow the stepping stones. Find an incomplete system.';
 }

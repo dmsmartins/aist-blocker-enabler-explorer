@@ -1,23 +1,36 @@
 # Scale Run
 
-A dependency-free Canvas platformer served at `play/` on the existing GitHub Pages site.
+An atmospheric, dependency-free Canvas exploration game at `play/`. Serve this repository with any static HTTP server and visit `/play/`. No build, backend, account, tracking or third-party game engine is required.
 
-Run the repository's static server and open `/play/`. No build step, backend, account, external engine, analytics or new data source is needed.
+## Architecture
 
-- `engine.mjs`: data selection, level layout, collisions, movement, collection and progression.
-- `game.mjs`: input, Canvas rendering, UI, knowledge dialogs and local progress.
-- `style.css`: responsive layout, touch controls and reduced-motion support.
+- `data.mjs` validates live `../data/explorer-data.json`, indexes authoritative relationships, detects strongly connected dependency components, and selects a seeded, diverse journey.
+- `world-builder.mjs` creates a central hub, vertical spine and four reusable branching layouts with independently reachable capability routes. It validates reachability before play.
+- `engine.mjs` owns fixed-step physics, checkpoints, individual capabilities, activation, source dependency support and progression. It has no browser dependency.
+- `renderer.mjs` draws the soft atmospheric islands, eight blocker archetypes, mechanism transformations and the evolving luminous player.
+- `input.mjs`, `audio.mjs`, `storage.mjs` isolate multi-input controls, optional generated sound and versioned progress reconciliation.
+- `ui.mjs` presents verbatim knowledge, the map, recaps and exact Explorer links. `game.mjs` coordinates these pieces.
 
-The game reads `../data/explorer-data.json`, selecting up to three distinct blockers per Stage Gate and one valid linked enabler per blocker. Selection favours a variety of mechanisms and is deterministic for a given dataset. Text and relationship rationales are taken directly from that file; source IDs remain internal. The knowledge dialog links to the exact blocker–enabler connection in the Explorer.
+## Knowledge and play
 
-Frame reveals a route, Commit connects it, Equip builds it, Assure protects it, Operate stabilises it, and Learn adapts it. These are visual game metaphors, not a scoring model or a claim of sufficient real-world mitigation. The barriers all require the specific linked enabler before the player can activate a crossing. Jumping alone cannot bypass them.
+The source remains unchanged. Larger gates offer four or five selected blockers; smaller gates include all eligible blockers. Each encounter offers up to three distinct linked enablers, favouring different mechanism families. The complete source relationship set is available in the knowledge panel. A capability can activate a challenge only when that exact enabler is linked to it. Matching a mechanism alone is insufficient.
 
-The current Gate 6 has no mapped blockers. Its three handover signals are explicitly illustrative and do not add invented blockers or enablers to the source data. If valid blockers are added to this gate, it automatically uses the same challenge-selection rules as the other gates.
+Frame reveals, Commit connects, Equip builds, Assure protects, Operate stabilises, and Learn adapts. Each changes the crossing visually and geometrically. Source dependencies produce local supporting routes and visible connections, including support carried from earlier chapters. Cycles are nonlocking dependency knots; nonselected source blockers appear as echoes. Opening one challenge never automatically opens another.
 
-Controls: arrows/A/D to move, Space/Up/W to jump, E to activate, P/Escape to pause. Multi-touch controls support holding movement and jumping together. Losing focus pauses play. Falling returns to a checkpoint without losing acquired enablers. Restart affects only the current run. `aistScaleRunProgressV1` stores completed gates locally, separate from the Explorer's bookmarks and maturity assessment. The game remains playable if browser storage is unavailable.
+The current final gate has no mapped blockers. Its handover signals are explicitly narrative metaphors. Adding valid source challenges automatically replaces the narrative fallback with normal encounters. No specific blocker or enabler ID is required. A new seed after completion offers another journey.
 
-Game completion is not an AIST maturity or readiness assessment. No real blockers are marked resolved in the Explorer.
+The luminous sphere acquires geometry as mechanism families are discovered, gradually echoing the Explorer logo. The official Stage Gate labels remain visible alongside artistic aliases defined in `config.mjs`.
+
+## Controls and accessibility
+
+Arrows / A / D move; Space / W / Up jump; Down / S drop through a platform; E use; Q cycle individual capabilities; 1–6 open a mechanism family; K knowledge; M map; P / Escape pause. Touch controls support simultaneous movement and jumping. Coyote time, buffered jumps, safe checkpoints and return shortcuts make exploration forgiving. Blur and hidden-page events pause play and release held controls.
+
+Dialogs manage focus; text status complements the canvas; reduced-motion preferences disable decorative movement. Sound is generated locally only after a user gesture and is off by default. `aistScaleRunProgressV2` stores source-validated progress separately from Explorer bookmarks and maturity responses. Valid v1 completed gates migrate. Corrupt or unavailable storage does not prevent play.
+
+Game progress is not a readiness assessment, a ranking of blockers, or a claim that one real-world enabling action is sufficient. Sequential chapters are a game convention.
 
 ## Validation
 
-Run `node play/engine.test.mjs` from the repository root. This simulates every level through normal inputs, checking that collectibles and exits are reachable without falls, barriers cannot be skipped without an enabler, checkpoint recovery preserves collected enablers, and every selected connection exists in the source dataset.
+Run `node play/engine.test.mjs` and `node play/input.test.mjs`. The suite checks 60 seeded journeys, immutable source mappings, every offered alternative, individual capability matching, cyclic and missing dependencies, changed source data, Gate 6 with future blockers, corrupt/blocked storage, restoration and checkpoint recovery. A deterministic pilot completes all six chapters and visits every offered capability using normal fixed-step movement, jump and drop inputs, without changing player positions or requiring falls. Unit tests separately place a player at a node to isolate activation rules.
+
+Browser QA covers the desktop and mobile layouts, map/help panels, focus, controls, reduced motion, source links and console errors. The renderer keeps a useful world scale on narrow displays instead of shrinking the entire level.
