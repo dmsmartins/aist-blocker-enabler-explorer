@@ -20,3 +20,5 @@ export const THEMES = [
 export const PHYSICS = {speed:260,acceleration:1900,friction:2200,gravity:1500,jump:650,coyote:.12,buffer:.14,width:24,height:28};
 export const WORLD = {width:2800,height:1450,hubX:1400,hubY:1200};
 export const SAVE_KEY = 'aistScaleRunProgressV2';
+
+export const ABILITIES={Frame:{key:'1',name:'Reveal steps',hint:'Creates temporary stepping stones ahead for 8 seconds.'},Commit:{key:'2',name:'Dash',hint:'A short burst across a gap in your facing direction.'},Equip:{key:'3',name:'Boost jump / break',hint:'Charges a higher jump, or adds one air jump. At a ready blocker, assembles the tools and breaks the barrier.'},Assure:{key:'4',name:'Glide',hint:'Slows your fall for 8 seconds.'},Operate:{key:'5',name:'Sprint',hint:'Faster movement for 8 seconds.'},Learn:{key:'6',name:'Recall',hint:'Return directly to the central portal.'}};

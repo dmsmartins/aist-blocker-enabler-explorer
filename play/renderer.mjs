@@ -1,6 +1,6 @@
-import {THEMES,powerStyle} from './config.mjs';
-import {platforms,currentEncounter} from './engine.mjs';
-import {hash} from './data.mjs';
+import {THEMES,powerStyle} from './config.mjs?v=3';
+import {platforms,currentEncounter} from './engine.mjs?v=3';
+import {hash} from './data.mjs?v=3';
 
 export class Renderer {
   constructor(canvas){this.canvas=canvas;this.ctx=canvas.getContext('2d');if(!this.ctx)throw new Error('Canvas 2D is unavailable');this.camera={x:0,y:0,zoom:1};this.width=1000;this.height=600;this.effects=[];this.reduced=false;this.overview=0;this.observer=new ResizeObserver(()=>this.resize());this.observer.observe(canvas);this.resize();}
@@ -59,7 +59,8 @@ export class Renderer {
     if(e.knot&&e.encountered){c.beginPath();c.ellipse(e.x,e.y-36,29,16,-.5,0,Math.PI*2);c.strokeStyle='#8ba5b466';c.stroke();}
     this.node(e.x,e.y-32,e.opened?'#478e80':'#668995',false,time,12);
     const near=Math.hypot(run.player.x+12-e.x,run.player.y+14-(e.y-25))<105;
-    if(near)this.label(e.opened?'E · return shortcut':run.inventory.has(run.selected)&&e.relations.some(r=>r.enablerId===run.selected)?'E · change this system':'Another capability is needed',e.x,e.y-72,12,'#315969');
+    const collected=e.alternatives.filter(a=>run.inventory.has(a.enabler.id)).length;
+    if(near)this.label(e.opened?'E · return shortcut':e.requiredAll&&collected<e.alternatives.length?`${collected}/${e.alternatives.length} tools collected`:run.inventory.has(run.selected)&&e.relations.some(r=>r.enablerId===run.selected)?'E or ability · unlock':'Choose a linked capability',e.x,e.y-72,12,'#315969');
     if(e.support&&!e.opened)this.label('Connected support',e.x,e.y+48,10,'#56877d');
     if(e.opened){this.node(e.anchorX,e.y-27,'#579a88',false,time,9);this.label('↩',e.anchorX,e.y-48,18,'#53877c');}
     c.restore();
@@ -74,6 +75,7 @@ export class Renderer {
     }
   }
   spark(run,time){const c=this.ctx,p=run.player,x=p.x+p.w/2,y=p.y+p.h/2;const glow=c.createRadialGradient(x,y,1,x,y,31);glow.addColorStop(0,'#fffdfbe6');glow.addColorStop(.32,'#fff8cfb0');glow.addColorStop(1,'#fffcdf00');c.fillStyle=glow;c.fillRect(x-31,y-31,62,62);this.circle(x,y,8.5,'#fffdf4','#9fbdb3');
+    if(run.timers?.Assure>run.time){c.strokeStyle='#6baab6';c.beginPath();c.arc(x,y,23,Math.PI,Math.PI*2);c.stroke();}if(run.timers?.Equip>run.time)this.label('↑',x,y-30,19,'#568d76');
     const list=[...run.mechanisms],coherence=Math.min(1,run.world.index/5),r=17;
     list.forEach((key,i)=>{c.save();c.translate(x,y);const angular=this.reduced?0:time*(key==='Learn'?.24:.06);c.rotate((i*.8)*(1-coherence*.35)+angular);c.strokeStyle='#507f8799';c.lineWidth=1.1;
       if(key==='Equip'){c.beginPath();c.moveTo(-r,r*.5);c.lineTo(0,-r);c.lineTo(r,r*.5);c.stroke();}
@@ -99,9 +101,9 @@ export class Renderer {
       if(Math.hypot(run.player.x-pickup.x,run.player.y-pickup.y)<150)this.label(pickup.relation.mechanism,pickup.x,pickup.y-56,11,'#6d643f');
     }
     for(const s of run.world.signals){this.node(s.x,s.y,'#7ca092',!run.signals.has(s.key),motion,12);this.label(run.signals.has(s.key)?'✓':s.label,s.x,s.y-27,12,'#547c76');}
-    const exit=run.world.exit,ready=run.encounters.length?run.encounters.every(e=>e.opened):run.signals.size===run.world.signals.length;
+    const exit=run.world.exit,opened=new Set([...run.priorOpened,...run.encounters.filter(e=>e.opened).map(e=>e.id)]),ready=run.encounters.length?(run.world.chapterIds||run.encounters.map(e=>e.id)).every(id=>opened.has(id)):run.signals.size===run.world.signals.length;
     c.strokeStyle=ready?'#609f90':'#8eacae';c.lineWidth=2;c.beginPath();c.ellipse(exit.x,exit.y-45,26,44,0,Math.PI,Math.PI*3);c.stroke();this.circle(exit.x,exit.y-45,13,ready?'#faf0c777':'#e9f3ec44');
-    this.label(ready?'E · continue the journey':'CENTRAL PORTAL',exit.x,exit.y-108,12,'#466b75');
+    this.label(ready?'E · continue the journey':run.world.roomCount>1?'E · MINI-MAP PORTALS':'CENTRAL PORTAL',exit.x,exit.y-108,12,'#466b75');
     if(run.time<18&&!run.encounters.some(e=>e.encountered)){this.label('← explore     jump ↑     explore →',exit.x,exit.y-152,13,'#456d78');}
     const cp=run.checkpoint;this.circle(cp.x+12,cp.y+32,4,'#b9d8c2','#76a494');
     for(const effect of this.effects){effect.age+=delta;if(effect.type==='notice'||effect.type==='collect'){this.label('!',effect.x,effect.y-30-effect.age*14,28,'#946c25');if(effect.type==='notice')continue;}const a=Math.min(1,effect.age/1.4),color=powerStyle(effect.mechanism).color;c.globalAlpha=(1-a)*.5;c.lineWidth=1.4;c.strokeStyle=color;c.beginPath();if(effect.mechanism==='Frame')c.arc(effect.x,effect.y,30+a*260,0,7);else if(effect.mechanism==='Assure')c.ellipse(effect.x,effect.y,35+a*95,35+a*80,0,0,7);else c.arc(effect.x,effect.y,15+a*75,-Math.PI*.3,Math.PI*1.3);if(!this.reduced)c.stroke();c.globalAlpha=1;}this.effects=this.effects.filter(e=>e.age<1.4);

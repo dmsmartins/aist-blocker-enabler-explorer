@@ -1,5 +1,5 @@
-import {WORLD,PHYSICS,CHAPTERS} from './config.mjs';
-import {hash,selectJourneyChallenges} from './data.mjs';
+import {WORLD,PHYSICS,CHAPTERS} from './config.mjs?v=3';
+import {hash,selectJourneyChallenges} from './data.mjs?v=3';
 export function buildJourney(data,seed='first-light') {
   const experienced=[];
   return data.gates.map((gate,index)=>{const challenges=selectJourneyChallenges(data,gate.id,seed,experienced);experienced.push(...challenges.map(c=>c.blocker.id));return buildWorld(data,gate,challenges,seed,index);});
@@ -31,7 +31,7 @@ export function buildWorld(data,gate,challenges,seed,index) {
     layouts[template].forEach(([offset,dy,width],j)=>{const name=parts[j];placed[name]=add(name+'-'+id,slot.x-s*offset,slot.y+dy,width,['upper','crown','lower'].includes(name)?'garden':'step');});
     add('landing-'+id,encounter.anchorX,slot.y,150,'landing',{lockedBy:id});
     const positions=['upper','crown','lower'].map(name=>({x:placed[name].x+placed[name].w/2,y:placed[name].y,platformId:placed[name].id}));
-    c.alternatives.forEach((alternative,j)=>world.pickups.push({id:id+':'+alternative.enabler.id,encounterId:id,...positions[j],...alternative}));
+    c.alternatives.forEach((alternative,j)=>{const pos=positions[j%3],platform=world.platforms.find(p=>p.id===pos.platformId),row=Math.floor(j/3),count=Math.ceil((c.alternatives.length-j%3)/3),offset=count>1?(row/(count-1)-.5)*(platform.w-45):0;world.pickups.push({id:id+':'+alternative.enabler.id,encounterId:id,...pos,x:pos.x+offset,...alternative});});
     for(const target of c.upstream){const source=data.blockerMap.get(target);world.dependencyLinks.push({from:target,to:id,echo:!selected.has(target),stage:source.stageGate,sameGate:source.stageGate===gate.id,knot:data.componentOf.get(target)===data.componentOf.get(id)&&c.knot,title:source.title});}
   });
   if(world.epilogue||world.unavailable){

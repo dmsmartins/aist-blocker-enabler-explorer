@@ -1,4 +1,4 @@
-import {powerStyle} from './config.mjs';
+import {powerStyle} from './config.mjs?v=3';
 
 export function hash(value) {let h=2166136261;for(const c of String(value)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;}
 export const idOf = v => typeof v==='number'&&Number.isSafeInteger(v)&&v>0?String(v):typeof v==='string'&&/^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/.test(v)?v:null;
@@ -50,9 +50,9 @@ export function visualArchetype(blocker,mechanism) {
   return ({'data-foundations':'broken-stream','technology-infrastructure':'misaligned-interfaces','governance-organisation':'routing-knot','people-adoption':'split-network','legal-safety-assurance':'veil','value-delivery-scale':'missing-structure'})[blocker.domain] || (mechanism==='Learn'?'living-loop':'missing-structure');
 }
 
-export function selectJourneyChallenges(data,gateId,seed,experienced=[]) {
+export function selectJourneyChallenges(data,gateId,seed,experienced=[],options={}) {
   const seen=new Set(experienced),candidates=data.blockers.filter(b=>b.stageGate===gateId&&(data.relationsByBlocker.get(b.id)||[]).length);
-  const count=Math.min(candidates.length,candidates.length>5?4+(hash(seed+gateId)%2):5);
+  const count=options.all?candidates.length:Math.min(candidates.length,candidates.length>5?4+(hash(seed+gateId)%2):5);
   const picked=[],domains=new Set(),mechanisms=new Set(),archetypes=new Set();
   while(picked.length<count){
     const available=candidates.filter(b=>!picked.includes(b));
@@ -66,9 +66,9 @@ export function selectJourneyChallenges(data,gateId,seed,experienced=[]) {
   return ordered.map(blocker=>{
     const all=data.relationsByBlocker.get(blocker.id),used=new Set(),alternatives=[];
     const shuffled=[...all].sort((a,b)=>hash(seed+'|'+blocker.id+'|'+a.enablerId)-hash(seed+'|'+blocker.id+'|'+b.enablerId));
-    for(const relation of [...shuffled.filter((r,i,a)=>a.findIndex(x=>x.mechanism===r.mechanism)===i),...shuffled]){if(alternatives.length===3)break;if(used.has(relation.enablerId))continue;used.add(relation.enablerId);alternatives.push({relation,enabler:data.enablerMap.get(relation.enablerId)});}
+    for(const relation of [...shuffled.filter((r,i,a)=>a.findIndex(x=>x.mechanism===r.mechanism)===i),...shuffled]){if(!options.all&&alternatives.length===3)break;if(used.has(relation.enablerId))continue;used.add(relation.enablerId);alternatives.push({relation,enabler:data.enablerMap.get(relation.enablerId)});}
     const component=data.components[data.componentOf.get(blocker.id)]||[];
-    return {blocker,alternatives,relations:all,archetype:visualArchetype(blocker,alternatives[0].relation.mechanism),knot:component.length>1||(data.upstream.get(blocker.id)||[]).includes(blocker.id),upstream:data.upstream.get(blocker.id)||[],downstream:data.downstream.get(blocker.id)||[]};
+    return {blocker,alternatives,requiredAll:!!options.all,relations:all,archetype:visualArchetype(blocker,alternatives[0].relation.mechanism),knot:component.length>1||(data.upstream.get(blocker.id)||[]).includes(blocker.id),upstream:data.upstream.get(blocker.id)||[],downstream:data.downstream.get(blocker.id)||[]};
   });
 }
 

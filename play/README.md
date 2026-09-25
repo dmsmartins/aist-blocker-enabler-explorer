@@ -13,26 +13,30 @@ An atmospheric, dependency-free Canvas exploration game at `play/`. Serve this r
 
 ## Knowledge and play
 
-The source remains unchanged. Larger gates offer four or five selected blockers; smaller gates include all eligible blockers. Each encounter offers up to three distinct linked enablers, favouring different mechanism families. The complete source relationship set is available in the knowledge panel. A capability can activate a challenge only when that exact enabler is linked to it. Matching a mechanism alone is insufficient.
+`campaign.mjs` includes every blocker that has a valid enabling relationship, and every distinct enabler linked to it. The current source yields 41 blockers and 109 unique enablers across 16 mini-maps. These counts are derived, never required. Each mini-map contains at most three blockers, retaining readable platform layouts.
 
-Frame reveals, Commit connects, Equip builds, Assure protects, Operate stabilises, and Learn adapts. Each changes the crossing visually and geometrically. Source dependencies produce local supporting routes and visible connections, including support carried from earlier chapters. Cycles are nonlocking dependency knots; nonselected source blockers appear as echoes. Opening one challenge never automatically opens another.
+Entrances may require an earlier source dependency to be opened; when no suitable earlier dependency exists, an exploration gate requires one path in the preceding mini-map. The portal panel explicitly distinguishes source dependencies from game gates. Requirements only point to earlier rooms, so source cycles cannot lock their own tools. All linked tools are collected before applying E or a linked mechanism ability at a blocker. This is a game collection rule, not a claim that all source enablers are necessary in real organisations. The source remains unchanged.
 
-The current final gate has no mapped blockers. Its handover signals are explicitly narrative metaphors. Adding valid source challenges automatically replaces the narrative fallback with normal encounters. No specific blocker or enabler ID is required. A new seed after completion offers another journey.
+The central portal leads between mini-maps. A capability linked to four or more blockers, or an opened blocker supporting three or more others, enables fast travel from anywhere, including direct arrival at blockers in unlocked mini-maps. Finishing a Stage Gate requires all its playable blockers, not just the current room. The source-empty final gate remains a narrative handover.
 
-The luminous sphere acquires geometry as mechanism families are discovered, gradually echoing the Explorer logo. The official Stage Gate labels remain visible alongside artistic aliases defined in `config.mjs`.
+Discovery uses a visible exclamation mark and queued bottom-centre text without pausing. Delivery shows a short nonmodal key animation and the source rationale, with Read full connection available. Neither discovery nor delivery cards repeat next-step instructions. The persistent guide and Help explain the full loop.
 
-Restart is available in the game header, including on mobile. After confirmation it returns to Stage Gate 1, clears only Scale Run progress and keeps the same challenges and sound/motion preferences. Cancelling resumes the previous state. The ending also offers a new seeded path.
+Original procedural ambient music and effects are available through Music. They start only after user interaction and pause during reading, pausing or tab hiding. No external recordings or network audio are used.
+
+Restart clears game progress, retains the same seed and sound/motion preferences, and starts at Stage Gate 1. Cancel preserves the current state. Progress from older short journeys retains valid discoveries; completion is reconciled against all newly included challenges.
 
 ## Controls and accessibility
 
-Arrows / A / D move; Space / W / Up jump; Down / S drop through a platform; E use; Q cycle individual capabilities; 1–6 open a mechanism family; K knowledge; M map; P / Escape pause. Touch controls support simultaneous movement and jumping. Coyote time, buffered jumps, safe checkpoints and return shortcuts make exploration forgiving. Blur and hidden-page events pause play and release held controls.
+Arrows / A / D move; Space / W / Up jump; Down / S drop through a platform; E use; Q cycle individual capabilities; 1–6 use abilities; T opens portals; K knowledge; M map; P / Escape pause. Touch controls support simultaneous movement and jumping. Coyote time, buffered jumps, safe checkpoints and return shortcuts make exploration forgiving. Blur and hidden-page events pause play and release held controls.
 
 Dialogs manage focus; text status complements the canvas; reduced-motion preferences disable decorative movement. Sound is generated locally only after a user gesture and is off by default. `aistScaleRunProgressV2` stores source-validated progress separately from Explorer bookmarks and maturity responses. Valid v1 completed gates migrate. Corrupt or unavailable storage does not prevent play.
 
 Game progress is not a readiness assessment, a ranking of blockers, or a claim that one real-world enabling action is sufficient. Sequential chapters are a game convention.
 
+The six real mechanism families unlock game abilities: Frame reveals temporary steps; Commit dashes; Equip boosts jumps or adds an air jump; Assure glides; Operate sprints; Learn recalls to the central portal. A linked ability at a fully equipped blocker also activates its passage. Traversal abilities supplement the reachable base routes, so their absence cannot create a dead end.
+
 ## Validation
 
-Run `node play/engine.test.mjs` and `node play/input.test.mjs`. The suite checks 60 seeded journeys, immutable source mappings, every offered alternative, individual capability matching, cyclic and missing dependencies, changed source data, Gate 6 with future blockers, corrupt/blocked storage, restoration and checkpoint recovery. A deterministic pilot completes all six chapters and visits every offered capability using normal fixed-step movement, jump and drop inputs, without changing player positions or requiring falls. Unit tests separately place a player at a node to isolate activation rules.
+Run `node play/engine.test.mjs`, `node play/campaign.test.mjs`, `node play/input.test.mjs`, `node play/learning.test.mjs`, and `node play/audio.test.mjs`. The full-campaign test visits all 41 source blockers, collects all 109 distinct enablers through normal movement, crosses opened routes, passes every mini-map entrance and completes the epilogue, with progress restored between rooms. It also checks lock/reset behavior, actual ability physics and high-connectivity travel. The suite checks 60 seeded journeys, immutable source mappings, every offered alternative, individual capability matching, cyclic and missing dependencies, changed source data, Gate 6 with future blockers, corrupt/blocked storage, restoration and checkpoint recovery. A deterministic pilot completes all six chapters and visits every offered capability using normal fixed-step movement, jump and drop inputs, without changing player positions or requiring falls. Unit tests separately place a player at a node to isolate activation rules.
 
 Browser QA covers the desktop and mobile layouts, map/help panels, focus, controls, reduced motion, source links and console errors. The renderer keeps a useful world scale on narrow displays instead of shrinking the entire level.

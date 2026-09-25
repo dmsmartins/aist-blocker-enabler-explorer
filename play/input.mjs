@@ -10,6 +10,7 @@ export function createInput(canvas,handlers) {
     if(event.repeat)return;
     if(event.code==='KeyQ'){event.preventDefault();handlers.cycle();}
     if(event.code==='KeyK'){event.preventDefault();handlers.knowledge();}
+    if(event.code==='KeyT'){event.preventDefault();handlers.portals?.();}
     if(event.code==='KeyM'){event.preventDefault();handlers.map();}
     if(/^Digit[1-6]$/.test(event.code)){event.preventDefault();handlers.family(Number(event.code.slice(-1))-1);}
   });
