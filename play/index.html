@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#102a43"><meta name="description" content="An atmospheric exploration game through the AI scalability lifecycle. Discover enabling capabilities, connect systems and carry learning forward.">
-<title>Scale Run — AI Scalability Explorer</title><link rel="icon" href="../assets/ai-scalability-logo-v2.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css?v=4">
+<title>Scale Run — AI Scalability Explorer</title><link rel="icon" href="../assets/ai-scalability-logo-v2.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css?v=5">
 </head><body>
 <a class="skip" href="#game">Skip to game</a>
 <header class="topbar"><a class="brand" href="../#home" aria-label="AI Scalability Explorer home"><img src="../assets/ai-scalability-logo-v2.svg" width="34" height="34" alt=""><span>AI Scalability Explorer</span></a><nav aria-label="Primary navigation"><a href="../#explore">Explore</a><a href="../#maturity">Assess</a><a href="../timeline/">Timeline</a><a href="./" aria-current="page">Play</a></nav></header>
@@ -14,15 +14,16 @@
    <div id="overlay" class="overlay"><div class="overlay-card"><p id="overlayKicker" class="eyebrow">A LIVING KNOWLEDGE LANDSCAPE</p><h2 id="overlayTitle">A little light.<br>A world of possibility.</h2><p id="overlayText">The knowledge network is taking shape.</p><div id="overlayExtra"></div><div class="overlay-actions"><button id="start" class="primary" disabled>Loading…</button><button id="overlayMap" class="secondary" hidden>View the journey</button></div><p id="overlayNote" class="fine">Challenges are generated from the live AI Scalability Explorer knowledge base.</p></div></div>
    <section id="delivery" class="delivery-card" hidden aria-live="polite"></section><div id="toast" class="toast" role="status" aria-live="polite"></div>
    <button id="orientation" class="orientation" title="Open map to find your route" aria-label="Open map and locate your spark" disabled>⌘ <span>Find your way</span></button>
+  <div class="touch-controls" aria-label="Touch controls"><div><button data-hold="left" aria-label="Move left">←</button><button data-hold="down" aria-label="Drop to a lower platform">↓</button><button data-hold="right" aria-label="Move right">→</button></div><div><button id="touchCycle" aria-label="Choose capability">◇</button><button data-hold="jump" aria-label="Jump">Jump ↑</button><button data-hold="action" aria-label="Use selected capability">Use ◎</button></div></div>
   </div>
   <div class="context-strip"><div><span id="contextKicker" class="eyebrow">EXPLORE AT YOUR OWN PACE</span><p id="objective">Discover a capability. Return. Change the system.</p></div><button id="knowledge" class="text-button" disabled>Behind this challenge ↗</button></div>
   <ol id="journeySteps" class="journey-steps" aria-label="How to finish this chapter"><li>Find a blocker</li><li>Collect all linked tools</li><li>Return and use them</li><li>Return to the central portal</li></ol><div class="capability-bar"><div id="powerTray" class="powers" aria-label="Capability families"></div><button id="portals" class="text-button" disabled title="Mini-map passages (T)">◎ Portals</button><button id="inventoryButton" class="inventory-button" disabled><span class="eyebrow">SELECTED CAPABILITY</span><span id="selectedCapability">No capabilities discovered yet</span><b aria-hidden="true">⌄</b></button></div>
-  <div class="touch-controls" aria-label="Touch controls"><div><button data-hold="left" aria-label="Move left">←</button><button data-hold="down" aria-label="Drop to a lower platform">↓</button><button data-hold="right" aria-label="Move right">→</button></div><div><button id="touchCycle" aria-label="Choose capability">◇</button><button data-hold="jump" aria-label="Jump">Jump ↑</button><button data-hold="action" aria-label="Use selected capability">Use ◎</button></div></div>
+
  </section>
  <div class="under-game"><p><kbd>← →</kbd> move <kbd>Space</kbd> jump <kbd>↓</kbd> drop <kbd>E</kbd> use <kbd>Q</kbd> change capability <kbd>K</kbd> knowledge <kbd>M</kbd> map <kbd>1–6</kbd> abilities <kbd>T</kbd> portals</p><span id="coverage">Live Explorer data</span></div>
  <p class="scope-note">Scale Run is a learning experience. Game progress is not an assessment of organisational maturity or readiness.</p>
  <footer><span>Explore → Assess → Timeline → Play</span><a href="../#explore">Explore the knowledge ↗</a></footer>
 </main>
 <dialog id="details"><div class="dialog-head"><p id="dialogKicker" class="eyebrow">SCALE RUN</p><button id="closeDialog" aria-label="Close panel">×</button></div><div id="dialogBody"></div></dialog>
-<script type="module" src="./game.mjs?v=4"></script>
+<script type="module" src="./game.mjs?v=5"></script>
 </body></html>

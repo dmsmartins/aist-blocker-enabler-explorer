@@ -42,3 +42,5 @@ Run `node play/engine.test.mjs`, `node play/campaign.test.mjs`, `node play/input
 Browser QA covers the desktop and mobile layouts, map/help panels, focus, controls, reduced motion, source links and console errors. The renderer keeps a useful world scale on narrow displays instead of shrinking the entire level.
 
 Full screen expands the game and its reading panels. The button exits it again; Escape also exits. A viewport-filling fallback is available when native fullscreen is unavailable.
+
+Mobile controls sit directly over the game, including fullscreen: left thumb moves, right thumb jumps or uses an object. Sliding between direction arrows preserves the other finger’s jump. Controls disappear while paused or reading an overlay, and active touches clear on interruption. Safe-area padding accommodates screen cutouts.

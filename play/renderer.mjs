@@ -1,6 +1,6 @@
-import {THEMES,powerStyle} from './config.mjs?v=4';
-import {platforms,currentEncounter,portalOpen,portalZones} from './engine.mjs?v=4';
-import {hash} from './data.mjs?v=4';
+import {THEMES,powerStyle} from './config.mjs?v=5';
+import {platforms,currentEncounter,portalOpen,portalZones} from './engine.mjs?v=5';
+import {hash} from './data.mjs?v=5';
 
 export class Renderer {
   constructor(canvas){this.canvas=canvas;this.ctx=canvas.getContext('2d');if(!this.ctx)throw new Error('Canvas 2D is unavailable');this.camera={x:0,y:0,zoom:1};this.width=1000;this.height=600;this.effects=[];this.reduced=false;this.overview=0;this.observer=new ResizeObserver(()=>this.resize());this.observer.observe(canvas);this.resize();}

@@ -1,5 +1,5 @@
-import {WORLD,PHYSICS,CHAPTERS} from './config.mjs?v=4';
-import {hash,selectJourneyChallenges} from './data.mjs?v=4';
+import {WORLD,PHYSICS,CHAPTERS} from './config.mjs?v=5';
+import {hash,selectJourneyChallenges} from './data.mjs?v=5';
 export function buildJourney(data,seed='first-light') {
   const experienced=[];
   return data.gates.map((gate,index)=>{const challenges=selectJourneyChallenges(data,gate.id,seed,experienced);experienced.push(...challenges.map(c=>c.blocker.id));return buildWorld(data,gate,challenges,seed,index);});

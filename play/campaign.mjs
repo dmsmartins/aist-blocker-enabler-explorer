@@ -1,5 +1,5 @@
-import {selectJourneyChallenges} from './data.mjs?v=4';
-import {buildWorld} from './world-builder.mjs?v=4';
+import {selectJourneyChallenges} from './data.mjs?v=5';
+import {buildWorld} from './world-builder.mjs?v=5';
 export function buildCampaign(data,seed='first-light'){
  const experienced=[],centralEnablers=new Set(data.enablers.filter(e=>new Set(data.relationships.filter(r=>r.enablerId===e.id).map(r=>r.blockerId)).size>=4).map(e=>e.id)),centralBlockers=new Set(data.blockers.filter(b=>(data.downstream.get(b.id)||[]).length>=3).map(b=>b.id));
  return data.gates.map((gate,index)=>{

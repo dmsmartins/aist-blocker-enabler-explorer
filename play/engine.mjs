@@ -1,5 +1,5 @@
-import {PHYSICS} from './config.mjs?v=4';
-import {bridgePlatforms} from './world-builder.mjs?v=4';
+import {PHYSICS} from './config.mjs?v=5';
+import {bridgePlatforms} from './world-builder.mjs?v=5';
 export function createRun(world,progress={}) {
   const inventory=new Set(progress.capabilities||[]),applied=new Map((progress.applied||[]).map(x=>[x.blockerId,x.enablerId]));
   const encounters=world.encounters.map(e=>{const enablerId=applied.get(e.id),relation=e.relations.find(r=>r.enablerId===enablerId&&inventory.has(enablerId)&&(!e.requiredAll||e.alternatives.every(a=>inventory.has(a.enabler.id))));return {...e,encountered:(progress.encountered||[]).includes(e.id)||!!relation,opened:!!relation,chosen:relation?.enablerId||null,mechanism:relation?.mechanism||null,animation:relation?1:0,support:0,crossed:false};});

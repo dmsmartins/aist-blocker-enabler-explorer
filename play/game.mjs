@@ -1,14 +1,14 @@
-import {installFullscreen} from './fullscreen.mjs?v=4';
-import {learningCard,journeyStep,discoveryNotice} from './learning.mjs?v=4';
-import {prepareData,hash} from './data.mjs?v=4';
-import {buildCampaign,roomUnlocked,reconcileCampaign} from './campaign.mjs?v=4';
-import {createRun,step,currentEncounter,availableRelations,cycleCapability,objective,useAbility,portalOpen} from './engine.mjs?v=4';
-import {readProgress,writeProgress,captureProgress,freshProgress,reconcileProgress,restartProgress} from './storage.mjs?v=4';
-import {Renderer} from './renderer.mjs?v=4';
-import {createInput} from './input.mjs?v=4';
-import {createAudio} from './audio.mjs?v=4';
-import {powerStyle,ABILITIES} from './config.mjs?v=4';
-import {esc,knowledgeHTML,mapHTML,recapHTML,finaleHTML,gateURL} from './ui.mjs?v=4';
+import {installFullscreen} from './fullscreen.mjs?v=5';
+import {learningCard,journeyStep,discoveryNotice} from './learning.mjs?v=5';
+import {prepareData,hash} from './data.mjs?v=5';
+import {buildCampaign,roomUnlocked,reconcileCampaign} from './campaign.mjs?v=5';
+import {createRun,step,currentEncounter,availableRelations,cycleCapability,objective,useAbility,portalOpen} from './engine.mjs?v=5';
+import {readProgress,writeProgress,captureProgress,freshProgress,reconcileProgress,restartProgress} from './storage.mjs?v=5';
+import {Renderer} from './renderer.mjs?v=5';
+import {createInput} from './input.mjs?v=5';
+import {createAudio} from './audio.mjs?v=5';
+import {powerStyle,ABILITIES} from './config.mjs?v=5';
+import {esc,knowledgeHTML,mapHTML,recapHTML,finaleHTML,gateURL} from './ui.mjs?v=5';
 
 const $=id=>document.getElementById(id),canvas=$('game'),audio=createAudio(),motionQuery=matchMedia('(prefers-reduced-motion: reduce)');
 const discoveryQueue=[],noticeQueue=[];let deliveryUntil=0;

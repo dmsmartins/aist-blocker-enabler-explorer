@@ -1,4 +1,4 @@
-import {powerStyle} from './config.mjs?v=4';
+import {powerStyle} from './config.mjs?v=5';
 
 export function hash(value) {let h=2166136261;for(const c of String(value)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;}
 export const idOf = v => typeof v==='number'&&Number.isSafeInteger(v)&&v>0?String(v):typeof v==='string'&&/^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/.test(v)?v:null;
