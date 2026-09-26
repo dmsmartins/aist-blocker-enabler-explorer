@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';
-import {prepareData} from './data.mjs';import {buildCampaign} from './campaign.mjs';import {platformGraph,routeBetween} from './world-builder.mjs';import {createRun,step,activate,platforms,portalOpen,portalZones} from './engine.mjs';import {freshProgress,captureProgress,reconcileProgress,restartProgress} from './storage.mjs';import {worldMapModel,worldMapHTML} from './world-map.mjs';
+import {prepareData} from './data.mjs';import {buildCampaign} from './campaign.mjs';import {platformGraph,routeBetween} from './world-builder.mjs';import {createRun,step,activate,platforms,pickupAwake,portalOpen,portalZones} from './engine.mjs';import {freshProgress,captureProgress,reconcileProgress,restartProgress} from './storage.mjs';import {worldMapModel,worldMapHTML} from './world-map.mjs';
 const raw=readFileSync(new URL('../data/explorer-data.json',import.meta.url),'utf8'),data=prepareData(JSON.parse(raw)),chapters=buildCampaign(data);
 let totalFrames=0;
 function tick(run,input){totalFrames++;const events=step(run,input,1/120);assert.ok(!events.some(e=>e.type==='respawn'),'Pilot fell off a required route');return events;}
@@ -35,7 +35,7 @@ for(const chapter of chapters){
   let changes=0;
   for(const room of chapter.rooms){if(!reachRoom(room.roomIndex))continue;visited.add(room.roomIndex);
    for(const e of run.encounters){navigate(run,'approach-'+e.id);assert.ok(e.encountered);}
-   for(const p of room.pickups){if(run.inventory.has(p.enabler.id))continue;navigate(run,p.platformId);settle(run,p.x);assert.ok(run.inventory.has(p.enabler.id),'Missed capability '+p.id);changes++;}
+   for(const p of room.pickups){if(!pickupAwake(run,p)||run.inventory.has(p.enabler.id))continue;navigate(run,p.platformId);settle(run,p.x);assert.ok(run.inventory.has(p.enabler.id),'Missed capability '+p.id);changes++;}
    for(const e of run.encounters){if(e.opened||!e.alternatives.every(a=>run.inventory.has(a.enabler.id)))continue;navigate(run,'approach-'+e.id);run.selected=e.alternatives[0].enabler.id;assert.equal(activate(run).type,'open');openedCount++;changes++;if(chapter.rooms.some(r=>r.roomIndex!==room.roomIndex&&r.pickups.some(p=>p.encounterId===e.id)))crossZoneReturns++;if(!(run.world.portals||[]).some(p=>p.hostId===e.id&&!portalOpen(run,p)))navigate(run,'landing-'+e.id);navigate(run,'home');}
    for(const signal of room.signals){navigate(run,signal.platformId);assert.ok(run.signals.has(signal.key));}
    save();

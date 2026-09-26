@@ -1,14 +1,15 @@
-import {PHYSICS} from './config.mjs?v=7';
-import {bridgePlatforms} from './world-builder.mjs?v=7';
+import {PHYSICS} from './config.mjs?v=8';
+import {bridgePlatforms} from './world-builder.mjs?v=8';
 export function createRun(world,progress={}) {
   const inventory=new Set(progress.capabilities||[]),applied=new Map((progress.applied||[]).map(x=>[x.blockerId,x.enablerId]));
   const encounters=world.encounters.map(e=>{const enablerId=applied.get(e.id),relation=e.relations.find(r=>r.enablerId===enablerId&&inventory.has(enablerId)&&(!e.requiredAll||e.alternatives.every(a=>inventory.has(a.enabler.id))));return {...e,encountered:(progress.encountered||[]).includes(e.id)||!!relation,opened:!!relation,chosen:relation?.enablerId||null,mechanism:relation?.mechanism||null,animation:relation?1:0,support:0,crossed:false};});
   const player={x:world.entrance.x-12,y:world.entrance.y-28,w:PHYSICS.width,h:PHYSICS.height,vx:0,vy:0,grounded:true,platformId:'home',coyote:0,jumpBuffer:0,jumpTime:0};
-  const run={world,encounters,inventory,seenPickups:new Set(progress.seenPickups||[]),visitedZones:new Set(progress.zones||[]),priorSignals:new Set(progress.handover||[]),priorOpened:new Set((progress.applied||[]).map(a=>a.blockerId)),mechanisms:new Set(progress.mechanisms||[]),selected:inventory.values().next().value||null,player,checkpoint:{x:player.x,y:player.y},signals:new Set(world.signals.filter(s=>(progress.handover||[]).includes(world.gate.id+':'+s.key)).map(s=>s.key)),complete:false,time:0,actionHeld:false,jumpHeld:false,focusId:null,abilityCooldown:{},timers:{},temporaryPlatforms:[],facing:1};
+  const run={world,encounters,inventory,priorEncountered:new Set(progress.encountered||[]),seenPickups:new Set(progress.seenPickups||[]),visitedZones:new Set(progress.zones||[]),priorSignals:new Set(progress.handover||[]),priorOpened:new Set((progress.applied||[]).map(a=>a.blockerId)),mechanisms:new Set(progress.mechanisms||[]),selected:inventory.values().next().value||null,player,checkpoint:{x:player.x,y:player.y},signals:new Set(world.signals.filter(s=>(progress.handover||[]).includes(world.gate.id+':'+s.key)).map(s=>s.key)),complete:false,time:0,actionHeld:false,jumpHeld:false,focusId:null,abilityCooldown:{},timers:{},temporaryPlatforms:[],facing:1};
   updateSupports(run);return run;
 }
 const centre=p=>({x:p.x+p.w/2,y:p.y+p.h/2});
 const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+export function pickupAwake(run,pickup){return run.priorEncountered?.has(pickup.encounterId)||run.priorOpened.has(pickup.encounterId)||run.encounters.some(e=>e.id===pickup.encounterId&&e.encountered);}
 export function currentEncounter(run) {return run.encounters.find(e=>e.id===run.focusId)||null;}
 export function availableRelations(run,encounter=currentEncounter(run)) {return encounter?encounter.relations.filter(r=>run.inventory.has(r.enablerId)):[];}
 export function cycleCapability(run) {const relevant=availableRelations(run).map(r=>r.enablerId),ids=[...new Set([...relevant,...run.inventory])];if(!ids.length)return null;run.selected=ids[(ids.indexOf(run.selected)+1)%ids.length];return run.selected;}
@@ -70,7 +71,7 @@ export function step(run,input,dt) {
     if(distance(pc,{x:e.x,y:e.y-25})<165){run.focusId=e.id;if(!e.encountered){e.encountered=true;events.push({type:'encounter',encounter:e});}}
     if(e.opened){e.animation=Math.min(1,e.animation+dt/1.2);if(!e.crossed&&distance(pc,{x:e.anchorX,y:e.y-25})<70){e.crossed=true;run.checkpoint={x:e.anchorX-12,y:e.y-28};events.push({type:'crossed',encounter:e});}}
   }
-  for(const pickup of run.world.pickups){const e=run.encounters.find(e=>e.id===pickup.encounterId)||pickup.encounter;if(distance(pc,{x:pickup.x,y:pickup.y-28})<230&&!run.seenPickups.has(pickup.id)){run.seenPickups.add(pickup.id);events.push({type:'sighting'});}if((!pickup.signature&&!e?.encountered)||run.inventory.has(pickup.enabler.id))continue;if(distance(pc,{x:pickup.x,y:pickup.y-28})<42){run.inventory.add(pickup.enabler.id);run.selected=pickup.enabler.id;run.mechanisms.add(pickup.relation.mechanism);run.checkpoint={x:pickup.x-12,y:pickup.y-28};events.push({type:'collect',pickup,encounter:e});}}
+  for(const pickup of run.world.pickups){const e=run.encounters.find(e=>e.id===pickup.encounterId)||pickup.encounter;if(!pickupAwake(run,pickup))continue;if(distance(pc,{x:pickup.x,y:pickup.y-28})<230&&!run.seenPickups.has(pickup.id)){run.seenPickups.add(pickup.id);events.push({type:'sighting'});}if(run.inventory.has(pickup.enabler.id))continue;if(distance(pc,{x:pickup.x,y:pickup.y-28})<42){run.inventory.add(pickup.enabler.id);run.selected=pickup.enabler.id;run.mechanisms.add(pickup.relation.mechanism);run.checkpoint={x:pickup.x-12,y:pickup.y-28};events.push({type:'collect',pickup,encounter:e});}}
   for(const signal of run.world.signals)if(!run.signals.has(signal.key)&&distance(pc,signal)<45){run.signals.add(signal.key);run.checkpoint={x:signal.x-12,y:signal.y+2};events.push({type:'signal',signal});}
   if(input.action&&!run.actionHeld)events.push(activate(run));run.actionHeld=!!input.action;
   if(p.y>run.world.height+100){Object.assign(p,{x:run.checkpoint.x,y:run.checkpoint.y,vx:0,vy:0,grounded:true,coyote:0,jumpBuffer:0});events.push({type:'respawn'});}

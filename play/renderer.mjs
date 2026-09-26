@@ -1,6 +1,6 @@
-import {THEMES,powerStyle} from './config.mjs?v=7';
-import {platforms,currentEncounter,portalOpen,portalZones} from './engine.mjs?v=7';
-import {hash} from './data.mjs?v=7';
+import {THEMES,powerStyle} from './config.mjs?v=8';
+import {platforms,pickupAwake,currentEncounter,portalOpen,portalZones} from './engine.mjs?v=8';
+import {hash} from './data.mjs?v=8';
 
 export class Renderer {
   constructor(canvas){this.canvas=canvas;this.ctx=canvas.getContext('2d');if(!this.ctx)throw new Error('Canvas 2D is unavailable');this.camera={x:0,y:0,zoom:1};this.width=1000;this.height=600;this.effects=[];this.reduced=false;this.overview=0;this.observer=new ResizeObserver(()=>this.resize());this.observer.observe(canvas);this.resize();}
@@ -112,7 +112,7 @@ export class Renderer {
     for(const p of this.surfacePlatforms(run)){if(p.kind==='seal')continue;if(p.x+p.w<this.camera.x-80||p.x>this.camera.x+this.width/this.camera.zoom+80||p.y<this.camera.y-100||p.y>this.camera.y+this.height/this.camera.zoom+100)continue;this.island(p,theme,run,motion);}
     for(const e of run.encounters){if(Math.abs(e.x-run.player.x)<this.width+500&&Math.abs(e.y-run.player.y)<this.height+300)this.encounter(e,run,motion);}
     for(const pickup of run.world.pickups){const e=run.encounters.find(e=>e.id===pickup.encounterId)||pickup.encounter,acquired=run.inventory.has(pickup.enabler.id);if(Math.abs(pickup.x-run.player.x)>this.width||Math.abs(pickup.y-run.player.y)>this.height)continue;
-      if(!pickup.signature&&!e?.encountered){this.circle(pickup.x,pickup.y-28,4,'#e8e8ce','#9cb5b0');continue;}
+      if(!pickupAwake(run,pickup)){this.circle(pickup.x,pickup.y-28,4,'#e8e8ce','#9cb5b0');continue;}
       const bob=this.reduced?0:Math.sin(motion*1.6+pickup.x)*3;
       if(pickup.signature)this.signature(pickup.signature,pickup.x,pickup.y-28+bob,motion,20);
       if(acquired){this.label('✓',pickup.x,pickup.y-26,16,'#669b82');continue;}

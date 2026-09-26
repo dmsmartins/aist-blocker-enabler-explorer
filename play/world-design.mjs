@@ -1,5 +1,5 @@
-import {hash} from './data.mjs?v=7';
-import {platformGraph,routeBetween} from './world-builder.mjs?v=7';
+import {hash} from './data.mjs?v=8';
+import {platformGraph,routeBetween} from './world-builder.mjs?v=8';
 export const WORLD_PROFILES=[
  {zones:3,reach:740,rise:90,span:2800,depth:1450,shape:'plateaus',names:['First ring','Quiet terraces','Open horizon'],layout:[[100,190],[370,190],[640,145]]},
  {zones:5,reach:1050,rise:94,span:3550,depth:1810,shape:'modules',names:['Foundation arch','Suspended spine','Lower archive','Signal tower','Upper observatory'],layout:[[100,230],[330,100],[330,340],[590,100],[590,340]]},
@@ -38,8 +38,8 @@ export function expandRoom(world,profile,roomIndex){
  return world;
 }
 export function validateCampaign(chapter){
- const errors=[],opened=new Set(),inventory=new Set(),reachable=new Set([0]);let changed=true;
- while(changed){changed=false;for(const i of [...reachable]){const room=chapter.rooms[i];for(const p of room.pickups)if(!inventory.has(p.enabler.id)){inventory.add(p.enabler.id);changed=true;}for(const e of room.encounters)if(!opened.has(e.id)&&e.alternatives.every(a=>inventory.has(a.enabler.id))){opened.add(e.id);changed=true;}for(const p of room.portals)if((!p.hostId||opened.has(p.hostId))&&p.requirements.every(id=>opened.has(id))&&!reachable.has(p.targetRoom)){reachable.add(p.targetRoom);changed=true;}}}
+ const errors=[],opened=new Set(),inventory=new Set(),encountered=new Set(),reachable=new Set([0]);let changed=true;
+ while(changed){changed=false;for(const i of [...reachable]){const room=chapter.rooms[i];for(const e of room.encounters)if(!encountered.has(e.id)){encountered.add(e.id);changed=true;}for(const p of room.pickups)if(encountered.has(p.encounterId)&&!inventory.has(p.enabler.id)){inventory.add(p.enabler.id);changed=true;}for(const e of room.encounters)if(!opened.has(e.id)&&e.alternatives.every(a=>inventory.has(a.enabler.id))){opened.add(e.id);changed=true;}for(const p of room.portals)if((!p.hostId||opened.has(p.hostId))&&p.requirements.every(id=>opened.has(id))&&!reachable.has(p.targetRoom)){reachable.add(p.targetRoom);changed=true;}}}
  if(reachable.size!==chapter.rooms.length)errors.push('Unreachable zone');if(opened.size!==chapter.allChallenges.length)errors.push('Capability prerequisite cycle');
  for(const room of chapter.rooms){const graph=platformGraph(room.platforms.filter(p=>!p.lockedBy));for(const p of [...room.pickups,...room.signals,...room.portals.filter(p=>!p.hostId)])if(!routeBetween(graph,'home',p.platformId)||!routeBetween(graph,p.platformId,'home'))errors.push('No round trip: '+room.roomIndex+':'+p.id);for(const e of room.encounters)if(!routeBetween(graph,'home','approach-'+e.id))errors.push('Unreachable blocker '+e.id);}
  return {valid:!errors.length,errors};

@@ -1,5 +1,5 @@
-import {SAVE_KEY} from './config.mjs?v=7';
-import {idOf} from './data.mjs?v=7';
+import {SAVE_KEY} from './config.mjs?v=8';
+import {idOf} from './data.mjs?v=8';
 export function freshProgress(seed='first-light'){return {version:2,fingerprint:'',seed,completed:[],handover:[],zones:[],seenPickups:[],encountered:[],capabilities:[],applied:[],mechanisms:[],settings:{sound:false,reducedMotion:false,currentGate:null,currentRoom:0}};}
 export function reconcileProgress(raw,data) {
   if(!raw||typeof raw!=='object'||Array.isArray(raw))return freshProgress();
