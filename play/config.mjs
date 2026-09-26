@@ -13,8 +13,8 @@ export const THEMES = [
   {sky:'#daeaf1',low:'#b9dddf',mist:'#f6f6ea',rock:'#517b83',leaf:'#72a3a0'},
   {sky:'#d8e9ef',low:'#b1d5df',mist:'#edf4f1',rock:'#4e7888',leaf:'#7ba8a5'},
   {sky:'#d4e9e7',low:'#afd4ce',mist:'#f1f2df',rock:'#4b7b79',leaf:'#79a792'},
-  {sky:'#dee9ed',low:'#b7d3de',mist:'#f5f0e4',rock:'#557887',leaf:'#7aa19b'},
-  {sky:'#dcece5',low:'#b2d8cf',mist:'#f5f4df',rock:'#4c8079',leaf:'#84ad95'},
+  {sky:'#e3e4ef',low:'#becbdd',mist:'#f5f0e4',rock:'#557887',leaf:'#7aa19b'},
+  {sky:'#e4ecdc',low:'#b9d0bb',mist:'#f5f4df',rock:'#4c8079',leaf:'#84ad95'},
   {sky:'#e6eeeb',low:'#c8e2df',mist:'#fff5df',rock:'#648887',leaf:'#93b6a3'}
 ];
 export const PHYSICS = {speed:260,acceleration:1900,friction:2200,gravity:1500,jump:650,coyote:.12,buffer:.14,width:24,height:28};

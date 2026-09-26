@@ -1,14 +1,15 @@
-import {installFullscreen} from './fullscreen.mjs?v=5';
-import {learningCard,journeyStep,discoveryNotice} from './learning.mjs?v=5';
-import {prepareData,hash} from './data.mjs?v=5';
-import {buildCampaign,roomUnlocked,reconcileCampaign} from './campaign.mjs?v=5';
-import {createRun,step,currentEncounter,availableRelations,cycleCapability,objective,useAbility,portalOpen} from './engine.mjs?v=5';
-import {readProgress,writeProgress,captureProgress,freshProgress,reconcileProgress,restartProgress} from './storage.mjs?v=5';
-import {Renderer} from './renderer.mjs?v=5';
-import {createInput} from './input.mjs?v=5';
-import {createAudio} from './audio.mjs?v=5';
-import {powerStyle,ABILITIES} from './config.mjs?v=5';
-import {esc,knowledgeHTML,mapHTML,recapHTML,finaleHTML,gateURL} from './ui.mjs?v=5';
+import {worldMapHTML} from './world-map.mjs?v=7';
+import {installFullscreen} from './fullscreen.mjs?v=7';
+import {learningCard,journeyStep,discoveryNotice} from './learning.mjs?v=7';
+import {prepareData,hash} from './data.mjs?v=7';
+import {buildCampaign,roomUnlocked,reconcileCampaign} from './campaign.mjs?v=7';
+import {createRun,step,currentEncounter,availableRelations,cycleCapability,objective,useAbility,portalOpen} from './engine.mjs?v=7';
+import {readProgress,writeProgress,captureProgress,freshProgress,reconcileProgress,restartProgress} from './storage.mjs?v=7';
+import {Renderer} from './renderer.mjs?v=7';
+import {createInput} from './input.mjs?v=7';
+import {createAudio} from './audio.mjs?v=7';
+import {powerStyle,ABILITIES} from './config.mjs?v=7';
+import {esc,knowledgeHTML,mapHTML,recapHTML,finaleHTML,gateURL} from './ui.mjs?v=7';
 
 const $=id=>document.getElementById(id),canvas=$('game'),audio=createAudio(),motionQuery=matchMedia('(prefers-reduced-motion: reduce)');
 const discoveryQueue=[],noticeQueue=[];let deliveryUntil=0;
@@ -30,7 +31,7 @@ function gates(){
 
 function hud(){
   if(!run)return;$('journeySteps').querySelectorAll('li').forEach((li,i)=>{li.classList.toggle('active',i===journeyStep(run));li.setAttribute('aria-current',i===journeyStep(run)?'step':'false');});const e=currentEncounter(run),selected=run.selected&&data.enablerMap.get(run.selected);$('portals').disabled=false;$('portals').textContent='◎ Locate portals';
-  $('chapterAlias').textContent=`STAGE GATE ${run.world.gate.id} · ${run.world.alias} · MAP ${(run.world.roomIndex||0)+1}/${run.world.roomCount||1}`;$('gateTitle').textContent=run.world.gate.label;
+  $('chapterAlias').textContent=`STAGE GATE ${run.world.gate.id} · ${run.world.alias} · ${run.world.zoneName||'MAP '+((run.world.roomIndex||0)+1)}`;$('gateTitle').textContent=run.world.gate.label;
   $('contextKicker').textContent=e?`${e.opened?'PATH OPENED':e.encountered?'ENCOUNTERED':'EXPLORE'}${e.knot?' · CONNECTED SYSTEMS':''}`:run.world.epilogue?'A NARRATIVE HANDOVER':'EXPLORE AT YOUR OWN PACE';
   $('objective').textContent=objective(run);$('coverage').textContent=`${run.encounters.length} blockers in this mini-map · ${run.world.chapterIds.filter(id=>run.priorOpened.has(id)||run.encounters.some(e=>e.id===id&&e.opened)).length}/${run.world.chapterIds.length} paths opened in this Stage Gate`;
   $('selectedCapability').textContent=selected?.title||'No capabilities discovered yet';$('inventoryButton').title=selected?.title||'Explore to discover a capability';
@@ -46,76 +47,40 @@ function overlay({title,text,button,kicker='A LIVING KNOWLEDGE LANDSCAPE',note='
 function prepare(i,room=0){
   discoveryQueue.length=0;noticeQueue.length=0;$('delivery').hidden=true;audio.setPlaying(false);index=i;run=createRun(worlds[i].rooms[room]||worlds[i].rooms[0],progress);mode='ready';input.clear();renderer.reset(run);$('toast').textContent='';$('pause').disabled=true;$('mapButton').disabled=false;$('orientation').disabled=false;$('restart').disabled=false;gates();hud();
   const learned=run.inventory.size>0,empty=run.world.epilogue||run.world.unavailable;
-  overlay({title:i===0&&!learned?'A little light. A world of possibility.':run.world.alias.toLowerCase().replace(/^./,s=>s.toUpperCase())+'.',text:empty?'Carry what you have learned through the living network. Visit the handover signals, then return to the central portal.':'1. Find a blocker. 2. Collect ALL its linked gold tools. 3. Return to that blocker and press E / Use (or a linked ability key). 4. Cross an opened blocker passage to its DARK PORTAL and use E to enter another mini-map. Open every blocker in this Stage Gate to finish it.',button:learned?'Continue this path →':'Begin the journey →',kicker:`STAGE GATE ${run.world.gate.id} · ${run.world.gate.label}`,note:run.world.epilogue?'No mapped blocker challenges in this gate. This epilogue uses narrative game metaphors.':run.world.unavailable?'Mapped blockers exist, but usable enabling relationships are not available. This is a narrative fallback.':`Mini-map ${run.world.roomIndex+1} / ${run.world.roomCount} · ${run.world.chapterIds.length} playable blockers across this Stage Gate. All their linked enablers are included.`,map:true});
-  progress.settings.currentGate=run.world.gate.id;progress.settings.currentRoom=run.world.roomIndex;persist();
+  overlay({title:i===0&&!learned?'A little light. A world of possibility.':run.world.alias.toLowerCase().replace(/^./,s=>s.toUpperCase())+'.',text:empty?'Carry what you have learned through the living network. Visit the handover signals, then return to the central portal.':'1. Find a blocker. 2. Collect ALL its linked gold tools. 3. Return to that blocker and press E / Use (or a linked ability key). 4. Explore physical portals to other regions; some passages require a blocker to be opened. Use M / Map to orient yourseex/5),r=17;
+    list.forEach((key,i)=>{c.save();c.translate(x,y);const angular=this.reduced?0:time*(key==='Learn'?.24:.06);c.rotate((i*.8)*(1-coherence*.35)+angular);c.strokeStyle='#507f8799';c.lineWidth=1.1;
+      if(key==='Equip'){c.beginPath();c.moveTo(-r,r*.5);c.lineTo(0,-r);c.lineTo(r,r*.5);c.stroke();}
+      else {c.beginPath();c.ellipse(0,0,r+i*1.8,9+i*.9,-.4,0,key==='Assure'?Math.PI*2:Math.PI*1.5);c.stroke();}
+      if(key==='Commit'||key==='Operate')this.circle(r,0,2,'#628e8e');c.restore();});
+    // A late directional arc echoes the logo; the original light remains present.
+    if(run.world.index===5&&list.length){c.beginPath();c.moveTo(x-19,y+17);c.quadraticCurveTo(x+5,y+12,x+14,y-16);c.strokeStyle='#488c9790';c.lineWidth=2;c.stroke();}
+    if(!p.grounded&&!this.reduced){this.circle(x-p.vx*.024,y+7,3,'#fffaf380');this.circle(x-p.vx*.05,y+12,1.8,'#fffaf350');}
+  }
+  render(run,delta,time,mode='playing') {
+    const c=this.ctx;this.overview=Math.max(0,this.overview-delta);const motion=this.reduced?0:time;
+    if(run){const desiredZoom=this.mapView?Math.min(this.width/run.world.width,this.height/run.world.height)*.95:!this.reduced&&this.width>700&&this.overview>0?.94:1;this.camera.zoom+=(desiredZoom-this.camera.zoom)*Math.min(1,delta*(this.mapView?8:3));const vw=this.width/this.camera.zoom,vh=this.height/this.camera.zoom,targetX=Math.max(-50,Math.min(run.world.width-vw+50,run.player.x-vw*.5+run.player.vx*.22)),targetY=Math.max(-80,Math.min(run.world.height-vh+35,run.player.y-vh*.64));const ease=this.reduced?1:Math.min(1,delta*4.5);this.camera.x+=(targetX-this.camera.x)*ease;this.camera.y+=(targetY-this.camera.y)*ease;}
+    c.setTransform(this.canvas.width/this.width,0,0,this.canvas.height/this.height,0,0);this.background(run,motion);if(!run)return;
+    c.save();c.scale(this.camera.zoom,this.camera.zoom);c.translate(-this.camera.x,-this.camera.y);const theme=THEMES[run.world.index%THEMES.length];
+    this.landmark(run,motion);this.dependencies(run,motion);
+    for(const p of this.surfacePlatforms(run)){if(p.kind==='seal')continue;if(p.x+p.w<this.camera.x-80||p.x>this.camera.x+this.width/this.camera.zoom+80||p.y<this.camera.y-100||p.y>this.camera.y+this.height/this.camera.zoom+100)continue;this.island(p,theme,run,motion);}
+    for(const e of run.encounters){if(Math.abs(e.x-run.player.x)<this.width+500&&Math.abs(e.y-run.player.y)<this.height+300)this.encounter(e,run,motion);}
+    for(const pickup of run.world.pickups){const e=run.encounters.find(e=>e.id===pickup.encounterId)||pickup.encounter,acquired=run.inventory.has(pickup.enabler.id);if(Math.abs(pickup.x-run.player.x)>this.width||Math.abs(pickup.y-run.player.y)>this.height)continue;
+      if(!pickup.signature&&!e?.encountered){this.circle(pickup.x,pickup.y-28,4,'#e8e8ce','#9cb5b0');continue;}
+      const bob=this.reduced?0:Math.sin(motion*1.6+pickup.x)*3;
+      if(pickup.signature)this.signature(pickup.signature,pickup.x,pickup.y-28+bob,motion,20);
+      if(acquired){this.label('✓',pickup.x,pickup.y-26,16,'#669b82');continue;}
+      this.node(pickup.x,pickup.y-28+bob,'#b89451',true,motion,12);this.label(powerStyle(pickup.relation.mechanism).symbol,pickup.x,pickup.y-23+bob,14,'#886e3e');
+      if(Math.hypot(run.player.x-pickup.x,run.player.y-pickup.y)<150)this.label(pickup.relation.mechanism,pickup.x,pickup.y-56,11,'#6d643f');
+    }
+    this.portals(run,motion);
+    for(const s of run.world.signals){this.node(s.x,s.y,'#7ca092',!run.signals.has(s.key),motion,12);this.label(run.signals.has(s.key)?'✓':s.label,s.x,s.y-27,12,'#547c76');}
+    const exit=run.world.exit,opened=new Set([...run.priorOpened,...run.encounters.filter(e=>e.opened).map(e=>e.id)]),ready=(run.world.chapterIds||run.encounters.map(e=>e.id)).length?(run.world.chapterIds||run.encounters.map(e=>e.id)).every(id=>opened.has(id)):(run.world.chapterSignalKeys||run.world.signals.map(s=>s.key)).every(key=>run.signals.has(key)||run.priorSignals.has(run.world.gate.id+':'+key));
+    c.strokeStyle=ready?'#609f90':'#8eacae';c.lineWidth=2;c.beginPath();c.ellipse(exit.x,exit.y-45,26,44,0,Math.PI,Math.PI*3);c.stroke();this.circle(exit.x,exit.y-45,13,ready?'#faf0c777':'#e9f3ec44');
+    this.label(ready?'E · continue the journey':'CENTRAL PORTAL',exit.x,exit.y-108,12,'#466b75');
+    if(run.time<18&&!run.encounters.some(e=>e.encountered)){this.label('← explore     jump ↑     explore →',exit.x,exit.y-152,13,'#456d78');}
+    const cp=run.checkpoint;this.circle(cp.x+12,cp.y+32,4,'#b9d8c2','#76a494');
+    for(const effect of this.effects){effect.age+=delta;if(effect.type==='notice'||effect.type==='collect'){this.label('!',effect.x,effect.y-30-effect.age*14,28,'#946c25');if(effect.type==='notice')continue;}const a=Math.min(1,effect.age/1.4),color=powerStyle(effect.mechanism).color;c.globalAlpha=(1-a)*.5;c.lineWidth=1.4;c.strokeStyle=color;c.beginPath();if(effect.mechanism==='Frame')c.arc(effect.x,effect.y,30+a*260,0,7);else if(effect.mechanism==='Assure')c.ellipse(effect.x,effect.y,35+a*95,35+a*80,0,0,7);else c.arc(effect.x,effect.y,15+a*75,-Math.PI*.3,Math.PI*1.3);if(!this.reduced)c.stroke();c.globalAlpha=1;}this.effects=this.effects.filter(e=>e.age<1.4);
+    this.spark(run,motion);c.restore();
+    if(mode==='complete'&&run.world.index===5){c.fillStyle='#f0f7ef40';c.fillRect(0,0,this.width,this.height);}
+  }
 }
-function play(){
-  if(mode==='error'){load();return;}
-  if(mode==='complete'){if(index<worlds.length-1){prepare(index+1);return;}newPath();return;}
-  if(!run)return;mode='playing';input.clear();$('overlay').hidden=true;$('pause').disabled=false;$('pause').textContent='Ⅱ';$('pause').setAttribute('aria-label','Pause game');audio.unlock(progress.settings.sound);audio.setPlaying(true);lastTime=performance.now();accumulator=0;canvas.focus({preventScroll:true});
-  if(innerWidth<600)$('gameShell').scrollIntoView({block:'start',behavior:'instant'});
-}
-function pause(){if(mode!=='playing')return;mode='paused';audio.setPlaying(false);input.clear();persist();$('pause').textContent='▶';$('pause').setAttribute('aria-label','Resume game');overlay({title:'A quiet moment.',text:'Your place in the network is saved. Take a look at the map, or continue when you are ready.',button:'Return to the spark →',kicker:run.world.gate.label,note:'No timer. No score. Discover the system at your own pace.',map:true});}
-function togglePause(){if(mode==='paused')play();else pause();}
-function newPath(seed=String(crypto.getRandomValues(new Uint32Array(1))[0])){progress=restartProgress(progress,data,seed);worlds=buildCampaign(data,progress.seed);run=null;lastHUDFocus=null;accumulator=0;prepare(0);}
-function requestRestart(){
-  if(!run)return;
-  showPanel('START AGAIN',`<h2>Restart the journey?</h2><p>Return to Stage Gate 1 with the same challenges. This clears completed chapters, discovered capabilities and opened paths from this game on this device.</p><p>Your sound and motion preferences are kept.</p><div class="panel-actions"><button id="cancelRestart" class="secondary">Keep playing</button><button id="confirmRestart" class="primary">Restart from Stage Gate 1</button></div>`);
-  $('cancelRestart').onclick=()=>$('details').close();
-  $('confirmRestart').onclick=()=>{newPath(progress.seed);lastFocus=$('start');$('details').close();$('start').focus({preventScroll:true});};
-  $('cancelRestart').focus({preventScroll:true});
-}
-
-function showPanel(kicker,html){
-  if(!$('details').open){dialogPrevious=mode;lastFocus=document.activeElement;if(mode==='playing'){mode='dialog';audio.setPlaying(false);input.clear();} $('details').showModal();}
-  $('dialogKicker').textContent=kicker;$('dialogBody').innerHTML=html;$('details').scrollTop=0;$('closeDialog').focus({preventScroll:true});
-}
-$('details').addEventListener('close',()=>{if(mode==='dialog'){mode=dialogPrevious;lastTime=performance.now();accumulator=0;}input.clear();if(mode==='playing'){audio.setPlaying(true);canvas.focus({preventScroll:true});}else if(lastFocus?.isConnected)lastFocus.focus({preventScroll:true});});
-$('closeDialog').onclick=()=>$('details').close();
-function showDelivery(ev){
- const card=learningCard(ev,run);if(!card)return;
- $('delivery').innerHTML=card.html+'<div class="delivery-actions"><button id="readDelivery" class="text-button">Read full connection ↗</button><button id="closeDelivery" class="text-button" aria-label="Dismiss tool explanation">×</button></div>';$('delivery').hidden=false;deliveryUntil=performance.now()+10000;
- $('readDelivery').onclick=()=>showKnowledge(ev.encounter.id,ev.relation.enablerId);$('closeDelivery').onclick=()=>{$('delivery').hidden=true;canvas.focus({preventScroll:true});};
-}
-function showKnowledge(id=null,enablerId=null){if(!run)return;const e=run.encounters.find(e=>e.id===id)||currentEncounter(run);if(!e&&!run.world.epilogue&&!run.world.unavailable){notify('Find an incomplete system to reveal its knowledge.');return;}showPanel('BEHIND THIS CHALLENGE',knowledgeHTML(data,run,e,enablerId));$('dialogBody').querySelectorAll('[data-connection]').forEach(b=>b.onclick=()=>showKnowledge(e.id,b.dataset.connection));}
-function showMap(){if(!run)return;showPanel('THE JOURNEY · GAME STATE',`<div class="map-gates">${worlds.map((w,i)=>`<span class="map-gate-label ${i===index?'current':''}">${progress.completed.includes(w.gate.id)?'✓':i+1} ${esc(w.alias)}</span>`).join('')}</div>`+`<p><strong>Mini-map ${run.world.roomIndex+1} / ${run.world.roomCount}</strong> · ${run.world.chapterIds.length} blockers across this Stage Gate. Use T or Locate portals to see entrances. Walk to a dark portal and press E to travel.</p>`+mapHTML(run,data));$('dialogBody').querySelectorAll('[data-map-node]').forEach(b=>b.onclick=()=>showKnowledge(b.dataset.mapNode));}
-function applyAbility(family){if(!run||mode!=='playing')return;handle([useAbility(run,family)]);hud();if(mode==='playing')canvas.focus({preventScroll:true});}
-function showPortals(){
- if(!run)return;
- showPanel('PORTALS IN THE LANDSCAPE',`<h2>Find the dark portals.</h2><p>Mini-map entrances are small dark vortices beyond blocker passages. Unlock the associated blocker, cross its new path and press E / Use beside the vortex. Abilities cannot bypass a sealed entrance.</p>${(run.world.portals||[]).map(p=>`<article class="alternative"><strong>${esc(p.label)} · ${portalOpen(run,p)?'Passage open':'Passage sealed'}</strong><span>${p.hostId?'Beyond '+esc(data.blockerMap.get(p.hostId).title):'Beside the central portal'}</span></article>`).join('')||'<p>This Stage Gate has only one mini-map.</p>'}<p>The central portal finishes the Stage Gate after all its blockers are opened. Portals back to mini-map 1 keep earlier branches reachable.</p>`+mapHTML(run,data));
-}
-function enterPortal(portal){
- persist();const target=worlds[index].rooms[portal.targetRoom];if(!target||!portalOpen(run,portal)||!roomUnlocked(target,progress))return;
- prepare(index,portal.targetRoom);play();notify('Entered mini-map '+(portal.targetRoom+1),2);
-}
-function showInventory(family=null){
-  if(!run)return;const e=currentEncounter(run),records=[];
-  for(const id of run.inventory){const links=e?e.relations.filter(r=>r.enablerId===id):[],source=links.length?links:data.relationships.filter(r=>r.enablerId===id);const families=[...new Set(source.map(r=>r.mechanism))];if(family&&!families.includes(family))continue;records.push({enabler:data.enablerMap.get(id),families,relevant:links.length>0});}
-  records.sort((a,b)=>Number(b.relevant)-Number(a.relevant));
-  showPanel('YOUR CAPABILITY CONSTELLATION',`<h2>${family?esc(family):'What you can bring to the system.'}</h2>${family?`<p class="source-text">${esc(data.mechanismMap.get(family)?.description)}</p>`:'<p>Select an individual enabling capability. A shared mechanism does not make different enablers interchangeable.</p>'}${records.length?records.map(r=>`<button class="alternative ${run.selected===r.enabler.id?'selected':''}" data-select-capability="${esc(r.enabler.id)}"><strong>${esc(r.enabler.title)}</strong><span>${esc(r.families.join(' · '))}${e?r.relevant?' · Linked to this challenge':' · Not linked to this challenge':''}${run.selected===r.enabler.id?' · Selected':''}</span></button>`).join(''):'<p>No capabilities in this family discovered yet. Explore the gold-lit branches near an encountered system.</p>'}`);
-  $('dialogBody').querySelectorAll('[data-select-capability]').forEach(b=>b.onclick=()=>{run.selected=b.dataset.selectCapability;hud();$('details').close();notify('Capability selected.');});
-}
-function cycle(){if(!run)return;const selected=cycleCapability(run);if(selected){notify(data.enablerMap.get(selected).title,3);hud();}}
-function help(){showPanel('HOW THE JOURNEY WORKS',`<h2>Explore. Return. Change the system.</h2><p>You are a small light moving through a connected landscape. The central portal is your point of return.</p><ol><li><strong>Move and jump along the stepping stones.</strong> Hold a direction and jump to climb. Follow a branch until you find an incomplete system.</li><li><strong>Look elsewhere for a capability.</strong> Encountering a system illuminates linked enablers on nearby upper and lower routes. Each gold light is an individual capability from the Explorer.</li><li><strong>Return and choose your approach.</strong> Use the capability selector or Q; then E, or a discovered mechanism key (1–6). At the round node, press E or Use. Collect every linked tool shown by the counter before opening the system. This is a game collection rule, not a claim that every source enabler is mandatory in reality.</li><li><strong>Follow the change.</strong> Cross the new route. The round node and the far anchor now provide an E shortcut back to the central portal. Connected challenges may gain a supporting route.</li><li><strong>Continue when the selected paths are open.</strong> Find dark portals beyond blocker passages to explore the other mini-maps. Return to the central portal and press E. It finishes the Stage Gate once every blocker is open. To enter other mini-maps, use the dark portals beyond opened blocker passages.</li></ol><p><strong>Keyboard:</strong> arrows / A / D move; Space / W / Up jump; Down / S drop through a platform; E use; Q cycle; 1–6 use ability; T portals; K knowledge; M map; P / Escape pause. On touchscreens, hold movement and tap or hold Jump. Use ◇ to choose a capability.</p><p>Use Restart to begin again at Stage Gate 1; a confirmation protects your progress from accidental clicks. Falls return you to a recent safe checkpoint. Acquired capabilities stay with you. Different enablers may offer legitimate alternative approaches. Dependency knots and echoes influence routes, but never create impossible prerequisite cycles.</p><h3>Abilities you can use</h3><ul>${Object.entries(ABILITIES).map(([family,a])=>`<li><strong>${a.key} · ${family} — ${a.name}:</strong> ${a.hint}</li>`).join('')}</ul><p>At a blocker with every tool collected, a linked ability also opens its barrier. Elsewhere, abilities change movement or reveal steps. Locked abilities become available as you collect real enablers. The six family buttons work on touchscreens.</p><label class="settings"><input id="motionSetting" type="checkbox" ${progress?.settings.reducedMotion?'checked':''}> Reduce atmospheric motion and camera effects</label><p class="small">The system's reduced-motion preference is always respected. Use ♫ Music in the game header to enable the ambient soundtrack and effects. Music pauses while you read or pause the game. Progress is stored on this device. Game state does not alter Explorer bookmarks or maturity answers.</p>`);$('motionSetting').onchange=event=>{if(progress){progress.settings.reducedMotion=event.target.checked;applySettings();persist();}};}
-
-function finish(){mode='complete';audio.setPlaying(false);input.clear();if(!progress.completed.includes(run.world.gate.id))progress.completed.push(run.world.gate.id);persist();gates();hud();$('pause').disabled=true;audio.play('complete');const final=index===worlds.length-1;overlay({title:final?'The system keeps moving.':'Path established.',text:final?'Scaling is not the end of the journey. It is the ability to keep learning, operating and adapting as conditions change.':run.world.gate.label,button:final?'Run another path →':`Continue to Stage Gate ${worlds[index+1].gate.id} →`,kicker:final?'LIGHT · CONNECTION · CONTINUITY':`STAGE GATE ${run.world.gate.id}`,note:'Game progress is not an assessment of organisational maturity or readiness.',extra:final?finaleHTML(run):recapHTML({...run,encounters:worlds[index].rooms.flatMap(room=>createRun(room,progress).encounters),world:{...run.world,dependencyLinks:worlds[index].rooms.flatMap(room=>room.dependencyLinks)}},data),map:true});$('start').focus({preventScroll:true});}
-function handle(events){let changed=false;for(const ev of events){renderer.react(ev);if(['encounter','collect'].includes(ev.type))noticeQueue.push(discoveryNotice(ev));if(ev.type==='open')showDelivery(ev);
-  if(ev.type==='ability')notify(`${ABILITIES[ev.family]?.name||ev.family} · ${ABILITIES[ev.family]?.hint||''}`);if(ev.type==='ability-locked')notify('Discover an enabler in this mechanism family to unlock its ability.');if(ev.type==='ability-cooldown')notify('This ability is recharging.');if(ev.type==='tools-missing')notify(`${ev.missing.length} tools still missing for this blocker.\n${ev.missing.map(a=>a.enabler.title).join(' · ')}`,6);if(ev.type==='travel'){enterPortal(ev.portal);return;}if(ev.type==='portal-locked')notify('This passage opens when its linked blocker is unlocked.');if(ev.type==='encounter'){changed=true;}
-  if(ev.type==='collect'){audio.play('collect');changed=true;}
-  if(ev.type==='open'){audio.play('open');changed=true;}
-  if(ev.type==='crossed'){notify('A return shortcut is ready. Use E at the anchor.');changed=true;}
-  if(ev.type==='return'){notify('Connection followed. Back at the central portal.');audio.play('return');}
-  if(ev.type==='unavailable')notify(ev.hasAlternative?'Choose a linked capability with Q or the capability selector.':'Another capability is needed. Explore the nearby gold-lit branches.');
-  if(ev.type==='distant')notify('Use a capability at an incomplete system’s round node.');
-  if(ev.type==='home')notify(run.encounters.length?`${ev.remaining} paths remain in this mini-map. Dark portals beyond opened passages lead to other maps.`:'Visit each handover signal, then return here.');
-  if(ev.type==='signal'){notify(ev.signal.label+'.');audio.play('signal');changed=true;}
-  if(ev.type==='respawn')notify('A soft landing. Your discovered capabilities are still with you.');
-  if(ev.type==='complete'){finish();return;}
- }if(changed){hud();persist();}}
-
-$('portals').onclick=showPortals;$('restart').onclick=requestRestart;$('start').onclick=play;$('pause').onclick=togglePause;$('help').onclick=help;$('mapButton').onclick=showMap;$('orientation').onclick=showMap;$('overlayMap').onclick=showMap;$('knowledge').onclick=()=>showKnowledge();$('inventoryButton').onclick=()=>showInventory();$('touchCycle').onclick=()=>showInventory();
-$('sound').onclick=()=>{if(!progress)return;progress.settings.sound=!progress.settings.sound;audio.unlock(progress.settings.sound);audio.play('collect');applySettings();persist();if(mode==='playing')canvas.focus({preventScroll:true});};
-window.addEventListener('pagehide',persist);
-function frame(now){const dt=Math.min(.05,(now-(lastTime||now))/1000);lastTime=now;if(mode==='playing'){accumulator+=dt;while(accumulator>=1/120&&mode==='playing'){handle(step(run,input.sample(),1/120));accumulator-=1/120;}}else accumulator=0;if(!document.hidden&&(mode==='playing'||now-lastRender>100)){renderer?.render(run,Math.min(.1,(now-lastRender)/1000),now/1000,mode);lastRender=now;}if(run&&run.focusId!==lastHUDFocus&&mode==='playing'){hud();lastHUDFocus=run.focusId;}if($('toast').textContent&&now>toastUntil)$('toast').textContent='';if(!$('toast').textContent&&noticeQueue.length&&mode==='playing')notify(noticeQueue.shift(),6);if(!$('delivery').hidden&&now>deliveryUntil)$('delivery').hidden=true;requestAnimationFrame(frame);}
-async function load(){mode='loading';$('start').disabled=true;$('start').textContent='Loading the knowledge network…';$('overlayExtra').innerHTML='';try{if(!renderer)throw new Error('Canvas is unavailable');const response=await fetch('../data/explorer-data.json',{cache:'no-cache',signal:AbortSignal.timeout(15000)});if(!response.ok)throw new Error(`Explorer data: HTTP ${response.status}`);data=prepareData(await response.json());if(data.warnings.length)console.warn('Scale Run data validation:',data.warnings);try{storage=window.localStorage;}catch{storage={getItem:()=>null,setItem:()=>{throw new Error('Unavailable storage');}};}progress=readProgress(storage,data);worlds=buildCampaign(data,progress.seed);progress=reconcileCampaign(progress,worlds);applySettings();let next=worlds.findIndex(w=>w.gate.id===progress.settings.currentGate);if(next<0)next=worlds.findIndex(w=>!progress.completed.includes(w.gate.id));if(next<0)next=0;if(next>0&&!progress.completed.includes(worlds[next-1].gate.id))next=0;const room=Math.min(progress.settings.currentRoom||0,worlds[next].rooms.length-1);prepare(next,roomUnlocked(worlds[next].rooms[room],progress)?room:0);}catch(error){console.error('Scale Run startup failed:',error);mode='error';overlay({title:'The knowledge network could not be loaded.',text:'Scale Run uses the live Explorer data. Please try again, or return to the Explorer.',button:'Try again',extra:'<a class="recap-link" href="../#explore">Return to Explorer ↗</a>',note:'Your saved progress has not been removed.'});}}
-requestAnimationFrame(frame);load();

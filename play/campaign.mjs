@@ -1,27 +1,34 @@
-import {selectJourneyChallenges} from './data.mjs?v=5';
-import {buildWorld} from './world-builder.mjs?v=5';
+import {selectJourneyChallenges} from './data.mjs?v=7';
+import {buildWorld} from './world-builder.mjs?v=7';
+import {WORLD_PROFILES,designOrder,expandRoom,route,validateCampaign} from './world-design.mjs?v=7';
 export function buildCampaign(data,seed='first-light'){
- const experienced=[],centralEnablers=new Set(data.enablers.filter(e=>new Set(data.relationships.filter(r=>r.enablerId===e.id).map(r=>r.blockerId)).size>=4).map(e=>e.id)),centralBlockers=new Set(data.blockers.filter(b=>(data.downstream.get(b.id)||[]).length>=3).map(b=>b.id));
+ const experienced=[];
  return data.gates.map((gate,index)=>{
-  const challenges=selectJourneyChallenges(data,gate.id,seed,experienced,{all:true});experienced.push(...challenges.map(c=>c.blocker.id));
-  const rooms=[];for(let i=0;i<Math.max(1,Math.ceil(challenges.length/3));i++)rooms.push(buildWorld(data,gate,challenges.slice(i*3,i*3+3),seed,index));
-  const earlier=new Set();rooms.forEach((room,i)=>{
-   const sourceRequirements=[...new Set(room.encounters.flatMap(e=>e.upstream).filter(id=>earlier.has(id)))];
-   room.roomIndex=i;room.roomCount=rooms.length;room.chapterIds=challenges.map(c=>c.blocker.id);room.chapterChallenges=challenges;room.centralEnablers=centralEnablers;room.centralBlockers=centralBlockers;
-   // Only earlier rooms may gate an entrance. Cycles cannot lock their own tools.
-   room.entryRequirements=i?sourceRequirements.length?[sourceRequirements[0]]:rooms[i-1].encounters.map(e=>e.id):[];
-   room.entryAny=i>0&&!sourceRequirements.length;room.sourceGate=sourceRequirements.length>0;room.encounters.forEach(e=>earlier.add(e.id));
-  });
-  for(const room of rooms){
-   room.portals=[];
-   for(const target of rooms){if(target===room)continue;
-    const hosts=room.encounters.filter(e=>target.entryRequirements.includes(e.id));
-    for(const host of hosts)room.portals.push({id:`passage-${room.roomIndex}-${target.roomIndex}-${host.id}`,targetRoom:target.roomIndex,hostId:host.id,requirements:target.entryRequirements,any:target.entryAny,x:host.anchorX,y:host.y-30,platformId:'landing-'+host.id,label:'Mini-map '+(target.roomIndex+1)});
-   }
-   for(const e of room.encounters){const group=room.portals.filter(p=>p.hostId===e.id),landing=room.platforms.find(p=>p.id==='landing-'+e.id);if(!group.length)continue;landing.w=Math.max(150,group.length*78+30);landing.x=e.anchorX-landing.w/2;group.forEach((p,j)=>p.x=e.anchorX+(j-(group.length-1)/2)*78);}
-   if(room.roomIndex>0)room.portals.push({id:'return-to-first',targetRoom:0,x:room.entrance.x+140,y:room.entrance.y-30,platformId:'home',requirements:[],any:false,label:'Return to mini-map 1'});
+  const challenges=designOrder(selectJourneyChallenges(data,gate.id,seed,experienced,{all:true}),index,seed),profile=WORLD_PROFILES[index]||WORLD_PROFILES[5];experienced.push(...challenges.map(c=>c.blocker.id));
+  const count=Math.max(profile.zones,Math.ceil(challenges.length/5)),buckets=Array.from({length:count},()=>[]);
+  challenges.forEach((c,i)=>buckets[Math.min(count-1,Math.floor(i*count/Math.max(1,challenges.length)))].push(c));
+  const rooms=buckets.map((cs,i)=>expandRoom(buildWorld(data,gate,cs,seed,index),profile,i));
+  const first=challenges[0]?.blocker.id,lockedRoom=challenges.length?count-1:-1;
+  rooms.forEach((r,i)=>{r.roomIndex=i;r.roomCount=count;r.chapterIds=challenges.map(c=>c.blocker.id);r.chapterChallenges=challenges;r.entryRequirements=i===lockedRoom&&first?[first]:[];r.entryAny=false;r.sourceGate=false;r.centralEnablers=new Set();r.centralBlockers=new Set();r.portals=[];r.epilogue=challenges.length===0;r.unavailable=false;r.discoveryKey=gate.id+':world6:'+i;});
+  // Zones form distinct navigable graphs. A late region opens after the tutorial/entry encounter.
+  const edges=index===0?[[0,1],[1,2]]:index===1?[[0,1],[0,2],[1,3],[2,3],[3,4]]:index===2?[[0,1],[1,2],[2,3],[3,0]]:index===3?[[0,1],[0,2],[0,3],[0,4],[2,5],[4,5],[3,6],[4,6]]:index===4?[[0,1],[0,2],[1,3],[2,3],[3,4],[4,2]]:[[0,1],[1,2]];
+  for(let i=profile.zones;i<count;i++)edges.push([i-1,i]);
+  function connect(a,b,requirements=[],host=null,shortcut=false){const r=rooms[a],target=rooms[b];if(!r||!target)return;const n=r.portals.filter(p=>!p.hostId).length,side=n%2?1:-1,x=r.entrance.x+side*(350+Math.floor(n/2)*230),y=r.entrance.y-180-Math.floor(n/2)*profile.rise*2,id=`zone-${a}-${b}-${shortcut?'shortcut':'route'}`,platformId=host?'landing-'+host.id:id;
+   if(!host){r.platforms.push({id:platformId,x:x-65,y,w:130,kind:'portal'});route(r,id+'-path',{x:r.entrance.x,y},{x,y},145);}r.portals.push({id,targetRoom:b,hostId:host?.id,requirements,any:false,shortcut,x:host?.anchorX??x,y:(host?.y??y)-30,platformId,label:target.zoneName});
   }
-  return {...rooms[0],rooms,allChallenges:challenges};
+  for(const [a,b] of edges){connect(a,b,rooms[b]?.entryRequirements||[]);connect(b,a,rooms[a]?.entryRequirements||[]);}
+  for(const r of rooms)for(const e of r.encounters){const related=rooms.find(other=>other!==r&&other.encounters.some(n=>n.upstream.includes(e.id)));const target=related?.roomIndex??(r.roomIndex+2)%count;if(target===r.roomIndex)continue;connect(r.roomIndex,target,[e.id,...rooms[target].entryRequirements],e,true);}
+  // Place capabilities independently. Required tools for entry locks always stay in open zones.
+  const pickups=rooms.flatMap(r=>r.pickups.map(p=>({...p,originRoom:r.roomIndex})));rooms.forEach(r=>r.pickups=[]);
+  for(const p of pickups){const c=challenges.find(c=>c.blocker.id===p.encounterId),rank=c.journeyRank,localTutorial=index===0&&rank<2;
+   let dest=localTutorial?p.originRoom:(p.originRoom+1+(rank%Math.max(1,count-2)))%count;
+   if(dest===lockedRoom&&(p.encounterId===first||index===0))dest=0;
+   if(index===0&&rank<5)dest=p.originRoom;
+   p.signature=c.signature;p.encounter=c;p.remote=dest!==p.originRoom;if(localTutorial){rooms[dest].pickups.push(p);continue;}
+   const room=rooms[dest],gardens=room.platforms.filter(f=>f.kind==='garden'&&!f.lockedBy),j=room.pickups.length,platform=gardens[j%gardens.length];p.platformId=platform.id;p.x=platform.x+platform.w/2;p.y=platform.y;room.pickups.push(p);
+  }
+  for(const r of rooms){for(const f of r.platforms){const group=r.pickups.filter(p=>p.platformId===f.id);group.forEach((p,j)=>p.x=f.x+20+(j+.5)*(f.w-40)/group.length);}if(!challenges.length){r.signals=r.signals.slice(r.roomIndex,r.roomIndex+1);for(const s of r.signals)s.key='signal-'+r.roomIndex;}else r.signals=[];r.chapterSignalKeys=challenges.length?[]:rooms.map((_,i)=>'signal-'+i);}
+  const chapter={...rooms[0],rooms,allChallenges:challenges};chapter.validation=validateCampaign(chapter);if(!chapter.validation.valid)throw Error(chapter.validation.errors.join('; '));return chapter;
  });
 }
 export function roomUnlocked(room,progress){const opened=new Set(progress.applied.map(a=>a.blockerId));return room.entryAny?room.entryRequirements.some(id=>opened.has(id)):room.entryRequirements.every(id=>opened.has(id));}
