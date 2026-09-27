@@ -1,6 +1,6 @@
-import {selectJourneyChallenges} from './data.mjs?v=8';
-import {buildWorld} from './world-builder.mjs?v=8';
-import {WORLD_PROFILES,designOrder,expandRoom,route,validateCampaign} from './world-design.mjs?v=8';
+import {selectJourneyChallenges} from './data.mjs?v=9';
+import {buildWorld} from './world-builder.mjs?v=9';
+import {WORLD_PROFILES,designOrder,expandRoom,route,validateCampaign} from './world-design.mjs?v=9';
 export function buildCampaign(data,seed='first-light'){
  const experienced=[];
  return data.gates.map((gate,index)=>{
@@ -21,10 +21,18 @@ export function buildCampaign(data,seed='first-light'){
   // Place capabilities independently. Required tools for entry locks always stay in open zones.
   const pickups=rooms.flatMap(r=>r.pickups.map(p=>({...p,originRoom:r.roomIndex})));rooms.forEach(r=>r.pickups=[]);
   for(const p of pickups){const c=challenges.find(c=>c.blocker.id===p.encounterId),rank=c.journeyRank,localTutorial=index===0&&rank<2;
-   let dest=localTutorial?p.originRoom:(p.originRoom+1+(rank%Math.max(1,count-2)))%count;
-   if(dest===lockedRoom&&(p.encounterId===first||index===0))dest=0;
-   if(index===0&&!localTutorial)dest=rooms[0].pickups.length<=rooms[1].pickups.length?0:1;
+   // Balance every region in this Stage Gate, preserving only the first local tutorial.
+   // The entry blocker's tools cannot be placed behind that same entry lock.
+   const eligible=rooms.filter(r=>!(p.encounterId===first&&r.roomIndex===lockedRoom));
+   eligible.sort((a,b)=>a.pickups.length-b.pickups.length||Number(a.roomIndex===p.originRoom)-Number(b.roomIndex===p.originRoom)||a.roomIndex-b.roomIndex);
+   const dest=localTutorial?p.originRoom:eligible[0].roomIndex;
    p.signature=c.signature;p.encounter=c;p.remote=dest!==p.originRoom;rooms[dest].pickups.push(p);
+  }
+  // Sparse source stages can offer the same real tool at an alternative location.
+  // Inventory remains keyed by source enabler, so this adds no extra requirement.
+  for(const room of rooms.filter(r=>!r.pickups.length&&challenges.length)){
+   const source=rooms.flatMap(r=>r.pickups).find(p=>!(room.roomIndex===lockedRoom&&p.encounterId===first));
+   if(source)room.pickups.push({...source,id:source.id+'-alternate-'+room.roomIndex,remote:room.roomIndex!==source.originRoom});
   }
   for(const r of rooms){
    // Separate stops in world space, including neighbouring/overlapping platforms.

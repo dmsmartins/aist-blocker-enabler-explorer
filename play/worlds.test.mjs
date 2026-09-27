@@ -12,7 +12,7 @@ function navigate(run,targetId){ const avoided=new Set();
     const standing=ps.find(p=>p.id===run.player.platformId);if(run.player.platformId===targetId||standing&&standing.y===target.y&&standing.x<target.x+target.w&&standing.x+standing.w>target.x){settle(run,target.x+target.w/2);return;}
     const graph=platformGraph(ps);for(const [id,edges] of graph)graph.set(id,edges.filter(next=>!avoided.has(id+"|"+next)));const route=routeBetween(graph,run.player.platformId,targetId);assert.ok(route,`No route from ${run.player.platformId} to ${targetId}`);
     const from=ps.find(p=>p.id===run.player.platformId),to=ps.find(p=>p.id===route[1]);
-    const launch=Math.max(from.x+20,Math.min(from.x+from.w-20,to.x+to.w/2));if(!from.motion&&(!from.lockedBy||run.encounters.find(e=>e.id===from.lockedBy)?.opened)&&!portalZones(run).some(z=>from.y>z.y&&from.y<z.y+z.h&&from.x<z.x+z.w&&from.x+from.w>z.x))settle(run,launch);
+    const launch=Math.max(from.x+20,Math.min(from.x+from.w-20,to.x+to.w/2));if(!run.encounters.some(e=>!e.opened&&from.y>e.y-155&&from.y-28<e.y+30&&from.x<(e.dir>0?e.x+305:e.x-105)&&from.x+from.w>(e.dir>0?e.x+105:e.x-305))&&!from.motion&&(!from.lockedBy||run.encounters.find(e=>e.id===from.lockedBy)?.opened)&&!portalZones(run).some(z=>from.y>z.y&&from.y<z.y+z.h&&from.x<z.x+z.w&&from.x+from.w>z.x))settle(run,launch);
     const aim=to.x+to.w/2;
     const descending=to.y>from.y+5&&Math.abs(aim-launch)<85;tick(run,{...steer(run,aim,!descending),down:descending});let airborne=false;
     for(let i=0;i<200;i++){tick(run,steer(run,aim,!descending));if(!run.player.grounded)airborne=true;if(airborne&&run.player.grounded)break;}

@@ -23,3 +23,5 @@ for(const remote of [false,true]){
 for(const chapter of chapters)for(const room of chapter.rooms)for(const p of room.pickups){assert.ok(room.pickups.filter(q=>q.platformId===p.platformId).length<=2);assert.ok(room.pickups.filter(q=>Math.hypot(q.x-p.x,q.y-p.y)<100).length<=2);}
 assert.ok(html.includes('data-map-zoom="out"'));assert.ok(!html.includes('world-overview'));const overview=worldMapHTML(c,fresh,progress,data,0,true);assert.ok(overview.includes('world-overview'));assert.ok(overview.includes('data-map-zoom="in"'));
 console.log('PASS dormant local/remote tools, saved discovery activation, at most two per stop and local-first map zoom');
+
+for(const c of chapters.filter(c=>c.allChallenges.length))for(const r of c.rooms)assert.ok(r.pickups.length,'Every region contains enablers: '+r.zoneName);

@@ -1,6 +1,6 @@
-import {connectionURL} from './data.mjs?v=8';
-import {platforms,pickupAwake,portalOpen} from './engine.mjs?v=8';
-import {powerStyle} from './config.mjs?v=8';
+import {connectionURL} from './data.mjs?v=9';
+import {platforms,pickupAwake,portalOpen} from './engine.mjs?v=9';
+import {powerStyle} from './config.mjs?v=9';
 export const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const gateURL=gate=>`../#stage-gates/${encodeURIComponent(gate.id)}`;
 const paragraph=(label,text)=>text?`<h3>${label}</h3><p class="source-text">${esc(text)}</p>`:'';

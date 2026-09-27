@@ -1,15 +1,15 @@
-import {worldMapHTML} from './world-map.mjs?v=8';
-import {installFullscreen} from './fullscreen.mjs?v=8';
-import {learningCard,journeyStep,discoveryNotice} from './learning.mjs?v=8';
-import {prepareData,hash} from './data.mjs?v=8';
-import {buildCampaign,roomUnlocked,reconcileCampaign} from './campaign.mjs?v=8';
-import {createRun,step,currentEncounter,availableRelations,cycleCapability,objective,useAbility,portalOpen} from './engine.mjs?v=8';
-import {readProgress,writeProgress,captureProgress,freshProgress,reconcileProgress,restartProgress} from './storage.mjs?v=8';
-import {Renderer} from './renderer.mjs?v=8';
-import {createInput} from './input.mjs?v=8';
-import {createAudio} from './audio.mjs?v=8';
-import {powerStyle,ABILITIES} from './config.mjs?v=8';
-import {esc,knowledgeHTML,mapHTML,recapHTML,finaleHTML,gateURL} from './ui.mjs?v=8';
+import {worldMapHTML} from './world-map.mjs?v=9';
+import {installFullscreen} from './fullscreen.mjs?v=9';
+import {learningCard,journeyStep,discoveryNotice} from './learning.mjs?v=9';
+import {prepareData,hash} from './data.mjs?v=9';
+import {buildCampaign,roomUnlocked,reconcileCampaign} from './campaign.mjs?v=9';
+import {createRun,step,currentEncounter,availableRelations,cycleCapability,objective,useAbility,portalOpen} from './engine.mjs?v=9';
+import {readProgress,writeProgress,captureProgress,freshProgress,reconcileProgress,restartProgress} from './storage.mjs?v=9';
+import {Renderer} from './renderer.mjs?v=9';
+import {createInput} from './input.mjs?v=9';
+import {createAudio} from './audio.mjs?v=9';
+import {powerStyle,ABILITIES} from './config.mjs?v=9';
+import {esc,knowledgeHTML,mapHTML,recapHTML,finaleHTML,gateURL} from './ui.mjs?v=9';
 
 const $=id=>document.getElementById(id),canvas=$('game'),audio=createAudio(),motionQuery=matchMedia('(prefers-reduced-motion: reduce)');
 const discoveryQueue=[],noticeQueue=[];let deliveryUntil=0;
