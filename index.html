@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light" />
   <title>AI Scalability Explorer</title>
+  <script src="dependencies.js"></script>
   <style>
 :root {
   --navy: #102a43;
@@ -820,6 +821,7 @@ body.modal-open{overflow:hidden}
 }
 
 </style>
+  <link rel="stylesheet" href="dependencies.css" />
 </head>
 <body>
   <svg class="svg-sprite" aria-hidden="true" width="0" height="0">
@@ -840,6 +842,7 @@ body.modal-open{overflow:hidden}
     <nav class="main-nav" aria-label="Primary navigation">
       <a class="timeline-nav-link nav-timeline-pill" href="./timeline/">Timeline</a>
       <button data-route="explore">Explore</button>
+      <button data-route="dependencies">Dependencies</button>
       <button data-route="maturity">Maturity Assessment</button>
       <a class="timeline-nav-link" href="./play/">Play</a>
     </nav>
@@ -958,9 +961,13 @@ function routeFromHash() {
 function render() {
   searchBtn.hidden = !['explore','domains','domain','all-blockers','all-enablers','stage-gates'].includes(state.route);
   navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.route === (state.route === 'home' ? '' : state.route === 'domain' || state.route === 'domains' || state.route === 'all-blockers' || state.route === 'all-enablers' || state.route === 'stage-gates' ? 'explore' : state.route)));
-  const renderers = { home:renderHome, explore:renderExplore, domains:renderDomains, domain:renderDomain, 'all-blockers':renderAllBlockers, 'all-enablers':renderAllEnablers, maturity:renderMaturity, selection:renderSelection, 'stage-gates':renderStageGates };
+  const renderers = { dependencies:renderDependencies, home:renderHome, explore:renderExplore, domains:renderDomains, domain:renderDomain, 'all-blockers':renderAllBlockers, 'all-enablers':renderAllEnablers, maturity:renderMaturity, selection:renderSelection, 'stage-gates':renderStageGates };
   (renderers[state.route] || renderHome)();
   app.focus({preventScroll:true});
+}
+
+function renderDependencies() {
+  DependencyExplorer.mount(app, state.data, focusBlocker);
 }
 
 function renderHome() {

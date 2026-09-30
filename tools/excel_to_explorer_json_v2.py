@@ -441,7 +441,7 @@ def convert(input_path: Path) -> Tuple[Dict[str, Any], List[str], List[str]]:
         c_why = resolve_column(h, ["Why it matters", "why_it_matters"])
         c_consequence = resolve_column(h, ["Consequence"])
         c_gate = resolve_column(h, ["Stage Gate"])
-        c_gate_desc = resolve_column(h, ["Stage Gate - Description", "Stage Gate Description"])
+        c_gate_desc = resolve_column(h, ["Stage Gate - Description", "Stage Gate Description"], required=False)
         c_stakeholders = resolve_column(h, ["Stakeholders"])
         c_source = resolve_column(h, ["Source"], required=False)
 
@@ -492,7 +492,7 @@ def convert(input_path: Path) -> Tuple[Dict[str, Any], List[str], List[str]]:
         c_outcome = resolve_column(h, ["expected_outcome", "Expected Outcome"])
         c_estakeholders = resolve_column(h, ["stakeholders", "Stakeholders"])
         c_egate = resolve_column(h, ["Stage Gate"])
-        c_egate_desc = resolve_column(h, ["Stage Gate - Description", "Stage Gate Description"])
+        c_egate_desc = resolve_column(h, ["Stage Gate - Description", "Stage Gate Description"], required=False)
 
         enablers: List[Dict[str, Any]] = []
         enabler_ids: List[int] = []
@@ -536,6 +536,11 @@ def convert(input_path: Path) -> Tuple[Dict[str, Any], List[str], List[str]]:
             ],
         )
 
+        # Accept the current workbook typo as well as the corrected header.
+        c_importance = resolve_column(
+            h, ["dependency_importance", "depdencency_importance"]
+        )
+
         blocker_dependencies: List[Dict[str, Any]] = []
         dep_ids: List[int] = []
         dep_pairs: List[Tuple[int, int]] = []
@@ -556,6 +561,11 @@ def convert(input_path: Path) -> Tuple[Dict[str, Any], List[str], List[str]]:
                     "id": rid,
                     "blockerId": bid,
                     "dependsOnBlockerId": depends_on,
+                    "dependencyImportance": as_int(
+                        row_value(row, c_importance),
+                        f"Blocker_Dependency_map row {excel_row} dependency_importance",
+                        allow_blank=True,
+                    ),
                 }
             )
 

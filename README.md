@@ -8,7 +8,7 @@ Static GitHub Pages application for exploring AI scalability blockers, enablers,
 - **Explore by Stage Gate**
 - **All Blockers**
 - **All Enablers**, organised by enabling mechanism
-- **Blocker dependencies** with upstream/downstream navigation
+- **Dependencies** tab with upstream/downstream navigation, importance filters and weighted, directional connections
 - **Timeline**, a lightweight semantic-zoom experience:
   Stage Gate → blockers → dependency map → blocker detail → mechanisms → enablers
 - **View for my role**
@@ -36,7 +36,7 @@ It contains:
 - `blockers`
 - `enablers`
 - `relationships` (Blocker ↔ Enabler + enabling mechanism)
-- `blockerDependencies` (Blocker → Blocker)
+- `blockerDependencies` (Blocker → Blocker), including numeric `dependencyImportance` (1–4; higher values mean greater importance). Missing importance is shown as unspecified.
 
 Internal blocker/enabler IDs are used for relationships but are not displayed in the UI.
 
@@ -79,7 +79,9 @@ The converter currently expects the workbook structure used by the Explorer, inc
 Both Blockers and Enablers include:
 
 - `Stage Gate`
-- `Stage Gate - Description`
+- `Stage Gate - Description` (optional; the converter uses its standard labels when a Stage Gate is populated)
+
+The converter accepts both `dependency_importance` and the workbook spelling `depdencency_importance`. `Subcluster` is deliberately not exported. Importance describes a relationship, not a blocker score.
 
 ## Local preview
 
