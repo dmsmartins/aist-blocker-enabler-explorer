@@ -1,15 +1,15 @@
-import {worldMapHTML} from './world-map.mjs?v=9';
-import {installFullscreen} from './fullscreen.mjs?v=9';
-import {learningCard,journeyStep,discoveryNotice} from './learning.mjs?v=9';
-import {prepareData,hash} from './data.mjs?v=9';
-import {buildCampaign,roomUnlocked,reconcileCampaign} from './campaign.mjs?v=9';
-import {createRun,step,currentEncounter,availableRelations,cycleCapability,objective,useAbility,portalOpen} from './engine.mjs?v=9';
-import {readProgress,writeProgress,captureProgress,freshProgress,reconcileProgress,restartProgress} from './storage.mjs?v=9';
-import {Renderer} from './renderer.mjs?v=9';
-import {createInput} from './input.mjs?v=9';
-import {createAudio} from './audio.mjs?v=9';
-import {powerStyle,ABILITIES} from './config.mjs?v=9';
-import {esc,knowledgeHTML,mapHTML,recapHTML,finaleHTML,gateURL} from './ui.mjs?v=9';
+import {worldMapHTML} from './world-map.mjs?v=10';
+import {installFullscreen} from './fullscreen.mjs?v=10';
+import {learningCard,journeyStep,discoveryNotice} from './learning.mjs?v=10';
+import {prepareData,hash} from './data.mjs?v=10';
+import {buildCampaign,roomUnlocked,reconcileCampaign} from './campaign.mjs?v=10';
+import {createRun,step,currentEncounter,availableRelations,cycleCapability,objective,useAbility,portalOpen} from './engine.mjs?v=10';
+import {readProgress,writeProgress,captureProgress,freshProgress,reconcileProgress,restartProgress} from './storage.mjs?v=10';
+import {Renderer} from './renderer.mjs?v=10';
+import {createInput} from './input.mjs?v=10';
+import {createAudio} from './audio.mjs?v=10';
+import {powerStyle,ABILITIES} from './config.mjs?v=10';
+import {esc,knowledgeHTML,mapHTML,recapHTML,finaleHTML,gateURL} from './ui.mjs?v=10';
 
 const $=id=>document.getElementById(id),canvas=$('game'),audio=createAudio(),motionQuery=matchMedia('(prefers-reduced-motion: reduce)');
 const discoveryQueue=[],noticeQueue=[];let deliveryUntil=0;
@@ -124,5 +124,5 @@ $('portals').onclick=showPortals;$('restart').onclick=requestRestart;$('start').
 $('sound').onclick=()=>{if(!progress)return;progress.settings.sound=!progress.settings.sound;audio.unlock(progress.settings.sound);audio.play('collect');applySettings();persist();if(mode==='playing')canvas.focus({preventScroll:true});};
 window.addEventListener('pagehide',persist);
 function frame(now){const dt=Math.min(.05,(now-(lastTime||now))/1000);lastTime=now;if(mode==='playing'){accumulator+=dt;while(accumulator>=1/120&&mode==='playing'){handle(step(run,input.sample(),1/120));accumulator-=1/120;}}else accumulator=0;if(!document.hidden&&(mode==='playing'||now-lastRender>100)){renderer?.render(run,Math.min(.1,(now-lastRender)/1000),now/1000,mode);lastRender=now;}if(run&&run.focusId!==lastHUDFocus&&mode==='playing'){hud();lastHUDFocus=run.focusId;}if($('toast').textContent&&now>toastUntil)$('toast').textContent='';if(!$('toast').textContent&&noticeQueue.length&&mode==='playing')notify(noticeQueue.shift(),6);if(!$('delivery').hidden&&now>deliveryUntil)$('delivery').hidden=true;requestAnimationFrame(frame);}
-async function load(){mode='loading';$('start').disabled=true;$('start').textContent='Loading the knowledge network…';$('overlayExtra').innerHTML='';try{if(!renderer)throw new Error('Canvas is unavailable');const response=await fetch('../data/explorer-data.json',{cache:'no-cache',signal:AbortSignal.timeout(15000)});if(!response.ok)throw new Error(`Explorer data: HTTP ${response.status}`);data=prepareData(await response.json());if(data.warnings.length)console.warn('Scale Run data validation:',data.warnings);try{storage=window.localStorage;}catch{storage={getItem:()=>null,setItem:()=>{throw new Error('Unavailable storage');}};}progress=readProgress(storage,data);worlds=buildCampaign(data,progress.seed);progress=reconcileCampaign(progress,worlds);applySettings();let next=worlds.findIndex(w=>w.gate.id===progress.settings.currentGate);if(next<0)next=worlds.findIndex(w=>!progress.completed.includes(w.gate.id));if(next<0)next=0;if(next>0&&!progress.completed.includes(worlds[next-1].gate.id))next=0;const room=Math.min(progress.settings.currentRoom||0,worlds[next].rooms.length-1);prepare(next,roomUnlocked(worlds[next].rooms[room],progress)?room:0);}catch(error){console.error('Scale Run startup failed:',error);mode='error';overlay({title:'The knowledge network could not be loaded.',text:'Scale Run uses the live Explorer data. Please try again, or return to the Explorer.',button:'Try again',extra:'<a class="recap-link" href="../#explore">Return to Explorer ↗</a>',note:'Your saved progress has not been removed.'});}}
+async function load(){mode='loading';$('start').disabled=true;$('start').textContent='Loading the knowledge network…';$('overlayExtra').innerHTML='';try{if(!renderer)throw new Error('Canvas is unavailable');const response=await fetch('../data/explorer-data.json?v=20261001-gates-0-5',{cache:'no-cache',signal:AbortSignal.timeout(15000)});if(!response.ok)throw new Error(`Explorer data: HTTP ${response.status}`);data=prepareData(await response.json());if(data.warnings.length)console.warn('Scale Run data validation:',data.warnings);try{storage=window.localStorage;}catch{storage={getItem:()=>null,setItem:()=>{throw new Error('Unavailable storage');}};}progress=readProgress(storage,data);worlds=buildCampaign(data,progress.seed);progress=reconcileCampaign(progress,worlds);applySettings();let next=worlds.findIndex(w=>w.gate.id===progress.settings.currentGate);if(next<0)next=worlds.findIndex(w=>!progress.completed.includes(w.gate.id));if(next<0)next=0;if(next>0&&!progress.completed.includes(worlds[next-1].gate.id))next=0;const room=Math.min(progress.settings.currentRoom||0,worlds[next].rooms.length-1);prepare(next,roomUnlocked(worlds[next].rooms[room],progress)?room:0);}catch(error){console.error('Scale Run startup failed:',error);mode='error';overlay({title:'The knowledge network could not be loaded.',text:'Scale Run uses the live Explorer data. Please try again, or return to the Explorer.',button:'Try again',extra:'<a class="recap-link" href="../#explore">Return to Explorer ↗</a>',note:'Your saved progress has not been removed.'});}}
 requestAnimationFrame(frame);load();

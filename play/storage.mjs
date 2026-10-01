@@ -1,8 +1,17 @@
-import {SAVE_KEY} from './config.mjs?v=9';
-import {idOf} from './data.mjs?v=9';
-export function freshProgress(seed='first-light'){return {version:2,fingerprint:'',seed,completed:[],handover:[],zones:[],seenPickups:[],encountered:[],capabilities:[],applied:[],mechanisms:[],settings:{sound:false,reducedMotion:false,currentGate:null,currentRoom:0}};}
+import {SAVE_KEY} from './config.mjs?v=10';
+import {idOf} from './data.mjs?v=10';
+export function freshProgress(seed='first-light'){return {version:3,fingerprint:'',seed,completed:[],handover:[],zones:[],seenPickups:[],encountered:[],capabilities:[],applied:[],mechanisms:[],settings:{sound:false,reducedMotion:false,currentGate:null,currentRoom:0}};}
 export function reconcileProgress(raw,data) {
   if(!raw||typeof raw!=='object'||Array.isArray(raw))return freshProgress();
+  // Migrate saved 1..6 gate IDs exactly once, retaining source-linked progress.
+  if((raw.version || 1)<3 && data.gateMap.has('0')) {
+    const gate = id => /^[1-6]$/.test(String(id)) ? String(Number(id)-1) : null;
+    const keys = values => (Array.isArray(values)?values:[]).map(key => {
+      if(typeof key!=='string')return key;
+      const [id,...rest]=key.split(':');return gate(id)===null?key:[gate(id),...rest].join(':');
+    });
+    raw={...raw,version:3,completed:(Array.isArray(raw.completed)?raw.completed:[]).map(gate).filter(id=>id!==null),handover:keys(raw.handover),zones:keys(raw.zones),settings:{...raw.settings,currentGate:gate(raw.settings?.currentGate)}};
+  }
   const value=freshProgress(typeof raw.seed==='string'&&raw.seed.length<100?raw.seed:'first-light');
   const validIds=(items,map)=>[...new Set((Array.isArray(items)?items:[]).map(idOf).filter(id=>map.has(id)))];
   value.completed=validIds(raw.completed,data.gateMap);value.encountered=validIds(raw.encountered,data.blockerMap);value.capabilities=validIds(raw.capabilities,data.enablerMap);

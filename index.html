@@ -883,7 +883,7 @@ const state = {
   bookmarks: loadBookmarks(),
   searchType: 'all',
   allMechanism: 'all',
-  stageGateView: 1,
+  stageGateView: 0,
   openDependencies: new Set(),
   timelineGate: null,
   timelineBlocker: null,
@@ -924,7 +924,7 @@ async function init() {
   if (window.__EXPLORER_DATA__) {
     state.data = window.__EXPLORER_DATA__;
   } else {
-    const res = await fetch('data/explorer-data.json?v=20261001-stage-gates', {cache: 'no-cache'});
+    const res = await fetch('data/explorer-data.json?v=20261001-gates-0-5', {cache: 'no-cache'});
     state.data = await res.json();
   }
   updateBookmarkCount();
@@ -1025,7 +1025,7 @@ function entryCard(title, text, link, action, symbol) {
 
 
 function timelinePreviewSvg() {
-  return `<svg viewBox="0 0 620 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Preview of the Timeline: Stage Gate 1 expanding into a blocker and three enablers">
+  return `<svg viewBox="0 0 620 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Preview of the Timeline: Stage Gate 0 expanding into a blocker and three enablers">
     <rect class="hv-crumb-bg" x="6" y="6" width="228" height="27" rx="13.5"></rect>
     <text class="hv-crumb-text" x="20" y="24">Stage Gate → Blocker → Enablers</text>
 
@@ -1036,8 +1036,8 @@ function timelinePreviewSvg() {
 
     <rect class="hv-card" x="6" y="148" width="170" height="108" rx="18"></rect>
     <circle class="hv-num-circle" cx="42" cy="180" r="16"></circle>
-    <text class="hv-num-text" x="42" y="185">1</text>
-    <text class="hv-heading" x="68" y="177">Stage Gate 1</text>
+    <text class="hv-num-text" x="42" y="185">0</text>
+    <text class="hv-heading" x="68" y="177">Stage Gate 0</text>
     <text class="hv-muted" x="26" y="208">Strategic Alignment</text>
     <text class="hv-muted" x="26" y="222">&amp; Idea Validation</text>
 
@@ -1329,7 +1329,7 @@ function renderDependencySection(b) {
   const deps = dependencyContext(b.id);
   const open = state.openDependencies.has(b.id);
   const node = x => `<button class="dependency-node" data-dependency-blocker="${x.id}">
-    <span class="dependency-node-stage">Gate ${x.stageGate || '—'}</span>
+    <span class="dependency-node-stage">Gate ${x.stageGate ?? '—'}</span>
     <strong>${escapeHtml(x.title)}</strong>
   </button>`;
   return `<section class="dependency-inline">
@@ -1354,7 +1354,7 @@ function renderBlockerCard(b) {
   const open = state.openBlocker === b.id;
   return `<article class="blocker-card ${open?'open':''}" data-blocker-card="${b.id}">
     <button class="blocker-summary" data-toggle-blocker="${b.id}">
-      <div><div class="blocker-title-line">${b.stageGate ? `<span class="stage-badge">${escapeHtml(b.stageGate)}</span>`:''}<strong>${escapeHtml(b.title)}</strong></div><p class="blocker-statement">${escapeHtml(b.statement)}</p></div>
+      <div><div class="blocker-title-line">${b.stageGate != null ? `<span class="stage-badge">${escapeHtml(b.stageGate)}</span>`:''}<strong>${escapeHtml(b.title)}</strong></div><p class="blocker-statement">${escapeHtml(b.statement)}</p></div>
       <span class="chevron">${icon('chevron')}</span>
     </button>
     ${open ? renderBlockerDetail(b) : ''}
@@ -1373,7 +1373,7 @@ function renderBlockerDetail(b) {
       <div class="detail-panel"><div class="detail-label">Consequence</div><p>${escapeHtml(b.consequence)}</p></div>
     </div>
     <div class="meta-row">
-      <div class="meta-item"><small>Stage Gate</small><span>${b.stageGate ? `Gate ${b.stageGate} · ${escapeHtml(b.stageGateDescription || '')}` : '—'}</span></div>
+      <div class="meta-item"><small>Stage Gate</small><span>${b.stageGate != null ? `Gate ${b.stageGate} · ${escapeHtml(b.stageGateDescription || '')}` : '—'}</span></div>
       <div class="meta-item"><small>Stakeholders</small><span>${escapeHtml(b.stakeholders.join(' · '))}</span></div>
       <div class="meta-item"><small>Dimension</small><span>${escapeHtml(b.dimension)}</span></div>
       <div class="meta-item"><small>Cluster</small><span>${escapeHtml(b.cluster.replace(/^\d+\)\s*/,''))}</span></div>
@@ -1523,7 +1523,7 @@ function renderStageGates() {
     document.getElementById('backExplore').onclick=()=>navigate('explore');
     return;
   }
-  const selectedId = state.stageGateView || gates[0].id;
+  const selectedId = state.stageGateView ?? gates[0].id;
   const selected = gates.find(g=>g.id===selectedId) || gates[0];
   let blockers = state.data.blockers.filter(b=>b.stageGate===selected.id);
   if (state.stakeholders.length) blockers = blockers.filter(b=>state.stakeholders.some(x=>b.stakeholders.includes(x)));
@@ -1560,7 +1560,7 @@ function renderStageGates() {
 
 function timelineBreadcrumbHtml() {
   const bits = [`<button data-tl-level="root">Timeline</button>`];
-  if (state.timelineGate) bits.push(`<button data-tl-level="gate">Gate ${state.timelineGate}</button>`);
+  if (state.timelineGate != null) bits.push(`<button data-tl-level="gate">Gate ${state.timelineGate}</button>`);
   const b = state.timelineBlocker ? blockerById(state.timelineBlocker) : null;
   if (b) bits.push(`<button data-tl-level="blocker">${escapeHtml(truncate(b.title,42))}</button>`);
   if (state.timelineMechanism) bits.push(`<span>${escapeHtml(state.timelineMechanism)}</span>`);
@@ -1603,7 +1603,7 @@ function renderTimelineGateView(gateId) {
 function renderTimelineDependencyView(b) {
   const deps=dependencyContext(b.id);
   const node=(x,side)=>`<button class="tl-dep-node" data-tl-related="${x.id}">
-      <span>Gate ${x.stageGate || '—'}</span><strong>${escapeHtml(x.title)}</strong>
+      <span>Gate ${x.stageGate ?? '—'}</span><strong>${escapeHtml(x.title)}</strong>
     </button>`;
   return `<section class="tl-dependency-view reveal">
     <div class="tl-focus-kicker">Dependency view</div>
@@ -1615,7 +1615,7 @@ function renderTimelineDependencyView(b) {
       <div class="tl-center-wrap">
         <div class="tl-center-line"></div>
         <button class="tl-center-node" id="tlZoomBlocker">
-          <span class="stage-badge">Gate ${b.stageGate || '—'}</span>
+          <span class="stage-badge">Gate ${b.stageGate ?? '—'}</span>
           <strong>${escapeHtml(b.title)}</strong>
           <p>${escapeHtml(truncate(b.statement,190))}</p>
           <em>Zoom into blocker →</em>
@@ -1674,7 +1674,7 @@ function renderTimelineBlockerDetail(b) {
   return `<section class="tl-detail reveal">
     <div class="tl-detail-hero">
       <div>
-        <div class="tl-detail-badges"><span class="stage-badge">Gate ${b.stageGate || '—'}</span><span>${escapeHtml(state.data.domains.find(d=>d.slug===b.domain)?.title || '')}</span></div>
+        <div class="tl-detail-badges"><span class="stage-badge">Gate ${b.stageGate ?? '—'}</span><span>${escapeHtml(state.data.domains.find(d=>d.slug===b.domain)?.title || '')}</span></div>
         <h2>${escapeHtml(b.title)}</h2>
         <p>${escapeHtml(b.statement)}</p>
       </div>
@@ -1685,7 +1685,7 @@ function renderTimelineBlockerDetail(b) {
       <div class="detail-panel"><div class="detail-label">Consequence</div><p>${escapeHtml(b.consequence)}</p></div>
     </div>
     <div class="tl-meta-grid">
-      <div><small>Stage Gate</small><span>Gate ${b.stageGate || '—'} · ${escapeHtml(b.stageGateDescription || '')}</span></div>
+      <div><small>Stage Gate</small><span>Gate ${b.stageGate ?? '—'} · ${escapeHtml(b.stageGateDescription || '')}</span></div>
       <div><small>Dimension</small><span>${escapeHtml(b.dimension)}</span></div>
       <div><small>Cluster</small><span>${escapeHtml(b.cluster.replace(/^\d+\)\s*/,''))}</span></div>
       <div><small>Stakeholders</small><span>${escapeHtml(b.stakeholders.join(' · '))}</span></div>
@@ -1758,7 +1758,7 @@ function bindTimelineEvents() {
 }
 
 function renderTimeline() {
-  const body = !state.timelineGate
+  const body = state.timelineGate == null
     ? `<div class="tl-start-hint reveal"><span>Start here</span><h3>Choose a Stage Gate.</h3><p>The view stays deliberately light. Each click reveals one more layer of the system.</p></div>`
     : !state.timelineBlocker
       ? renderTimelineGateView(state.timelineGate)
@@ -1778,21 +1778,21 @@ function renderTimeline() {
 
 const COMPANY_ASSESSMENT_KEY = 'aistCompanyAssessmentV1';
 const COMPANY_ASSESSMENT_QUESTIONS = [
-  {gate:1, title:'Ownership, value and investment logic', text:'Are AI initiatives consistently tied to a business problem, a clear owner, stakeholder value and a credible investment logic?', blockerIds:[1114,1133,1143]},
-  {gate:1, title:'Shared vision, priorities and governance', text:'Is there a shared AI vision, aligned priorities across functions, clear governance and sustained management commitment?', blockerIds:[1211,1223,1233,1243]},
-  {gate:1, title:'Realistic solution framing', text:'Do decision-makers understand AI capabilities and limits, and are solutions framed around the operational context before technology is selected?', blockerIds:[1511,1524,3123]},
-  {gate:1, title:'Scaling readiness and delivery ambition', text:'Does the organisation share a practical definition of scaling, project readiness and realistic delivery ambition?', blockerIds:[1811,1823,1921]},
-  {gate:1, title:'Early safety impact framing', text:'Are potential safety implications identified at the earliest stage, before major solution decisions are made?', blockerIds:[3744]},
-  {gate:2, title:'Data governance, quality and access', text:'Are data ownership, access, quality requirements, architecture and reuse practices sufficiently consistent for AI use cases?', blockerIds:[1024,1614,2134,3114,3634]},
-  {gate:2, title:'Skills, legal capability and regulatory interpretation', text:'Are the necessary AI skills available and can legal or compliance functions interpret relevant requirements with confidence?', blockerIds:[1413,1713,1723]},
-  {gate:2, title:'Platform, compute and tooling foundations', text:'Are platform architecture, compute environments and the software/tooling stack ready to support repeatable AI deployment?', blockerIds:[2213,2221,2231]},
-  {gate:3, title:'Incremental build and verification discipline', text:'Are solutions built incrementally with a clear MVP discipline and verified against usable, consistent data?', blockerIds:[1043,2123]},
-  {gate:3, title:'Safety and reliability evidence', text:'Can the organisation generate sufficient evidence to demonstrate safety and reliability as an AI solution scales?', blockerIds:[3734]},
-  {gate:4, title:'Operational ownership and run model', text:'Before go-live, are business ownership, human accountability and the steady-state run model clearly defined?', blockerIds:[1314,1323,1334]},
-  {gate:4, title:'Trust and organisational adoption', text:'Can teams absorb the change, trust AI-supported decisions and understand outputs well enough to use them in the field?', blockerIds:[1424,1433,3523]},
-  {gate:4, title:'Production transition and systems integration', text:'Can AI move from PoC to production and integrate with enterprise, asset management, OT and operational systems?', blockerIds:[1833,2313,2323,3413]},
-  {gate:4, title:'Maintenance workflow and operator feedback', text:'Are AI outputs embedded in maintenance workflows with a structured feedback loop from operators?', blockerIds:[3333]},
-  {gate:5, title:'Monitoring, retraining and performance at scale', text:'After deployment, are model performance, drift, retraining and evolution continuously monitored and managed?', blockerIds:[2423,2513]}
+  {gate:0, title:'Ownership, value and investment logic', text:'Are AI initiatives consistently tied to a business problem, a clear owner, stakeholder value and a credible investment logic?', blockerIds:[1114,1133,1143]},
+  {gate:0, title:'Shared vision, priorities and governance', text:'Is there a shared AI vision, aligned priorities across functions, clear governance and sustained management commitment?', blockerIds:[1211,1223,1233,1243]},
+  {gate:0, title:'Realistic solution framing', text:'Do decision-makers understand AI capabilities and limits, and are solutions framed around the operational context before technology is selected?', blockerIds:[1511,1524,3123]},
+  {gate:0, title:'Scaling readiness and delivery ambition', text:'Does the organisation share a practical definition of scaling, project readiness and realistic delivery ambition?', blockerIds:[1811,1823,1921]},
+  {gate:0, title:'Early safety impact framing', text:'Are potential safety implications identified at the earliest stage, before major solution decisions are made?', blockerIds:[3744]},
+  {gate:1, title:'Data governance, quality and access', text:'Are data ownership, access, quality requirements, architecture and reuse practices sufficiently consistent for AI use cases?', blockerIds:[1024,1614,2134,3114,3634]},
+  {gate:1, title:'Skills, legal capability and regulatory interpretation', text:'Are the necessary AI skills available and can legal or compliance functions interpret relevant requirements with confidence?', blockerIds:[1413,1713,1723]},
+  {gate:1, title:'Platform, compute and tooling foundations', text:'Are platform architecture, compute environments and the software/tooling stack ready to support repeatable AI deployment?', blockerIds:[2213,2221,2231]},
+  {gate:2, title:'Incremental build and verification discipline', text:'Are solutions built incrementally with a clear MVP discipline and verified against usable, consistent data?', blockerIds:[1043,2123]},
+  {gate:2, title:'Safety and reliability evidence', text:'Can the organisation generate sufficient evidence to demonstrate safety and reliability as an AI solution scales?', blockerIds:[3734]},
+  {gate:3, title:'Operational ownership and run model', text:'Before go-live, are business ownership, human accountability and the steady-state run model clearly defined?', blockerIds:[1314,1323,1334]},
+  {gate:3, title:'Trust and organisational adoption', text:'Can teams absorb the change, trust AI-supported decisions and understand outputs well enough to use them in the field?', blockerIds:[1424,1433,3523]},
+  {gate:3, title:'Production transition and systems integration', text:'Can AI move from PoC to production and integrate with enterprise, asset management, OT and operational systems?', blockerIds:[1833,2313,2323,3413]},
+  {gate:3, title:'Maintenance workflow and operator feedback', text:'Are AI outputs embedded in maintenance workflows with a structured feedback loop from operators?', blockerIds:[3333]},
+  {gate:4, title:'Monitoring, retraining and performance at scale', text:'After deployment, are model performance, drift, retraining and evolution continuously monitored and managed?', blockerIds:[2423,2513]}
 ];
 const COMPANY_ASSESSMENT_OPTIONS = [
   {key:'yes',label:'Yes, consistently',status:'resolved',hint:'Established and used consistently'},
@@ -1855,7 +1855,7 @@ function renderMaturity() {
       <div class="maturity-card maturity-card-featured">
         <span class="prototype-badge">Illustrative prototype</span>
         <h3>Assess my company</h3>
-        <p class="subtle">15 questions across Stage Gates 1–5. Responses are mapped transparently to the blockers already in the Explorer.</p>
+        <p class="subtle">15 questions across Stage Gates 0–4. Responses are mapped transparently to the blockers already in the Explorer.</p>
         <div class="assessment-card-actions">
           <button class="primary-btn" id="startCompanyAssessment">Start assessment →</button>
           <button class="outline-btn" id="loadDemoCompany">Load demo company</button>
@@ -1896,7 +1896,7 @@ function renderCompanyAssessmentQuestion() {
   app.innerHTML=`<section class="page assessment-shell">
     <div class="assessment-topline"><button class="back-btn" id="exitAssessment">← Assessment</button><span>Illustrative company assessment</span></div>
     <div class="assessment-progress"><i style="width:${pct}%"></i></div>
-    <div class="assessment-question-meta"><span>Question ${i+1} of ${COMPANY_ASSESSMENT_QUESTIONS.length}</span><span>Stage Gate ${q.gate}</span></div>
+    <div class="assessment-question-meta"><span>Question ${i+1} of ${COMPANY_ASSESSMENT_QUESTIONS.length}</span><span>Stage Gate ${q.gate} · ${escapeHtml(state.data.stageGates.find(g=>g.id===q.gate)?.label || "")}</span></div>
     <div class="assessment-question-card">
       <p class="eyebrow">${escapeHtml(q.title)}</p>
       <h2>${escapeHtml(q.text)}</h2>
@@ -1965,7 +1965,7 @@ function renderCompanyAssessmentResults(result) {
       <button class="primary-btn" id="openPersonalTimeline">Explore my remaining blockers →</button>
       <button class="outline-btn" id="retakeAssessment">Retake assessment</button>
     </div>
-    <div class="mockup-note"><strong>Prototype interpretation.</strong><br>“Done” means that all blockers currently mapped to that Stage Gate were marked resolved by this illustrative assessment. Gate 6 is never inferred as done when no blockers are mapped.</div>
+    <div class="mockup-note"><strong>Prototype interpretation.</strong><br>“Done” means that all blockers currently mapped to that Stage Gate were marked resolved by this illustrative assessment. Gate 5 is never inferred as done when no blockers are mapped.</div>
   </section>`;
   document.getElementById('openPersonalTimeline').onclick=()=>{window.location.href='./timeline/?assessment=company';};
   document.getElementById('retakeAssessment').onclick=()=>{

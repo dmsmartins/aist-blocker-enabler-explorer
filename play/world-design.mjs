@@ -1,5 +1,5 @@
-import {hash} from './data.mjs?v=9';
-import {platformGraph,routeBetween} from './world-builder.mjs?v=9';
+import {hash} from './data.mjs?v=10';
+import {platformGraph,routeBetween} from './world-builder.mjs?v=10';
 export const WORLD_PROFILES=[
  {zones:3,reach:740,rise:90,span:2800,depth:1450,shape:'plateaus',names:['First ring','Quiet terraces','Open horizon'],layout:[[100,190],[370,190],[640,145]]},
  {zones:5,reach:1050,rise:94,span:3550,depth:1810,shape:'modules',names:['Foundation arch','Suspended spine','Lower archive','Signal tower','Upper observatory'],layout:[[100,230],[330,100],[330,340],[590,100],[590,340]]},

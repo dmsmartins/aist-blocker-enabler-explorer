@@ -26,7 +26,7 @@ The live application reads:
 data/explorer-data.json
 ```
 
-Current schema: **2.0**
+Current schema: **3.0**
 
 It contains:
 
@@ -83,7 +83,7 @@ Both Blockers and Enablers include:
 
 The converter accepts both `dependency_importance` and the workbook spelling `depdencency_importance`. `Subcluster` is deliberately not exported. Importance describes a relationship, not a blocker score.
 
-Text Stage Gates such as `Gate 0-Strategic Alignment & Idea Validation` are accepted. Excel Gate 0..5 maps to the existing website/JSON IDs 1..6; the description is validated against the matching lifecycle stage. Legacy numeric 1..6 input remains supported. Blank gates remain null.
+Text Stage Gates such as `Gate 0-Strategic Alignment & Idea Validation` are accepted. Excel and JSON both use Gate 0..5 with the names from the workbook; the description is validated against the matching lifecycle stage. Bare numeric inputs also use 0..5. Blank gates remain null.
 
 ## Local preview
 

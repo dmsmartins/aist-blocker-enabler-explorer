@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "AI Scalability Explorer",
-    "schemaVersion": "2.0",
+    "schemaVersion": "3.0",
     "sourceWorkbook": "Final_Blockers&Enablers_Explorer (1).xlsx",
     "internalIdsVisibleInUi": false,
     "relationshipTypeUsedInUi": false,
@@ -15,27 +15,27 @@
   },
   "stageGates": [
     {
-      "id": 1,
+      "id": 0,
       "label": "Strategic Alignment & Idea Validation"
     },
     {
-      "id": 2,
+      "id": 1,
       "label": "Solution Architecture & Feasibility"
     },
     {
-      "id": 3,
+      "id": 2,
       "label": "Solution Build & Verification"
     },
     {
-      "id": 4,
+      "id": 3,
       "label": "Operational Deployment & Commissioning"
     },
     {
-      "id": 5,
-      "label": "Steady-State Operations & Evolution"
+      "id": 4,
+      "label": "Steady-State Operation & Evolution"
     },
     {
-      "id": 6,
+      "id": 5,
       "label": "Retirement & Transition"
     }
   ],
@@ -113,7 +113,7 @@
       "dimension": "Organisational",
       "whyItMatters": "AI use cases have different requirements for accuracy, completeness, consistency and reliability. Railway infrastructure managers need agreed quality expectations, standards and responsibilities so that data is fit for its intended operational purpose and can be reused confidently across initiatives.",
       "consequence": "AI initiatives may repeatedly spend effort assessing and correcting data, apply inconsistent quality thresholds, produce unreliable results or fail to scale because the suitability of data cannot be demonstrated consistently.",
-      "stageGate": 3,
+      "stageGate": 2,
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
         "IT / data platform",
@@ -134,7 +134,7 @@
       "dimension": "Organisational",
       "whyItMatters": "Scaling requires organisations to learn progressively whether a solution works technically, operationally and for its users. MVPs and intermediate prototypes provide opportunities to test assumptions, gather feedback and increase maturity before committing to full-scale deployment.",
       "consequence": "Projects may remain as repeated PoCs or demonstrations, make large jumps in complexity towards production, and reach later stages without sufficient evidence of operational fit, user acceptance or readiness to scale.",
-      "stageGate": 1,
+      "stageGate": 0,
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Executive / senior management",
@@ -155,7 +155,7 @@
       "dimension": "Organisational",
       "whyItMatters": "Railway infrastructure managers need AI initiatives to be anchored in validated operational or asset-management problems with clear business ownership, otherwise solutions may become disconnected from maintenance priorities, field realities and accountable decision-making.",
       "consequence": "Projects may lose focus, fail to meet operational needs and struggle to move beyond pilots.",
-      "stageGate": 1,
+      "stageGate": 0,
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Executive / senior management",
@@ -175,7 +175,7 @@
       "dimension": "Organisational",
       "whyItMatters": "Stakeholders need to understand the specific value for their role, responsibilities and objectives before supporting scale-up. Different railway functions need to understand how AI creates value for their work through safer decisions, reduced manual effort, better asset planning, maintenance prioritisation, improved asset reliability and more effective operational decision-making.",
       "consequence": "AI initiatives may stall during scaling because stakeholders do not see enough relevance, benefit or ownership.",
-      "stageGate": 1,
+      "stageGate": 0,
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Executive / senior management",
@@ -196,7 +196,7 @@
       "dimension": "Organisational",
       "whyItMatters": "Decision-makers need a clear view of costs, benefits, risks and financial exposure before committing resources, particularly where AI investment competes with long-term infrastructure, maintenance and safety-related expenditure. This also requires recognising that some data, integration, platform and governance capabilities are shared foundations that create value across multiple AI initiatives rather than costs attributable to a single use case.",
       "consequence": "Individual use cases may appear unnecessarily expensive or financially unattractive, shared capabilities may be underfunded or repeatedly rebuilt, and commitment to scale may weaken because stakeholders cannot justify investment or manage financial risk.",
-      "stageGate": 1,
+      "stageGate": 0,
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Executive / senior management",
@@ -216,7 +216,7 @@
       "dimension": "Organisational",
       "whyItMatters": "A shared AI vision helps align asset management, maintenance, operations, IT and leadership around where AI should support infrastructure decisions and where it should not, while allowing the organisation to respond coherently to a rapidly changing AI landscape and translating strategic goals into asset management, maintenance and operational improvement objectives.",
       "consequence": "Adoption may slow, investment decisions may be delayed and initiatives may remain fragmented.",
-      "stageGate": 1,
+      "stageGate": 0,
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Executive / senior management",
@@ -237,7 +237,7 @@
       "dimension": "Organisational",
       "whyItMatters": "Railway infrastructure data, assets and processes cut across organisational silos; fragmented priorities can lead to duplicated pilots, inconsistent tools and weak portfolio-level impact.",
       "consequence": "AI work may become duplicated, underfunded or misaligned, reducing impact and slowing progress towards scale.",
-      "stageGate": 1,
+      "stageGate": 0,
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Executive / senior management",
@@ -258,7 +258,7 @@
       "dimension": "Organisational",
       "whyItMatters": "AI projects in railway infrastructure require timely decisions across business, technical, safety and compliance roles; unclear governance can leave promising initiatives stuck between pilot and operational use.",
       "consequence": "Initiatives may remain stuck between pilot and operations, with repeated decision re-opening, weak ownership and delayed investment.",
-      "stageGate": 1,
+      "stageGate": 0,
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Executive / senior management",
@@ -280,7 +280,7 @@
       "dimension": "Organisational",
       "whyItMatters": "Scaling AI needs visible sponsorship, long-term commitment, recurring executive attention and alignment with organisational priorities, particularly where railway asset cycles and operational deployment extend beyond short project horizons",
       "consequence": "AI initiatives may lose momentum, funding and authority before they are embedded in operations.",
-      "stageGate": 4,
+      "stageGate": 3,
       "stageGateDescription": "Operational Deployment & Commissioning",
       "stakeholders": [
         "Executive / senior management",
@@ -301,7 +301,7 @@
       "dimension": "Organisational",
       "whyItMatters": "AI initiatives need accountable business owners to validate the problem, support operational adoption and realise asset-management or maintenance benefits over time.",
       "consequence": "Solutions may remain technical prototypes without operational adoption, benefit realisation or clear accountability for scale-up.",
-      "stageGate": 4,
+      "stageGate": 3,
       "stageGateDescription": "Operational Deployment & Commissioning",
       "stakeholders": [
         "Executive / senior management",
@@ -322,7 +322,7 @@
       "dimension": "Organisational",
       "whyItMatters": "Human-AI decision chains need clear accountability so staff know who is responsible for judgement, approval, action and escalation. In railway infrastructure, AI-supported decisions may affect maintenance, safety, reliability and service continuity, making accountability and escalation responsibilities critical.",
       "consequence": "Operational decisions may be delayed, challenged or unsafe because roles, responsibilities and liability are not understood.",
-      "stageGate": 4,
+      "stageGate": 3,
       "stageGateDescription": "Operational Deployment & Commissioning",
       "stakeholders": [
         "Executive / senior management",
@@ -343,7 +343,7 @@
       "dimension": "Organisational",
       "whyItMatters": "Production AI needs ownership, support, monitoring, incident handling and maintenance funding; without this, infrastructure managers may introduce tools that create operational risk instead of reducing it.",
       "consequence": "Solutions may enter production without clear support, funding or accountability, creating operational risk and weakening long-term value.",
-      "stageGate": 4,
+      "stageGate": 3,
       "stageGateDescription": "Operational Deployment & Commissioning",
       "stakeholders": [
         "Asset management",
@@ -364,7 +364,7 @@
       "dimension": "Organisational",
       "whyItMatters": "Infrastructure managers need enough AI literacy across technical, operational and management roles to interpret outputs, challenge assumptions and use AI safely in infrastructure decisions.",
       "consequence": "AI initiatives may face weak adoption, poor interpretation of model outputs and limited ability to scale beyond specialist teams.",
-      "stageGate": 4,
+      "stageGate": 3,
       "stageGateDescription": "Operational Deployment & Commissioning",
       "stakeholders": [
         "Executive / senior management",
@@ -386,7 +386,7 @@
       "dimension": "Organisational",
       "whyItMatters": "AI adoption depends on user confidence, early involvement, visible benefits and evidence that solutions support existing work rather than add burden, particularly in maintenance, inspection and operational environments where staff must rely on AI-supported recommendations in daily practice.",
       "consequence": "Operational teams may reject or bypass AI tools, slowing scale-up and reducing realised value.",
-      "stageGate": 1,
+      "stageGate": 0,
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Maintenance / operations",
@@ -408,7 +408,7 @@
       "dimension": "Organisational",
       "whyItMatters": "AI solutions often improve iteratively through user feedback, updated models and changing technologies. Organisations need the capability to adapt alongside the solution.",
       "consequence": "Users may resist iterative releases, expectations may become unrealistic and AI solutions may lose relevance as technologies and operational needs evolve",
-      "stageGate": 6,
+      "stageGate": 5,
       "stageGateDescription": "Retirement & Transition",
       "stakeholders": [
         "Executive / senior management",
@@ -430,7 +430,7 @@
       "dimension": "Organisational",
       "whyItMatters": "Infrastructure managers commit long planning and procurement cycles to AI investments. Without an informed view of what current AI can achieve on railway data and in field conditions, prioritisation and funding decisions are made on the wrong assumptions.",
       "consequence": "Initiatives may be over-promised, poorly prioritised or rejected because expectations are either inflated or too cautious.",
-      "stageGate": 1,
+      "stageGate": 0,
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Executive / senior management",
@@ -451,7 +451,7 @@
       "dimension": "Organisational",
       "whyItMatters": "AI must fit real infrastructure management work: inspections, work orders, access constraints, maintenance windows, safety rules and field practices.",
       "consequence": "Solutions may fail adoption, create operational burden, increase supplier dependency or enter operations without adequate support.",
-      "stageGate": 1,
+      "stageGate": 0,
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Maintenance / operations",
@@ -472,7 +472,7 @@
       "dimension": "Organisational",
       "whyItMatters": "AI scaling depends on governed but usable data access across asset, maintenance, inspection and operational systems; overly fragmented governance slows reuse and integration.",
       "consequence": "Projects may face delays, duplicated data work, inconsistent controls and limited reuse across initiatives.",
-      "stageGate": 1,
+      "stageGate": 0,
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "IT / data platform",
@@ -493,7 +493,7 @@
       "dimension": "Organisational",
       "whyItMatters": "Legal and compliance teams need enough AI understanding to guide safe deployment and adapt to the changing legal AI landscape without creating late approval bottlenecks or excessive risk avoidance.",
       "consequence": "Projects may face late compliance challenges, delayed approvals, unclear regulatory interpretation or unsafe design choices.",
-      "stageGate": 2,
+      "stageGate": 1,
       "stageGateDescription": "Solution Architecture & Feasibility",
       "stakeholders": [
         "Legal / safety / compliance",
@@ -514,7 +514,7 @@
       "dimension": "Organisational",
       "whyItMatters": "Teams need clear regulatory guidance to make confident design, approval and scaling decisions.",
       "consequence": "Projects may be delayed, over-constrained or stopped because compliance risks are misunderstood or addressed too late.",
-      "stageGate": 2,
+      "stageGate": 1,
       "stageGateDescription": "Solution Architecture & Feasibility",
       "stakeholders": [
         "Legal / safety / compliance",
@@ -535,7 +535,7 @@
       "dimension": "Organisational",
       "whyItMatters": "Teams need a common understanding of scale objectives, such as wider deployment, reuse, operational integration, user adoption or portfolio growth.",
       "consequence": "Initiatives may appear successful in pilot form but fail to progress because stakeholders measure scale in different ways.",
-      "stageGate": 3,
+      "stageGate": 2,
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
         "Executive / senior management",
@@ -556,7 +556,7 @@
       "dimension": "Organisational",
       "whyItMatters": "A common readiness language helps infrastructure managers decide whether an AI initiative is still experimental, ready for operational testing or mature enough for broader deployment.",
       "consequence": "Projects may be assessed inconsistently, creating confusion about whether they are ready to scale, adapt or stop.",
-      "stageGate": 1,
+      "stageGate": 0,
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Executive / senior management",
@@ -577,7 +577,7 @@
       "dimension": "Technical",
       "whyItMatters": "AI initiatives in railway infrastructure need clear progression criteria, dedicated resources and alignment across technical, operational, legal and funding decisions to move from PoC into operational use and real maintenance workflows",
       "consequence": "Promising initiatives may remain as pilots, fail to operate in real workflows and lose momentum before delivering operational value.",
-      "stageGate": 1,
+      "stageGate": 0,
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Executive / senior management",
@@ -599,7 +599,7 @@
       "dimension": "Organisational",
       "whyItMatters": "Railway AI deployment must accommodate integration with operational systems, maintenance processes, legal and safety reviews and organisational change. Unrealistic schedules can undermine otherwise viable initiatives.",
       "consequence": "Projects may become oversized, miss commitments, encounter late approval bottlenecks and lose credibility, sponsorship or funding before operational deployment.",
-      "stageGate": 4,
+      "stageGate": 3,
       "stageGateDescription": "Operational Deployment & Commissioning",
       "stakeholders": [
         "Executive / senior management",
@@ -621,8 +621,8 @@
       "dimension": "Technical",
       "whyItMatters": "AI scaling needs reliable data sources, processing environments, delivery channels, platform governance and operational IT capabilities.",
       "consequence": "Projects may remain isolated, require repeated adaptation to changing IT environments and become outdated before they can scale.",
-      "stageGate": 5,
-      "stageGateDescription": "Steady-State Operations & Evolution",
+      "stageGate": 4,
+      "stageGateDescription": "Steady-State Operation & Evolution",
       "stakeholders": [
         "IT / data platform",
         "Data science / AI teams",
@@ -642,7 +642,7 @@
       "dimension": "Technical",
       "whyItMatters": "Infrastructure managers need consistent meaning across asset registers, inspections, defects, work orders and sensor streams so AI outputs are trusted and comparable across systems.",
       "consequence": "AI outputs may be unreliable, difficult to integrate and hard to scale because data is interpreted differently across systems and teams.",
-      "stageGate": 3,
+      "stageGate": 2,
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
         "IT / data platform",
@@ -662,7 +662,7 @@
       "dimension": "Technical",
       "whyItMatters": "Within railway infrastructure management, scalable AI depends on secure and timely access to asset management, inspection, condition monitoring and operational data across multiple systems while maintaining appropriate governance and access controls.",
       "consequence": "AI use cases may be blocked or delayed because teams cannot retrieve, integrate or govern the data needed for analysis and operations.",
-      "stageGate": 3,
+      "stageGate": 2,
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
         "IT / data platform",
@@ -683,7 +683,7 @@
       "dimension": "Technical",
       "whyItMatters": "Railway AI use cases may require cloud, edge or hybrid deployment depending on latency, connectivity, hardware and operational constraints.",
       "consequence": "Solutions may fail to meet operational performance needs, become difficult to scale or require costly rework when moving from pilot to deployment.",
-      "stageGate": 3,
+      "stageGate": 2,
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
         "IT / data platform",
@@ -704,8 +704,8 @@
       "dimension": "Technical",
       "whyItMatters": "Infrastructure managers need AI tools that are maintainable, supportable and portable enough to avoid long-term vendor lock-in or unsustainable specialist dependencies.",
       "consequence": "Scaling may prove to be impossible - or at least become difficult and costly - as it would be dependent on specialist vendor support. Infrastructure providers would have little ways of enforcing such support, limiting flexibility and long-term sustainability.",
-      "stageGate": 5,
-      "stageGateDescription": "Steady-State Operations & Evolution",
+      "stageGate": 4,
+      "stageGateDescription": "Steady-State Operation & Evolution",
       "stakeholders": [
         "IT / data platform",
         "Data science / AI teams",
@@ -725,7 +725,7 @@
       "dimension": "Technical",
       "whyItMatters": "AI creates more value when outputs are integrated into the systems used to manage asset records, interventions, work orders and maintenance decisions.",
       "consequence": "AI solutions may remain isolated, rely on ad hoc interfaces and deliver only limited value because data exchange and operational integration are weak.",
-      "stageGate": 3,
+      "stageGate": 2,
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
         "IT / data platform",
@@ -746,7 +746,7 @@
       "dimension": "Technical",
       "whyItMatters": "AI solutions that depend on live monitoring or operational technology data must connect reliably with railway systems and procedures, such as condition-monitoring platforms, alarms and remote monitoring.",
       "consequence": "AI solutions may remain disconnected from live operations, limiting real-time decision support, adoption and safe scaling.",
-      "stageGate": 3,
+      "stageGate": 2,
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
         "Maintenance / operations",
@@ -768,8 +768,8 @@
       "dimension": "Technical",
       "whyItMatters": "Production AI needs continuous monitoring to detect drift, performance decay, degradation and changing data patterns as asset condition, maintenance history and operational environments evolve over time.",
       "consequence": "Model outputs may become unreliable over time, reducing trust, operational value and safety of AI-supported decisions.",
-      "stageGate": 5,
-      "stageGateDescription": "Steady-State Operations & Evolution",
+      "stageGate": 4,
+      "stageGateDescription": "Steady-State Operation & Evolution",
       "stakeholders": [
         "Data science / AI teams",
         "IT / data platform",
@@ -789,8 +789,8 @@
       "dimension": "Technical",
       "whyItMatters": "Scaled AI must remain reliable under realistic operating conditions, with acceptable levels of false positives, missed detections, resource use and performance variation across larger asset populations, operational environments and maintenance conditions.",
       "consequence": "Users may lose trust in AI outputs, operational decisions may be weakened, and solutions may fail readiness for production deployment.",
-      "stageGate": 5,
-      "stageGateDescription": "Steady-State Operations & Evolution",
+      "stageGate": 4,
+      "stageGateDescription": "Steady-State Operation & Evolution",
       "stakeholders": [
         "Data science / AI teams",
         "IT / data platform",
@@ -810,7 +810,7 @@
       "dimension": "Cross-cutting",
       "whyItMatters": "AI for infrastructure management depends on data being collected, retained and available at the right frequency, quality and granularity for asset condition assessment, inspection analysis, monitoring systems and maintenance decision support.",
       "consequence": "AI projects may be delayed, limited to small pilots or unable to support operational workflows because the data foundation is not fit for use.",
-      "stageGate": 3,
+      "stageGate": 2,
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
         "IT / data platform",
@@ -831,7 +831,7 @@
       "dimension": "Cross-cutting",
       "whyItMatters": "Railway IMs operate heterogeneous legacy systems and long-lived assets. Poor early solution choices can create technical dead ends, unnecessary vendor dependency or solutions that work in a pilot but cannot be integrated or scaled.",
       "consequence": "Projects may require major redesign, become locked into unsuitable technologies or platforms, or reach technically successful pilots that cannot progress to scalable operational use.",
-      "stageGate": 2,
+      "stageGate": 1,
       "stageGateDescription": "Solution Architecture & Feasibility",
       "stakeholders": [
         "Asset management",
@@ -852,7 +852,7 @@
       "dimension": "Cross-cutting",
       "whyItMatters": "Within railway infrastructure management, AI recommendations should integrate with asset records, work-order processes and maintenance planning activities so that operational teams can act on them and provide feedback for continuous improvement.",
       "consequence": "AI tools may not be accepted in operational reality, feedback from the field may not improve the system, and maintenance decisions may remain disconnected from AI outputs.",
-      "stageGate": 4,
+      "stageGate": 3,
       "stageGateDescription": "Operational Deployment & Commissioning",
       "stakeholders": [
         "Maintenance / operations",
@@ -874,8 +874,8 @@
       "dimension": "Cross-cutting",
       "whyItMatters": "Infrastructure managers need reproducible deployment, logging, telemetry, support and handover so AI solutions can operate reliably beyond the pilot stage.",
       "consequence": "Solutions may remain experimental, fail in live use or become difficult to maintain, monitor and improve over time.",
-      "stageGate": 5,
-      "stageGateDescription": "Steady-State Operations & Evolution",
+      "stageGate": 4,
+      "stageGateDescription": "Steady-State Operation & Evolution",
       "stakeholders": [
         "IT / data platform",
         "Data science / AI teams",
@@ -895,7 +895,7 @@
       "dimension": "Cross-cutting",
       "whyItMatters": "Field and asset management users need to understand AI outputs well enough to trust, challenge and act on them in safety-conscious infrastructure contexts.",
       "consequence": "Users may reject or bypass AI tools, limiting adoption and preventing progression towards more autonomous AI-supported decisions.",
-      "stageGate": 4,
+      "stageGate": 3,
       "stageGateDescription": "Operational Deployment & Commissioning",
       "stakeholders": [
         "Maintenance / operations",
@@ -916,7 +916,7 @@
       "dimension": "Cross-cutting",
       "whyItMatters": "Railway assets and failures are cross-system by nature; siloed data prevents AI from connecting asset condition, interventions, operations and outcomes.",
       "consequence": "Projects may duplicate data work, remain limited to local use cases and fail to exploit wider modelling or innovation opportunities.",
-      "stageGate": 1,
+      "stageGate": 0,
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "IT / data platform",
@@ -938,7 +938,7 @@
       "dimension": "Cross-cutting",
       "whyItMatters": "AI may influence maintenance or operational decisions with safety implications. Identifying these implications early allows assurance, accountability and evidence requirements to be designed into the initiative rather than discovered late.",
       "consequence": "Safety requirements may emerge late, forcing redesign, limiting deployment scope, delaying approval or preventing the solution from progressing to operational use.",
-      "stageGate": 2,
+      "stageGate": 1,
       "stageGateDescription": "Solution Architecture & Feasibility",
       "stakeholders": [
         "Legal / safety / compliance",
@@ -960,7 +960,7 @@
       "dimension": "Cross-cutting",
       "whyItMatters": "Safety-critical railway environments need clear assurance, applicable standards and validated evidence before AI can support operational decisions.",
       "consequence": "AI initiatives may be delayed, restricted or rejected because safety, reliability and certification expectations cannot be demonstrated.",
-      "stageGate": 2,
+      "stageGate": 1,
       "stageGateDescription": "Solution Architecture & Feasibility",
       "stakeholders": [
         "Legal / safety / compliance",

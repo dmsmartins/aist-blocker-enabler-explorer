@@ -1,5 +1,5 @@
-import {esc,mapHTML} from './ui.mjs?v=9';
-import {createRun,portalOpen} from './engine.mjs?v=9';
+import {esc,mapHTML} from './ui.mjs?v=10';
+import {createRun,portalOpen} from './engine.mjs?v=10';
 export function worldMapModel(chapter,run,progress){
  const visited=new Set([...(progress.zones||[]),run.world.discoveryKey]),visible=new Set(),open=new Set([run.world.roomIndex]);
  for(const room of chapter.rooms)if(visited.has(room.discoveryKey)){visible.add(room.roomIndex);const state=createRun(room,progress);for(const p of room.portals){visible.add(p.targetRoom);if(portalOpen(state,p))open.add(p.targetRoom);}}

@@ -1,6 +1,6 @@
-import {selectJourneyChallenges} from './data.mjs?v=9';
-import {buildWorld} from './world-builder.mjs?v=9';
-import {WORLD_PROFILES,designOrder,expandRoom,route,validateCampaign} from './world-design.mjs?v=9';
+import {selectJourneyChallenges} from './data.mjs?v=10';
+import {buildWorld} from './world-builder.mjs?v=10';
+import {WORLD_PROFILES,designOrder,expandRoom,route,validateCampaign} from './world-design.mjs?v=10';
 export function buildCampaign(data,seed='first-light'){
  const experienced=[];
  return data.gates.map((gate,index)=>{

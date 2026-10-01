@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert the AIST Blocker & Enabler Excel workbook to Explorer JSON v2.
+"""Convert the AIST Blocker & Enabler Excel workbook to Explorer JSON v3.
 
 No third-party packages are required: the script reads .xlsx files directly with
 Python's standard library (xlsx is a ZIP archive containing XML files).
@@ -30,18 +30,18 @@ from xml.etree import ElementTree as ET
 # Configuration / source-of-truth metadata
 # ---------------------------------------------------------------------------
 
-SCHEMA_VERSION = "2.0"
+SCHEMA_VERSION = "3.0"
 
-# JSON uses Stage Gates 1..6. Textual Excel gates 0..5 map to these IDs.
+# JSON and Excel both use Stage Gates 0..5.
 # These labels are also used when a gate has no
-# blocker/enabler row yet (currently Gate 6 can legitimately be empty).
+# blocker/enabler row yet (currently Gate 5 can legitimately be empty).
 STAGE_GATES = {
-    1: "Strategic Alignment & Idea Validation",
-    2: "Solution Architecture & Feasibility",
-    3: "Solution Build & Verification",
-    4: "Operational Deployment & Commissioning",
-    5: "Steady-State Operations & Evolution",
-    6: "Retirement & Transition",
+    0: "Strategic Alignment & Idea Validation",
+    1: "Solution Architecture & Feasibility",
+    2: "Solution Build & Verification",
+    3: "Operational Deployment & Commissioning",
+    4: "Steady-State Operation & Evolution",
+    5: "Retirement & Transition",
 }
 
 MECHANISM_ORDER = ["Frame", "Commit", "Equip", "Assure", "Operate", "Learn"]
@@ -404,21 +404,17 @@ def rows_from_sheet(reader: XlsxReader, sheet_name: str) -> Tuple[List[str], Lis
 
 
 def validate_gate(gate_value: Any, desc_value: Any, context: str, warnings: List[str]) -> Tuple[Optional[int], Optional[str]]:
-    # Keep legacy numeric 1..6 input compatible with the existing website.
-    # The new combined labels use a separate, explicit zero-based convention.
+    # Combined labels and bare numeric inputs now share the same 0..5 IDs.
     combined = re.fullmatch(r"Gate\s+([0-5])\s*[-–—]\s*(.+)", norm_text(gate_value), re.IGNORECASE)
     if combined:
-        gate = int(combined.group(1)) + 1
-        embedded_desc = combined.group(2)
-        # The workbook uses singular 'Operation' for this canonical label.
-        def label_key(value: Any) -> str:
-            return norm_header(value).replace("steady_state_operation_and", "steady_state_operations_and")
+        gate = int(combined.group(1))
+        desc = combined.group(2)
         expected = STAGE_GATES[gate]
-        if label_key(embedded_desc) != label_key(expected):
+        if norm_header(desc) != norm_header(expected):
             raise ValueError(f"{context}: {gate_value!r} has an unexpected Stage Gate description; expected {expected!r}")
-        if norm_text(desc_value) and label_key(desc_value) != label_key(expected):
+        if norm_text(desc_value) and norm_header(desc_value) != norm_header(desc):
             raise ValueError(f"{context}: conflicting Stage Gate description {desc_value!r}")
-        return gate, expected
+        return gate, desc
     gate = as_int(gate_value, f"{context} Stage Gate", allow_blank=True)
     desc = norm_text(desc_value) or None
 
@@ -428,7 +424,7 @@ def validate_gate(gate_value: Any, desc_value: Any, context: str, warnings: List
         return None, desc
 
     if gate not in STAGE_GATES:
-        raise ValueError(f"{context}: Stage Gate must be 1..6, got {gate}")
+        raise ValueError(f"{context}: Stage Gate must be 0..5, got {gate}")
 
     expected = STAGE_GATES[gate]
     if not desc:
@@ -735,7 +731,7 @@ def convert(input_path: Path) -> Tuple[Dict[str, Any], List[str], List[str]]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Convert AIST Blocker & Enabler Excel workbook to Explorer JSON v2."
+        description="Convert AIST Blocker & Enabler Excel workbook to Explorer JSON v3."
     )
     parser.add_argument("input", type=Path, help="Path to the source .xlsx workbook")
     parser.add_argument(

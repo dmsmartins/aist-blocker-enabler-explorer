@@ -54,7 +54,7 @@ function AppCanvas({data}){
   const [detailOpen,setDetailOpen]=useState(false);
   const [selectedMechanism,setSelectedMechanism]=useState(null);
   const [selectedEnabler,setSelectedEnabler]=useState(null);
-  const stageX=id=>(id-1)*430;
+  const stageX=id=>id*430;
   const domains=useMemo(()=>Object.fromEntries(data.domains.map(d=>[d.slug,d.title])),[data]);
 
   const dependencyContext=useCallback(id=>{
@@ -83,10 +83,10 @@ function AppCanvas({data}){
     const edgeBase={type:"smoothstep",style:{stroke:"#aec7d7",strokeWidth:1.2},markerEnd:{type:MarkerType.ArrowClosed,width:14,height:14,color:"#aec7d7"}};
     data.stageGates.forEach(g=>{
       nodes.push({id:`stage-${g.id}`,type:"stage",position:{x:stageX(g.id),y:0},data:{gate:g,count:data.blockers.filter(b=>b.stageGate===g.id).length,selected:selectedGate===g.id,zoom},zIndex:selectedGate===g.id?5:1});
-      if(g.id<data.stageGates.length)edges.push({id:`stage-edge-${g.id}`,source:`stage-${g.id}`,target:`stage-${g.id+1}`,...edgeBase,style:{stroke:"#c9dce8",strokeWidth:2}});
+      if(g.id<data.stageGates.length-1)edges.push({id:`stage-edge-${g.id}`,source:`stage-${g.id}`,target:`stage-${g.id+1}`,...edgeBase,style:{stroke:"#c9dce8",strokeWidth:2}});
     });
 
-    if(selectedGate&&!selectedBlocker){
+    if((selectedGate != null)&&!selectedBlocker){
       const blockers=data.blockers.filter(b=>b.stageGate===selectedGate),baseX=stageX(selectedGate)-380,cols=3;
       blockers.forEach((b,i)=>{const row=Math.floor(i/cols),col=i%cols,x=baseX+col*310,y=310+row*175;
         nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x,y},data:{blocker:b,selected:false,domainTitle:domains[b.domain]||"",zoom}});
@@ -132,7 +132,7 @@ function AppCanvas({data}){
         // Once a blocker is selected, keep the lifecycle timeline out of the fit calculation.
         // This lets the dependency graph use the viewport instead of shrinking to show all six gates.
         focus=all.filter(n=>n.type!=="stage");
-      }else if(selectedGate){
+      }else if((selectedGate != null)){
         // Focus the selected gate plus its blockers; other lifecycle gates remain available by panning.
         focus=all.filter(n=>n.type!=="stage" || n.id===`stage-${selectedGate}`);
       }else{
@@ -140,16 +140,16 @@ function AppCanvas({data}){
       }
       flow.fitView({
         nodes:focus.length?focus:all,
-        padding:selectedBlocker?.08:selectedGate?.06:.10,
+        padding:selectedBlocker?.08:(selectedGate != null)?.06:.10,
         duration:700,
-        maxZoom:selectedBlocker?1.14:selectedGate?1.02:.92
+        maxZoom:selectedBlocker?1.14:(selectedGate != null)?1.02:.92
       });
     },100);
     return()=>clearTimeout(t);
   },[selectedGate,selectedBlocker,detailOpen,selectedMechanism,selectedEnabler]);
 
   const reset=()=>{setSelectedGate(null);setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null);setTimeout(()=>{const stages=flow.getNodes().filter(n=>n.type==="stage");flow.fitView({nodes:stages,padding:.10,duration:700,maxZoom:.92})},70)};
-  const back=()=>{if(selectedEnabler){setSelectedEnabler(null);return}if(selectedMechanism){setSelectedMechanism(null);return}if(detailOpen){setDetailOpen(false);return}if(selectedBlocker){setSelectedBlocker(null);return}if(selectedGate){setSelectedGate(null)}};
+  const back=()=>{if(selectedEnabler){setSelectedEnabler(null);return}if(selectedMechanism){setSelectedMechanism(null);return}if(detailOpen){setDetailOpen(false);return}if(selectedBlocker){setSelectedBlocker(null);return}if((selectedGate != null)){setSelectedGate(null)}};
 
   const onNodeClick=(evt,node)=>{
     if(node.type==="stage"){
@@ -182,7 +182,7 @@ function AppCanvas({data}){
   const selectedEnablerPair=selectedBlockerObj&&selectedEnabler?Object.values(groups).flat().find(x=>x.enabler.id===selectedEnabler):null;
 
   const crumbs=[];
-  if(selectedGate)crumbs.push({label:`Gate ${selectedGate}`,action:()=>{setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}});
+  if((selectedGate != null))crumbs.push({label:`Gate ${selectedGate}`,action:()=>{setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}});
   if(selectedBlockerObj)crumbs.push({label:truncate(selectedBlockerObj.title,38),action:()=>{setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}});
   if(detailOpen)crumbs.push({label:"Detail",action:()=>{setSelectedMechanism(null);setSelectedEnabler(null)}});
   if(selectedMechanism)crumbs.push({label:selectedMechanism,action:()=>setSelectedEnabler(null)});
@@ -193,12 +193,12 @@ function AppCanvas({data}){
       <div className="brand"><span className="brand-mark"></span><span>AI Scalability Explorer</span></div>
       <div className="top-title">Spatial Timeline · React prototype</div>
       <div className="top-actions">
-        ${selectedGate?html`<button className="ghost-top" onClick=${back}>← Back one level</button>`:null}
+        ${(selectedGate != null)?html`<button className="ghost-top" onClick=${back}>← Back one level</button>`:null}
         <button className="ghost-top" onClick=${reset}>Reset</button><a className="top-link" href="../">Current Explorer ↗</a>
       </div>
     </header>
     <main className="workspace">
-      <div className=${"intro"+(selectedGate?" compact":"")}><div className="eyebrow">Semantic zoom</div><h1>${selectedGate?"Keep exploring.":"Start with the lifecycle."}</h1><p>${selectedGate?"Pan and zoom freely. Click a blocker to focus it, then use the + button on the central blocker to open details and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it."}</p></div>
+      <div className=${"intro"+((selectedGate != null)?" compact":"")}><div className="eyebrow">Semantic zoom</div><h1>${(selectedGate != null)?"Keep exploring.":"Start with the lifecycle."}</h1><p>${(selectedGate != null)?"Pan and zoom freely. Click a blocker to focus it, then use the + button on the central blocker to open details and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it."}</p></div>
       <div className="depth"><span>Overview</span><i></i><span>Deep dive</span></div>
       <div className="flow-wrap">
         <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.25} maxZoom=${2.2} fitView fitViewOptions=${{padding:.10,maxZoom:.92}} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
@@ -206,7 +206,7 @@ function AppCanvas({data}){
           <${Controls} showInteractive=${false} position="bottom-left" />
         </${ReactFlow}>
       </div>
-      ${!selectedGate?html`<div className="hint"><strong>Click a Stage Gate</strong><span>Then keep zooming into what interests you.</span></div>`:null}
+      ${selectedGate == null?html`<div className="hint"><strong>Click a Stage Gate</strong><span>Then keep zooming into what interests you.</span></div>`:null}
       <div className="breadcrumbs"><button onClick=${reset}>Timeline</button>${crumbs.map((c,i)=>html`<${React.Fragment} key=${i}><i>›</i>${c.action?html`<button onClick=${c.action}>${c.label}</button>`:html`<span>${c.label}</span>`}</${React.Fragment}>`)}</div>
       <div className="zoom-readout">Zoom ${Math.round(zoom*100)}%</div>
 
@@ -228,7 +228,7 @@ function AppCanvas({data}){
 
 function Root(){
   const[data,setData]=useState(null),[error,setError]=useState(null);
-  useEffect(()=>{fetch("../data/explorer-data.json?v=20261001-stage-gates", {cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("Could not load explorer-data.json");return r.json()}).then(setData).catch(e=>setError(e.message))},[]);
+  useEffect(()=>{fetch("../data/explorer-data.json?v=20261001-gates-0-5", {cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("Could not load explorer-data.json");return r.json()}).then(setData).catch(e=>setError(e.message))},[]);
   if(error)return html`<div style=${{padding:"40px",fontFamily:"system-ui"}}><h2>Could not load data</h2><p>${error}</p></div>`;
   if(!data)return html`<div style=${{display:"grid",placeItems:"center",height:"100%",fontFamily:"system-ui",color:"#587185"}}>Loading spatial timeline…</div>`;
   return html`<${ReactFlowProvider}><${AppCanvas} data=${data}/></${ReactFlowProvider}>`;

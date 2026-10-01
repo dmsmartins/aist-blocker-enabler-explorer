@@ -75,7 +75,7 @@ function AppCanvas({data}){
   useEffect(()=>{const sync=()=>{try{const x=JSON.parse(localStorage.getItem("aistExplorerBookmarks")||"{\"blockers\":[],\"enablers\":[]}");setSavedCount((x.blockers?.length||0)+(x.enablers?.length||0))}catch{setSavedCount(0)}};window.addEventListener("storage",sync);return()=>window.removeEventListener("storage",sync)},[]);
   const phoneViewport=window.innerWidth<600;
   const compactViewport=window.innerWidth<900;
-  const stageX=id=>(id-1)*(phoneViewport?250:compactViewport?260:270);
+  const stageX=id=>id*(phoneViewport?250:compactViewport?260:270);
   const domains=useMemo(()=>Object.fromEntries(data.domains.map(d=>[d.slug,d.title])),[data]);
 const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[assessment]);
   const gateAssessment=useCallback(gateId=>{
@@ -119,10 +119,10 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
     data.stageGates.forEach(g=>{
       const ga=assessmentMode?gateAssessment(g.id):null;
       nodes.push({id:`stage-${g.id}`,type:"stage",position:{x:stageX(g.id),y:0},data:{gate:g,count:data.blockers.filter(b=>b.stageGate===g.id).length,selected:selectedGate===g.id,zoom,assessmentState:ga?.state,remaining:ga?.remaining,dimmed:!!selectedBlocker&&selectedGate!==g.id,keyboardActivate:()=>{setSelectedGate(g.id);setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}},zIndex:selectedGate===g.id?5:1});
-      if(g.id<data.stageGates.length)edges.push({id:`stage-edge-${g.id}`,source:`stage-${g.id}`,target:`stage-${g.id+1}`,...edgeBase,style:{stroke:"#c9dce8",strokeWidth:2}});
+      if(g.id<data.stageGates.length-1)edges.push({id:`stage-edge-${g.id}`,source:`stage-${g.id}`,target:`stage-${g.id+1}`,...edgeBase,style:{stroke:"#c9dce8",strokeWidth:2}});
     });
 
-    if(selectedGate&&!selectedBlocker){
+    if((selectedGate != null)&&!selectedBlocker){
       const blockers=data.blockers.filter(b=>b.stageGate===selectedGate && (!assessmentMode || showCompleted || blockerStatus(b.id)!=="resolved"));
       const cols=phoneViewport?1:compactViewport?2:3;
       const stepX=phoneViewport?0:compactViewport?275:300;
@@ -177,7 +177,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       if(selectedBlocker){
         const selected=all.find(n=>n.id===`blocker-${selectedBlocker}`);
         focus=phone?[selected].filter(Boolean):all.filter(n=>n.type==="blocker");
-      }else if(selectedGate){
+      }else if((selectedGate != null)){
         const gate=all.find(n=>n.id===`stage-${selectedGate}`);
         const blockers=all.filter(n=>n.type==="blocker");
         focus=[gate,...blockers.slice(0,phone?2:tablet?4:6)].filter(Boolean);
@@ -187,10 +187,10 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       }
       flow.fitView({
         nodes:focus.length?focus:all,
-        padding:selectedBlocker?(phone?.22:.12):selectedGate?(phone?.16:.10):.10,
+        padding:selectedBlocker?(phone?.22:.12):(selectedGate != null)?(phone?.16:.10):.10,
         duration:reduced?0:320,
-        minZoom:selectedBlocker?(phone?.88:.56):selectedGate?(phone?.78:tablet?.64:.52):(phone?.76:tablet?.62:.48),
-        maxZoom:selectedBlocker?(phone?1.02:1.05):selectedGate?(phone?.96:.92):(phone?.92:.90)
+        minZoom:selectedBlocker?(phone?.88:.56):(selectedGate != null)?(phone?.78:tablet?.64:.52):(phone?.76:tablet?.62:.48),
+        maxZoom:selectedBlocker?(phone?1.02:1.05):(selectedGate != null)?(phone?.96:.92):(phone?.92:.90)
       });
     };
     const raf1=requestAnimationFrame(()=>{raf2=requestAnimationFrame(fit)});
@@ -198,7 +198,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
   },[selectedGate,selectedBlocker,detailOpen,showCompleted,graph.nodes.length]);
 
   const reset=()=>{setSelectedGate(null);setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)};
-  const back=()=>{if(selectedEnabler){setSelectedEnabler(null);return}if(selectedMechanism){setSelectedMechanism(null);return}if(detailOpen){closeDetail();return}if(selectedBlocker){setSelectedBlocker(null);return}if(selectedGate){setSelectedGate(null)}};
+  const back=()=>{if(selectedEnabler){setSelectedEnabler(null);return}if(selectedMechanism){setSelectedMechanism(null);return}if(detailOpen){closeDetail();return}if(selectedBlocker){setSelectedBlocker(null);return}if((selectedGate != null)){setSelectedGate(null)}};
 
   const onNodeClick=(evt,node)=>{
     if(node.type==="stage"){
@@ -233,7 +233,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
   const selectedEnablerPair=selectedBlockerObj&&selectedEnabler?Object.values(groups).flat().find(x=>x.enabler.id===selectedEnabler):null;
 
   const crumbs=[];
-  if(selectedGate)crumbs.push({label:`Gate ${selectedGate}`,action:()=>{setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}});
+  if((selectedGate != null))crumbs.push({label:`Gate ${selectedGate}`,action:()=>{setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}});
   if(selectedBlockerObj)crumbs.push({label:truncate(selectedBlockerObj.title,38),action:()=>{setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}});
   if(detailOpen)crumbs.push({label:"Detail",action:()=>{setSelectedMechanism(null);setSelectedEnabler(null)}});
   if(selectedMechanism)crumbs.push({label:selectedMechanism,action:()=>setSelectedEnabler(null)});
@@ -246,13 +246,13 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       <div className="top-actions">
         <a className="icon-top" href="../?search=1#explore" aria-label="Search" title="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg></a>
         <a className="icon-top" href="../#selection" aria-label="My selection" title="My selection"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5h10v15l-5-3.1-5 3.1z"></path></svg>${savedCount?html`<span className="saved-count">${savedCount}</span>`:null}</a>
-        ${selectedGate?html`<button className="ghost-top" onClick=${back}>← Back one level</button>`:null}
+        ${(selectedGate != null)?html`<button className="ghost-top" onClick=${back}>← Back one level</button>`:null}
         ${assessmentMode?html`<button className=${"ghost-top"+(showCompleted?" active-toggle":"")} onClick=${()=>setShowCompleted(v=>!v)}>${showCompleted?"Hide completed":"Show completed"}</button>`:null}
         <button className="ghost-top" onClick=${reset}>Reset</button><a className="top-link" href="../#explore">Explorer ↗</a><a className="top-link" href="../#dependencies">Dependencies ↗</a><a className="top-link" href="../play/">Play ↗</a>
       </div>
     </header>
     <main className=${"workspace"+(detailOpen?" detail-open":"")}>
-      <div className=${"intro"+(selectedGate?" compact":"")}><div className="eyebrow">${assessmentMode?"Assessment result · illustrative":"Semantic zoom"}</div><h1>${assessmentMode?(selectedGate?"Focus on what remains.":"Your AI scalability path."):(selectedGate?"Keep exploring.":"Start with the lifecycle.")}</h1><p>${assessmentMode?(selectedGate?"Resolved blockers are hidden by default. Open a remaining blocker to explore dependencies and enablers.":"Done gates have all currently mapped blockers resolved. Other gates show what remains."):(selectedGate?"Pan and zoom freely. Click a blocker to focus it, then use the + button on the central blocker to open details and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it.")}</p></div>
+      <div className=${"intro"+((selectedGate != null)?" compact":"")}><div className="eyebrow">${assessmentMode?"Assessment result · illustrative":"Semantic zoom"}</div><h1>${assessmentMode?((selectedGate != null)?"Focus on what remains.":"Your AI scalability path."):((selectedGate != null)?"Keep exploring.":"Start with the lifecycle.")}</h1><p>${assessmentMode?((selectedGate != null)?"Resolved blockers are hidden by default. Open a remaining blocker to explore dependencies and enablers.":"Done gates have all currently mapped blockers resolved. Other gates show what remains."):((selectedGate != null)?"Pan and zoom freely. Click a blocker to focus it, then use the + button on the central blocker to open details and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it.")}</p></div>
       <div className="depth"><span>Overview</span><i></i><span>Deep dive</span></div>
       <div className="flow-wrap">
         <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.35} maxZoom=${1.7} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
@@ -260,7 +260,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
           <${Controls} showInteractive=${false} position="bottom-left" />
         </${ReactFlow}>
       </div>
-      ${!selectedGate?html`<div className="hint"><strong>${assessmentMode?"Your personalised timeline":"Click a Stage Gate"}</strong><span>${assessmentMode?"Open a gate to explore remaining blockers.":"Then keep zooming into what interests you."}</span></div>`:null}
+      ${selectedGate == null?html`<div className="hint"><strong>${assessmentMode?"Your personalised timeline":"Click a Stage Gate"}</strong><span>${assessmentMode?"Open a gate to explore remaining blockers.":"Then keep zooming into what interests you."}</span></div>`:null}
       <div className="breadcrumbs"><button onClick=${reset}>Timeline</button>${crumbs.map((c,i)=>html`<${React.Fragment} key=${i}><i>›</i>${c.action?html`<button onClick=${c.action}>${c.label}</button>`:html`<span>${c.label}</span>`}</${React.Fragment}>`)}</div>
       <div className="zoom-readout">Zoom ${Math.round(zoom*100)}%</div>
 
@@ -282,7 +282,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
 
 function Root(){
   const[data,setData]=useState(null),[error,setError]=useState(null);
-  useEffect(()=>{fetch("../data/explorer-data.json?v=20261001-stage-gates", {cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("Could not load explorer-data.json");return r.json()}).then(setData).catch(e=>setError(e.message))},[]);
+  useEffect(()=>{fetch("../data/explorer-data.json?v=20261001-gates-0-5", {cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("Could not load explorer-data.json");return r.json()}).then(setData).catch(e=>setError(e.message))},[]);
   if(error)return html`<div style=${{padding:"40px",fontFamily:"system-ui"}}><h2>Could not load data</h2><p>${error}</p></div>`;
   if(!data)return html`<div className="timeline-loading"><span className="loading-spinner" aria-hidden="true"></span><span>Loading spatial timeline…</span></div>`;
   return html`<${ReactFlowProvider}><${AppCanvas} data=${data}/></${ReactFlowProvider}>`;
