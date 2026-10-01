@@ -83,6 +83,8 @@ Both Blockers and Enablers include:
 
 The converter accepts both `dependency_importance` and the workbook spelling `depdencency_importance`. `Subcluster` is deliberately not exported. Importance describes a relationship, not a blocker score.
 
+Text Stage Gates such as `Gate 0-Strategic Alignment & Idea Validation` are accepted. Excel Gate 0..5 maps to the existing website/JSON IDs 1..6; the description is validated against the matching lifecycle stage. Legacy numeric 1..6 input remains supported. Blank gates remain null.
+
 ## Local preview
 
 Because the app loads JSON with `fetch()`, use a local web server rather than opening `index.html` directly.

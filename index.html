@@ -924,7 +924,7 @@ async function init() {
   if (window.__EXPLORER_DATA__) {
     state.data = window.__EXPLORER_DATA__;
   } else {
-    const res = await fetch('data/explorer-data.json?v=20260930-dependency-importance', {cache: 'no-cache'});
+    const res = await fetch('data/explorer-data.json?v=20261001-stage-gates', {cache: 'no-cache'});
     state.data = await res.json();
   }
   updateBookmarkCount();

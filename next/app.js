@@ -228,7 +228,7 @@ function AppCanvas({data}){
 
 function Root(){
   const[data,setData]=useState(null),[error,setError]=useState(null);
-  useEffect(()=>{fetch("../data/explorer-data.json").then(r=>{if(!r.ok)throw new Error("Could not load explorer-data.json");return r.json()}).then(setData).catch(e=>setError(e.message))},[]);
+  useEffect(()=>{fetch("../data/explorer-data.json?v=20261001-stage-gates", {cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("Could not load explorer-data.json");return r.json()}).then(setData).catch(e=>setError(e.message))},[]);
   if(error)return html`<div style=${{padding:"40px",fontFamily:"system-ui"}}><h2>Could not load data</h2><p>${error}</p></div>`;
   if(!data)return html`<div style=${{display:"grid",placeItems:"center",height:"100%",fontFamily:"system-ui",color:"#587185"}}>Loading spatial timeline…</div>`;
   return html`<${ReactFlowProvider}><${AppCanvas} data=${data}/></${ReactFlowProvider}>`;

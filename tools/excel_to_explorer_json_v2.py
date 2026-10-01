@@ -32,7 +32,8 @@ from xml.etree import ElementTree as ET
 
 SCHEMA_VERSION = "2.0"
 
-# Excel uses Stage Gates 1..6. These labels are also used when a gate has no
+# JSON uses Stage Gates 1..6. Textual Excel gates 0..5 map to these IDs.
+# These labels are also used when a gate has no
 # blocker/enabler row yet (currently Gate 6 can legitimately be empty).
 STAGE_GATES = {
     1: "Strategic Alignment & Idea Validation",
@@ -403,6 +404,21 @@ def rows_from_sheet(reader: XlsxReader, sheet_name: str) -> Tuple[List[str], Lis
 
 
 def validate_gate(gate_value: Any, desc_value: Any, context: str, warnings: List[str]) -> Tuple[Optional[int], Optional[str]]:
+    # Keep legacy numeric 1..6 input compatible with the existing website.
+    # The new combined labels use a separate, explicit zero-based convention.
+    combined = re.fullmatch(r"Gate\s+([0-5])\s*[-–—]\s*(.+)", norm_text(gate_value), re.IGNORECASE)
+    if combined:
+        gate = int(combined.group(1)) + 1
+        embedded_desc = combined.group(2)
+        # The workbook uses singular 'Operation' for this canonical label.
+        def label_key(value: Any) -> str:
+            return norm_header(value).replace("steady_state_operation_and", "steady_state_operations_and")
+        expected = STAGE_GATES[gate]
+        if label_key(embedded_desc) != label_key(expected):
+            raise ValueError(f"{context}: {gate_value!r} has an unexpected Stage Gate description; expected {expected!r}")
+        if norm_text(desc_value) and label_key(desc_value) != label_key(expected):
+            raise ValueError(f"{context}: conflicting Stage Gate description {desc_value!r}")
+        return gate, expected
     gate = as_int(gate_value, f"{context} Stage Gate", allow_blank=True)
     desc = norm_text(desc_value) or None
 
