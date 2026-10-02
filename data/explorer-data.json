@@ -2,7 +2,7 @@
   "meta": {
     "title": "AI Scalability Explorer",
     "schemaVersion": "3.0",
-    "sourceWorkbook": "Final_Blockers&Enablers_Explorer (2).xlsx",
+    "sourceWorkbook": "Final_Blockers&Enablers_Explorer (3).xlsx",
     "internalIdsVisibleInUi": false,
     "relationshipTypeUsedInUi": false,
     "relationshipStrengthUsedInUi": false,
@@ -121,8 +121,8 @@
         "Asset management",
         "Maintenance / operations",
         "Legal / safety / complianceAsset Owner (technical owner of asset)",
-        "ERP “(SAP/Maximo) IT Managers”",
-        "and “(SAP/Maximo) Business Application Managers”"
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": null,
       "domain": "data-foundations"
@@ -143,7 +143,9 @@
         "Asset management",
         "Maintenance / operations",
         "IT / data platform",
-        "Data science / AI teams"
+        "Data science / AI teamsAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": null,
       "domain": "value-delivery-scale"
@@ -163,7 +165,9 @@
         "Executive / senior management",
         "Asset management",
         "Data science / AI teams",
-        "Maintenance / operations"
+        "Maintenance / operationsAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale"
@@ -184,7 +188,9 @@
         "Asset management",
         "Maintenance / operations",
         "Data science / AI teams",
-        "Change management / HR"
+        "Change management / HRAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale"
@@ -204,7 +210,9 @@
         "Executive / senior management",
         "Asset management",
         "Legal / safety / compliance",
-        "Data science / AI teams"
+        "Data science / AI teamsAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale"
@@ -225,7 +233,9 @@
         "Asset management",
         "Maintenance / operations",
         "Data science / AI teams",
-        "Change management / HR"
+        "Change management / HRAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation"
@@ -246,7 +256,9 @@
         "Asset management",
         "Maintenance / operations",
         "Data science / AI teams",
-        "IT / data platform"
+        "IT / data platformAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation"
@@ -268,7 +280,9 @@
         "IT / data platform",
         "Data science / AI teams",
         "Legal / safety / compliance",
-        "Maintenance / operations"
+        "Maintenance / operationsAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation"
@@ -289,7 +303,9 @@
         "Asset management",
         "Maintenance / operations",
         "Data science / AI teams",
-        "Change management / HR"
+        "Change management / HRAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation"
@@ -310,7 +326,9 @@
         "Asset management",
         "Maintenance / operations",
         "Data science / AI teams",
-        "IT / data platform"
+        "IT / data platformAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation"
@@ -331,7 +349,9 @@
         "Maintenance / operations",
         "Asset management",
         "Legal / safety / compliance",
-        "Data science / AI teams"
+        "Data science / AI teamsAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation"
@@ -352,7 +372,9 @@
         "Maintenance / operations",
         "IT / data platform",
         "Data science / AI teams",
-        "Executive / senior management"
+        "Executive / senior managementAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation"
@@ -374,7 +396,9 @@
         "Maintenance / operations",
         "IT / data platform",
         "Data science / AI teams",
-        "Change management / HR"
+        "Change management / HRAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption"
@@ -396,7 +420,9 @@
         "Change management / HR",
         "Data science / AI teams",
         "IT / data platform",
-        "Executive / senior management"
+        "Executive / senior managementAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption"
@@ -418,7 +444,9 @@
         "Maintenance / operations",
         "Asset management",
         "Data science / AI teams",
-        "IT / data platform"
+        "IT / data platformAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption"
@@ -439,7 +467,9 @@
         "Asset management",
         "Maintenance / operations",
         "Data science / AI teams",
-        "IT / data platform"
+        "IT / data platformAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption"
@@ -460,7 +490,9 @@
         "Asset management",
         "Data science / AI teams",
         "IT / data platform",
-        "Legal / safety / compliance"
+        "Legal / safety / complianceAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption"
@@ -481,7 +513,9 @@
         "Data science / AI teams",
         "Asset management",
         "Legal / safety / compliance",
-        "Maintenance / operations"
+        "Maintenance / operationsAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "data-foundations"
@@ -502,7 +536,9 @@
         "Executive / senior management",
         "Data science / AI teams",
         "IT / data platform",
-        "Asset management"
+        "Asset managementAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "legal-safety-assurance"
@@ -523,7 +559,9 @@
         "Executive / senior management",
         "Data science / AI teams",
         "IT / data platform",
-        "Asset management"
+        "Asset managementAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "legal-safety-assurance"
@@ -544,7 +582,9 @@
         "Asset management",
         "Maintenance / operations",
         "Data science / AI teams",
-        "IT / data platform"
+        "IT / data platformAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale"
@@ -565,7 +605,9 @@
         "Asset management",
         "Data science / AI teams",
         "IT / data platform",
-        "Maintenance / operations"
+        "Maintenance / operationsAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale"
@@ -587,7 +629,9 @@
         "Maintenance / operations",
         "IT / data platform",
         "Data science / AI teams",
-        "Legal / safety / compliance"
+        "Legal / safety / complianceAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale"
@@ -609,7 +653,9 @@
         "Maintenance / operations",
         "IT / data platform",
         "Data science / AI teams",
-        "Legal / safety / compliance"
+        "Legal / safety / complianceAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": null,
       "domain": "value-delivery-scale"
@@ -630,7 +676,9 @@
         "Data science / AI teams",
         "Asset management",
         "Maintenance / operations",
-        "Executive / senior management"
+        "Executive / senior managementAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure"
@@ -650,7 +698,9 @@
         "IT / data platform",
         "Data science / AI teams",
         "Asset management",
-        "Maintenance / operations"
+        "Maintenance / operationsAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "data-foundations"
@@ -671,7 +721,9 @@
         "Data science / AI teams",
         "Asset management",
         "Legal / safety / compliance",
-        "Maintenance / operations"
+        "Maintenance / operationsAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "data-foundations"
@@ -692,7 +744,9 @@
         "Data science / AI teams",
         "Maintenance / operations",
         "Asset management",
-        "Systems engineering"
+        "Systems engineeringAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure"
@@ -713,7 +767,9 @@
         "Data science / AI teams",
         "Systems engineering",
         "Asset management",
-        "Executive / senior management"
+        "Executive / senior managementAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure"
@@ -734,7 +790,9 @@
         "Asset management",
         "Maintenance / operations",
         "Data science / AI teams",
-        "Systems engineering"
+        "Systems engineeringAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure"
@@ -756,7 +814,9 @@
         "Systems engineering",
         "Asset management",
         "Data science / AI teams",
-        "Legal / safety / compliance"
+        "Legal / safety / complianceAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure"
@@ -777,7 +837,9 @@
         "IT / data platform",
         "Maintenance / operations",
         "Asset management",
-        "Legal / safety / compliance"
+        "Legal / safety / complianceAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "value-delivery-scale"
@@ -798,7 +860,9 @@
         "IT / data platform",
         "Maintenance / operations",
         "Asset management",
-        "Legal / safety / compliance"
+        "Legal / safety / complianceAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure"
@@ -819,7 +883,9 @@
         "Data science / AI teams",
         "Asset management",
         "Maintenance / operations",
-        "Legal / safety / compliance"
+        "Legal / safety / complianceAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "data-foundations"
@@ -840,7 +906,9 @@
         "Maintenance / operations",
         "Systems engineering",
         "IT / data platform",
-        "Data science / AI teams"
+        "Data science / AI teamsAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": null,
       "domain": "value-delivery-scale"
@@ -862,7 +930,9 @@
         "IT / data platform",
         "Data science / AI teams",
         "Systems engineering",
-        "Legal / safety / compliance"
+        "Legal / safety / complianceAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure"
@@ -883,7 +953,9 @@
         "Data science / AI teams",
         "Maintenance / operations",
         "Asset management",
-        "Systems engineering"
+        "Systems engineeringAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "value-delivery-scale"
@@ -904,7 +976,9 @@
         "Asset management",
         "Data science / AI teams",
         "Legal / safety / compliance",
-        "IT / data platform"
+        "IT / data platformAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure"
@@ -926,7 +1000,9 @@
         "Asset management",
         "Maintenance / operations",
         "Executive / senior management",
-        "Legal / safety / compliance"
+        "Legal / safety / complianceAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "data-foundations"
@@ -948,7 +1024,9 @@
         "Maintenance / operations",
         "Asset management",
         "Data science / AI teams",
-        "IT / data platform"
+        "IT / data platformAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "legal-safety-assurance"
@@ -970,7 +1048,9 @@
         "Asset management",
         "Data science / AI teams",
         "IT / data platform",
-        "Executive / senior management"
+        "Executive / senior managementAsset Owner (technical owner of asset)",
+        "ERP (SAP/Maximo) IT Managers",
+        "(SAP/Maximo) Business Application Managers"
       ],
       "source": null,
       "domain": "legal-safety-assurance"
