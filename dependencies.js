@@ -75,6 +75,7 @@
     const observer = new ResizeObserver(draw); observer.observe(map);
     cleanup = () => observer.disconnect();
     requestAnimationFrame(draw);
+    root.stageDependencyNavigation?.();
   }
   root.DependencyExplorer = {mount, connections, importance};
 })(typeof window === 'undefined' ? globalThis : window);

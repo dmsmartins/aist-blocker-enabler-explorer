@@ -8,7 +8,7 @@ Static GitHub Pages application for exploring AI scalability blockers, enablers,
 - **Explore by Stage Gate**
 - **All Blockers**
 - **All Enablers**, organised by enabling mechanism
-- **Dependencies** tab with upstream/downstream navigation, importance filters and weighted, directional connections
+- **Dependencies** tab with **By Blocker** and **By Stage Gate** views, importance filters and directional connections
 - **Timeline**, a lightweight semantic-zoom experience:
   Stage Gate → blockers → dependency map → blocker detail → mechanisms → enablers
 - **View for my role**
@@ -110,3 +110,13 @@ Live site:
 ```text
 https://dmsmartins.github.io/aist-blocker-enabler-explorer/
 ```
+
+## Stage Gate dependency map
+
+Open `#stage-dependencies` or choose Dependencies → By Stage Gate. Each directed connection aggregates blocker dependencies from the dependent gate to the gate it depends on. Line thickness represents the number of blocker dependencies; colour represents their highest importance. The importance 3–4 filter is applied to individual relationships before computing counts and colours.
+
+Curves above the gates show dependencies on later stages; curves below show dependencies on earlier stages. Within-gate dependencies have selectable badges. Select a curve or use the keyboard-accessible connection list to inspect every underlying blocker pair. Selecting a gate focuses its incoming and outgoing connections. Unknown gate assignments are omitted and counted explicitly.
+
+A dependency on a later stage is not automatically an error or a requirement to complete that entire stage first. The panel describes possible interpretations and preserves access to blocker details.
+
+Validation: `node --test --test-isolation=none stage-dependencies.test.mjs dependencies.test.mjs`.

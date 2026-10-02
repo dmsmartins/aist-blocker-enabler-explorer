@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light" />
   <title>AI Scalability Explorer</title>
-  <script src="dependencies.js"></script>
+  <script src="dependencies.js?v=20261002-stage-map"></script>
+  <script src="stage-dependencies.js?v=20261002-stage-map"></script>
   <style>
 :root {
   --navy: #102a43;
@@ -822,6 +823,7 @@ body.modal-open{overflow:hidden}
 
 </style>
   <link rel="stylesheet" href="dependencies.css" />
+  <link rel="stylesheet" href="stage-dependencies.css?v=20261002-stage-map" />
 </head>
 <body>
   <svg class="svg-sprite" aria-hidden="true" width="0" height="0">
@@ -960,12 +962,19 @@ function routeFromHash() {
 
 function render() {
   searchBtn.hidden = !['explore','domains','domain','all-blockers','all-enablers','stage-gates'].includes(state.route);
-  navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.route === (state.route === 'home' ? '' : state.route === 'domain' || state.route === 'domains' || state.route === 'all-blockers' || state.route === 'all-enablers' || state.route === 'stage-gates' ? 'explore' : state.route)));
-  const renderers = { dependencies:renderDependencies, home:renderHome, explore:renderExplore, domains:renderDomains, domain:renderDomain, 'all-blockers':renderAllBlockers, 'all-enablers':renderAllEnablers, maturity:renderMaturity, selection:renderSelection, 'stage-gates':renderStageGates };
+  navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.route === (state.route === 'stage-dependencies' ? 'dependencies' : state.route === 'home' ? '' : state.route === 'domain' || state.route === 'domains' || state.route === 'all-blockers' || state.route === 'all-enablers' || state.route === 'stage-gates' ? 'explore' : state.route)));
+  const renderers = { "stage-dependencies":renderStageDependencies, dependencies:renderDependencies, home:renderHome, explore:renderExplore, domains:renderDomains, domain:renderDomain, 'all-blockers':renderAllBlockers, 'all-enablers':renderAllEnablers, maturity:renderMaturity, selection:renderSelection, 'stage-gates':renderStageGates };
   (renderers[state.route] || renderHome)();
   app.focus({preventScroll:true});
 }
 
+function stageDependencyNavigation() {
+  if (!['dependencies','stage-dependencies'].includes(state.route)) return;
+  app.insertAdjacentHTML('afterbegin', `<nav class="dependency-views" aria-label="Dependency views"><a href="#dependencies" ${state.route==='dependencies'?'aria-current="page"':''}>By Blocker</a><a href="#stage-dependencies" ${state.route==='stage-dependencies'?'aria-current="page"':''}>By Stage Gate</a></nav>`);
+}
+function renderStageDependencies() {
+  StageDependencies.mount(app, state.data, focusBlocker);
+}
 function renderDependencies() {
   DependencyExplorer.mount(app, state.data, focusBlocker);
 }
@@ -2033,7 +2042,7 @@ function uxEnhanceView(){
   selectionBtn.classList.toggle("active",state.route==="selection");
   if(state.route==="selection")selectionBtn.setAttribute("aria-current","page");else selectionBtn.removeAttribute("aria-current");
   navButtons.forEach(function(btn){
-    var activeRoute=(state.route==="domain"||state.route==="domains"||state.route==="all-blockers"||state.route==="all-enablers"||state.route==="stage-gates")?"explore":state.route;
+    var activeRoute=state.route==="stage-dependencies"?"dependencies":(state.route==="domain"||state.route==="domains"||state.route==="all-blockers"||state.route==="all-enablers"||state.route==="stage-gates")?"explore":state.route;
     var active=btn.dataset.route===activeRoute;
     btn.classList.toggle("active",active);
     if(active)btn.setAttribute("aria-current","page");else btn.removeAttribute("aria-current");
