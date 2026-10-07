@@ -7,6 +7,8 @@
   <title>AI Scalability Explorer</title>
   <script src="dependencies.js?v=20261002-stage-map"></script>
   <script src="stage-dependencies.js?v=20261002-stage-map"></script>
+  <script src="validation.js?v=20261007-review"></script>
+  <link rel="stylesheet" href="validation.css?v=20261007-review" />
   <style>
 :root {
   --navy: #102a43;
@@ -962,15 +964,15 @@ function routeFromHash() {
 
 function render() {
   searchBtn.hidden = !['explore','domains','domain','all-blockers','all-enablers','stage-gates'].includes(state.route);
-  navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.route === (state.route === 'stage-dependencies' ? 'dependencies' : state.route === 'home' ? '' : state.route === 'domain' || state.route === 'domains' || state.route === 'all-blockers' || state.route === 'all-enablers' || state.route === 'stage-gates' ? 'explore' : state.route)));
-  const renderers = { "stage-dependencies":renderStageDependencies, dependencies:renderDependencies, home:renderHome, explore:renderExplore, domains:renderDomains, domain:renderDomain, 'all-blockers':renderAllBlockers, 'all-enablers':renderAllEnablers, maturity:renderMaturity, selection:renderSelection, 'stage-gates':renderStageGates };
+  navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.route === (['stage-dependencies','validate-dependencies'].includes(state.route) ? 'dependencies' : state.route === 'home' ? '' : state.route === 'domain' || state.route === 'domains' || state.route === 'all-blockers' || state.route === 'all-enablers' || state.route === 'stage-gates' ? 'explore' : state.route)));
+  const renderers = { "validate-dependencies":()=>DependencyValidation.mount(app), "stage-dependencies":renderStageDependencies, dependencies:renderDependencies, home:renderHome, explore:renderExplore, domains:renderDomains, domain:renderDomain, 'all-blockers':renderAllBlockers, 'all-enablers':renderAllEnablers, maturity:renderMaturity, selection:renderSelection, 'stage-gates':renderStageGates };
   (renderers[state.route] || renderHome)();
   app.focus({preventScroll:true});
 }
 
 function stageDependencyNavigation() {
-  if (!['dependencies','stage-dependencies'].includes(state.route)) return;
-  app.insertAdjacentHTML('afterbegin', `<nav class="dependency-views" aria-label="Dependency views"><a href="#dependencies" ${state.route==='dependencies'?'aria-current="page"':''}>By Blocker</a><a href="#stage-dependencies" ${state.route==='stage-dependencies'?'aria-current="page"':''}>By Stage Gate</a></nav>`);
+  if (!['dependencies','stage-dependencies','validate-dependencies'].includes(state.route)) return;
+  app.insertAdjacentHTML('afterbegin', `<nav class="dependency-views" aria-label="Dependency views"><a href="#dependencies" ${state.route==='dependencies'?'aria-current="page"':''}>By Blocker</a><a href="#stage-dependencies" ${state.route==='stage-dependencies'?'aria-current="page"':''}>By Stage Gate</a><a href="#validate-dependencies" ${state.route==='validate-dependencies'?'aria-current="page"':''}>Validate dependencies</a></nav>`);
 }
 function renderStageDependencies() {
   StageDependencies.mount(app, state.data, focusBlocker);
@@ -2042,7 +2044,7 @@ function uxEnhanceView(){
   selectionBtn.classList.toggle("active",state.route==="selection");
   if(state.route==="selection")selectionBtn.setAttribute("aria-current","page");else selectionBtn.removeAttribute("aria-current");
   navButtons.forEach(function(btn){
-    var activeRoute=state.route==="stage-dependencies"?"dependencies":(state.route==="domain"||state.route==="domains"||state.route==="all-blockers"||state.route==="all-enablers"||state.route==="stage-gates")?"explore":state.route;
+    var activeRoute=["stage-dependencies","validate-dependencies"].includes(state.route)?"dependencies":(state.route==="domain"||state.route==="domains"||state.route==="all-blockers"||state.route==="all-enablers"||state.route==="stage-gates")?"explore":state.route;
     var active=btn.dataset.route===activeRoute;
     btn.classList.toggle("active",active);
     if(active)btn.setAttribute("aria-current","page");else btn.removeAttribute("aria-current");
