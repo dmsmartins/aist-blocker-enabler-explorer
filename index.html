@@ -8,6 +8,8 @@
   <script src="dependencies.js?v=20261002-stage-map"></script>
   <script src="stage-dependencies.js?v=20261002-stage-map"></script>
   <script src="validation.js?v=20261007-review"></script>
+  <script src="readiness.js?v=20261008-project"></script>
+  <link rel="stylesheet" href="readiness.css?v=20261008-project" />
   <link rel="stylesheet" href="validation.css?v=20261007-review" />
   <style>
 :root {
@@ -965,7 +967,7 @@ function routeFromHash() {
 function render() {
   searchBtn.hidden = !['explore','domains','domain','all-blockers','all-enablers','stage-gates'].includes(state.route);
   navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.route === (['stage-dependencies','validate-dependencies'].includes(state.route) ? 'dependencies' : state.route === 'home' ? '' : state.route === 'domain' || state.route === 'domains' || state.route === 'all-blockers' || state.route === 'all-enablers' || state.route === 'stage-gates' ? 'explore' : state.route)));
-  const renderers = { "validate-dependencies":()=>DependencyValidation.mount(app), "stage-dependencies":renderStageDependencies, dependencies:renderDependencies, home:renderHome, explore:renderExplore, domains:renderDomains, domain:renderDomain, 'all-blockers':renderAllBlockers, 'all-enablers':renderAllEnablers, maturity:renderMaturity, selection:renderSelection, 'stage-gates':renderStageGates };
+  const renderers = { "project-readiness":()=>ProjectReadiness.mount(app,state.data,{openBlocker:focusBlocker}), "validate-dependencies":()=>DependencyValidation.mount(app), "stage-dependencies":renderStageDependencies, dependencies:renderDependencies, home:renderHome, explore:renderExplore, domains:renderDomains, domain:renderDomain, 'all-blockers':renderAllBlockers, 'all-enablers':renderAllEnablers, maturity:renderMaturity, selection:renderSelection, 'stage-gates':renderStageGates };
   (renderers[state.route] || renderHome)();
   app.focus({preventScroll:true});
 }
@@ -1873,10 +1875,11 @@ function renderMaturity() {
         </div>
         ${last?`<button class="text-action" id="viewLastAssessment">View last result →</button>`:''}
       </div>
-      <div class="maturity-card muted-card">
+      <div class="maturity-card">
         <h3>Assess my project</h3>
-        <p class="subtle">Project readiness will be connected when the final assessment framework is available.</p>
-        <span class="coming-soon">Not yet connected</span>
+        <p class="subtle">Assess an AI project using grouped readiness questions, record evidence and build a gap and action report linked to Blockers and Enablers.</p>
+        <p class="subtle">Candidate framework for UIC review. Stage Gates and mappings are provisional.</p>
+        <a class="primary-btn" href="#project-readiness">Open project readiness →</a>
       </div>
     </div>
     <div class="mockup-note"><strong>Illustrative assessment.</strong><br>This prototype demonstrates the interaction and traceability to blockers. It is not the final UIC AIST maturity methodology or scoring framework.</div>
@@ -2044,7 +2047,7 @@ function uxEnhanceView(){
   selectionBtn.classList.toggle("active",state.route==="selection");
   if(state.route==="selection")selectionBtn.setAttribute("aria-current","page");else selectionBtn.removeAttribute("aria-current");
   navButtons.forEach(function(btn){
-    var activeRoute=["stage-dependencies","validate-dependencies"].includes(state.route)?"dependencies":(state.route==="domain"||state.route==="domains"||state.route==="all-blockers"||state.route==="all-enablers"||state.route==="stage-gates")?"explore":state.route;
+    var activeRoute=state.route==="project-readiness"?"maturity":["stage-dependencies","validate-dependencies"].includes(state.route)?"dependencies":(state.route==="domain"||state.route==="domains"||state.route==="all-blockers"||state.route==="all-enablers"||state.route==="stage-gates")?"explore":state.route;
     var active=btn.dataset.route===activeRoute;
     btn.classList.toggle("active",active);
     if(active)btn.setAttribute("aria-current","page");else btn.removeAttribute("aria-current");
@@ -2381,3 +2384,4 @@ init().catch(err => {
 </script>
 </body>
 </html>
+

@@ -2,6 +2,33 @@
 
 Static GitHub Pages application for exploring AI scalability blockers, enablers, lifecycle Stage Gates and blocker dependencies.
 
+## AI Project Readiness
+
+Open Maturity Assessment → Assess my project, or `#project-readiness`.
+The assessment reads `readinessQuestions` and `questionBlockerMap` from the live JSON.
+Candidate questions and mappings retain their UIC review statuses and provisional gates.
+
+Choose Yes, Partly, No, Not sure, or Not applicable. Yes needs recorded evidence;
+N/A needs a reason. Responses, evidence, comments, planned actions, owners, target
+dates and the current question save in this browser. Storage failure is reported;
+download the assessment JSON for a backup. This is one local assessment per browser,
+with no server submission, multi-user collaboration or cross-device sync.
+
+The report lists all questions by provisional gate. Direct mappings create candidate
+issues for reported gaps or missing evidence. For grouped questions, users may select
+which Direct blocker issues need attention. Contextual mappings remain supporting
+information and never create diagnoses or suggested actions. Suggested Enablers,
+actions, mechanisms and relationship rationale come from the existing source links.
+There is no overall score, automatic blocker clearance or gate approval. Recorded
+evidence is self-reported, not verified. A changed question or mapping flags the saved
+answer for review rather than retaining a healthy status.
+
+Download the full assessment as JSON and the report as Markdown, or print / save PDF.
+Starting a new assessment asks before replacing the current local answers. Assessment
+JSON import is not included in this version. The company assessment remains separate.
+
+Validation: `node --test --test-isolation=none readiness.test.mjs dependencies.test.mjs stage-dependencies.test.mjs validation.test.mjs`.
+
 ## Current experience
 
 - **Explore by Domain**
@@ -14,7 +41,7 @@ Static GitHub Pages application for exploring AI scalability blockers, enablers,
 - **View for my role**
 - **My Selection**
 - **Play — Scale Run**, an abstract platformer using the same blockers and enablers across the six Stage Gates (see `play/README.md`)
-- Illustrative **Maturity Assessment** placeholder
+- **Maturity Assessment**, with an illustrative company assessment and candidate **AI Project Readiness**
 
 The interface deliberately uses progressive disclosure: the first view stays light and additional detail appears only as the user explores deeper.
 
@@ -26,7 +53,7 @@ The live application reads:
 data/explorer-data.json
 ```
 
-Current schema: **3.0**
+Current schema: **3.1**
 
 It contains:
 
@@ -36,6 +63,8 @@ It contains:
 - `blockers`
 - `enablers`
 - `relationships` (Blocker ↔ Enabler + enabling mechanism)
+- `readinessQuestions` (grouped candidate questions, evidence guidance and UIC review status)
+- `questionBlockerMap` (Direct/Contextual candidate mappings using source blocker IDs)
 - `blockerDependencies` (Blocker → Blocker), including numeric `dependencyImportance` (1–4; higher values mean greater importance). Missing importance is shown as unspecified.
 
 Internal blocker/enabler IDs are used for relationships but are not displayed in the UI.
@@ -120,3 +149,4 @@ Curves above the gates show dependencies on later stages; curves below show depe
 A dependency on a later stage is not automatically an error or a requirement to complete that entire stage first. The panel describes possible interpretations and preserves access to blocker details.
 
 Validation: `node --test --test-isolation=none stage-dependencies.test.mjs dependencies.test.mjs`.
+
