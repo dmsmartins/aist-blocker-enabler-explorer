@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "AI Scalability Explorer",
-    "schemaVersion": "3.0",
+    "schemaVersion": "3.1",
     "sourceWorkbook": "Final_Blockers&Enablers_Explorer_Readiness_Draft.xlsx",
     "internalIdsVisibleInUi": false,
     "relationshipTypeUsedInUi": false,
@@ -10,7 +10,18 @@
       "blockers": 41,
       "enablers": 109,
       "relationships": 152,
-      "blockerDependencies": 127
+      "blockerDependencies": 127,
+      "readinessQuestions": 26,
+      "questionBlockerMappings": 45
+    },
+    "readiness": {
+      "schemaVersion": "1.0",
+      "gateAssignments": "Provisional - review per question",
+      "mappingSemantics": {
+        "Direct": "Explicit assessment of the blocker issue; review status is separate.",
+        "Contextual": "Supporting context; does not diagnose or clear the blocker."
+      },
+      "automaticBlockerClearance": false
     }
   },
   "stageGates": [
@@ -4786,6 +4797,1071 @@
       "blockerId": 3744,
       "dependsOnBlockerId": 2513,
       "dependencyImportance": 4
+    }
+  ],
+  "readinessQuestions": [
+    {
+      "id": "RQ-1114-01",
+      "question": "Is the project anchored in a validated operational problem, an accountable owner and the shared AI vision?",
+      "dimensions": [
+        "Organisational"
+      ],
+      "lifecycleStage": "Strategic Alignment & Idea Validation",
+      "provisionalStageGate": 0,
+      "guidance": "Confirm problem evidence, ownership and strategic alignment separately. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Problem baseline",
+        "owner approval",
+        "AI strategy alignment."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1114,
+        1211
+      ],
+      "sourceStageGates": "1114: Gate 0-Strategic Alignment & Idea Validation; 1211: Gate 0-Strategic Alignment & Idea Validation"
+    },
+    {
+      "id": "RQ-1133-01",
+      "question": "Is the expected value clear to each affected stakeholder group?",
+      "dimensions": [
+        "Organisational"
+      ],
+      "lifecycleStage": "Strategic Alignment & Idea Validation",
+      "provisionalStageGate": 0,
+      "guidance": "Separate benefits for maintenance, asset management, operations and leadership. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Stakeholder value statements",
+        "interviews",
+        "benefit measures."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1133
+      ],
+      "sourceStageGates": "1133: Gate 0-Strategic Alignment & Idea Validation"
+    },
+    {
+      "id": "RQ-1143-01",
+      "question": "Does the business case address costs, benefits, risks and funding of shared foundations?",
+      "dimensions": [
+        "Organisational"
+      ],
+      "lifecycleStage": "Strategic Alignment & Idea Validation",
+      "provisionalStageGate": 0,
+      "guidance": "Distinguish use-case costs from reusable platform, data and governance investments. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Cost model",
+        "risk register",
+        "shared investment allocation."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1143
+      ],
+      "sourceStageGates": "1143: Gate 0-Strategic Alignment & Idea Validation"
+    },
+    {
+      "id": "RQ-1223-01",
+      "question": "Have cross-functional priorities and competing AI initiatives been reconciled?",
+      "dimensions": [
+        "Organisational"
+      ],
+      "lifecycleStage": "Strategic Alignment & Idea Validation",
+      "provisionalStageGate": 0,
+      "guidance": "Identify duplicated work and portfolio-level resource conflicts. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Portfolio review",
+        "prioritisation decisions",
+        "resource commitments."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1223
+      ],
+      "sourceStageGates": "1223: Gate 0-Strategic Alignment & Idea Validation"
+    },
+    {
+      "id": "RQ-1233-01",
+      "question": "Do teams share evidence-based readiness criteria, decision rights and a timely review process?",
+      "dimensions": [
+        "Organisational"
+      ],
+      "lifecycleStage": "Strategic Alignment & Idea Validation",
+      "provisionalStageGate": 0,
+      "guidance": "Document readiness criteria, reviewers, approval authority and decision deadlines. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Readiness checklist",
+        "governance charter",
+        "decision matrix",
+        "review calendar."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1233,
+        1823
+      ],
+      "sourceStageGates": "1233: Gate 0-Strategic Alignment & Idea Validation; 1823: Gate 0-Strategic Alignment & Idea Validation"
+    },
+    {
+      "id": "RQ-1243-01",
+      "question": "Is management sponsorship and funding sustained through deployment and operation?",
+      "dimensions": [
+        "Organisational"
+      ],
+      "lifecycleStage": "Operational Deployment & Commissioning",
+      "provisionalStageGate": 3,
+      "guidance": "Confirm commitments beyond the pilot and arrangements for recurring reviews. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Sponsor commitments",
+        "funding plan",
+        "steering review minutes."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1243
+      ],
+      "sourceStageGates": "1243: Gate 3- Operational Deployment & Commissioning"
+    },
+    {
+      "id": "RQ-1314-01",
+      "question": "Are business ownership and human accountability defined for operational use beyond the prototype?",
+      "dimensions": [
+        "Organisational"
+      ],
+      "lifecycleStage": "Operational Deployment & Commissioning",
+      "provisionalStageGate": 3,
+      "guidance": "Confirm benefit ownership and responsibilities for judgement, approval, action and escalation. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Ownership agreement",
+        "decision workflow",
+        "responsibility matrix",
+        "escalation procedure."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1314,
+        1323
+      ],
+      "sourceStageGates": "1314: Gate 3- Operational Deployment & Commissioning; 1323: Gate 3- Operational Deployment & Commissioning"
+    },
+    {
+      "id": "RQ-1334-01",
+      "question": "Has the production operating model been funded and accepted through a reproducible deployment and support handover?",
+      "dimensions": [
+        "Organisational",
+        "Cross-cutting"
+      ],
+      "lifecycleStage": "Operational Deployment & Commissioning",
+      "provisionalStageGate": 3,
+      "guidance": "Check support ownership, monitoring, incidents, deployment reproducibility and handover acceptance. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Run budget",
+        "support acceptance",
+        "deployment records",
+        "telemetry and recovery tests."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Multiple source gates: proposed earliest review, revisit at later mapped gates. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1334,
+        3413
+      ],
+      "sourceStageGates": "1334: Gate 3- Operational Deployment & Commissioning; 3413: Gate 4-Steady-State Operation & Evolution"
+    },
+    {
+      "id": "RQ-1413-01",
+      "question": "Do affected teams have the skills to interpret, challenge and use AI outputs?",
+      "dimensions": [
+        "Organisational"
+      ],
+      "lifecycleStage": "Operational Deployment & Commissioning",
+      "provisionalStageGate": 3,
+      "guidance": "Assess role-specific competence and address training gaps. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Skills assessment",
+        "training plan",
+        "competence demonstration."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1413
+      ],
+      "sourceStageGates": "1413: Gate 3- Operational Deployment & Commissioning"
+    },
+    {
+      "id": "RQ-1424-01",
+      "question": "Have field users demonstrated that they can understand, challenge and use the AI outputs, with adoption concerns addressed?",
+      "dimensions": [
+        "Organisational",
+        "Cross-cutting"
+      ],
+      "lifecycleStage": "Strategic Alignment & Idea Validation",
+      "provisionalStageGate": 0,
+      "guidance": "Assess interpretation and trust with affected users. Record unresolved concerns and workflow burden. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "User interpretation trials",
+        "explanation examples",
+        "co-design and adoption feedback."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Multiple source gates: proposed earliest review, revisit at later mapped gates. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1424,
+        3523
+      ],
+      "sourceStageGates": "1424: Gate 0-Strategic Alignment & Idea Validation; 3523: Gate 3- Operational Deployment & Commissioning"
+    },
+    {
+      "id": "RQ-1433-01",
+      "question": "Can the organisation absorb iterative releases and transition to changed AI capabilities?",
+      "dimensions": [
+        "Organisational"
+      ],
+      "lifecycleStage": "Retirement & Transition",
+      "provisionalStageGate": 5,
+      "guidance": "Assess change capacity across releases and eventual replacement or retirement. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Change capacity assessment",
+        "release plan",
+        "transition and training plan."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Source assigns Gate 5. Review earlier lifecycle applicability. UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1433
+      ],
+      "sourceStageGates": "1433: Gate 5-Retirement & Transition"
+    },
+    {
+      "id": "RQ-1511-01",
+      "question": "Do decision-makers understand the proposed AI capability, data needs and limitations?",
+      "dimensions": [
+        "Organisational"
+      ],
+      "lifecycleStage": "Strategic Alignment & Idea Validation",
+      "provisionalStageGate": 0,
+      "guidance": "Test expectations against realistic operational conditions and assurance needs. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Capability briefing",
+        "limitations register",
+        "feasibility evidence."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1511
+      ],
+      "sourceStageGates": "1511: Gate 0-Strategic Alignment & Idea Validation"
+    },
+    {
+      "id": "RQ-1524-01",
+      "question": "Does the proposed solution fit real railway field conditions and support needs?",
+      "dimensions": [
+        "Organisational"
+      ],
+      "lifecycleStage": "Strategic Alignment & Idea Validation",
+      "provisionalStageGate": 0,
+      "guidance": "Consider possession windows, connectivity, shifts and maintenance practices. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Field workflow observations",
+        "operational requirements",
+        "support assessment."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1524
+      ],
+      "sourceStageGates": "1524: Gate 0-Strategic Alignment & Idea Validation"
+    },
+    {
+      "id": "RQ-1614-01",
+      "question": "Are cross-unit data ownership, access rules and sharing arrangements usable for reuse beyond the local pilot?",
+      "dimensions": [
+        "Organisational",
+        "Cross-cutting"
+      ],
+      "lifecycleStage": "Strategic Alignment & Idea Validation",
+      "provisionalStageGate": 0,
+      "guidance": "Confirm governance and practical access across silos, including interoperability and control responsibilities. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Data sharing agreements",
+        "access approvals",
+        "cross-unit reuse trial",
+        "governance decision records."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1614,
+        3634
+      ],
+      "sourceStageGates": "1614: Gate 0-Strategic Alignment & Idea Validation; 3634: Gate 0-Strategic Alignment & Idea Validation"
+    },
+    {
+      "id": "RQ-1713-01",
+      "question": "Has a suitably informed legal team assessed applicable requirements and unresolved regulatory interpretations?",
+      "dimensions": [
+        "Organisational"
+      ],
+      "lifecycleStage": "Solution Architecture & Feasibility",
+      "provisionalStageGate": 1,
+      "guidance": "Confirm specialist capability, document interpretations and assign owners to unresolved questions. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Legal assessment",
+        "specialist input",
+        "requirements register",
+        "unresolved issue log."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1713,
+        1723
+      ],
+      "sourceStageGates": "1713: Gate 1-Solution Architecture & Feasibility; 1723: Gate 1-Solution Architecture & Feasibility"
+    },
+    {
+      "id": "RQ-1811-01",
+      "question": "Is the intended scale defined, and is model performance demonstrated across that scope and operational variation?",
+      "dimensions": [
+        "Organisational",
+        "Technical"
+      ],
+      "lifecycleStage": "Solution Build & Verification",
+      "provisionalStageGate": 2,
+      "guidance": "Define sites, assets, users and workloads, then test false positives, missed detections and segment performance. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Scaling scope",
+        "volume assumptions",
+        "segment validation results",
+        "acceptance thresholds."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Multiple source gates: proposed earliest review, revisit at later mapped gates. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1811,
+        2513
+      ],
+      "sourceStageGates": "1811: Gate 2- Solution Build & Verification; 2513: Gate 4-Steady-State Operation & Evolution"
+    },
+    {
+      "id": "RQ-1043-01",
+      "question": "Is there a realistic incremental pathway from MVP and PoC to production, with owners and evidence at each milestone?",
+      "dimensions": [
+        "Organisational",
+        "Technical"
+      ],
+      "lifecycleStage": "Strategic Alignment & Idea Validation",
+      "provisionalStageGate": 0,
+      "guidance": "Assess increments, transition work, integration and assurance dependencies, resources and approval lead times. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "MVP roadmap",
+        "production transition plan",
+        "integrated schedule",
+        "field validation milestones."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Multiple source gates: proposed earliest review, revisit at later mapped gates. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1043,
+        1833,
+        1921
+      ],
+      "sourceStageGates": "1043: Gate 0-Strategic Alignment & Idea Validation; 1833: Gate 0-Strategic Alignment & Idea Validation; 1921: Gate 3- Operational Deployment & Commissioning"
+    },
+    {
+      "id": "RQ-2213-01",
+      "question": "Can the governed platform and compute environment sustain the intended workload and operational constraints?",
+      "dimensions": [
+        "Technical"
+      ],
+      "lifecycleStage": "Solution Build & Verification",
+      "provisionalStageGate": 2,
+      "guidance": "Check platform ownership, processing capacity, delivery channels, latency, connectivity and cloud or edge choices. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Architecture review",
+        "platform ownership",
+        "load tests",
+        "compute sizing",
+        "connectivity assessment."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Multiple source gates: proposed earliest review, revisit at later mapped gates. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        2213,
+        2221
+      ],
+      "sourceStageGates": "2213: Gate 4-Steady-State Operation & Evolution; 2221: Gate 2- Solution Build & Verification"
+    },
+    {
+      "id": "RQ-1024-01",
+      "question": "Are data quality responsibilities and criteria agreed, and is quality and semantic consistency demonstrated across required systems?",
+      "dimensions": [
+        "Organisational",
+        "Technical"
+      ],
+      "lifecycleStage": "Solution Build & Verification",
+      "provisionalStageGate": 2,
+      "guidance": "Check organisational ownership and technical profiling separately. Agree thresholds for this use case and common meaning across sources. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Data quality policy",
+        "ownership matrix",
+        "data profiling",
+        "semantic dictionary",
+        "reconciliation tests."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        1024,
+        2123
+      ],
+      "sourceStageGates": "1024: Gate 2- Solution Build & Verification; 2123: Gate 2- Solution Build & Verification"
+    },
+    {
+      "id": "RQ-3114-01",
+      "question": "Is the required data collected, retained and securely available through the target architecture at usable frequency and granularity?",
+      "dimensions": [
+        "Cross-cutting",
+        "Technical"
+      ],
+      "lifecycleStage": "Solution Build & Verification",
+      "provisionalStageGate": 2,
+      "guidance": "Demonstrate coverage, retention, access, data movement and enforceable controls. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Data inventory",
+        "retention plan",
+        "coverage tests",
+        "data flow diagram",
+        "access and control tests."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        3114,
+        2134
+      ],
+      "sourceStageGates": "3114: Gate 2- Solution Build & Verification; 2134: Gate 2- Solution Build & Verification"
+    },
+    {
+      "id": "RQ-2231-01",
+      "question": "Are software and vendor dependencies maintainable and sufficiently portable?",
+      "dimensions": [
+        "Technical"
+      ],
+      "lifecycleStage": "Steady-State Operation & Evolution",
+      "provisionalStageGate": 4,
+      "guidance": "Assess specialist support, exit options and long-term sustainability. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Dependency inventory",
+        "support terms",
+        "portability and exit assessment."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        2231
+      ],
+      "sourceStageGates": "2231: Gate 4-Steady-State Operation & Evolution"
+    },
+    {
+      "id": "RQ-2313-01",
+      "question": "Can AI recommendations flow into enterprise and maintenance workflows, with users able to act and return field feedback?",
+      "dimensions": [
+        "Technical",
+        "Cross-cutting"
+      ],
+      "lifecycleStage": "Solution Build & Verification",
+      "provisionalStageGate": 2,
+      "guidance": "Verify asset records, work orders, maintenance planning and feedback interfaces end to end. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Interface specification",
+        "integration tests",
+        "work-order trial",
+        "operator feedback process."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Multiple source gates: proposed earliest review, revisit at later mapped gates. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        2313,
+        3333
+      ],
+      "sourceStageGates": "2313: Gate 2- Solution Build & Verification; 3333: Gate 3- Operational Deployment & Commissioning"
+    },
+    {
+      "id": "RQ-2323-01",
+      "question": "Are OT, monitoring, alarm procedures and operational workflows integrated reliably?",
+      "dimensions": [
+        "Technical"
+      ],
+      "lifecycleStage": "Solution Build & Verification",
+      "provisionalStageGate": 2,
+      "guidance": "Test relevant live-system interfaces and failure handling. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "OT interface tests",
+        "alarm procedure",
+        "operational trial evidence."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        2323
+      ],
+      "sourceStageGates": "2323: Gate 2- Solution Build & Verification"
+    },
+    {
+      "id": "RQ-2423-01",
+      "question": "Are model monitoring, retraining and controlled evolution arrangements in place?",
+      "dimensions": [
+        "Technical"
+      ],
+      "lifecycleStage": "Steady-State Operation & Evolution",
+      "provisionalStageGate": 4,
+      "guidance": "Define drift thresholds, response owners and revalidation triggers. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Monitoring plan",
+        "drift tests",
+        "retraining and change control records."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        2423
+      ],
+      "sourceStageGates": "2423: Gate 4-Steady-State Operation & Evolution"
+    },
+    {
+      "id": "RQ-3123-01",
+      "question": "Have solution approaches been compared against operational and scalability requirements?",
+      "dimensions": [
+        "Cross-cutting"
+      ],
+      "lifecycleStage": "Solution Architecture & Feasibility",
+      "provisionalStageGate": 1,
+      "guidance": "Include alternative technologies and justify the chosen approach. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Options appraisal",
+        "architecture decision record",
+        "feasibility assessment."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        3123
+      ],
+      "sourceStageGates": "3123: Gate 1-Solution Architecture & Feasibility"
+    },
+    {
+      "id": "RQ-3744-01",
+      "question": "Have safety implications and oversight needs been identified, with an agreed assurance plan and evidence for reliability at scale?",
+      "dimensions": [
+        "Cross-cutting"
+      ],
+      "lifecycleStage": "Solution Architecture & Feasibility",
+      "provisionalStageGate": 1,
+      "guidance": "Trace hazards and failure modes into human oversight and assurance evidence requirements. Confirm outstanding evidence with reviewers. Assess every component separately. Record partial readiness, gaps and evidence owners.",
+      "evidenceExamples": [
+        "Hazard analysis",
+        "oversight design",
+        "assurance plan",
+        "reliability tests",
+        "safety evidence register."
+      ],
+      "applicability": "Candidate for railway AI projects. UIC must confirm scope; assessors may mark N/A with a reason.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "UIC must review wording, scope and evidence. Source gate retained provisionally. A positive answer does not clear every mapped blocker.",
+      "sourceBlockerIds": [
+        3744,
+        3734
+      ],
+      "sourceStageGates": "3744: Gate 1-Solution Architecture & Feasibility; 3734: Gate 1-Solution Architecture & Feasibility"
+    }
+  ],
+  "questionBlockerMap": [
+    {
+      "questionId": "RQ-1114-01",
+      "blockerId": 1114,
+      "blockerCode": "B-01",
+      "blockerTitle": "Technology-push AI initiatives without clear ownership",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Technology-push AI initiatives without clear ownership. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1114-01",
+      "blockerId": 1211,
+      "blockerCode": "B-04",
+      "blockerTitle": "Lack of shared AI vision",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Lack of shared AI vision. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1133-01",
+      "blockerId": 1133,
+      "blockerCode": "B-02",
+      "blockerTitle": "Unclear value articulation for stakeholder groups",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Unclear value articulation for stakeholder groups. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1143-01",
+      "blockerId": 1143,
+      "blockerCode": "B-03",
+      "blockerTitle": "Unclear financial implications, risks and investment logic",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Unclear financial implications, risks and investment logic. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1223-01",
+      "blockerId": 1223,
+      "blockerCode": "B-05",
+      "blockerTitle": "Fragmented AI priorities across silos",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Fragmented AI priorities across silos. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1233-01",
+      "blockerId": 1233,
+      "blockerCode": "B-06",
+      "blockerTitle": "Slow or unclear AI governance",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Slow or unclear AI governance. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1233-01",
+      "blockerId": 1823,
+      "blockerCode": "B-23",
+      "blockerTitle": "There is no shared understanding of AI project maturity and readiness across teams and decision-makers.",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses There is no shared understanding of AI project maturity and readiness across teams and decision-makers.. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1243-01",
+      "blockerId": 1243,
+      "blockerCode": "B-07",
+      "blockerTitle": "Insufficient sustained management commitment 'towards the end goal'",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Insufficient sustained management commitment 'towards the end goal'. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1314-01",
+      "blockerId": 1314,
+      "blockerCode": "B-08",
+      "blockerTitle": "No business ownership beyond prototype",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses No business ownership beyond prototype. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1314-01",
+      "blockerId": 1323,
+      "blockerCode": "B-09",
+      "blockerTitle": "Unclear human accountability in AI-supported operational decisions",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Unclear human accountability in AI-supported operational decisions. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1334-01",
+      "blockerId": 1334,
+      "blockerCode": "B-10",
+      "blockerTitle": "No defined run model after go-live",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses No defined run model after go-live. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1334-01",
+      "blockerId": 3413,
+      "blockerCode": "B-34",
+      "blockerTitle": "Production-grade AI operations and handover gap",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Production-grade AI operations and handover gap. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1413-01",
+      "blockerId": 1413,
+      "blockerCode": "B-11",
+      "blockerTitle": "Insufficient AI and digital skills across the organisation",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Insufficient AI and digital skills across the organisation. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1424-01",
+      "blockerId": 1424,
+      "blockerCode": "B-12",
+      "blockerTitle": "Low trust and cultural resistance to AI",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Low trust and cultural resistance to AI. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1424-01",
+      "blockerId": 3523,
+      "blockerCode": "B-37",
+      "blockerTitle": "Limited explainability, interpretability and field trust",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Limited explainability, interpretability and field trust. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1433-01",
+      "blockerId": 1433,
+      "blockerCode": "B-13",
+      "blockerTitle": "Limited capacity to absorb continuous change",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Limited capacity to absorb continuous change. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1511-01",
+      "blockerId": 1511,
+      "blockerCode": "B-14",
+      "blockerTitle": "Unrealistic understanding of AI capabilities and limits among decision-makers",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Unrealistic understanding of AI capabilities and limits among decision-makers. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1524-01",
+      "blockerId": 1524,
+      "blockerCode": "B-15",
+      "blockerTitle": "Solutions misaligned with operational context",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Solutions misaligned with operational context. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1614-01",
+      "blockerId": 1614,
+      "blockerCode": "B-16",
+      "blockerTitle": "Fragmented or restrictive data governance",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Fragmented or restrictive data governance. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1614-01",
+      "blockerId": 3634,
+      "blockerCode": "B-18",
+      "blockerTitle": "Organisational data silos limiting reuse and scaling",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Organisational data silos limiting reuse and scaling. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1713-01",
+      "blockerId": 1713,
+      "blockerCode": "B-19",
+      "blockerTitle": "Limited AI expertise in legal functions",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Limited AI expertise in legal functions. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1713-01",
+      "blockerId": 1723,
+      "blockerCode": "B-20",
+      "blockerTitle": "Unclear regulatory interpretation increases perceived risk",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Unclear regulatory interpretation increases perceived risk. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1811-01",
+      "blockerId": 1811,
+      "blockerCode": "B-22",
+      "blockerTitle": "Ambiguous definition of scaling",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Ambiguous definition of scaling. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1811-01",
+      "blockerId": 2513,
+      "blockerCode": "B-36",
+      "blockerTitle": "Model performance degrades with scale",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Model performance degrades with scale. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1043-01",
+      "blockerId": 1043,
+      "blockerCode": "B-40",
+      "blockerTitle": "Weak MVP and incremental delivery discipline",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Weak MVP and incremental delivery discipline. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1043-01",
+      "blockerId": 1833,
+      "blockerCode": "B-24",
+      "blockerTitle": "PoC to production transition stalls",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses PoC to production transition stalls. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1043-01",
+      "blockerId": 1921,
+      "blockerCode": "B-42",
+      "blockerTitle": "Unrealistic delivery timelines and scaling ambition",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Unrealistic delivery timelines and scaling ambition. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-2213-01",
+      "blockerId": 2213,
+      "blockerCode": "B-28",
+      "blockerTitle": "Immature platform architecture and fragmented IT foundations",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Immature platform architecture and fragmented IT foundations. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-2213-01",
+      "blockerId": 2221,
+      "blockerCode": "B-29",
+      "blockerTitle": "Compute environment constraints for AI deployment",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Compute environment constraints for AI deployment. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1024-01",
+      "blockerId": 1024,
+      "blockerCode": "B-39",
+      "blockerTitle": "Inconsistent data quality management across AI use cases",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Inconsistent data quality management across AI use cases. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-1024-01",
+      "blockerId": 2123,
+      "blockerCode": "B-26",
+      "blockerTitle": "Data quality, consistency and semantic structure",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Data quality, consistency and semantic structure. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-3114-01",
+      "blockerId": 3114,
+      "blockerCode": "B-25",
+      "blockerTitle": "Data collection, storage and usable availability",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Data collection, storage and usable availability. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-3114-01",
+      "blockerId": 2134,
+      "blockerCode": "B-27",
+      "blockerTitle": "Data architecture, access and controls",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Data architecture, access and controls. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-2231-01",
+      "blockerId": 2231,
+      "blockerCode": "B-30",
+      "blockerTitle": "Software stack, tooling and vendor dependency constraints",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Software stack, tooling and vendor dependency constraints. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-2313-01",
+      "blockerId": 2313,
+      "blockerCode": "B-31",
+      "blockerTitle": "Enterprise and asset management system integration",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Enterprise and asset management system integration. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-2313-01",
+      "blockerId": 3333,
+      "blockerCode": "B-33",
+      "blockerTitle": "Maintenance workflow integration and operator feedback loops",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Maintenance workflow integration and operator feedback loops. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-2323-01",
+      "blockerId": 2323,
+      "blockerCode": "B-32",
+      "blockerTitle": "OT, monitoring systems and railway operations integration",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses OT, monitoring systems and railway operations integration. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-2423-01",
+      "blockerId": 2423,
+      "blockerCode": "B-35",
+      "blockerTitle": "Unsufficient Model monitoring, -retraining and -evolution",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Unsufficient Model monitoring, -retraining and -evolution. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-3123-01",
+      "blockerId": 3123,
+      "blockerCode": "B-44",
+      "blockerTitle": "Poor solution framing and technology selection",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Poor solution framing and technology selection. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-3744-01",
+      "blockerId": 3744,
+      "blockerCode": "B-21",
+      "blockerTitle": "Safety implications not identified early",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Safety implications not identified early. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required."
+    },
+    {
+      "questionId": "RQ-3744-01",
+      "blockerId": 3734,
+      "blockerCode": null,
+      "blockerTitle": "Difficulty proving safety and reliability at scale",
+      "relationship": "Direct",
+      "rationale": "Question explicitly assesses Difficulty proving safety and reliability at scale. Evaluate its evidence separately within the grouped question.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Draft semantic mapping. UIC validation is required. Source blocker has no code; numeric ID is authoritative."
+    },
+    {
+      "questionId": "RQ-1114-01",
+      "blockerId": 1314,
+      "blockerCode": "B-08",
+      "blockerTitle": "No business ownership beyond prototype",
+      "relationship": "Contextual",
+      "rationale": "Early accountable ownership informs continued ownership beyond the prototype.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Supporting context only. Do not infer that this question diagnoses this blocker. UIC must validate."
+    },
+    {
+      "questionId": "RQ-1334-01",
+      "blockerId": 2423,
+      "blockerCode": "B-35",
+      "blockerTitle": "Unsufficient Model monitoring, -retraining and -evolution",
+      "relationship": "Contextual",
+      "rationale": "The operating model provides context for ongoing model monitoring.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Supporting context only. Do not infer that this question diagnoses this blocker. UIC must validate."
+    },
+    {
+      "questionId": "RQ-1424-01",
+      "blockerId": 1413,
+      "blockerCode": "B-11",
+      "blockerTitle": "Insufficient AI and digital skills across the organisation",
+      "relationship": "Contextual",
+      "rationale": "Interpretation and adoption trials may reveal skills needs.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Supporting context only. Do not infer that this question diagnoses this blocker. UIC must validate."
+    },
+    {
+      "questionId": "RQ-3114-01",
+      "blockerId": 1024,
+      "blockerCode": "B-39",
+      "blockerTitle": "Inconsistent data quality management across AI use cases",
+      "relationship": "Contextual",
+      "rationale": "Data availability provides context for agreed quality responsibilities and criteria.",
+      "reviewStatus": "Draft - UIC review",
+      "reviewComments": "Supporting context only. Do not infer that this question diagnoses this blocker. UIC must validate."
     }
   ]
 }
