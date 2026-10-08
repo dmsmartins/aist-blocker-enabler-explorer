@@ -1,7 +1,7 @@
 (function(root){
   'use strict';
   const API='https://aist-dependency-votes.diogomsmartins.workers.dev';
-  const KEY='aist-dependency-review-v1';
+  const KEY='aist-dependency-review-v1'+(typeof location!=='undefined'&&new URLSearchParams(location.search).get('reviewTest')==='1'?'-test':'');
   const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   let memory;
   function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch{return memory||{};}}
@@ -35,7 +35,7 @@
         area.innerHTML=`<div class="vr-box vr-intro"><h2>Review a few pairs</h2><p>For each pair, consider: <strong>does addressing blocker A require progress on blocker B?</strong> Being related is not enough. The reverse direction is a separate question.</p><div class="vr-steps"><span><b>1</b> Read both blockers</span><span><b>2</b> Yes, No or Not sure</span><span><b>3</b> Submit your answers</span></div><p>You can stop early or continue with another set. Current links and their importance are hidden while you vote.</p><div class="vr-setup"><label>Pairs in this set<select id="vr-size"><option value="10">10 pairs</option><option value="15">15 pairs</option></select></label><label>Your role (optional)<input id="vr-role" maxlength="100" placeholder="e.g. Operations, IT, project manager" value="${escape(store.role||'')}"></label></div><button class="vr-primary" id="vr-start" ${busy?'disabled':''}>${busy?'Preparing pairs…':'Start reviewing'}</button></div>`;
         area.querySelector('#vr-start').onclick=async()=>{
           const size=Number(area.querySelector('#vr-size').value);store.role=area.querySelector('#vr-role').value.trim();busy=true;error='';render();
-          try{const result=await request('/session',{participantId:store.participantId,size,exclude:store.seen[store.version]||[],isTest:testMode});
+          try{const result=await request('/session',{participantId:store.participantId,size,exclude:store.seen[store.version]||[],excludeVersion:store.version,isTest:testMode});
             draft={...result,role:store.role,answers:{},index:0};store.version=result.version;screen='vote';persist();
           }catch(e){error=e.message;}finally{busy=false;if(alive())render();}
         };
@@ -62,7 +62,7 @@
           }catch(e){error=e.message;if([400,410].includes(e.status)){draft.expired=true;persist();}}finally{busy=false;if(alive())render();}
         };
       }else{
-        area.innerHTML=`<div class="vr-box vr-done" role="status"><span class="vr-check" aria-hidden="true">✓</span><h2>Answers saved. Thank you.</h2><p>${success.count} answers have been stored${success.isTest?' as test data':' for review'}.</p><p>You can finish here or review another set.</p><button class="vr-primary" id="vr-more">Review more pairs</button><p class="vr-hint">Receipt: ${escape(success.id)}</p></div>`;
+        area.innerHTML=`<div class="vr-box vr-done" role="status"><span class="vr-check" aria-hidden="true">✓</span><h2>Answers saved. Thank you.</h2><p>${success.count} answer${success.count===1?' has':'s have'} been stored${success.isTest?' as test data':' for review'}.</p><p>You can finish here or review another set.</p><button class="vr-primary" id="vr-more">Review more pairs</button><p class="vr-hint">Receipt: ${escape(success.id)}</p></div>`;
         area.querySelector('#vr-more').onclick=()=>{screen='start';error='';render();};
       }
     }
