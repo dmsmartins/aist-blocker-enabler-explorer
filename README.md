@@ -26,7 +26,7 @@ The live application reads:
 data/explorer-data.json
 ```
 
-Current schema: **3.0**
+Current schema: **3.1**
 
 It contains:
 
@@ -36,6 +36,8 @@ It contains:
 - `blockers`
 - `enablers`
 - `relationships` (Blocker ↔ Enabler + enabling mechanism)
+- `readinessQuestions` (candidate grouped questions, evidence guidance and review statuses)
+- `questionBlockerMap` (Direct/Contextual draft mappings using numeric blocker IDs)
 - `blockerDependencies` (Blocker → Blocker), including numeric `dependencyImportance` (1–4; higher values mean greater importance). Missing importance is shown as unspecified.
 
 Internal blocker/enabler IDs are used for relationships but are not displayed in the UI.
@@ -120,3 +122,9 @@ Curves above the gates show dependencies on later stages; curves below show depe
 A dependency on a later stage is not automatically an error or a requirement to complete that entire stage first. The panel describes possible interpretations and preserves access to blocker details.
 
 Validation: `node --test --test-isolation=none stage-dependencies.test.mjs dependencies.test.mjs`.
+
+## Candidate project readiness data
+
+The optional `Readiness_Questions` and `Question_Blocker_Map` sheets export as `readinessQuestions` and `questionBlockerMap`. Both sheets must be present together; workbooks without either export empty arrays. The converter validates question IDs, blocker references, Direct/Contextual relationships, review statuses and provisional gate labels. Questions retain draft status and no automatic blocker clearance or score is produced. The current UI does not yet render a readiness assessment.
+
+Use `python tools/excel_to_explorer_json_v2.py "data/Final_Blockers&Enablers_Explorer.xlsx" "data/explorer-data.json"` to regenerate. The converter requires only the Python standard library. Run `python -m unittest discover -s tools -p 'test*converter.py'` for converter tests.

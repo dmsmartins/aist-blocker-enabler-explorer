@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert the AIST Blocker & Enabler Excel workbook to Explorer JSON v3.
+"""Convert the AIST Blocker & Enabler Excel workbook to Explorer JSON v3.1.
 
 No third-party packages are required: the script reads .xlsx files directly with
 Python's standard library (xlsx is a ZIP archive containing XML files).
@@ -11,6 +11,8 @@ Usage:
 
 Output schema (camelCase) is designed to be consumed directly by the GitHub
 Pages Explorer, including Stage Gates and blocker-to-blocker dependencies.
+Optional readiness sheets produce readinessQuestions and questionBlockerMap.
+These preserve review statuses and provisional gates, with no readiness scoring.
 """
 
 from __future__ import annotations
@@ -30,7 +32,7 @@ from xml.etree import ElementTree as ET
 # Configuration / source-of-truth metadata
 # ---------------------------------------------------------------------------
 
-SCHEMA_VERSION = "3.0"
+SCHEMA_VERSION = "3.1"
 
 # JSON and Excel both use Stage Gates 0..5.
 # These labels are also used when a gate has no
@@ -437,6 +439,110 @@ def validate_gate(gate_value: Any, desc_value: Any, context: str, warnings: List
     return gate, desc
 
 
+def read_readiness(reader: XlsxReader, blockers: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    """Read optional readiness tables, preserving review status and draft semantics."""
+    names = {norm_header(n): n for n in reader.sheet_names()}
+    wanted = ["Readiness_Questions", "Question_Blocker_Map"]
+    found = [norm_header(n) in names for n in wanted]
+    if not any(found):
+        return [], []
+    if not all(found):
+        raise ValueError("Readiness_Questions and Question_Blocker_Map must both be present")
+
+    def records(sheet: str, key: str):
+        table = reader.read_sheet(names[norm_header(sheet)])
+        header_rows = [i for i, row in enumerate(table) if row and norm_header(row[0]) == norm_header(key)]
+        if len(header_rows) != 1:
+            raise ValueError(f"{sheet}: expected one header row beginning with {key}")
+        i = header_rows[0]
+        headers = [norm_header(v) for v in table[i]]
+        if len(set(headers)) != len(headers):
+            raise ValueError(f"{sheet}: duplicate column names")
+        for row in table[i + 1:]:
+            if any(norm_text(v) for v in row):
+                yield dict(zip(headers, row))
+
+    def required(row, name):
+        value = norm_text(row.get(norm_header(name)))
+        if not value:
+            raise ValueError(f"Readiness row: missing {name}")
+        return value
+
+    valid_statuses = {"Draft - UIC review", "Under UIC review", "UIC approved", "Rejected"}
+    def review_status(row):
+        value = required(row, "Review_Status")
+        if value not in valid_statuses:
+            raise ValueError(f"Invalid readiness review status: {value!r}")
+        return value
+
+    by_blocker = {b["id"]: b for b in blockers}
+    questions = []
+    question_ids = set()
+    for row in records("Readiness_Questions", "Question_ID"):
+        qid = required(row, "Question_ID")
+        if qid in question_ids:
+            raise ValueError(f"Duplicate readiness question ID: {qid}")
+        question_ids.add(qid)
+        gate = as_int(row.get("provisional_stage_gate"), "Provisional_Stage_Gate")
+        if gate not in STAGE_GATES:
+            raise ValueError(f"Invalid provisional Stage Gate for {qid}: {gate}")
+        lifecycle = required(row, "Lifecycle_Stage")
+        if lifecycle != STAGE_GATES[gate]:
+            raise ValueError(f"Lifecycle stage does not match provisional gate for {qid}")
+        source_ids = [as_int(v, "Source_Blocker_IDs") for v in split_semicolon(required(row, "Source_Blocker_IDs"))]
+        if len(source_ids) != len(set(source_ids)) or not set(source_ids) <= set(by_blocker):
+            raise ValueError(f"Duplicate or unknown source blocker IDs for {qid}: {source_ids}")
+        questions.append({
+            "id": qid,
+            "question": required(row, "Question"),
+            "dimensions": split_semicolon(required(row, "Dimension")),
+            "lifecycleStage": lifecycle,
+            "provisionalStageGate": gate,
+            "guidance": required(row, "Guidance"),
+            "evidenceExamples": split_semicolon(required(row, "Evidence_Examples")),
+            "applicability": required(row, "Applicability"),
+            "reviewStatus": review_status(row),
+            "reviewComments": norm_text(row.get("review_comments")),
+            "sourceBlockerIds": source_ids,
+            "sourceStageGates": required(row, "Source_Stage_Gates"),
+        })
+    mappings = []
+    pairs = set()
+    direct = defaultdict(set)
+    for row in records("Question_Blocker_Map", "Question_ID"):
+        qid = required(row, "Question_ID")
+        bid = as_int(row.get("blocker_id"), "Blocker_ID")
+        if qid not in question_ids or bid not in by_blocker:
+            raise ValueError(f"Unknown readiness mapping reference: {qid}, {bid}")
+        pair = (qid, bid)
+        if pair in pairs:
+            raise ValueError(f"Duplicate readiness mapping: {pair}")
+        pairs.add(pair)
+        relationship = required(row, "Relationship")
+        if relationship not in {"Direct", "Contextual"}:
+            raise ValueError(f"Invalid readiness relationship: {relationship!r}")
+        code = clean_source(row.get("blocker_code"))
+        title = required(row, "Blocker_Title")
+        if code != by_blocker[bid]["code"] or title != by_blocker[bid]["title"]:
+            raise ValueError(f"Readiness mapping blocker code/title mismatch for {bid}")
+        if relationship == "Direct":
+            direct[qid].add(bid)
+        mappings.append({
+            "questionId": qid,
+            "blockerId": bid,
+            "blockerCode": code,
+            "blockerTitle": title,
+            "relationship": relationship,
+            "rationale": required(row, "Rationale"),
+            "reviewStatus": review_status(row),
+            "reviewComments": norm_text(row.get("review_comments")),
+        })
+    for question in questions:
+        if direct[question["id"]] != set(question["sourceBlockerIds"]):
+            raise ValueError(f"Direct mappings do not match source blocker IDs for {question['id']}")
+    return questions, mappings
+
+
 def convert(input_path: Path) -> Tuple[Dict[str, Any], List[str], List[str]]:
     warnings: List[str] = []
     info: List[str] = []
@@ -722,6 +828,27 @@ def convert(input_path: Path) -> Tuple[Dict[str, Any], List[str], List[str]]:
             "blockerDependencies": blocker_dependencies,
         }
 
+        questions, mappings = read_readiness(reader, blockers)
+        data["readinessQuestions"] = questions
+        data["questionBlockerMap"] = mappings
+        data["meta"]["counts"].update({
+            "readinessQuestions": len(questions),
+            "questionBlockerMappings": len(mappings),
+        })
+        data["meta"]["readiness"] = {
+            "schemaVersion": "1.0",
+            "gateAssignments": "Provisional - review per question",
+            "mappingSemantics": {
+                "Direct": "Explicit assessment of the blocker issue; review status is separate.",
+                "Contextual": "Supporting context; does not diagnose or clear the blocker.",
+            },
+            "automaticBlockerClearance": False,
+        }
+        if questions:
+            pending = sum(q["reviewStatus"] != "UIC approved" for q in questions)
+            warnings.append(f"{pending} readiness questions are not UIC approved; preserve their review status.")
+        else:
+            info.append("No readiness sheets: emitted empty readiness arrays.")
         return data, warnings, info
 
 
@@ -731,7 +858,7 @@ def convert(input_path: Path) -> Tuple[Dict[str, Any], List[str], List[str]]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Convert AIST Blocker & Enabler Excel workbook to Explorer JSON v3."
+        description="Convert AIST Excel workbook to Explorer JSON v3.1, including optional readiness sheets."
     )
     parser.add_argument("input", type=Path, help="Path to the source .xlsx workbook")
     parser.add_argument(
@@ -772,6 +899,8 @@ def main() -> int:
     print(f"  Enablers:             {counts['enablers']}")
     print(f"  Blocker–Enabler rel.: {counts['relationships']}")
     print(f"  Blocker dependencies: {counts['blockerDependencies']}")
+    print(f"  Readiness questions:  {counts['readinessQuestions']}")
+    print(f"  Readiness mappings:   {counts['questionBlockerMappings']}")
 
     gate_blockers = Counter(b["stageGate"] for b in data["blockers"])
     gate_enablers = Counter(e["stageGate"] for e in data["enablers"])
@@ -804,3 +933,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

@@ -1,6 +1,6 @@
 # Candidate project readiness review
 
-The supplied `Final_Blockers&Enablers_Explorer (5).xlsx` is now versioned at `data/Final_Blockers&Enablers_Explorer.xlsx`. It contains the four original sheets plus `Readiness_Questions` and `Question_Blocker_Map`. The live JSON and application behaviour are unchanged.
+The supplied `Final_Blockers&Enablers_Explorer (5).xlsx` is now versioned at `data/Final_Blockers&Enablers_Explorer.xlsx`. It contains the four original sheets plus `Readiness_Questions` and `Question_Blocker_Map`. JSON schema 3.1 now includes the candidate readiness data. The UI behaviour is unchanged.
 
 ## Candidate content
 - 26 English questions cover all 41 source blockers through 41 Direct and 4 Contextual draft mappings.
@@ -28,10 +28,13 @@ Use the existing converter workflow with the versioned workbook:
 ```sh
 python tools/excel_to_explorer_json_v2.py "data/Final_Blockers&Enablers_Explorer.xlsx" --check-only
 ```
-The current converter ignores the two candidate readiness sheets. Exporting them to the app requires a separate reviewed schema and application change.
+The converter now exports the two candidate readiness sheets as readinessQuestions and questionBlockerMap in JSON schema 3.1. Rendering an assessment in the UI requires a separate application change. All review statuses and provisional gate assignments are preserved.
 
 ## Excel compatibility correction
 The initial generated package rewrote XML namespace prefixes without preserving the prefix declarations used by markup-compatibility attributes. This revision preserves namespace declarations and validates every Ignorable and Choice Requires prefix in every XML part. The original sheets and their associated package parts remain byte-identical, and all content and converter checks pass again. Native Excel verification was attempted but could not complete: Excel COM startup failed and Computer Use access to Excel was not approved. Native Excel opening is therefore not claimed.
 
 ## Second compatibility revision
 User screenshots confirmed that the first namespace correction still failed in native Excel. The two added sheets were rebuilt using openpyxl because the prior artifact export did not establish native Excel compatibility. The rebuilt sheet, table and validation parts were appended to the original package while keeping all four original worksheet XML parts, original table and related components byte-identical. Existing style entries remain at their original indices. The 26 questions and 45 mappings are unchanged. Namespace prefix checks, independent workbook loading, original cell values/styles, table counts and repository converter validation pass. Native Excel opening remains unverified because access was unavailable; the previous claim of a sufficient correction is superseded.
+
+## JSON export validation
+26 questions and 45 mappings (41 Direct, 4 Contextual) are exported. All seven existing Explorer data collections match the JSON currently on main exactly. Nine readiness converter tests cover grouped questions, blank blocker codes, legacy workbooks, missing paired sheets, duplicate IDs/mappings, unknown references, gate conflicts, invalid statuses/relationships, source-to-Direct consistency and stale blocker metadata.
