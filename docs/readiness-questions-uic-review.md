@@ -29,3 +29,6 @@ Use the existing converter workflow with the versioned workbook:
 python tools/excel_to_explorer_json_v2.py "data/Final_Blockers&Enablers_Explorer.xlsx" --check-only
 ```
 The current converter ignores the two candidate readiness sheets. Exporting them to the app requires a separate reviewed schema and application change.
+
+## Excel compatibility correction
+The initial generated package rewrote XML namespace prefixes without preserving the prefix declarations used by markup-compatibility attributes. This revision preserves namespace declarations and validates every Ignorable and Choice Requires prefix in every XML part. The original sheets and their associated package parts remain byte-identical, and all content and converter checks pass again. Native Excel verification was attempted but could not complete: Excel COM startup failed and Computer Use access to Excel was not approved. Native Excel opening is therefore not claimed.
