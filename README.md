@@ -41,7 +41,7 @@ Validation: `node --test --test-isolation=none readiness.test.mjs dependencies.t
 - **View for my role**
 - **My Selection**
 - **Play — Scale Run**, an abstract platformer using the same blockers and enablers across the six Stage Gates (see `play/README.md`)
-- Illustrative **Maturity Assessment** placeholder
+- **Maturity Assessment**, with an illustrative company assessment and candidate **AI Project Readiness**
 
 The interface deliberately uses progressive disclosure: the first view stays light and additional detail appears only as the user explores deeper.
 
@@ -53,7 +53,7 @@ The live application reads:
 data/explorer-data.json
 ```
 
-Current schema: **3.0**
+Current schema: **3.1**
 
 It contains:
 
@@ -63,6 +63,8 @@ It contains:
 - `blockers`
 - `enablers`
 - `relationships` (Blocker ↔ Enabler + enabling mechanism)
+- `readinessQuestions` (grouped candidate questions, evidence guidance and UIC review status)
+- `questionBlockerMap` (Direct/Contextual candidate mappings using source blocker IDs)
 - `blockerDependencies` (Blocker → Blocker), including numeric `dependencyImportance` (1–4; higher values mean greater importance). Missing importance is shown as unspecified.
 
 Internal blocker/enabler IDs are used for relationships but are not displayed in the UI.
