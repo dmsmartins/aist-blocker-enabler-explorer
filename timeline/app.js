@@ -37,7 +37,7 @@ function BlockerNode({data}){
     <${Handle} type="target" position=${Position.Left} style=${{opacity:0}} />
     <div className="node-kicker"><span>Gate ${blocker.stageGate} · ${domainTitle}</span><span>${relationLabel||""}</span></div>
     ${status?html`<div className="assessment-status">${status==="resolved"?"✓ Resolved":status==="partial"?"◐ Partial":"● Open"}</div>`:null}
-    <strong>${blocker.title}</strong>${blocker.classification?html`<div className="criticality-label">${blocker.classification} · ${blocker.criticalityComposite.toFixed(1)}</div>`:null}
+    <strong>${blocker.title}</strong>${blocker.classification?html`<div className="criticality-label">${blocker.classification}</div>`:null}
     ${showStatement?html`<p>${truncate(blocker.statement,selected?185:100)}</p>`:null}
     ${selected?html`<button className="deep-dive-plus" title="Open blocker details and enablers" aria-label="Open blocker details and enablers" onClick=${(e)=>{e.preventDefault();e.stopPropagation();data.onDeepDive?.(blocker)}}><span>+</span><em>Details & enablers</em></button>`:null}
     <${Handle} type="source" position=${Position.Right} style=${{opacity:0}} />

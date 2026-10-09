@@ -1593,7 +1593,7 @@ function renderTimelineGateView(gateId) {
       <button class="tl-blocker-node ${b.classification==='Critical core'?'critical-core':''}" data-tl-blocker="${b.id}">
         <span>${escapeHtml(state.data.domains.find(d=>d.slug===b.domain)?.title || '')}</span>
         <strong>${escapeHtml(b.title)}</strong>
-        <small>${escapeHtml(truncate(b.statement,105))}</small><small class="criticality-label">${escapeHtml(b.classification)} · ${b.criticalityComposite?.toFixed(1)}</small>
+        <small>${escapeHtml(truncate(b.statement,105))}</small><small class="criticality-label">${escapeHtml(b.classification)}</small>
       </button>`).join('')}</div>` : `<div class="empty-state">No blockers are currently mapped to this gate.</div>`}
   </section>`;
 }
