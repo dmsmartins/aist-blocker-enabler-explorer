@@ -4,7 +4,7 @@ Static GitHub Pages application for exploring AI scalability blockers, enablers,
 
 ## Current experience
 
-- **Explore by Domain**
+- **Explore by Community**
 - **Explore by Stage Gate**
 - **All Blockers**
 - **All Enablers**, organised by enabling mechanism

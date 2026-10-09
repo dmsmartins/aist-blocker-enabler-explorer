@@ -945,17 +945,18 @@ function bindGlobal() {
 }
 
 function navigate(route) {
-  const map = { home:'#home', explore:'#explore', maturity:'#maturity', selection:'#selection', domains:'#domains', stage:'#stage-gates', domain:'#domain/data-foundations' };
+  const map = { home:'#home', explore:'#explore', maturity:'#maturity', selection:'#selection', domains:'#communities', stage:'#stage-gates', domain:'#domain/data-foundations' };
   location.hash = map[route] || `#${route}`;
 }
 function routeFromHash() {
+  if (location.hash === '#domains') { location.replace('#communities'); return; }
   const hash = location.hash || '#home';
   if (hash === '#timeline') {
     window.location.replace('./timeline/');
     return;
   }
   if (hash.startsWith('#domain/')) { state.route='domain'; state.domain=hash.split('/')[1]; }
-  else state.route = hash.slice(1) || 'home';
+  else state.route = hash === '#communities' ? 'domains' : hash.slice(1) || 'home';
   state.openBlocker = null;
   state.openEnablers.clear();
   state.openDependencies.clear();
@@ -1016,7 +1017,7 @@ function renderHome() {
         <p>Same underlying dataset, different lenses.</p>
       </div>
       <div class="home-cards home-cards--secondary">
-        ${entryCard('Explore the landscape','Browse blockers and enablers across domains, stages and stakeholders.','Explore','explore','↗')}
+        ${entryCard('Explore the landscape','Browse blockers and enablers across communities, stages and stakeholders.','Explore','explore','↗')}
         ${entryCard('View for my role','Focus the landscape on the stakeholders most relevant to you.','Choose perspective','role','◎')}
         ${entryCard('Maturity assessment','Assess the maturity of your organisation or AI initiative.','Open assessment','maturity','▥')}
       </div>
@@ -1130,7 +1131,7 @@ function renderDomain() {
   const blockers = filteredBlockers();
   const blockerHtml = blockers.length ? blockers.map(renderBlockerCard).join('') : `<div class="empty-state">No blockers match the current filters.</div>`;
   app.innerHTML = `<section class="page">
-    <button class="back-btn" id="backDomains">${icon('back')} Back to domains</button>
+    <button class="back-btn" id="backDomains">${icon('back')} Back to communities</button>
     <div class="domain-title-row">
       <div class="domain-heading"><div class="domain-icon">${domainSymbol(domain.slug)}</div><div><h2>${escapeHtml(domain.title)}</h2><p class="subtle">${escapeHtml(domain.description)} These foundations are critical to move from isolated pilots towards scalable AI.</p></div></div>
       <button class="filter-btn" id="filterBtn">${icon('filter')} Filters</button>
