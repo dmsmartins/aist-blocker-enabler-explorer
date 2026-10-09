@@ -137,7 +137,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": null,
-      "domain": "data-foundations"
+      "domain": "data-foundations",
+      "communityId": 5,
+      "communityName": "Data quality & accountability foundations",
+      "criticalityComposite": 32.8,
+      "classification": "Peripheral"
     },
     {
       "id": 1043,
@@ -161,7 +165,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": null,
-      "domain": "value-delivery-scale"
+      "domain": "value-delivery-scale",
+      "communityId": 1,
+      "communityName": "Scaling strategy & delivery orchestration",
+      "criticalityComposite": 27.6,
+      "classification": "Watch"
     },
     {
       "id": 1114,
@@ -184,7 +192,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "value-delivery-scale"
+      "domain": "value-delivery-scale",
+      "communityId": 3,
+      "communityName": "Human adoption & operational value realization",
+      "criticalityComposite": 20.6,
+      "classification": "High"
     },
     {
       "id": 1133,
@@ -208,7 +220,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "value-delivery-scale"
+      "domain": "value-delivery-scale",
+      "communityId": 3,
+      "communityName": "Human adoption & operational value realization",
+      "criticalityComposite": 13.4,
+      "classification": "Critical core"
     },
     {
       "id": 1143,
@@ -231,7 +247,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "value-delivery-scale"
+      "domain": "value-delivery-scale",
+      "communityId": 1,
+      "communityName": "Scaling strategy & delivery orchestration",
+      "criticalityComposite": 22.2,
+      "classification": "Watch"
     },
     {
       "id": 1211,
@@ -255,7 +275,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "governance-organisation"
+      "domain": "governance-organisation",
+      "communityId": 1,
+      "communityName": "Scaling strategy & delivery orchestration",
+      "criticalityComposite": 13.6,
+      "classification": "High"
     },
     {
       "id": 1223,
@@ -279,7 +303,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "governance-organisation"
+      "domain": "governance-organisation",
+      "communityId": 1,
+      "communityName": "Scaling strategy & delivery orchestration",
+      "criticalityComposite": 21,
+      "classification": "High"
     },
     {
       "id": 1233,
@@ -304,7 +332,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "governance-organisation"
+      "domain": "governance-organisation",
+      "communityId": 2,
+      "communityName": "Governance, architecture & operational integration",
+      "criticalityComposite": 9.8,
+      "classification": "Critical core"
     },
     {
       "id": 1243,
@@ -328,7 +360,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "governance-organisation"
+      "domain": "governance-organisation",
+      "communityId": 1,
+      "communityName": "Scaling strategy & delivery orchestration",
+      "criticalityComposite": 16.4,
+      "classification": "High"
     },
     {
       "id": 1314,
@@ -352,7 +388,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "governance-organisation"
+      "domain": "governance-organisation",
+      "communityId": 2,
+      "communityName": "Governance, architecture & operational integration",
+      "criticalityComposite": 3.2,
+      "classification": "Critical core"
     },
     {
       "id": 1323,
@@ -376,7 +416,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "governance-organisation"
+      "domain": "governance-organisation",
+      "communityId": 5,
+      "communityName": "Data quality & accountability foundations",
+      "criticalityComposite": 19,
+      "classification": "High"
     },
     {
       "id": 1334,
@@ -400,7 +444,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "governance-organisation"
+      "domain": "governance-organisation",
+      "communityId": 4,
+      "communityName": "Model assurance, lifecycle & safety",
+      "criticalityComposite": 14.8,
+      "classification": "High"
     },
     {
       "id": 1413,
@@ -425,7 +473,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "people-adoption"
+      "domain": "people-adoption",
+      "communityId": 3,
+      "communityName": "Human adoption & operational value realization",
+      "criticalityComposite": 24.4,
+      "classification": "Watch"
     },
     {
       "id": 1424,
@@ -450,7 +502,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "people-adoption"
+      "domain": "people-adoption",
+      "communityId": 3,
+      "communityName": "Human adoption & operational value realization",
+      "criticalityComposite": 11,
+      "classification": "Critical core"
     },
     {
       "id": 1433,
@@ -475,7 +531,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "people-adoption"
+      "domain": "people-adoption",
+      "communityId": 3,
+      "communityName": "Human adoption & operational value realization",
+      "criticalityComposite": 26,
+      "classification": "Watch"
     },
     {
       "id": 1511,
@@ -499,7 +559,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "people-adoption"
+      "domain": "people-adoption",
+      "communityId": 3,
+      "communityName": "Human adoption & operational value realization",
+      "criticalityComposite": 22.8,
+      "classification": "Watch"
     },
     {
       "id": 1524,
@@ -523,7 +587,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "people-adoption"
+      "domain": "people-adoption",
+      "communityId": 3,
+      "communityName": "Human adoption & operational value realization",
+      "criticalityComposite": 24.4,
+      "classification": "Watch"
     },
     {
       "id": 1614,
@@ -547,7 +615,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "data-foundations"
+      "domain": "data-foundations",
+      "communityId": 2,
+      "communityName": "Governance, architecture & operational integration",
+      "criticalityComposite": 21.8,
+      "classification": "High"
     },
     {
       "id": 1713,
@@ -571,7 +643,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "legal-safety-assurance"
+      "domain": "legal-safety-assurance",
+      "communityId": 2,
+      "communityName": "Governance, architecture & operational integration",
+      "criticalityComposite": 29,
+      "classification": "Peripheral"
     },
     {
       "id": 1723,
@@ -595,7 +671,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "legal-safety-assurance"
+      "domain": "legal-safety-assurance",
+      "communityId": 4,
+      "communityName": "Model assurance, lifecycle & safety",
+      "criticalityComposite": 23.8,
+      "classification": "Watch"
     },
     {
       "id": 1811,
@@ -619,7 +699,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "value-delivery-scale"
+      "domain": "value-delivery-scale",
+      "communityId": 1,
+      "communityName": "Scaling strategy & delivery orchestration",
+      "criticalityComposite": 32,
+      "classification": "Peripheral"
     },
     {
       "id": 1823,
@@ -643,7 +727,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "value-delivery-scale"
+      "domain": "value-delivery-scale",
+      "communityId": 1,
+      "communityName": "Scaling strategy & delivery orchestration",
+      "criticalityComposite": 30,
+      "classification": "Peripheral"
     },
     {
       "id": 1833,
@@ -668,7 +756,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "value-delivery-scale"
+      "domain": "value-delivery-scale",
+      "communityId": 1,
+      "communityName": "Scaling strategy & delivery orchestration",
+      "criticalityComposite": 27.6,
+      "classification": "Watch"
     },
     {
       "id": 1921,
@@ -693,7 +785,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": null,
-      "domain": "value-delivery-scale"
+      "domain": "value-delivery-scale",
+      "communityId": 1,
+      "communityName": "Scaling strategy & delivery orchestration",
+      "criticalityComposite": 29.8,
+      "classification": "Peripheral"
     },
     {
       "id": 2213,
@@ -717,7 +813,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
-      "domain": "technology-infrastructure"
+      "domain": "technology-infrastructure",
+      "communityId": 2,
+      "communityName": "Governance, architecture & operational integration",
+      "criticalityComposite": 9.2,
+      "classification": "Critical core"
     },
     {
       "id": 2123,
@@ -740,7 +840,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
-      "domain": "data-foundations"
+      "domain": "data-foundations",
+      "communityId": 5,
+      "communityName": "Data quality & accountability foundations",
+      "criticalityComposite": 16,
+      "classification": "High"
     },
     {
       "id": 2134,
@@ -764,7 +868,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
-      "domain": "data-foundations"
+      "domain": "data-foundations",
+      "communityId": 2,
+      "communityName": "Governance, architecture & operational integration",
+      "criticalityComposite": 6.2,
+      "classification": "Critical core"
     },
     {
       "id": 2221,
@@ -788,7 +896,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
-      "domain": "technology-infrastructure"
+      "domain": "technology-infrastructure",
+      "communityId": 1,
+      "communityName": "Scaling strategy & delivery orchestration",
+      "criticalityComposite": 26.8,
+      "classification": "Watch"
     },
     {
       "id": 2231,
@@ -812,7 +924,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
-      "domain": "technology-infrastructure"
+      "domain": "technology-infrastructure",
+      "communityId": 1,
+      "communityName": "Scaling strategy & delivery orchestration",
+      "criticalityComposite": 29.8,
+      "classification": "Peripheral"
     },
     {
       "id": 2313,
@@ -836,7 +952,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
-      "domain": "technology-infrastructure"
+      "domain": "technology-infrastructure",
+      "communityId": 2,
+      "communityName": "Governance, architecture & operational integration",
+      "criticalityComposite": 15.2,
+      "classification": "High"
     },
     {
       "id": 2323,
@@ -861,7 +981,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
-      "domain": "technology-infrastructure"
+      "domain": "technology-infrastructure",
+      "communityId": 2,
+      "communityName": "Governance, architecture & operational integration",
+      "criticalityComposite": 23.6,
+      "classification": "Watch"
     },
     {
       "id": 2423,
@@ -885,7 +1009,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
-      "domain": "value-delivery-scale"
+      "domain": "value-delivery-scale",
+      "communityId": 4,
+      "communityName": "Model assurance, lifecycle & safety",
+      "criticalityComposite": 13.4,
+      "classification": "Critical core"
     },
     {
       "id": 2513,
@@ -909,7 +1037,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
-      "domain": "technology-infrastructure"
+      "domain": "technology-infrastructure",
+      "communityId": 4,
+      "communityName": "Model assurance, lifecycle & safety",
+      "criticalityComposite": 5.8,
+      "classification": "Critical core"
     },
     {
       "id": 3114,
@@ -933,7 +1065,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
-      "domain": "data-foundations"
+      "domain": "data-foundations",
+      "communityId": 5,
+      "communityName": "Data quality & accountability foundations",
+      "criticalityComposite": 25.6,
+      "classification": "Watch"
     },
     {
       "id": 3123,
@@ -957,7 +1093,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": null,
-      "domain": "value-delivery-scale"
+      "domain": "value-delivery-scale",
+      "communityId": 1,
+      "communityName": "Scaling strategy & delivery orchestration",
+      "criticalityComposite": 35.6,
+      "classification": "Peripheral"
     },
     {
       "id": 3333,
@@ -982,7 +1122,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
-      "domain": "technology-infrastructure"
+      "domain": "technology-infrastructure",
+      "communityId": 3,
+      "communityName": "Human adoption & operational value realization",
+      "criticalityComposite": 5.2,
+      "classification": "Critical core"
     },
     {
       "id": 3413,
@@ -1006,7 +1150,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
-      "domain": "value-delivery-scale"
+      "domain": "value-delivery-scale",
+      "communityId": 1,
+      "communityName": "Scaling strategy & delivery orchestration",
+      "criticalityComposite": 6.2,
+      "classification": "Critical core"
     },
     {
       "id": 3523,
@@ -1030,7 +1178,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
-      "domain": "technology-infrastructure"
+      "domain": "technology-infrastructure",
+      "communityId": 4,
+      "communityName": "Model assurance, lifecycle & safety",
+      "criticalityComposite": 10,
+      "classification": "Critical core"
     },
     {
       "id": 3634,
@@ -1055,7 +1207,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "data-foundations"
+      "domain": "data-foundations",
+      "communityId": 2,
+      "communityName": "Governance, architecture & operational integration",
+      "criticalityComposite": 33.2,
+      "classification": "Peripheral"
     },
     {
       "id": 3744,
@@ -1080,7 +1236,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
-      "domain": "legal-safety-assurance"
+      "domain": "legal-safety-assurance",
+      "communityId": 4,
+      "communityName": "Model assurance, lifecycle & safety",
+      "criticalityComposite": 30.4,
+      "classification": "Peripheral"
     },
     {
       "id": 3734,
@@ -1105,7 +1265,11 @@
         "(SAP/Maximo) Business Application Managers"
       ],
       "source": null,
-      "domain": "legal-safety-assurance"
+      "domain": "legal-safety-assurance",
+      "communityId": 4,
+      "communityName": "Model assurance, lifecycle & safety",
+      "criticalityComposite": 19.4,
+      "classification": "High"
     }
   ],
   "enablers": [
@@ -4040,763 +4204,890 @@
       "id": 1,
       "blockerId": 1024,
       "dependsOnBlockerId": 1614,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 2,
       "blockerId": 1024,
       "dependsOnBlockerId": 1323,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 3,
       "blockerId": 1024,
       "dependsOnBlockerId": 3114,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 4,
       "blockerId": 1024,
       "dependsOnBlockerId": 2123,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 5,
       "blockerId": 1043,
       "dependsOnBlockerId": 1243,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 6,
       "blockerId": 1043,
       "dependsOnBlockerId": 1833,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 7,
       "blockerId": 1043,
       "dependsOnBlockerId": 3413,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 8,
       "blockerId": 1133,
       "dependsOnBlockerId": 1114,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 9,
       "blockerId": 1133,
       "dependsOnBlockerId": 3333,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 11,
       "blockerId": 1143,
       "dependsOnBlockerId": 1114,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 12,
       "blockerId": 1143,
       "dependsOnBlockerId": 1133,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 13,
       "blockerId": 1143,
       "dependsOnBlockerId": 2513,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 14,
       "blockerId": 1143,
       "dependsOnBlockerId": 3413,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 15,
       "blockerId": 1211,
       "dependsOnBlockerId": 1133,
-      "dependencyImportance": 1
+      "dependencyImportance": 1,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 16,
       "blockerId": 1211,
       "dependsOnBlockerId": 1143,
-      "dependencyImportance": 1
+      "dependencyImportance": 1,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 17,
       "blockerId": 1223,
       "dependsOnBlockerId": 1211,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 18,
       "blockerId": 1223,
       "dependsOnBlockerId": 2513,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 19,
       "blockerId": 1233,
       "dependsOnBlockerId": 1211,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 20,
       "blockerId": 1233,
       "dependsOnBlockerId": 1223,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 21,
       "blockerId": 1243,
       "dependsOnBlockerId": 1143,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 22,
       "blockerId": 1243,
       "dependsOnBlockerId": 1211,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 23,
       "blockerId": 1243,
       "dependsOnBlockerId": 3413,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 24,
       "blockerId": 1314,
       "dependsOnBlockerId": 1233,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 25,
       "blockerId": 1314,
       "dependsOnBlockerId": 2313,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 26,
       "blockerId": 1323,
       "dependsOnBlockerId": 1314,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 27,
       "blockerId": 1323,
       "dependsOnBlockerId": 3523,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 28,
       "blockerId": 1334,
       "dependsOnBlockerId": 1314,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 29,
       "blockerId": 1334,
       "dependsOnBlockerId": 1323,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 31,
       "blockerId": 1334,
       "dependsOnBlockerId": 2423,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 32,
       "blockerId": 1413,
       "dependsOnBlockerId": 1243,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 33,
       "blockerId": 1413,
       "dependsOnBlockerId": 3523,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 34,
       "blockerId": 1424,
       "dependsOnBlockerId": 1413,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 35,
       "blockerId": 1424,
       "dependsOnBlockerId": 1314,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 36,
       "blockerId": 1424,
       "dependsOnBlockerId": 2513,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 37,
       "blockerId": 1424,
       "dependsOnBlockerId": 3523,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 38,
       "blockerId": 1433,
       "dependsOnBlockerId": 1413,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 39,
       "blockerId": 1433,
       "dependsOnBlockerId": 1424,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 40,
       "blockerId": 1433,
       "dependsOnBlockerId": 3333,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 41,
       "blockerId": 1511,
       "dependsOnBlockerId": 1211,
-      "dependencyImportance": 1
+      "dependencyImportance": 1,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 42,
       "blockerId": 1524,
       "dependsOnBlockerId": 1114,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 43,
       "blockerId": 1524,
       "dependsOnBlockerId": 1511,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 44,
       "blockerId": 1524,
       "dependsOnBlockerId": 1424,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 45,
       "blockerId": 1524,
       "dependsOnBlockerId": 3333,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 46,
       "blockerId": 1614,
       "dependsOnBlockerId": 1233,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 47,
       "blockerId": 1614,
       "dependsOnBlockerId": 1314,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 48,
       "blockerId": 1614,
       "dependsOnBlockerId": 2134,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 49,
       "blockerId": 1713,
       "dependsOnBlockerId": 1233,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 50,
       "blockerId": 1713,
       "dependsOnBlockerId": 2134,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 51,
       "blockerId": 1723,
       "dependsOnBlockerId": 1713,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 52,
       "blockerId": 1723,
       "dependsOnBlockerId": 3523,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 53,
       "blockerId": 1811,
       "dependsOnBlockerId": 1211,
-      "dependencyImportance": 1
+      "dependencyImportance": 1,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 54,
       "blockerId": 1811,
       "dependsOnBlockerId": 1314,
-      "dependencyImportance": 1
+      "dependencyImportance": 1,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 55,
       "blockerId": 1811,
       "dependsOnBlockerId": 2513,
-      "dependencyImportance": 1
+      "dependencyImportance": 1,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 56,
       "blockerId": 1823,
       "dependsOnBlockerId": 1811,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 57,
       "blockerId": 1823,
       "dependsOnBlockerId": 3413,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 58,
       "blockerId": 1833,
       "dependsOnBlockerId": 1823,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 59,
       "blockerId": 1833,
       "dependsOnBlockerId": 1233,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 60,
       "blockerId": 1833,
       "dependsOnBlockerId": 1334,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 61,
       "blockerId": 1833,
       "dependsOnBlockerId": 3413,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 62,
       "blockerId": 1921,
       "dependsOnBlockerId": 1713,
-      "dependencyImportance": 1
+      "dependencyImportance": 1,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 63,
       "blockerId": 1921,
       "dependsOnBlockerId": 3734,
-      "dependencyImportance": 1
+      "dependencyImportance": 1,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 64,
       "blockerId": 1921,
       "dependsOnBlockerId": 1043,
-      "dependencyImportance": 1
+      "dependencyImportance": 1,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 65,
       "blockerId": 1921,
       "dependsOnBlockerId": 3413,
-      "dependencyImportance": 1
+      "dependencyImportance": 1,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 66,
       "blockerId": 1921,
       "dependsOnBlockerId": 2423,
-      "dependencyImportance": 1
+      "dependencyImportance": 1,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 67,
       "blockerId": 2123,
       "dependsOnBlockerId": 3114,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 68,
       "blockerId": 2123,
       "dependsOnBlockerId": 1133,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 69,
       "blockerId": 2134,
       "dependsOnBlockerId": 2213,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 70,
       "blockerId": 2134,
       "dependsOnBlockerId": 1233,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 71,
       "blockerId": 2134,
       "dependsOnBlockerId": 1314,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 72,
       "blockerId": 2134,
       "dependsOnBlockerId": 1614,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 73,
       "blockerId": 2213,
       "dependsOnBlockerId": 2134,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 74,
       "blockerId": 2213,
       "dependsOnBlockerId": 1511,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 75,
       "blockerId": 2213,
       "dependsOnBlockerId": 1233,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 76,
       "blockerId": 2213,
       "dependsOnBlockerId": 1243,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 77,
       "blockerId": 2221,
       "dependsOnBlockerId": 2213,
-      "dependencyImportance": 1
+      "dependencyImportance": 1,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 78,
       "blockerId": 2221,
       "dependsOnBlockerId": 1511,
-      "dependencyImportance": 1
+      "dependencyImportance": 1,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 79,
       "blockerId": 2231,
       "dependsOnBlockerId": 2221,
-      "dependencyImportance": 1
+      "dependencyImportance": 1,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 80,
       "blockerId": 2313,
       "dependsOnBlockerId": 2213,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 81,
       "blockerId": 2313,
       "dependsOnBlockerId": 2123,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 82,
       "blockerId": 2313,
       "dependsOnBlockerId": 2134,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 83,
       "blockerId": 2313,
       "dependsOnBlockerId": 1314,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 84,
       "blockerId": 2313,
       "dependsOnBlockerId": 1424,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 85,
       "blockerId": 2313,
       "dependsOnBlockerId": 1433,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 86,
       "blockerId": 2323,
       "dependsOnBlockerId": 2313,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 87,
       "blockerId": 2323,
       "dependsOnBlockerId": 2213,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 88,
       "blockerId": 2323,
       "dependsOnBlockerId": 2134,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 89,
       "blockerId": 2323,
       "dependsOnBlockerId": 1314,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 90,
       "blockerId": 2323,
       "dependsOnBlockerId": 1334,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 91,
       "blockerId": 2423,
       "dependsOnBlockerId": 3413,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 92,
       "blockerId": 2423,
       "dependsOnBlockerId": 3333,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 93,
       "blockerId": 2423,
       "dependsOnBlockerId": 1334,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 94,
       "blockerId": 2423,
       "dependsOnBlockerId": 3734,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 95,
       "blockerId": 2513,
       "dependsOnBlockerId": 2123,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 96,
       "blockerId": 2513,
       "dependsOnBlockerId": 2423,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 97,
       "blockerId": 2513,
       "dependsOnBlockerId": 1133,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 98,
       "blockerId": 2513,
       "dependsOnBlockerId": 3734,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 99,
       "blockerId": 3114,
       "dependsOnBlockerId": 2134,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 100,
       "blockerId": 3123,
       "dependsOnBlockerId": 1114,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 101,
       "blockerId": 3123,
       "dependsOnBlockerId": 2213,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 102,
       "blockerId": 3123,
       "dependsOnBlockerId": 2231,
-      "dependencyImportance": 2
+      "dependencyImportance": 2,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 103,
       "blockerId": 3333,
       "dependsOnBlockerId": 2323,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 104,
       "blockerId": 3333,
       "dependsOnBlockerId": 3523,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 105,
       "blockerId": 3333,
       "dependsOnBlockerId": 1314,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 106,
       "blockerId": 3333,
       "dependsOnBlockerId": 1323,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 107,
       "blockerId": 3333,
       "dependsOnBlockerId": 1424,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 108,
       "blockerId": 3333,
       "dependsOnBlockerId": 1524,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 109,
       "blockerId": 3413,
       "dependsOnBlockerId": 2123,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 110,
       "blockerId": 3413,
       "dependsOnBlockerId": 2134,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 111,
       "blockerId": 3413,
       "dependsOnBlockerId": 2213,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 112,
       "blockerId": 3413,
       "dependsOnBlockerId": 2221,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 113,
       "blockerId": 3413,
       "dependsOnBlockerId": 2231,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 114,
       "blockerId": 3413,
       "dependsOnBlockerId": 1223,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 115,
       "blockerId": 3413,
       "dependsOnBlockerId": 1334,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 116,
       "blockerId": 3523,
       "dependsOnBlockerId": 2513,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 117,
       "blockerId": 3523,
       "dependsOnBlockerId": 3333,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 118,
       "blockerId": 3523,
       "dependsOnBlockerId": 1323,
-      "dependencyImportance": 3
+      "dependencyImportance": 3,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 120,
       "blockerId": 3634,
       "dependsOnBlockerId": 1614,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 121,
       "blockerId": 3634,
       "dependsOnBlockerId": 1424,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 122,
       "blockerId": 3634,
       "dependsOnBlockerId": 2134,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 123,
       "blockerId": 3734,
       "dependsOnBlockerId": 1114,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 124,
       "blockerId": 3734,
       "dependsOnBlockerId": 1723,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 125,
       "blockerId": 3734,
       "dependsOnBlockerId": 3523,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 126,
       "blockerId": 3744,
       "dependsOnBlockerId": 1314,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 127,
       "blockerId": 3744,
       "dependsOnBlockerId": 1334,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 128,
       "blockerId": 3744,
       "dependsOnBlockerId": 1723,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 129,
       "blockerId": 3744,
       "dependsOnBlockerId": 2423,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     },
     {
       "id": 130,
       "blockerId": 3744,
       "dependsOnBlockerId": 2513,
-      "dependencyImportance": 4
+      "dependencyImportance": 4,
+      "reviewStatus": "Unreviewed"
     }
   ],
   "readinessQuestions": [
@@ -5862,6 +6153,28 @@
       "rationale": "Data availability provides context for agreed quality responsibilities and criteria.",
       "reviewStatus": "Draft - UIC review",
       "reviewComments": "Supporting context only. Do not infer that this question diagnoses this blocker. UIC must validate."
+    }
+  ],
+  "communities": [
+    {
+      "id": 1,
+      "name": "Scaling strategy & delivery orchestration"
+    },
+    {
+      "id": 2,
+      "name": "Governance, architecture & operational integration"
+    },
+    {
+      "id": 3,
+      "name": "Human adoption & operational value realization"
+    },
+    {
+      "id": 4,
+      "name": "Model assurance, lifecycle & safety"
+    },
+    {
+      "id": 5,
+      "name": "Data quality & accountability foundations"
     }
   ]
 }

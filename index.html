@@ -826,7 +826,7 @@ body.modal-open{overflow:hidden}
 </style>
   <link rel="stylesheet" href="dependencies.css" />
   <link rel="stylesheet" href="stage-dependencies.css?v=20261002-stage-map" />
-</head>
+<link rel="stylesheet" href="community-metadata.css" /></head>
 <body>
   <svg class="svg-sprite" aria-hidden="true" width="0" height="0">
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
@@ -1084,7 +1084,7 @@ function renderExplore() {
     <div class="page-head"><div><p class="eyebrow">Explore</p><h2>Choose a path.</h2><p class="subtle">Start broad. Open detail only when it becomes useful.</p></div></div>
     ${activePerspectiveHtml()}
     <div class="path-grid">
-      <button class="path-card" id="byDomain"><div class="path-visual">▦</div><h3>By Domain</h3><p>Explore blockers and enablers by thematic domain.</p><span class="card-link">Choose a domain →</span></button>
+      <button class="path-card" id="byDomain"><div class="path-visual">▦</div><h3>By Community</h3><p>Explore related blockers in five communities.</p><span class="card-link">Explore communities →</span></button>
       <button class="path-card" id="byStage"><div class="path-visual">┈</div><h3>By Stage Gate</h3><p>Explore blockers along the six lifecycle gates.</p><span class="card-link">Follow the lifecycle →</span></button>
     </div>
     <div class="browse-all"><span class="browse-label">or browse all</span></div>
@@ -1102,22 +1102,8 @@ function activePerspectiveHtml() {
 }
 
 function renderDomains() {
-  const cards = state.data.domains.map(d => `<button class="domain-card ${d.enabled?'':'not-loaded'}" data-domain="${d.slug}">
-    <div class="domain-icon">${domainSymbol(d.slug)}</div><h3>${escapeHtml(d.title)}</h3><p>${escapeHtml(d.description)}</p><span class="chev">${icon('chevron')}</span>
-  </button>`).join('');
-  app.innerHTML = `<section class="page">
-    <button class="back-btn" id="backExplore">${icon('back')} Explore</button>
-    <div class="page-head"><div><p class="eyebrow">Explore by domain</p><h2>Where do you want to look?</h2><p class="subtle">Macro-domains organise the experience; the underlying clusters remain unchanged.</p></div></div>
-    ${activePerspectiveHtml()}
-    <div class="domain-grid">${cards}</div>
-  </section>`;
-  document.getElementById('backExplore').onclick = ()=>navigate('explore');
-  app.querySelectorAll('[data-domain]').forEach(card => card.onclick = () => {
-    const d = state.data.domains.find(x=>x.slug===card.dataset.domain);
-    if (d.enabled) location.hash = `#domain/${d.slug}`;
-    else toast(`${d.title} is reserved for the next data slice.`);
-  });
-  document.getElementById('changePerspective')?.addEventListener('click', openRolePicker);
+  app.innerHTML = `<section class="page"><button class="back-btn" id="backExplore">${icon('back')} Explore</button><div class="page-head"><div><p class="eyebrow">Explore by community</p><h2>Communities</h2><p class="subtle">Select a community, then zoom into its blockers and dependencies.</p></div></div><iframe title="Community clusters and blocker dependencies" src="./communities/" style="width:100%;height:1030px;border:0;border-radius:18px"></iframe></section>`;
+  document.getElementById('backExplore').onclick=()=>navigate('explore');
 }
 function domainSymbol(slug) {
   return ({'data-foundations':'◫','technology-infrastructure':'▣','governance-organisation':'◇','people-adoption':'●','legal-safety-assurance':'◆','value-delivery-scale':'▤'})[slug] || '○';
@@ -1603,10 +1589,10 @@ function renderTimelineGateView(gateId) {
       <p>${escapeHtml(gate.description || gate.label)}</p>
     </div>
     ${blockers.length ? `<div class="tl-blocker-cloud">${blockers.map(b=>`
-      <button class="tl-blocker-node" data-tl-blocker="${b.id}">
+      <button class="tl-blocker-node ${b.classification==='Critical core'?'critical-core':''}" data-tl-blocker="${b.id}">
         <span>${escapeHtml(state.data.domains.find(d=>d.slug===b.domain)?.title || '')}</span>
         <strong>${escapeHtml(b.title)}</strong>
-        <small>${escapeHtml(truncate(b.statement,105))}</small>
+        <small>${escapeHtml(truncate(b.statement,105))}</small><small class="criticality-label">${escapeHtml(b.classification)} · ${b.criticalityComposite?.toFixed(1)}</small>
       </button>`).join('')}</div>` : `<div class="empty-state">No blockers are currently mapped to this gate.</div>`}
   </section>`;
 }

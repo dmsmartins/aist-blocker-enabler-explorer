@@ -299,3 +299,5 @@
   .brand-mark{width:24px;height:24px}
   .ghost-top,.top-link{font-size:10px;padding:6px 7px}
 }
+
+.blocker-node.critical-core{border-left:4px solid #ad482c;background:#fff8f4}.criticality-label{font-size:11px;color:#85614f;margin-top:8px}.blocker-node.critical-core .criticality-label{color:#a13d24;font-weight:700}
