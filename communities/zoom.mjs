@@ -1,0 +1,2 @@
+export function wheelFactor(delta,mode=0){const pixels=delta*(mode===1?16:mode===2?400:1);return Math.exp(Math.max(-50,Math.min(50,pixels))*.00065)}
+export function zoomBox(box,factor,anchor=[.5,.5],minimum=650,maximum=2400){const width=Math.max(minimum,Math.min(maximum,box[2]*factor));const height=width*box[3]/box[2];return [box[0]+(box[2]-width)*anchor[0],box[1]+(box[3]-height)*anchor[1],width,height]}

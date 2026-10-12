@@ -31,7 +31,7 @@ Validation: `node --test --test-isolation=none readiness.test.mjs dependencies.t
 
 ## Current experience
 
-- **Explore by Domain**
+- **Explore by Community**
 - **Explore by Stage Gate**
 - **All Blockers**
 - **All Enablers**, organised by enabling mechanism
@@ -41,7 +41,7 @@ Validation: `node --test --test-isolation=none readiness.test.mjs dependencies.t
 - **View for my role**
 - **My Selection**
 - **Play — Scale Run**, an abstract platformer using the same blockers and enablers across the six Stage Gates (see `play/README.md`)
-- **Maturity Assessment**, with an illustrative company assessment and candidate **AI Project Readiness**
+- **Maturity Assessment**, with a company prototype and candidate **AI Project Readiness**
 
 The interface deliberately uses progressive disclosure: the first view stays light and additional detail appears only as the user explores deeper.
 
@@ -63,8 +63,6 @@ It contains:
 - `blockers`
 - `enablers`
 - `relationships` (Blocker ↔ Enabler + enabling mechanism)
-- `readinessQuestions` (grouped candidate questions, evidence guidance and UIC review status)
-- `questionBlockerMap` (Direct/Contextual candidate mappings using source blocker IDs)
 - `blockerDependencies` (Blocker → Blocker), including numeric `dependencyImportance` (1–4; higher values mean greater importance). Missing importance is shown as unspecified.
 
 Internal blocker/enabler IDs are used for relationships but are not displayed in the UI.
@@ -149,4 +147,3 @@ Curves above the gates show dependencies on later stages; curves below show depe
 A dependency on a later stage is not automatically an error or a requirement to complete that entire stage first. The panel describes possible interpretations and preserves access to blocker details.
 
 Validation: `node --test --test-isolation=none stage-dependencies.test.mjs dependencies.test.mjs`.
-
