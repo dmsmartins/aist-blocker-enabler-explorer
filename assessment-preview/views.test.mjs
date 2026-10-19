@@ -40,3 +40,25 @@ test('PDF has unique recommended enablers, practical actions and outcomes, with 
   r.recommendations[0].enabler_title='<script>alert(1)</script>';
   assert.ok(!V.enablerReport(r).includes('<script>'));
 });
+
+test('community and cluster groupings preserve allocated weights and missingness',()=>{
+  const s=make();
+  for(const a of Object.values(s.answers))Object.assign(a,{score:2,applicability:'applicable'});
+  const r=M.report(c,s);
+  const communities=r.groups.filter(g=>g.kind==='community');
+  assert.equal(communities.length,5);
+  assert.equal(communities.reduce((n,g)=>n+g.answered,0),41);
+  assert.ok(communities.every(g=>Math.abs(g.percent-50)<1e-9));
+  const clusters=r.groups.filter(g=>g.kind==='cluster');
+  assert.equal(clusters.length,22);
+  assert.equal(new Set(clusters.map(g=>g.dimension)).size,3);
+  for(const kind of ['cluster','community']){
+    const axes=r.groups.filter(g=>g.kind===kind&&(kind!=='cluster'||g.dimension==='Organisational'));
+    const svg=V.radar(axes,kind);
+    assert.equal((svg.match(/<circle /g)||[]).length,axes.length);
+    assert.equal((svg.match(/<li>/g)||[]).length,axes.length);
+    assert.ok(!svg.includes('NaN'));
+  }
+  const blank=M.report(c,make()).groups.filter(g=>g.kind==='community');
+  assert.ok(blank.every(g=>g.percent===null));
+});

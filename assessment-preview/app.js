@@ -6,7 +6,7 @@
   const esc = V.escape, now = () => new Date().toISOString();
   const title = q => `${q.assessment_type === 'company' ? 'Company' : 'Project'} · ${q.mode === 'quick' ? 'Quick' : 'Expert'}`;
   const levels = ['Absent', 'Recognised', 'Defined / tested locally', 'Implemented', 'Measured / sustained'];
-  let coffeeTimer;
+  let coffeeTimer, radarKind = 'stage_gate', radarDimension = 'Organisational';
   let current, catalog, session, view = 'home', store = { catalogs: {}, sessions: [] }, storageBlocked = false;
   function persist() {
     if (storageBlocked) return;
@@ -39,7 +39,7 @@
     }, 200);
   }
   function start(q) {
-    catalog = current;
+    catalog = current; radarKind = 'stage_gate';
     session = M.create(catalog, q, crypto.randomUUID(), now());
     session.scoring_basis = 'self_report_preview';
     store.catalogs[catalog.catalog_version] = catalog;
@@ -48,7 +48,7 @@
   }
   function resume(index, next = 'questions') {
     try {
-      session = store.sessions[index]; catalog = store.catalogs[session.catalog_version];
+      radarKind = 'stage_gate'; session = store.sessions[index]; catalog = store.catalogs[session.catalog_version];
       M.validate(catalog); M.validateAssessment(catalog, session);
       // Preserve historical evidence-based evaluations when changing preview policy.
       if (session.scoring_basis !== 'self_report_preview') {
@@ -101,13 +101,19 @@
   }
   function results() {
     const q = M.questionnaire(catalog, session), report = M.report(catalog, session);
+    const dimensions=[...new Set(report.groups.filter(g=>g.kind==='cluster').map(g=>g.dimension))];
+    if(!dimensions.includes(radarDimension))radarDimension=dimensions[0];
+    const axes=radarKind==='stage_gate'?V.gateAxes(report):report.groups.filter(g=>g.kind===radarKind&&(radarKind!=='cluster'||g.dimension===radarDimension)).sort((a,b)=>a.label.localeCompare(b.label,'en',{numeric:true}));
     app.innerHTML = `<div class="tools"><button id="back">← Questions</button><button id="home">Questionnaires</button></div>
       <p class="eyebrow">${esc(title(q))}</p><h1>Your scalability profile</h1>
-      <section class="radar-panel">${V.radar(V.gateAxes(report))}<p class="muted radar-caption">${report.rows.filter(r => r.status === 'valid').length}/${q.questions.length} questions answered${report.counts.not_applicable ? ` · ${report.counts.not_applicable} not applicable` : ''}.
+      <section class="radar-panel"><div class="radar-controls"><label>View by <select id="radar-kind"><option value="stage_gate" ${radarKind==='stage_gate'?'selected':''}>Stage Gate</option><option value="cluster" ${radarKind==='cluster'?'selected':''}>Cluster</option><option value="community" ${radarKind==='community'?'selected':''}>Community</option></select></label>${radarKind==='cluster'?`<label>Dimension <select id="radar-dimension">${dimensions.map(d=>`<option ${d===radarDimension?'selected':''}>${esc(d)}</option>`).join('')}</select></label>`:''}</div><h2 class="radar-view-title">${radarKind==='cluster'?esc(radarDimension)+' clusters':radarKind==='community'?'Communities':'Stage Gates'}</h2>${V.radar(axes,radarKind)}<p class="muted radar-caption">${report.rows.filter(r => r.status === 'valid').length}/${q.questions.length} questions answered${report.counts.not_applicable ? ` · ${report.counts.not_applicable} not applicable` : ''}.
       ${report.partial ? 'Partial profile — unanswered areas are left blank.' : ''} Self-reported preview.</p></section>
       <div class="tools result-actions"><button class="primary" id="timeline">Explore my timeline →</button><button id="pdf">PDF · recommended enablers</button></div>
       <section class="pdf-only"><h2>Enablers to develop</h2><p>${report.partial ? 'Recommendations reflect the answered questions only.' : 'Recommendations reflect the reported gaps.'} Scores do not imply blocker closure.</p>
       ${V.enablerReport(report, catalog, new URL("../", location.href))}</section>`;
+    app.querySelector('#radar-kind').onchange=e=>{radarKind=e.target.value;results();};
+    const dimensionSelect=app.querySelector('#radar-dimension');
+    if(dimensionSelect)dimensionSelect.onchange=e=>{radarDimension=e.target.value;results();};
     on('#back', () => go('questions')); on('#home', () => go('home'));
     on('#timeline', () => {
       try {

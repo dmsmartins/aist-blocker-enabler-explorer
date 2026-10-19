@@ -83,12 +83,13 @@
       }
     }
     const groups=[];
-    for (const kind of ['cluster','stage_gate']) {
-      const labels=new Map(blockers.map(b=>[kind==='cluster'?b.cluster_id:b.stage_gate,kind==='cluster'?b.dimension+' · '+b.cluster:b.stage_gate||'Unspecified stage gate']));
+    for (const kind of ['cluster','stage_gate','community']) {
+      const key=b=>kind==='cluster'?b.cluster_id:kind==='community'?(b.dependency_analysis?.community||'Unassigned community'):b.stage_gate;
+      const labels=new Map(blockers.map(b=>[key(b),kind==='cluster'?b.cluster: key(b)||'Unspecified stage gate']));
       for (const [id,label] of labels) {
-        const bs=blockers.filter(b=>(kind==='cluster'?b.cluster_id:b.stage_gate)===id), valid=bs.filter(b=>b.status==='valid'), applicable=bs.filter(b=>b.status!=='not_applicable');
+        const bs=blockers.filter(b=>key(b)===id), valid=bs.filter(b=>b.status==='valid'), applicable=bs.filter(b=>b.status!=='not_applicable');
         const den=4*valid.reduce((n,b)=>n+b.allocated_weight,0);
-        groups.push({kind,id,label,percent:den?100*valid.reduce((n,b)=>n+b.allocated_weight*b.score,0)/den:null,answered:valid.length,applicable:applicable.length,not_applicable:bs.length-applicable.length,partial:valid.length<applicable.length});
+        groups.push({kind,id,label,dimension:kind==='cluster'?bs[0].dimension:null,percent:den?100*valid.reduce((n,b)=>n+b.allocated_weight*b.score,0)/den:null,answered:valid.length,applicable:applicable.length,not_applicable:bs.length-applicable.length,partial:valid.length<applicable.length});
       }
     }
     const recommendations=[];
