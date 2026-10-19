@@ -6,6 +6,7 @@
   const esc = V.escape, now = () => new Date().toISOString();
   const title = q => `${q.assessment_type === 'company' ? 'Company' : 'Project'} · ${q.mode === 'quick' ? 'Quick' : 'Expert'}`;
   const levels = ['Absent', 'Recognised', 'Defined / tested locally', 'Implemented', 'Measured / sustained'];
+  let coffeeTimer;
   let current, catalog, session, view = 'home', store = { catalogs: {}, sessions: [] }, storageBlocked = false;
   function persist() {
     if (storageBlocked) return;
@@ -14,7 +15,29 @@
   }
   function touch() { session.updated_at = now(); persist(); }
   function on(selector, callback) { app.querySelector(selector)?.addEventListener('click', callback); }
-  function go(next) { view = next; render(); app.focus(); window.scrollTo(0, 0); }
+  function go(next) { clearInterval(coffeeTimer); view = next; render(); app.focus(); window.scrollTo(0, 0); }
+  function coffee(q) {
+    clearInterval(coffeeTimer);
+    view = 'coffee';
+    let remaining = 10;
+    const deadline = Date.now() + 10000;
+    app.innerHTML = `<section class="coffee-break"><p class="eyebrow">${esc(title(q))}</p>
+      <div class="coffee-art" aria-hidden="true"><span class="steam steam-one"></span><span class="steam steam-two"></span><span class="steam steam-three"></span><div class="coffee-cup"></div><div class="coffee-saucer"></div></div>
+      <h1>Grab a coffee.</h1><p class="coffee-estimate">This will take approx. <strong>${q.mode === 'quick' ? '15' : '30'} minutes.</strong></p>
+      <p class="muted">Take a breath. Your questionnaire is about to begin.</p>
+      <div class="coffee-countdown" role="timer" aria-label="Seconds until the questionnaire begins"><span id="coffee-seconds">10</span><small>seconds</small></div>
+      <p class="sr-only" role="status">The questionnaire starts automatically in 10 seconds. You can start now or go back.</p>
+      <div class="tools"><button class="primary" id="coffee-start">Start now →</button><button id="coffee-back">← Back</button></div></section>`;
+    app.focus(); window.scrollTo(0, 0);
+    const begin = () => { if (view !== 'coffee') return; clearInterval(coffeeTimer); start(q); };
+    on('#coffee-start', begin); on('#coffee-back', () => go('home'));
+    coffeeTimer = setInterval(() => {
+      remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+      const counter = document.getElementById('coffee-seconds');
+      if (counter) counter.textContent = remaining;
+      if (remaining === 0) begin();
+    }, 200);
+  }
   function start(q) {
     catalog = current;
     session = M.create(catalog, q, crypto.randomUUID(), now());
@@ -48,7 +71,7 @@
       <p>${q.questions.length} questions</p><button class="primary" data-start="${i}">Start ${esc(title(q))}</button></section>`).join('')}</div>
       ${store.sessions.length ? `<section class="panel"><h2>Continue an assessment</h2><div class="drafts">${store.sessions.map((s, i) => `
       <button data-resume="${i}">${esc(title(s))} <small>${esc(s.updated_at?.slice(0, 10))}</small></button>`).join('')}</div></section>` : ''}`;
-    app.querySelectorAll('[data-start]').forEach(b => b.onclick = () => start(current.questionnaires[Number(b.dataset.start)]));
+    app.querySelectorAll('[data-start]').forEach(b => b.onclick = () => coffee(current.questionnaires[Number(b.dataset.start)]));
     app.querySelectorAll('[data-resume]').forEach(b => b.onclick = () => resume(Number(b.dataset.resume)));
   }
   function questions() {
