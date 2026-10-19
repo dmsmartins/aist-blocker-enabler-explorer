@@ -1,65 +1,110 @@
-/* A separate evaluation workspace: never mutates legacy assessment or closure state. */
-(async function() {
+(async function () {
   'use strict';
-  const M=AssessmentPreview, app=document.getElementById('app'), status=document.getElementById('storage-status');
-  const STORE='aistQuestionnairePreviewV1', esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const now=()=>new Date().toISOString(), pct=v=>v===null?'No score':v.toFixed(1)+'%', title=q=>q.assessment_type[0].toUpperCase()+q.assessment_type.slice(1)+' · '+q.mode[0].toUpperCase()+q.mode.slice(1);
-  const labels={valid:'Answered with evidence',not_applicable:'N/A justified',unanswered:'Not answered',evidence_missing:'Evidence needed',na_reason_missing:'N/A justification needed',invalid:'Invalid response'};
-  let current, c, s, view='home', store={catalogs:{},sessions:[]}, storageBlocked=false;
+  const M = AssessmentPreview, V = AssessmentViews;
+  const app = document.getElementById('app'), status = document.getElementById('storage-status');
+  const STORE = 'aistQuestionnairePreviewV1';
+  const esc = V.escape, now = () => new Date().toISOString();
+  const title = q => `${q.assessment_type === 'company' ? 'Company' : 'Project'} · ${q.mode === 'quick' ? 'Quick' : 'Expert'}`;
+  const levels = ['Absent', 'Recognised', 'Defined / tested locally', 'Implemented', 'Measured / sustained'];
+  let current, catalog, session, view = 'home', store = { catalogs: {}, sessions: [] }, storageBlocked = false;
   function persist() {
-    if(storageBlocked){status.textContent='Saved data could not be read. Download your current work; existing browser data has not been overwritten.';return;}
-    try {localStorage.setItem(STORE,JSON.stringify(store));status.textContent='Draft saved in this browser · '+new Date().toLocaleTimeString();}
-    catch(e){status.textContent='Browser storage is unavailable or full. Your changes are in memory only: download a JSON backup before leaving.';}
+    if (storageBlocked) return;
+    try { localStorage.setItem(STORE, JSON.stringify(store)); status.textContent = 'Saved in this browser'; }
+    catch { status.textContent = 'Browser storage is full or unavailable. Keep this tab open; these answers cannot be restored after closing.'; }
   }
-  function touch(){s.updated_at=now();persist();}
-  function download(name,data,type='application/json'){const url=URL.createObjectURL(new Blob([type==='application/json'?JSON.stringify(data,null,2):data],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
-  function exportSession(){download('assessment-'+s.assessment_id+'.json',{format:'aist-questionnaire-preview-v1',catalog_snapshot:c,assessment:s,report:M.report(c,s)});}
-  function bind(selector,fn){app.querySelector(selector)?.addEventListener('click',fn);}
-  function navigate(next){view=next;render();app.focus();window.scrollTo(0,0);}
-  function sessionTools(){return '<div class="tools"><button id="home">All questionnaires</button><button id="questions">Questions</button><button id="report">Results & review</button><button id="download">Download JSON backup</button></div>';}
-  function wireTools(){bind('#home',()=>navigate('home'));bind('#questions',()=>navigate('questions'));bind('#report',()=>navigate('report'));bind('#download',exportSession);}
-  function start(q,linked=null){c=current;s=M.create(c,q,crypto.randomUUID(),now());s.source_quick_assessment_id=linked;store.catalogs[c.catalog_version]=c;store.sessions.push(s);persist();navigate('setup');}
-  function home(){
-    app.innerHTML='<p class="eyebrow">Questionnaire review · Preview</p><h1>Try the questions.<br>Make the framework clearer.</h1><p class="muted">Choose company or project, then Quick or Expert. Review the wording, try the maturity guides and record feedback for the end-of-week review.</p><div class="notice info">All four sets cover the same 41 blockers. Quick gives a conservative group estimate; Expert assesses each blocker individually. Their weighted scores are not directly comparable.</div><div class="cards">'+current.questionnaires.map((q,i)=>'<section class="card"><p class="eyebrow">'+esc(q.assessment_type)+'</p><h2>'+esc(q.mode==='quick'?'Quick overview':'Expert assessment')+'</h2><p>'+q.questions.length+' questions · 41 blockers · five maturity levels</p><p class="muted">'+(q.mode==='quick'?'Evaluate all criteria in each group; choose the lowest supported level.':'Review the question and evidence for each individual blocker.')+'</p><button class="primary" data-start="'+i+'">Start '+esc(title(q))+'</button></section>').join('')+'</div><section class="panel"><h2>Your saved evaluations</h2><p>Separate drafts for each run. No answers are copied between Quick and Expert.</p>'+ (store.sessions.length?'<div class="table-wrap"><table><thead><tr><th>Evaluation</th><th>Scope</th><th>Updated</th><th></th></tr></thead><tbody>'+store.sessions.map((x,i)=>'<tr><td>'+esc(x.entity_name||'Untitled')+'<br><small>'+esc(x.assessment_type+' · '+x.mode)+'</small></td><td>'+esc(x.scope||'Scope not entered')+'</td><td>'+esc(x.updated_at?.slice(0,10))+'</td><td><button data-resume="'+i+'">Resume</button></td></tr>').join('')+'</tbody></table></div>':'<p class="muted">No drafts yet.</p>')+'<label class="field">Import a downloaded evaluation<input id="import" type="file" accept=".json,application/json"></label><p id="import-error" class="error" role="alert"></p></section>';
-    app.querySelectorAll('[data-start]').forEach(b=>b.onclick=()=>start(current.questionnaires[Number(b.dataset.start)]));
-    app.querySelectorAll('[data-resume]').forEach(b=>b.onclick=()=>{try{s=store.sessions[Number(b.dataset.resume)];c=store.catalogs[s.catalog_version];M.validate(c);M.validateAssessment(c,s);navigate('questions');}catch(e){app.querySelector('#import-error').textContent='Cannot resume this draft: '+e.message;}});
-    app.querySelector('#import').onchange=async e=>{try{const file=e.target.files[0];if(!file)return;if(file.size>10000000)throw new Error('File exceeds 10 MB.');const data=JSON.parse(await file.text());if(data.format!=='aist-questionnaire-preview-v1')throw new Error('Unsupported backup format.');M.validate(data.catalog_snapshot);M.validateAssessment(data.catalog_snapshot,data.assessment);const index=store.sessions.findIndex(x=>x.assessment_id===data.assessment.assessment_id);if(index>=0&&!confirm('Replace the existing draft with the imported version?'))return;store.catalogs[data.catalog_snapshot.catalog_version]=data.catalog_snapshot;if(index>=0)store.sessions[index]=data.assessment;else store.sessions.push(data.assessment);persist();home();}catch(error){app.querySelector('#import-error').textContent=error.message;}};
+  function touch() { session.updated_at = now(); persist(); }
+  function on(selector, callback) { app.querySelector(selector)?.addEventListener('click', callback); }
+  function go(next) { view = next; render(); app.focus(); window.scrollTo(0, 0); }
+  function start(q) {
+    catalog = current;
+    session = M.create(catalog, q, crypto.randomUUID(), now());
+    session.scoring_basis = 'self_report_preview';
+    store.catalogs[catalog.catalog_version] = catalog;
+    store.sessions.push(session);
+    persist(); go('questions');
   }
-  function setup(){const q=M.questionnaire(c,s);app.innerHTML=sessionTools()+'<p class="eyebrow">'+esc(title(q))+'</p><h1>Define this evaluation</h1><p>Record the assessed units or the project and intended deployment scale. Evidence and N/A decisions apply to this scope.</p><form id="setup"><div class="metadata">'+[['entity_name',q.assessment_type==='company'?'Company name':'Project name'],['entity_id','Company / project reference'],['author','Reviewer'],['assessment_date','Assessment date'],['scope',q.assessment_type==='company'?'Units and scope included':'Project scope'],['target_scale','Intended scale / deployment']].map(([key,label])=>'<label class="field">'+label+'<input name="'+key+'" '+(['entity_name','author','scope'].includes(key)?'required ':'')+'type="'+(key==='assessment_date'?'date':'text')+'" value="'+esc(s[key])+'"></label>').join('')+'</div><p class="notice">For score 0, a factual description of the absent practice is valid evidence. “Not sure” stays unanswered. Future-stage requirements are readiness gaps unless genuinely outside scope.</p><button class="primary" type="submit">Review questions →</button></form>';wireTools();app.querySelector('#setup').oninput=e=>{if(e.target.name){s[e.target.name]=e.target.value;touch();}};app.querySelector('#setup').onsubmit=e=>{e.preventDefault();navigate('questions');};}
-  function trace(q){
-    return '<details><summary>Criteria, blocker IDs, evidence examples & source relationships</summary><p class="criteria">'+esc(q.criteria)+'</p>'+q.blocker_ids.map(id=>{
-      const b=c.blockers.find(b=>b.blocker_id===id),m=c.question_blocker.find(m=>M.key(m)===s.questionnaire_key&&m.question_id===q.question_id&&m.blocker_id===id),dep=c.blocker_dependencies.filter(e=>e.blocker_id===id),down=c.blocker_dependencies.filter(e=>e.depends_on_blocker_id===id),links=c.blocker_enabler_relationships.filter(e=>e.blocker_id===id);
-      const expert=c.questionnaires.find(x=>x.assessment_type===s.assessment_type&&x.mode==='expert')?.questions.find(x=>x.blocker_ids.includes(id));
-      return '<div class="trace"><h3>'+id+' · '+esc(b.title)+'</h3><p>'+esc(b.dimension+' · '+b.cluster)+'<br>'+esc(b.stage_gate)+'</p><p><strong>Suggested evidence:</strong> '+esc(m?.suggested_evidence)+'</p><p><strong>Dependency analysis:</strong> '+esc(b.dependency_analysis?.state)+' · '+esc(b.dependency_analysis?.community)+' (source classification; not closure status)</p>'+(s.mode==='quick'?'<details><summary>Expert guide for blocker '+id+'</summary><p>'+esc(expert.text)+'</p>'+[0,1,2,3,4].map(n=>'<p><strong>Level '+n+':</strong> '+esc(expert['rubric_'+n])+'</p>').join('')+'</details>':'')+'<details><summary>Upstream dependencies ('+dep.length+') and downstream impacts ('+down.length+')</summary><p>These relationships support review; they are not automatic closure gates.</p><ul>'+dep.map(e=>'<li>Depends on '+e.depends_on_blocker_id+' · relationship '+e.relationship_id+' · importance '+e.dependency_importance+'</li>').join('')+down.map(e=>'<li>Blocker '+e.blocker_id+' depends on this blocker · relationship '+e.relationship_id+'</li>').join('')+'</ul></details><details><summary>Linked enablers ('+links.length+')</summary>'+links.map(l=>{const e=c.enablers.find(e=>e.enabler_id===l.enabler_id);return '<p><strong>'+e.enabler_id+' · '+esc(e.enabler_title)+'</strong><br>Relationship '+l.relationship_id+' · '+esc(l.relationship_type+' / '+l.relationship_strength+' / '+l.attribute)+'<br>'+esc(l.rationale)+'<br><small>'+esc(l.attribute_description)+'</small></p>';}).join('')+'</details></div>';
-    }).join('')+'</details>';
+  function resume(index, next = 'questions') {
+    try {
+      session = store.sessions[index]; catalog = store.catalogs[session.catalog_version];
+      M.validate(catalog); M.validateAssessment(catalog, session);
+      // Preserve historical evidence-based evaluations when changing preview policy.
+      if (session.scoring_basis !== 'self_report_preview') {
+        const old = session;
+        session = structuredClone(old);
+        session.assessment_id = crypto.randomUUID();
+        session.source_assessment_id = old.assessment_id;
+        session.scoring_basis = 'self_report_preview';
+        session.created_at = now();
+        for (const q of M.questionnaire(catalog, session).questions) session.answers[q.question_id].effective_weight = q.default_weight;
+        store.sessions.push(session); touch();
+      }
+      go(next);
+    } catch (e) { status.textContent = `Cannot open this saved evaluation: ${e.message}`; }
   }
-  function questions(){
-    const questionnaire=M.questionnaire(c,s);s.current_step=Math.min(Math.max(Number.isInteger(s.current_step)?s.current_step:0,0),questionnaire.questions.length-1);
-    const q=questionnaire.questions[s.current_step],a=s.answers[q.question_id];
-    app.innerHTML=sessionTools()+'<p class="eyebrow">'+esc(title(questionnaire))+' · '+esc(s.entity_name||'Untitled evaluation')+'</p><div class="tools"><button id="edit-scope">Edit scope</button><label>Jump to question <select id="jump">'+questionnaire.questions.map((x,i)=>'<option value="'+i+'" '+(i===s.current_step?'selected':'')+'>'+esc(x.question_id+' · '+x.topic)+'</option>').join('')+'</select></label></div><div id="summary"></div><section class="question"><p class="eyebrow">Question '+(s.current_step+1)+' of '+questionnaire.questions.length+' · '+esc(q.question_id)+'</p><h2>'+esc(q.text)+'</h2>'+(s.mode==='quick'?'<p class="notice">Choose the highest level fully met by <strong>every mapped blocker</strong>. If any component is 0, the group is 0. Unknown components must stay unanswered. Mixed applicability requires an individual Expert assessment.</p>':'<p class="notice info">Choose the highest level fully supported by evidence, including all preceding levels.</p>')+'<fieldset><legend>Maturity level</legend>'+[0,1,2,3,4].map(n=>'<label class="option"><input type="radio" name="score" value="'+n+'" '+(a.applicability==='applicable'&&a.score===n?'checked':'')+'><span><strong>Level '+n+'</strong>'+esc(q['rubric_'+n])+'</span></label>').join('')+'<label class="option"><input type="radio" name="score" value="unknown" '+(a.applicability==='undecided'?'checked':'')+'><span><strong>Not sure / unanswered</strong>No score is assigned.</span></label><label class="option"><input type="radio" name="score" value="na" '+(a.applicability==='not_applicable'?'checked':'')+'><span><strong>Not applicable</strong>Only for a genuine exclusion from the recorded scope.</span></label></fieldset><div id="evidence-fields"><label class="field">Evidence / factual justification<textarea id="evidence">'+esc(a.evidence)+'</textarea></label></div><div id="na-fields"><label class="field">Reason this is outside scope<textarea id="na-reason">'+esc(a.na_reason)+'</textarea></label>'+(s.mode==='quick'?'<label class="option"><input id="all-na" type="checkbox" '+(a.all_blockers_not_applicable?'checked':'')+'>All mapped blockers are outside scope and the reason covers every one.</label><button id="start-expert">Start a separate Expert assessment</button>':'')+'</div><details><summary>Assessment weight (default '+q.default_weight+')</summary><label class="field">Effective weight for this evaluation<input id="weight" type="number" min="0" step="any" value="'+a.effective_weight+'"></label><p>Zero weight stays in progress and gap lists but is excluded from the weighted score. Catalogue defaults and other evaluations are unchanged.</p></details><label class="field">Feedback on this question or its guides<textarea id="feedback" placeholder="Is anything unclear, missing or difficult to assess?">'+esc(a.review_comment)+'</textarea></label>'+trace(q)+'<div class="tools"><button id="previous" '+(s.current_step===0?'disabled':'')+'>← Previous</button><button class="primary" id="next">'+(s.current_step===questionnaire.questions.length-1?'Results & review':'Next question →')+'</button></div></section>';
-    wireTools();bind('#edit-scope',()=>navigate('setup'));app.querySelector('#jump').onchange=e=>{s.current_step=Number(e.target.value);touch();questions();};
-    app.querySelector('fieldset').insertAdjacentHTML('beforebegin','<p class="criteria"><strong>Criteria referenced by the guides (source column N)</strong><br>'+esc(q.criteria)+'</p><p class="muted">Select 0 only when absence is confirmed. If the practice is unassessed or unknown, choose “Not sure”.</p>');
-    function refresh(){const r=M.report(c,s);app.querySelector('#summary').innerHTML='<div class="statusline"><span><strong>'+Math.round(r.completion*100)+'%</strong> complete</span><span>'+r.counts.unanswered+' unanswered</span><span>'+r.counts.evidence_missing+' need evidence</span><span>'+r.counts.not_applicable+' N/A justified</span><span>'+r.counts.zero_weight+' zero weight</span><span>'+esc(labels[M.classify(a,q,s.mode)])+'</span></div><progress max="1" value="'+r.completion+'" aria-label="Completion"></progress>';app.querySelector('#evidence-fields').hidden=a.applicability==='not_applicable';app.querySelector('#na-fields').hidden=a.applicability!=='not_applicable';}
-    function change(){a.updated_at=now();a.author=s.author;touch();refresh();}
-    app.querySelectorAll('input[name=score]').forEach(el=>el.onchange=()=>{a.score=['na','unknown'].includes(el.value)?null:Number(el.value);a.applicability=el.value==='na'?'not_applicable':el.value==='unknown'?'undecided':'applicable';change();});
-    for(const [id,field] of [['evidence','evidence'],['na-reason','na_reason'],['feedback','review_comment']])app.querySelector('#'+id).oninput=e=>{a[field]=e.target.value;change();};
-    app.querySelector('#weight').oninput=e=>{const n=e.target.value===''?NaN:Number(e.target.value);e.target.setCustomValidity(M.weightOK(n)?'':'Enter a finite non-negative weight.');if(!M.weightOK(n)){e.target.reportValidity();return;}a.effective_weight=n;change();};
-    if(s.mode==='quick'){app.querySelector('#all-na').onchange=e=>{a.all_blockers_not_applicable=e.target.checked;change();};bind('#start-expert',()=>{const parent=s.assessment_id;start(current.questionnaires.find(x=>x.assessment_type===s.assessment_type&&x.mode==='expert'),parent);});}
-    bind('#previous',()=>{s.current_step--;touch();navigate('questions');});bind('#next',()=>{if(s.current_step===questionnaire.questions.length-1)navigate('report');else{s.current_step++;touch();navigate('questions');}});refresh();
+  function home() {
+    app.innerHTML = `<p class="eyebrow">Maturity assessment · Preview</p><h1>Where are you ready to scale?</h1>
+      <p class="muted">Choose a questionnaire and start answering.</p><div class="cards">${current.questionnaires.map((q, i) => `
+      <section class="card"><p class="eyebrow">${esc(q.assessment_type)}</p><h2>${q.mode === 'quick' ? 'Quick overview' : 'Expert assessment'}</h2>
+      <p>${q.questions.length} questions</p><button class="primary" data-start="${i}">Start ${esc(title(q))}</button></section>`).join('')}</div>
+      ${store.sessions.length ? `<section class="panel"><h2>Continue an assessment</h2><div class="drafts">${store.sessions.map((s, i) => `
+      <button data-resume="${i}">${esc(title(s))} <small>${esc(s.updated_at?.slice(0, 10))}</small></button>`).join('')}</div></section>` : ''}`;
+    app.querySelectorAll('[data-start]').forEach(b => b.onclick = () => start(current.questionnaires[Number(b.dataset.start)]));
+    app.querySelectorAll('[data-resume]').forEach(b => b.onclick = () => resume(Number(b.dataset.resume)));
   }
-  function results(){
-    const q=M.questionnaire(c,s),r=M.report(c,s);
-    const metadataComplete=Boolean(s.entity_name.trim()&&s.scope.trim()&&s.author.trim());
-    app.innerHTML=sessionTools()+'<p class="eyebrow">'+esc(title(q))+' · Evaluation report</p><h1>'+esc(s.entity_name||'Untitled evaluation')+'</h1><p>'+esc(s.scope||'Scope not entered')+' · '+esc(s.target_scale)+'<br>'+esc(s.author||'Reviewer not entered')+' · '+esc(s.assessment_date)+'</p>'+(!metadataComplete?'<p class="notice">Evaluation metadata is incomplete. Record the entity, scope and reviewer before sharing a final report.</p>':'')+'<p class="notice">'+(r.partial?'Partial assessment. Missing, invalid and unsupported answers are excluded from maturity.':'Question completion reached 100%. Evidence remains self-reported and requires review.')+' No blocker has been closed by this assessment.</p><div class="metrics"><div class="metric"><strong>'+pct(r.maturity_percent)+'</strong>Weighted maturity'+(r.partial?' · partial':'')+'</div><div class="metric"><strong>'+Math.round(r.completion*100)+'%</strong>Question completion</div><div class="metric"><strong>'+r.counts.not_applicable+'</strong>Justified N/A exclusions</div></div><p>'+r.counts.unanswered+' unanswered · '+r.counts.evidence_missing+' without evidence · '+r.counts.na_reason_missing+' unjustified N/A · '+r.counts.invalid+' invalid · '+r.counts.zero_weight+' zero weight</p><div class="tools"><button id="feedback-download">Download question feedback</button><button id="print">Print / save PDF</button></div><section class="panel"><h2>Coverage by cluster and Stage Gate</h2><p>Community radar is unavailable pending approval of the source mapping. Quick and Expert scores use different weighting units.</p><div class="table-wrap"><table><thead><tr><th>Grouping</th><th>Maturity</th><th>Coverage</th><th>N/A</th></tr></thead><tbody>'+r.groups.map(g=>'<tr><td>'+esc(g.label)+'</td><td>'+(g.applicable===0?'Not applicable':pct(g.percent))+(g.partial?' · partial':'')+'</td><td>'+g.answered+'/'+g.applicable+'</td><td>'+g.not_applicable+'</td></tr>').join('')+'</tbody></table></div></section><section class="panel"><h2>Blocker assessment and dependency review</h2><p>Quick scores are conservative group estimates, not individual evaluations. Levels 3–4 are ready for evidence review; they do not imply resolution. '+c.dependency_cycle_groups.length+' cyclic group(s) require joint review.</p><div class="table-wrap"><table><thead><tr><th>Blocker</th><th>Maturity / origin</th><th>Review action</th><th>Upstream dependencies</th></tr></thead><tbody>'+r.blockers.map(b=>'<tr><td>'+b.blocker_id+' · '+esc(b.title)+'</td><td>'+(b.score===null?'No score':b.score)+'<br>'+esc(b.score_origin)+'</td><td>'+(b.status==='not_applicable'?'N/A in this scope':b.status!=='valid'?esc(labels[b.status]):b.score>=3?'Review evidence; no automatic closure':b.allocated_weight===0?'Gap · zero weighted priority':'Gap identified')+'</td><td>'+c.blocker_dependencies.filter(e=>e.blocker_id===b.blocker_id).map(e=>e.depends_on_blocker_id+' (relationship '+e.relationship_id+')').join(', ')+'</td></tr>').join('')+'</tbody></table></div></section><section class="panel"><h2>Enablers for evidenced gaps</h2><p>Priority sums allocated weight × (4 − score) / 4 over distinct blockers at levels 0–2. Relationship strength is not a probability. Dependency status remains unreviewed.</p>'+(!r.recommendations.length?'<p>No enabler priorities can be calculated from the current valid gap responses.</p>':r.recommendations.map(e=>'<details><summary>'+esc(e.enabler_title)+' · priority '+e.priority.toFixed(3)+'</summary><p><strong>Practical actions:</strong> '+esc(e.practical_actions)+'</p><p><strong>Expected outcome:</strong> '+esc(e.expected_outcome)+'</p><ul>'+e.contributions.map(b=>'<li>'+esc(b.question_id)+' → blocker '+b.blocker_id+' → relationships '+b.relationship_ids.join(', ')+' → enabler '+e.enabler_id+' · contribution '+b.contribution.toFixed(3)+'</li>').join('')+'</ul>'+e.links.map(l=>'<p>Relationship '+l.relationship_id+': '+esc(l.relationship_type+' / '+l.relationship_strength+' / '+l.attribute)+'<br>'+esc(l.rationale)+'<br>'+esc(l.attribute_description)+'</p>').join('')+'</details>').join(''))+'</section><section class="panel"><h2>Answers, evidence and question feedback</h2>'+r.rows.map((row,i)=>'<article class="result-answer"><h3>'+esc(row.question.question_id+' · '+row.question.text)+'</h3><p><strong>'+esc(labels[row.status])+'</strong> · '+(row.answer.score===null?'No level selected':'Level '+row.answer.score)+' · effective weight '+row.answer.effective_weight+'</p>'+(row.answer.score!==null?'<p>'+esc(row.question['rubric_'+row.answer.score])+'</p>':'')+'<p><strong>Evidence:</strong> '+esc(row.answer.evidence||'None')+'</p><p><strong>N/A reason:</strong> '+esc(row.answer.na_reason||'None')+'</p><p><strong>Question feedback:</strong> '+esc(row.answer.review_comment||'None')+'</p><button data-edit="'+i+'">Edit response</button></article>').join('')+'</section><details><summary>Source versions and limitations</summary><p>Questionnaire '+esc(s.questionnaire_version)+'<br>Maps '+esc(s.maps_version)+'<br>Catalogue '+esc(s.catalog_version)+'</p><p>This preview does not persist closure decisions or modify the Explorer timeline. Print/PDF uses this same report. Download JSON to retain the full guides, weights, maps and responses for reproducibility.</p></details>';
-    wireTools();app.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{s.current_step=Number(b.dataset.edit);touch();navigate('questions');});
-    bind('#feedback-download',()=>download('question-feedback-'+s.assessment_id+'.json',{assessment_id:s.assessment_id,reviewer:s.author,assessment_type:s.assessment_type,mode:s.mode,questionnaire_version:s.questionnaire_version,feedback:r.rows.filter(x=>x.answer.review_comment.trim()).map(x=>({question_id:x.question.question_id,question:x.question.text,blocker_ids:x.question.blocker_ids,comment:x.answer.review_comment}))}));
-    bind('#print',()=>{const details=[...app.querySelectorAll('details')],states=details.map(x=>x.open);details.forEach(x=>x.open=true);window.print();details.forEach((x,i)=>x.open=states[i]);});
+  function questions() {
+    const q = M.questionnaire(catalog, session);
+    session.current_step = Math.max(0, Math.min(Number.isInteger(session.current_step) ? session.current_step : 0, q.questions.length - 1));
+    const question = q.questions[session.current_step], answer = session.answers[question.question_id];
+    const answered = Object.values(session.answers).filter(a => a.score !== null || a.applicability === 'not_applicable').length;
+    app.innerHTML = `<div class="tools"><button id="home">← Questionnaires</button><button id="results">Results</button></div>
+      <p class="eyebrow">${esc(title(q))}</p><progress max="${q.questions.length}" value="${answered}" aria-label="Questions answered"></progress>
+      <section class="question"><p class="eyebrow">Question ${session.current_step + 1} of ${q.questions.length}</p><h2>${esc(question.text)}</h2>
+      <p class="muted">${q.mode === 'quick' ? 'Choose the lowest level that applies across all parts of this question.' : 'Choose the level that best describes your current practice.'}</p>
+      <fieldset><legend class="sr-only">Maturity level</legend>${levels.map((label, n) => `
+      <label class="option"><input type="radio" name="score" value="${n}" ${answer.applicability === 'applicable' && answer.score === n ? 'checked' : ''}>
+      <span><strong>Level ${n}</strong>${label}</span></label>`).join('')}
+      <label class="option"><input type="radio" name="score" value="unknown" ${answer.applicability === 'undecided' ? 'checked' : ''}><span>Not sure / skip for now</span></label>
+      <label class="option"><input type="radio" name="score" value="na" ${answer.applicability === 'not_applicable' ? 'checked' : ''}><span>Not applicable${q.mode === 'quick' ? ' to any part of this question' : ''}</span></label></fieldset>
+      <div class="tools"><button id="previous" ${session.current_step === 0 ? 'disabled' : ''}>← Previous</button><button class="primary" id="next">${session.current_step === q.questions.length - 1 ? 'See results' : 'Next →'}</button></div></section>`;
+    on('#home', () => go('home')); on('#results', () => go('results'));
+    app.querySelectorAll('[name=score]').forEach(input => input.onchange = () => {
+      answer.score = ['unknown', 'na'].includes(input.value) ? null : Number(input.value);
+      answer.applicability = input.value === 'na' ? 'not_applicable' : input.value === 'unknown' ? 'undecided' : 'applicable';
+      answer.updated_at = now(); touch();
+      app.querySelector('progress').value = Object.values(session.answers).filter(a => a.score !== null || a.applicability === 'not_applicable').length;
+    });
+    on('#previous', () => { session.current_step--; touch(); go('questions'); });
+    on('#next', () => { if (session.current_step === q.questions.length - 1) go('results'); else { session.current_step++; touch(); go('questions'); } });
   }
-  function render(){if(view==='home')home();else if(view==='setup')setup();else if(view==='questions')questions();else results();}
+  function results() {
+    const q = M.questionnaire(catalog, session), report = M.report(catalog, session);
+    app.innerHTML = `<div class="tools"><button id="back">← Questions</button><button id="home">Questionnaires</button></div>
+      <p class="eyebrow">${esc(title(q))}</p><h1>Your scalability profile</h1>
+      <section class="radar-panel">${V.radar(V.gateAxes(report))}<p class="muted radar-caption">${report.rows.filter(r => r.status === 'valid').length}/${q.questions.length} questions answered${report.counts.not_applicable ? ` · ${report.counts.not_applicable} not applicable` : ''}.
+      ${report.partial ? 'Partial profile — unanswered areas are left blank.' : ''} Self-reported preview.</p></section>
+      <div class="tools result-actions"><button class="primary" id="timeline">Explore my timeline →</button><button id="pdf">PDF · recommended enablers</button></div>
+      <section class="pdf-only"><h2>Enablers to develop</h2><p>${report.partial ? 'Recommendations reflect the answered questions only.' : 'Recommendations reflect the reported gaps.'} Scores do not imply blocker closure.</p>
+      ${V.enablerReport(report)}</section>`;
+    on('#back', () => go('questions')); on('#home', () => go('home'));
+    on('#timeline', () => {
+      try {
+        sessionStorage.setItem('aistQuestionnaireTimelineV1', JSON.stringify(V.timeline(catalog, report, session)));
+        window.location.href = `../timeline/?assessment=questionnaire&id=${encodeURIComponent(session.assessment_id)}`;
+      } catch { status.textContent = 'Unable to open the timeline: browser session storage is unavailable.'; }
+    });
+    on('#pdf', () => window.print());
+  }
+  function render() { if (view === 'home') home(); else if (view === 'questions') questions(); else results(); }
   try {
-    const res=await fetch('../data/explorer_catalog.json',{cache:'no-cache'});if(!res.ok)throw new Error('Catalogue HTTP '+res.status);current=M.validate(await res.json());
-    try{const raw=localStorage.getItem(STORE);if(raw){const saved=JSON.parse(raw);if(!saved.catalogs||!Array.isArray(saved.sessions))throw new Error('Invalid saved data');store=saved;}}
-    catch(e){storageBlocked=true;status.textContent='Existing browser data could not be read. It has not been replaced. You can still evaluate and download your work.';}
-    render();
-  } catch(e){app.innerHTML='<h1>Unable to open questionnaire preview</h1><p class="error">'+esc(e.message)+'</p><p>The source catalogue must pass validation before questions can be shown.</p>';}
+    const response = await fetch('../data/explorer_catalog.json', { cache: 'no-cache' });
+    if (!response.ok) throw new Error(`Catalogue HTTP ${response.status}`);
+    current = M.validate(await response.json());
+    try {
+      const raw = localStorage.getItem(STORE);
+      if (raw) { const saved = JSON.parse(raw); if (!saved.catalogs || !Array.isArray(saved.sessions)) throw new Error('Invalid saved data'); store = saved; }
+    } catch { storageBlocked = true; status.textContent = 'Existing drafts could not be read. They have not been overwritten.'; }
+    const id = new URLSearchParams(location.search).get('resume');
+    const index = store.sessions.findIndex(s => s.assessment_id === id);
+    if (id && index >= 0) resume(index, 'results'); else render();
+  } catch (error) { app.innerHTML = `<h1>Unable to open assessment</h1><p>${esc(error.message)}</p>`; }
 })();

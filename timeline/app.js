@@ -11,7 +11,12 @@ const uniq=arr=>[...new Set(arr)];
 const ASSESSMENT_KEY="aistCompanyAssessmentV1";
 function readCompanyAssessment(){
   try{
-    const requested=new URLSearchParams(window.location.search).get("assessment")==="company";
+    const query=new URLSearchParams(window.location.search);
+    if(query.get("assessment")==="questionnaire"){
+      const snapshot=JSON.parse(sessionStorage.getItem("aistQuestionnaireTimelineV1")||"null");
+      return snapshot?.preview && snapshot.assessment_id===query.get("id") && snapshot.data ? snapshot : null;
+    }
+    const requested=query.get("assessment")==="company";
     if(!requested)return null;
     const raw=JSON.parse(localStorage.getItem(ASSESSMENT_KEY)||"null");
     return raw&&raw.blockerStatuses?raw:null;
@@ -21,7 +26,7 @@ function readCompanyAssessment(){
 function StageNode({data}){
   const {gate,count,selected,assessmentState,remaining}=data;
   const cls="stage-node"+(selected?" selected":"")+(count===0?" empty":"")+(assessmentState?` assessment-${assessmentState}`:"");
-  const countLabel=assessmentState==="done"?"✓ Done":assessmentState==="empty"?"No blockers mapped":assessmentState?`${remaining} remaining`:`${count} blocker${count===1?"":"s"}`;
+  const countLabel=data.preview?`${data.gapCount} gaps · ${data.unanswered} unanswered`:assessmentState==="done"?"✓ Done":assessmentState==="empty"?"No blockers mapped":assessmentState?`${remaining} remaining`:`${count} blocker${count===1?"":"s"}`;
   return html`<div className=${cls+(data.dimmed?" dimmed":"")} role="button" tabIndex="0" aria-pressed=${selected?"true":"false"} onKeyDown=${e=>{if((e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}>
     <${Handle} type="target" position=${Position.Left} style=${{opacity:0}} />
     <div className="stage-top"><span className="stage-number">${assessmentState==="done"?"✓":gate.id}</span><span className="stage-count">${countLabel}</span></div>
@@ -36,7 +41,7 @@ function BlockerNode({data}){
   return html`<div className=${"blocker-node"+(selected?" selected":"")+statusCls+(blocker.classification==='Critical core'?' critical-core':'')+(data.dimmed?" dimmed":"")} role=${selected?"group":"button"} tabIndex=${selected?-1:0} data-blocker-node=${blocker.id} aria-pressed=${selected?undefined:"false"} onKeyDown=${e=>{if(!selected&&(e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}>
     <${Handle} type="target" position=${Position.Left} style=${{opacity:0}} />
     <div className="node-kicker"><span>Gate ${blocker.stageGate} · ${domainTitle}</span><span>${relationLabel||""}</span></div>
-    ${status?html`<div className="assessment-status">${status==="resolved"?"✓ Resolved":status==="partial"?"◐ Partial":"● Open"}</div>`:null}
+    ${status?html`<div className="assessment-status">${status==="gap"?"● Gap identified":status==="review"?"Ready for review":status==="unanswered"?"Not assessed":status==="not_applicable"?"Not applicable":status==="resolved"?"✓ Resolved":status==="partial"?"◐ Partial":"● Open"}</div>`:null}
     <strong>${blocker.title}</strong>${blocker.classification?html`<div className="criticality-label">${blocker.classification}</div>`:null}
     ${showStatement?html`<p>${truncate(blocker.statement,selected?185:100)}</p>`:null}
     ${selected?html`<button className="deep-dive-plus" title="Open blocker details and enablers" aria-label="Open blocker details and enablers" onClick=${(e)=>{e.preventDefault();e.stopPropagation();data.onDeepDive?.(blocker)}}><span>+</span><em>Details & enablers</em></button>`:null}
@@ -72,6 +77,7 @@ function AppCanvas({data}){
   const [showCompleted,setShowCompleted]=useState(false);
   const assessment=useMemo(()=>readCompanyAssessment(),[]);
   const assessmentMode=!!assessment;
+  const previewMode=!!assessment?.preview;
   useEffect(()=>{const sync=()=>{try{const x=JSON.parse(localStorage.getItem("aistExplorerBookmarks")||"{\"blockers\":[],\"enablers\":[]}");setSavedCount((x.blockers?.length||0)+(x.enablers?.length||0))}catch{setSavedCount(0)}};window.addEventListener("storage",sync);return()=>window.removeEventListener("storage",sync)},[]);
   const phoneViewport=window.innerWidth<600;
   const compactViewport=window.innerWidth<900;
@@ -81,9 +87,10 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
   const gateAssessment=useCallback(gateId=>{
     const bs=data.blockers.filter(b=>b.stageGate===gateId);
     if(!bs.length)return{state:"empty",remaining:0};
+    if(assessment?.preview)return{state:"active",remaining:bs.filter(b=>blockerStatus(b.id)==="gap").length,gaps:bs.filter(b=>blockerStatus(b.id)==="gap").length,unanswered:bs.filter(b=>blockerStatus(b.id)==="unanswered").length};
     const remaining=bs.filter(b=>blockerStatus(b.id)!=="resolved").length;
     return{state:remaining===0?"done":"active",remaining};
-  },[data,blockerStatus]);
+  },[data,blockerStatus,assessment]);
 
   const dependencyContext=useCallback(id=>{
     const upstreamIds=uniq(data.blockerDependencies.filter(d=>d.blockerId===id).map(d=>d.dependsOnBlockerId));
@@ -118,7 +125,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
     const edgeBase={type:"smoothstep",style:{stroke:"#aec7d7",strokeWidth:1.2},markerEnd:{type:MarkerType.ArrowClosed,width:14,height:14,color:"#aec7d7"}};
     data.stageGates.forEach(g=>{
       const ga=assessmentMode?gateAssessment(g.id):null;
-      nodes.push({id:`stage-${g.id}`,type:"stage",position:{x:stageX(g.id),y:0},data:{gate:g,count:data.blockers.filter(b=>b.stageGate===g.id).length,selected:selectedGate===g.id,zoom,assessmentState:ga?.state,remaining:ga?.remaining,dimmed:!!selectedBlocker&&selectedGate!==g.id,keyboardActivate:()=>{setSelectedGate(g.id);setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}},zIndex:selectedGate===g.id?5:1});
+      nodes.push({id:`stage-${g.id}`,type:"stage",position:{x:stageX(g.id),y:0},data:{gate:g,count:data.blockers.filter(b=>b.stageGate===g.id).length,selected:selectedGate===g.id,zoom,assessmentState:ga?.state,remaining:ga?.remaining,preview:previewMode,gapCount:ga?.gaps,unanswered:ga?.unanswered,dimmed:!!selectedBlocker&&selectedGate!==g.id,keyboardActivate:()=>{setSelectedGate(g.id);setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}},zIndex:selectedGate===g.id?5:1});
       if(g.id<data.stageGates.length-1)edges.push({id:`stage-edge-${g.id}`,source:`stage-${g.id}`,target:`stage-${g.id+1}`,...edgeBase,style:{stroke:"#c9dce8",strokeWidth:2}});
     });
 
@@ -240,7 +247,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
   if(selectedEnablerPair)crumbs.push({label:truncate(selectedEnablerPair.enabler.title,28),action:null});
 
   return html`<div className="shell">
-    <header className="topbar">
+    ${previewMode?html`<header className="topbar"><a className="brand" href=${"../assessment-preview/?resume="+encodeURIComponent(assessment.assessment_id)}><span className="brand-mark"></span><span>AI Scalability Explorer</span></a><div className="top-title">My scalability timeline</div><div className="top-actions"><a className="top-link" href=${"../assessment-preview/?resume="+encodeURIComponent(assessment.assessment_id)}>← Results</a>${selectedGate!=null?html`<button className="ghost-top" onClick=${back}>← Back one level</button>`:null}<button className="ghost-top" onClick=${reset}>Reset view</button></div></header>`:html`    <header className="topbar">
       <a className="brand" href="../#home"><span className="brand-mark"></span><span>AI Scalability Explorer</span></a>
       <div className="top-title">${assessmentMode?"My AI Scalability Timeline":"Spatial Timeline"}</div>
       <div className="top-actions">
@@ -250,9 +257,9 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
         ${assessmentMode?html`<button className=${"ghost-top"+(showCompleted?" active-toggle":"")} onClick=${()=>setShowCompleted(v=>!v)}>${showCompleted?"Hide completed":"Show completed"}</button>`:null}
         <button className="ghost-top" onClick=${reset}>Reset</button><a className="top-link" href="../#explore">Explorer ↗</a><a className="top-link" href="../#dependencies">Dependencies ↗</a><a className="top-link" href="../play/">Play ↗</a>
       </div>
-    </header>
+    </header>`}
     <main className=${"workspace"+(detailOpen?" detail-open":"")}>
-      <div className=${"intro"+((selectedGate != null)?" compact":"")}><div className="eyebrow">${assessmentMode?"Assessment result · illustrative":"Semantic zoom"}</div><h1>${assessmentMode?((selectedGate != null)?"Focus on what remains.":"Your AI scalability path."):((selectedGate != null)?"Keep exploring.":"Start with the lifecycle.")}</h1><p>${assessmentMode?((selectedGate != null)?"Resolved blockers are hidden by default. Open a remaining blocker to explore dependencies and enablers.":"Done gates have all currently mapped blockers resolved. Other gates show what remains."):((selectedGate != null)?"Pan and zoom freely. Click a blocker to focus it, then use the + button on the central blocker to open details and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it.")}</p></div>
+      <div className=${"intro"+((selectedGate != null)?" compact":"")}><div className="eyebrow">${previewMode?"Self-reported assessment":assessmentMode?"Assessment result · illustrative":"Semantic zoom"}</div><h1>${assessmentMode?((selectedGate != null)?"Focus on what remains.":"Your AI scalability path."):((selectedGate != null)?"Keep exploring.":"Start with the lifecycle.")}</h1><p>${previewMode?"Choose a Stage Gate to explore assessed gaps, dependencies and enablers. High scores require review; no blockers are closed.":assessmentMode?((selectedGate != null)?"Resolved blockers are hidden by default. Open a remaining blocker to explore dependencies and enablers.":"Done gates have all currently mapped blockers resolved. Other gates show what remains."):((selectedGate != null)?"Pan and zoom freely. Click a blocker to focus it, then use the + button on the central blocker to open details and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it.")}</p></div>
       <div className="depth"><span>Overview</span><i></i><span>Deep dive</span></div>
       <div className="flow-wrap">
         <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.35} maxZoom=${1.7} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
@@ -260,7 +267,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
           <${Controls} showInteractive=${false} position="bottom-left" />
         </${ReactFlow}>
       </div>
-      ${selectedGate == null?html`<div className="hint"><strong>${assessmentMode?"Your personalised timeline":"Click a Stage Gate"}</strong><span>${assessmentMode?"Open a gate to explore remaining blockers.":"Then keep zooming into what interests you."}</span></div>`:null}
+      ${selectedGate == null?html`<div className="hint"><strong>${assessmentMode?"Your personalised timeline":"Click a Stage Gate"}</strong><span>${previewMode?"Explore gaps and enablers by Stage Gate.":assessmentMode?"Open a gate to explore remaining blockers.":"Then keep zooming into what interests you."}</span></div>`:null}
       <div className="breadcrumbs"><button onClick=${reset}>Timeline</button>${crumbs.map((c,i)=>html`<${React.Fragment} key=${i}><i>›</i>${c.action?html`<button onClick=${c.action}>${c.label}</button>`:html`<span>${c.label}</span>`}</${React.Fragment}>`)}</div>
       <div className="zoom-readout">Zoom ${Math.round(zoom*100)}%</div>
 
@@ -282,7 +289,13 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
 
 function Root(){
   const[data,setData]=useState(null),[error,setError]=useState(null);
-  useEffect(()=>{fetch("../data/explorer-data.json?v=20261001-gates-0-5", {cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("Could not load explorer-data.json");return r.json()}).then(setData).catch(e=>setError(e.message))},[]);
+  useEffect(()=>{
+    if(new URLSearchParams(location.search).get("assessment")==="questionnaire"){
+      const snapshot=readCompanyAssessment();
+      if(snapshot?.data)setData(snapshot.data);else setError("This assessment is not available in this tab. Return to the questionnaire results and open the timeline again.");
+      return;
+    }
+    fetch("../data/explorer-data.json?v=20261001-gates-0-5", {cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("Could not load explorer-data.json");return r.json()}).then(setData).catch(e=>setError(e.message))},[]);
   if(error)return html`<div style=${{padding:"40px",fontFamily:"system-ui"}}><h2>Could not load data</h2><p>${error}</p></div>`;
   if(!data)return html`<div className="timeline-loading"><span className="loading-spinner" aria-hidden="true"></span><span>Loading spatial timeline…</span></div>`;
   return html`<${ReactFlowProvider}><${AppCanvas} data=${data}/></${ReactFlowProvider}>`;

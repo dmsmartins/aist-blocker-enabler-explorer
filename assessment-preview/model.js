@@ -44,12 +44,12 @@
   function create(c,q,id,now) {
     return {assessment_id:id,entity_id:'',entity_name:'',scope:'',target_scale:'',author:'',assessment_date:now.slice(0,10),created_at:now,updated_at:now,catalog_version:c.catalog_version,maps_version:c.maps_version,questionnaire_key:key(q),assessment_type:q.assessment_type,mode:q.mode,questionnaire_version:q.questionnaire_version,questionnaire_snapshot:structuredClone(q),source_quick_assessment_id:null,answers:Object.fromEntries(q.questions.map(x=>[x.question_id,{score:null,applicability:'undecided',evidence:'',na_reason:'',all_blockers_not_applicable:false,effective_weight:x.default_weight,review_comment:'',author:'',updated_at:now}])),current_step:0};
   }
-  function classify(a,q,mode) {
+  function classify(a,q,mode,selfReport=false) {
     if (!a || !weightOK(a.effective_weight)) return 'invalid';
-    if(a.applicability==='not_applicable') return a.score===null && text(a.na_reason) && (mode!=='quick'||a.all_blockers_not_applicable===true) ? 'not_applicable':'na_reason_missing';
+    if(a.applicability==='not_applicable') return a.score===null && (selfReport || text(a.na_reason) && (mode!=='quick'||a.all_blockers_not_applicable===true)) ? 'not_applicable':'na_reason_missing';
     if(a.score===null) return 'unanswered';
     if(a.applicability!=='applicable'||!Number.isInteger(a.score)||a.score<0||a.score>4) return 'invalid';
-    return text(a.evidence)?'valid':'evidence_missing';
+    return selfReport||text(a.evidence)?'valid':'evidence_missing';
   }
   function validateAssessment(c,s) {
     const q=questionnaire(c,s);
@@ -72,7 +72,7 @@
     let numerator=0,denominator=0;
     const blockers=[];
     for (const question of q.questions) {
-      const answer=s.answers[question.question_id],status=classify(answer,question,q.mode);
+      const answer=s.answers[question.question_id],status=classify(answer,question,q.mode,s.scoring_basis==='self_report_preview');
       counts[status]++;
       if(answer?.effective_weight===0)counts.zero_weight++;
       if(status==='valid'){numerator+=answer.effective_weight*answer.score;denominator+=4*answer.effective_weight;}
