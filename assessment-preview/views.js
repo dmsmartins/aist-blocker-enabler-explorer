@@ -20,9 +20,9 @@
     axes.forEach((a,i)=>{if(known[i]){const [x,y]=point(i,a.percent*1.75);svg+=`<circle cx="${x}" cy="${y}" r="5" fill="#1379ad"><title>Gate ${i}: ${a.percent.toFixed(1)}%, ${a.answered}/${a.applicable} blockers answered</title></circle>`;}});
     return svg+'</svg><table class="sr-only"><caption>Radar values and coverage</caption><thead><tr><th>Stage Gate</th><th>Maturity</th><th>Coverage</th></tr></thead><tbody>'+axes.map((a,i)=>`<tr><td>Gate ${i}</td><td>${a.percent??'No score'}</td><td>${a.answered||0}/${a.applicable||0}</td></tr>`).join('')+'</tbody></table>';
   }
-  function enablerReport(report) {
+  function enablerReport(report, catalog, baseUrl) {
     if(!report.recommendations.length) return '<p>No enablers are suggested from the current responses. Unanswered questions do not count as gaps.</p>';
-    return report.recommendations.map(e=>`<article class="pdf-enabler"><h3>${escape(e.enabler_title)}</h3><p><strong>Actions:</strong> ${escape(e.practical_actions)}</p><p><strong>Expected outcome:</strong> ${escape(e.expected_outcome)}</p><p class="muted">Supports blockers ${e.contributions.map(b=>b.blocker_id).join(', ')}</p></article>`).join('');
+    return report.recommendations.map(e=>`<article class="pdf-enabler"><h3>${escape(e.enabler_title)}</h3><p><strong>Actions:</strong> ${escape(e.practical_actions)}</p><p><strong>Expected outcome:</strong> ${escape(e.expected_outcome)}</p><p class="muted">Addresses: ${e.contributions.map(b=>{const title=catalog?.blockers.find(x=>x.blocker_id===b.blocker_id)?.title || "Blocker details";const href=baseUrl ? new URL(`assessment-preview/blocker.html?id=${encodeURIComponent(b.blocker_id)}`,baseUrl).href : null;return href ? `<a href="${escape(href)}">${escape(title)}</a>` : escape(title);}).join("; ")}</p></article>`).join('');
   }
   function timeline(c, report, session) {
     const stakeholders = value => String(value || '').split(';').map(x=>x.trim()).filter(Boolean);

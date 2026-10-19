@@ -84,7 +84,7 @@
       ${report.partial ? 'Partial profile — unanswered areas are left blank.' : ''} Self-reported preview.</p></section>
       <div class="tools result-actions"><button class="primary" id="timeline">Explore my timeline →</button><button id="pdf">PDF · recommended enablers</button></div>
       <section class="pdf-only"><h2>Enablers to develop</h2><p>${report.partial ? 'Recommendations reflect the answered questions only.' : 'Recommendations reflect the reported gaps.'} Scores do not imply blocker closure.</p>
-      ${V.enablerReport(report)}</section>`;
+      ${V.enablerReport(report, catalog, new URL("../", location.href))}</section>`;
     on('#back', () => go('questions')); on('#home', () => go('home'));
     on('#timeline', () => {
       try {

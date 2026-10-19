@@ -30,7 +30,11 @@ test('timeline uses canonical IDs and retains unanswered, N/A, gaps and review w
 });
 test('PDF has unique recommended enablers, practical actions and outcomes, with escaped content',()=>{
   const s=make();Object.assign(s.answers[q.questions[0].question_id],{score:1,applicability:'applicable'});
-  const r=M.report(c,s),html=V.enablerReport(r);
+  const r=M.report(c,s),html=V.enablerReport(r,c,'https://example.com/');
+  const b=c.blockers.find(b=>b.blocker_id===r.recommendations[0].contributions[0].blocker_id);
+  assert.ok(html.includes(V.escape(b.title)));
+  assert.ok(html.includes(`https://example.com/assessment-preview/blocker.html?id=${b.blocker_id}`));
+  assert.ok(!html.includes('Supports blockers'));
   assert.equal((html.match(/class="pdf-enabler"/g)||[]).length,r.recommendations.length);
   assert.ok(html.includes('Expected outcome:')&&html.includes('Actions:'));
   r.recommendations[0].enabler_title='<script>alert(1)</script>';
