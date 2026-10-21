@@ -681,7 +681,7 @@ h3 { font-size: 18px; color: #17334c; }
   .mechanism-explainer-grid { grid-template-columns:1fr 1fr; }
   .entry-card { min-height:160px; }
   .hero-grid { grid-template-columns: 1fr; gap: 34px; }
-  .hero-visual { order: -1; max-width: 420px; margin: 0 auto; }
+  .hero-visual { order: 1; max-width: 420px; margin: 0 auto; }
   .hero-visual-tag { display: none; }
   .domain-grid { grid-template-columns:1fr 1fr; }
   .detail-grid, .meta-row, .enabler-detail-grid { grid-template-columns:1fr; }
@@ -828,7 +828,8 @@ body.modal-open{overflow:hidden}
 </style>
   <link rel="stylesheet" href="dependencies.css" />
   <link rel="stylesheet" href="stage-dependencies.css?v=20261002-stage-map" />
-<link rel="stylesheet" href="community-metadata.css" /></head>
+<link rel="stylesheet" href="community-metadata.css" /><link rel="stylesheet" href="entry.css?v=20261021-depth">
+</head>
 <body>
   <svg class="svg-sprite" aria-hidden="true" width="0" height="0">
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
@@ -847,15 +848,15 @@ body.modal-open{overflow:hidden}
 
     <nav class="main-nav" aria-label="Primary navigation">
       <a class="timeline-nav-link nav-timeline-pill" href="./timeline/">Timeline</a>
-      <button data-route="explore">Explore</button>
-      <button data-route="dependencies">Dependencies</button>
-      <button data-route="maturity">Maturity Assessment</button>
-      <a class="timeline-nav-link" href="./play/">Play</a>
-      <a class="timeline-nav-link" href="./assessment-preview/">Questionnaire preview</a>
+      <button data-route="explore">Browse</button>
+      
+      <a class="timeline-nav-link" href="./assessment-preview/">Assessment</a>
+      
+      
     </nav>
 
     <div class="topbar-actions">
-      <button class="icon-btn" id="selectionBtn" title="My selection" aria-label="My selection">
+      <button class="icon-btn" id="selectionBtn" title="Saved items" aria-label="Saved items">
         <svg><use href="#i-bookmark"></use></svg>
         <span id="bookmarkCount" class="count-dot" hidden>0</span>
       </button>
@@ -987,7 +988,7 @@ function renderDependencies() {
 
 function renderHome() {
   const mechanismShort = {
-    Frame: 'Define the problem and value.',
+    Frame: 'Set direction, define the problem and value.',
     Commit: 'Create ownership and decision rights.',
     Equip: 'Provide skills, data and platforms.',
     Assure: 'Clarify safety, legal and reliability needs.',
@@ -1000,35 +1001,26 @@ function renderHome() {
       <div class="hero-inner hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">UIC AIST · Insight to impact</p>
-          <h1>Understand.<br>Overcome.<br>Scale AI.</h1>
-          <p class="lead">Pan through the six lifecycle Stage Gates on one canvas and watch each blocker resolve into the enablers that overcome it.</p>
+          <h1>Understand.<br>Overcome.<br><span>Scale AI.</span></h1>
+          <p class="lead">Start with a maturity assessment to discover where you are ready to scale, then explore the timeline to understand what is missing. Or dive straight into the explorer.</p>
           <div class="hero-actions">
-            <a class="hero-cta" href="./timeline/">Open the Timeline <span class="hero-cta-arrow">→</span></a>
-            <button class="hero-secondary" data-entry="explore">Browse the explorer instead</button>
-            <a class="hero-secondary" href="./play/">Play Scale Run ↗</a>
+            <a class="hero-cta" href="./assessment-preview/">Start with an Assessment <span aria-hidden="true">→</span></a>
+            <span class="recommended">★ Recommended first step</span>
+            <a class="hero-timeline" href="./timeline/">Explore the Timeline <span aria-hidden="true">→</span></a>
+            <button class="hero-browse" data-entry="explore">Browse the explorer instead →</button>
           </div>
         </div>
         <div class="hero-visual">
           ${timelinePreviewSvg()}
-          <span class="hero-visual-tag">Live, explorable canvas</span>
+          
         </div>
       </div>
     </section>
-    <section class="explore-more">
-      <div class="explore-more-head">
-        <h2>Other ways into the same data</h2>
-        <p>Same underlying dataset, different lenses.</p>
-      </div>
-      <div class="home-cards home-cards--secondary">
-        ${entryCard('Explore the landscape','Browse blockers and enablers across communities, stages and stakeholders.','Explore','explore','↗')}
-        ${entryCard('View for my role','Focus the landscape on the stakeholders most relevant to you.','Choose perspective','role','◎')}
-        ${entryCard('Maturity assessment','Assess the maturity of your organisation or AI initiative.','Open assessment','maturity','▥')}
-      </div>
-    </section>
     <section class="framework-strip">
-      <div class="framework-title">Enablers act through six mechanisms</div>
+      <p class="eyebrow">Enablers</p><h2 class="framework-title">Enablers act through six mechanisms</h2><p class="mechanism-intro">These mechanisms help overcome blockers and move organisations from insight to impact, providing the conditions, capabilities and support needed across the journey.</p>
       <div class="mechanism-explainer-grid">${mechs}</div>
     </section>`;
+  mountJourneyConnections();
   app.querySelectorAll('[data-entry]').forEach(btn => btn.addEventListener('click', () => {
     const action = btn.dataset.entry;
     if (action === 'role') openRolePicker(); else navigate(action);
@@ -1039,65 +1031,72 @@ function entryCard(title, text, link, action, symbol) {
 }
 
 
+// One observer follows responsive layout; the decorative layer never captures clicks.
+let journeyResizeObserver;
+function mountJourneyConnections() {
+  journeyResizeObserver?.disconnect();
+  const art = app.querySelector('.journey-art');
+  if (!art) return;
+  const svg = art.querySelector('.journey-connections');
+  const cards = [...art.querySelectorAll('.journey-card')];
+  const draw = () => {
+    if (!art.isConnected) { journeyResizeObserver.disconnect(); return; }
+    svg.setAttribute('viewBox', `0 0 ${art.clientWidth} ${art.clientHeight}`);
+    // Static, untransformed cards keep text crisp and connections aligned.
+    const points = cards.map(card => ({
+      x: card.offsetLeft + card.offsetWidth / 2,
+      y: card.offsetTop + card.offsetHeight / 2,
+      w: card.offsetWidth,
+      color: getComputedStyle(card).getPropertyValue('--journey-color').trim()
+    }));
+    svg.innerHTML = points.slice(0,-1).map((a,i) => {
+      const b = points[i+1];
+      let d;
+      if (Math.abs(a.x-b.x) < 10) {
+        const bend = a.x + a.w * .8;
+        d = `M${a.x},${a.y} C${bend},${a.y} ${bend},${b.y} ${b.x},${b.y}`;
+      } else {
+        const mid = (a.x+b.x)/2;
+        d = `M${a.x},${a.y} C${mid},${a.y} ${mid},${b.y} ${b.x},${b.y}`;
+      }
+      return `<defs><linearGradient id="gate-link-${i}" gradientUnits="userSpaceOnUse" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}"><stop stop-color="${a.color}"/><stop offset="1" stop-color="${b.color}"/></linearGradient></defs><path d="${d}" stroke="url(#gate-link-${i})"/>`;
+    }).join('');
+  };
+  journeyResizeObserver = new ResizeObserver(draw);
+  journeyResizeObserver.observe(art);
+  cards.forEach(card => journeyResizeObserver.observe(card));
+  draw();
+}
+
 function timelinePreviewSvg() {
-  return `<svg viewBox="0 0 620 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Preview of the Timeline: Stage Gate 0 expanding into a blocker and three enablers">
-    <rect class="hv-crumb-bg" x="6" y="6" width="228" height="27" rx="13.5"></rect>
-    <text class="hv-crumb-text" x="20" y="24">Stage Gate → Blocker → Enablers</text>
-
-    <path class="hv-edge hv-edge-anim hv-edge-1" d="M176,202 C208,202 214,196 250,196"></path>
-    <path class="hv-edge hv-edge-anim hv-edge-2" d="M460,202 C495,202 495,75 468,75"></path>
-    <path class="hv-edge hv-edge-anim hv-edge-3" d="M460,202 C495,202 495,195 468,195"></path>
-    <path class="hv-edge hv-edge-anim hv-edge-4" d="M460,202 C495,202 495,317 468,317"></path>
-
-    <rect class="hv-card" x="6" y="148" width="170" height="108" rx="18"></rect>
-    <circle class="hv-num-circle" cx="42" cy="180" r="16"></circle>
-    <text class="hv-num-text" x="42" y="185">0</text>
-    <text class="hv-heading" x="68" y="177">Stage Gate 0</text>
-    <text class="hv-muted" x="26" y="208">Strategic Alignment</text>
-    <text class="hv-muted" x="26" y="222">&amp; Idea Validation</text>
-
-    <rect class="hv-card-selected" x="250" y="140" width="210" height="124" rx="16"></rect>
-    <text class="hv-kicker" x="270" y="168">STAGE 1 · BLOCKER</text>
-    <text class="hv-title" x="270" y="190">Unclear financial</text>
-    <text class="hv-title" x="270" y="207">implications, risks and</text>
-    <text class="hv-title" x="270" y="224">investment logic</text>
-    <text class="hv-muted" x="270" y="248">Resolved by 3 enablers</text>
-
-    <rect class="hv-chip" x="468" y="40" width="146" height="70" rx="14" stroke-width="1.5" style="stroke:var(--frame)"></rect>
-    <circle class="hv-frame-fill" cx="486" cy="58" r="4"></circle>
-    <text class="hv-frame-text" x="498" y="61">FRAME</text>
-    <text class="hv-chip-title" x="482" y="80">AI-specific portfolio</text>
-    <text class="hv-chip-title" x="482" y="94">business case</text>
-
-    <rect class="hv-chip" x="468" y="160" width="146" height="70" rx="14" stroke-width="1.5" style="stroke:var(--commit)"></rect>
-    <circle class="hv-commit-fill" cx="486" cy="178" r="4"></circle>
-    <text class="hv-commit-text" x="498" y="181">COMMIT</text>
-    <text class="hv-chip-title" x="482" y="200">Multi-year funding for</text>
-    <text class="hv-chip-title" x="482" y="214">AI scaling</text>
-
-    <rect class="hv-chip" x="468" y="280" width="146" height="78" rx="14" stroke-width="1.5" style="stroke:var(--equip)"></rect>
-    <circle class="hv-equip-fill" cx="486" cy="298" r="4"></circle>
-    <text class="hv-equip-text" x="498" y="301">EQUIP</text>
-    <text class="hv-chip-title" x="482" y="320">Enterprise-wide data</text>
-    <text class="hv-chip-title" x="482" y="334">integration strategy</text>
-  </svg>`;
+  const gateIcons = [
+    '<path d="M5 20v-5m7 5V9m7 11V3"/>',
+    '<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/><path d="M10 6h7v8M6 10v7h8"/>',
+    '<path d="M12 3l8 4v6c0 4-8 8-8 8s-8-4-8-8V7zM8 12l3 3 5-6"/>',
+    '<path d="M4 17v4h16v-4M12 16V3m-5 5 5-5 5 5"/>',
+    '<path d="M3 3v18h18M6 16l4-5 4 2 6-8"/>',
+    '<path d="M4 7h12l-3-3m3 3-3 3M20 17H8l3-3m-3 3 3 3"/>'
+  ];
+  const captions=['Define ambition and value','Design a feasible solution','Build and verify','Deploy into operations','Operate and improve','Retire and transition'];
+  return `<div class="journey-pill">Assessment <span>→</span> Timeline <span>→</span> Action</div><div class="journey-art">
+    <svg class="journey-orbits" viewBox="0 0 1000 650" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <g transform="rotate(-18 500 325)">
+        <ellipse class="orbit-track" cx="500" cy="355" rx="520" ry="235"/>
+        <ellipse class="orbit-glow" cx="500" cy="355" rx="520" ry="235" pathLength="100"/>
+        <ellipse class="orbit-track orbit-secondary" cx="540" cy="260" rx="390" ry="230"/>
+        <ellipse class="orbit-glow orbit-secondary" cx="540" cy="260" rx="390" ry="230" pathLength="100"/>
+      </g>
+    </svg>
+    <svg class="journey-connections" aria-hidden="true" focusable="false"></svg>
+    ${state.data.stageGates.map((g,i)=>`<a href="./timeline/?gate=${g.id}" class="journey-card journey-${i}" style="--journey-color:${['#1485ed','#1878cb','#8254dc','#169b79','#e07c24','#8550db'][i]}"><span class="journey-card-heading"><span class="journey-number">${g.id}</span><svg class="journey-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${gateIcons[i] || ''}</svg></span><small>STAGE GATE</small><strong>${escapeHtml(g.label)}</strong><span class="journey-caption">${captions[i]||''}</span></a>`).join('')}</div>`;
 }
 
 function renderExplore() {
-  app.innerHTML = `<section class="page narrow">
-    <div class="page-head"><div><p class="eyebrow">Explore</p><h2>Choose a path.</h2><p class="subtle">Start broad. Open detail only when it becomes useful.</p></div></div>
-    ${activePerspectiveHtml()}
-    <div class="path-grid">
-      <button class="path-card" id="byDomain"><div class="path-visual">▦</div><h3>By Community</h3><p>Explore related blockers in five communities.</p><span class="card-link">Explore communities →</span></button>
-      <button class="path-card" id="byStage"><div class="path-visual">┈</div><h3>By Stage Gate</h3><p>Explore blockers along the six lifecycle gates.</p><span class="card-link">Follow the lifecycle →</span></button>
-    </div>
-    <div class="browse-all"><span class="browse-label">or browse all</span></div>
-    <div class="secondary-actions"><button class="outline-btn" id="allBlockers">All Blockers →</button><button class="outline-btn" id="allEnablers">All Enablers →</button></div>
-  </section>`;
-  document.getElementById('byDomain').onclick = ()=>navigate('domains');
-  document.getElementById('byStage').onclick = ()=>navigate('stage');
-  document.getElementById('allBlockers').onclick = ()=>navigate('all-blockers');
-  document.getElementById('allEnablers').onclick = ()=>navigate('all-enablers');
+  app.innerHTML=`<section class="page narrow"><p class="eyebrow">Browse</p><h2>Explore the knowledge structure.</h2><p class="lead">Discover related blockers through communities, or follow the dependencies between them.</p><div class="path-grid">
+  <button class="path-card" id="byDomain"><div class="path-visual">▦</div><h3>Communities</h3><p>Explore related blockers and their enablers.</p><span class="card-link">Explore communities →</span></button>
+  <button class="path-card" id="byDependencies"><div class="path-visual">↗</div><h3>Dependencies</h3><p>Understand what depends on what, and where to act first.</p><span class="card-link">Explore dependencies →</span></button></div></section>`;
+  document.getElementById('byDomain').onclick=()=>navigate('domains');
+  document.getElementById('byDependencies').onclick=()=>navigate('dependencies');
 }
 
 function activePerspectiveHtml() {
@@ -1981,7 +1980,7 @@ function renderSelection() {
   const bs=state.bookmarks.blockers.map(id=>state.data.blockers.find(b=>b.id===id)).filter(Boolean);
   const es=state.bookmarks.enablers.map(id=>state.data.enablers.find(e=>e.id===id)).filter(Boolean);
   const domains=unique(bs.map(b=>b.domain));
-  app.innerHTML=`<section class="page narrow"><p class="eyebrow">My Selection</p><h2>Saved for later.</h2><div class="selection-summary"><span class="stat-chip">${bs.length} blocker${bs.length===1?'':'s'}</span><span class="stat-chip">${es.length} enabler${es.length===1?'':'s'}</span><span class="stat-chip">${domains.length} domain${domains.length===1?'':'s'}</span></div>
+  app.innerHTML=`<section class="page narrow"><p class="eyebrow">Saved items</p><h2>Saved for later.</h2><div class="selection-summary"><span class="stat-chip">${bs.length} blocker${bs.length===1?'':'s'}</span><span class="stat-chip">${es.length} enabler${es.length===1?'':'s'}</span><span class="stat-chip">${domains.length} domain${domains.length===1?'':'s'}</span></div>
     <section class="selection-section"><h3>Saved blockers</h3><div class="selection-list">${bs.length?bs.map(b=>selectionItem('blocker',b.id,b.title,b.statement)).join(''):'<div class="empty-state">No saved blockers yet.</div>'}</div></section>
     <section class="selection-section"><h3>Saved enablers</h3><div class="selection-list">${es.length?es.map(e=>selectionItem('enabler',e.id,e.title,e.description)).join(''):'<div class="empty-state">No saved enablers yet.</div>'}</div></section>
   </section>`;
@@ -2196,6 +2195,8 @@ var uxRouteFromHash=routeFromHash;
 routeFromHash=function(){
   var hash=location.hash||"#home";
   if(hash==="#timeline"){window.location.replace("./timeline/");return;}
+  if(hash==="#maturity"){window.location.replace("./assessment-preview/");return;}
+  if(hash==="#stage-gates"||hash.startsWith("#stage-gates/")){const gate=hash.split('/')[1];window.location.replace("./timeline/"+(gate?"?gate="+encodeURIComponent(gate):""));return;}
   var stageMatch=hash.match(/^#stage-gates\/(\d+)$/);
   if(stageMatch&&state.data.stageGates.some(function(g){return Number(g.id)===Number(stageMatch[1]);})){
     state.route="stage-gates";state.stageGateView=Number(stageMatch[1]);render();return;
