@@ -37,9 +37,9 @@ For rapid prototyping without changing the current build/deployment pipeline, th
 If this interaction model is approved, the next engineering step is to move the same component model into a conventional Vite build and, if desired, a separate repository.
 # Stage Gate guidance
 
-Expand a Stage Gate, then use **+ Mais** to open its guidance. The panel uses
+Expand a Stage Gate, then use **+ Guidance** to open its guidance. The panel uses
 the blocker inspector's visual style and leaves the timeline selection and
-assessment state unchanged. Close it with × or Escape; focus returns to Mais.
+assessment state unchanged. Close it with × or Escape; focus returns to Guidance.
 Missing guidance is reported inside the panel without blocking the timeline.
 
 `../data/stage-gate-guidance.json` is exported from `Stage_Gates` and `ISO_Lines`

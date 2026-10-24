@@ -32,7 +32,7 @@ function StageNode({data}){
     <${Handle} type="target" position=${Position.Left} style=${{opacity:0}} />
     <div className="stage-top"><span className="stage-number">${assessmentState==="done"?"✓":gate.id}</span><span className="stage-count">${countLabel}</span></div>
     <strong>${gate.label}</strong><p>${data.zoom>0.62?(assessmentState==="done"?"All mapped blockers were marked resolved.":assessmentState==="empty"?"No blockers are currently mapped to this gate.":"Click to reveal the blockers at this stage."):""}</p>
-    ${selected?html`<button className="deep-dive-plus stage-guidance-more nodrag nopan" data-guidance-key=${gateKey(gate)} aria-label=${`Mais — Stage Gate ${gate.id} guidance`} aria-haspopup="dialog" onClick=${e=>{e.preventDefault();e.stopPropagation();data.onGuidance?.(gate,e.currentTarget)}}><span aria-hidden="true">+</span><em>Mais</em></button>`:null}
+    ${selected?html`<button className="deep-dive-plus stage-guidance-more nodrag nopan" data-guidance-key=${gateKey(gate)} aria-label=${`Guidance — Stage Gate ${gate.id} guidance`} aria-haspopup="dialog" onClick=${e=>{e.preventDefault();e.stopPropagation();data.onGuidance?.(gate,e.currentTarget)}}><span aria-hidden="true">+</span><em>Guidance</em></button>`:null}
     <${Handle} type="source" position=${Position.Right} style=${{opacity:0}} />
   </div>`;
 }
