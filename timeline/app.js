@@ -2,6 +2,7 @@ import React,{useEffect,useMemo,useState,useCallback,useRef} from "https://esm.s
 import {createRoot} from "https://esm.sh/react-dom@18.3.1/client";
 import htm from "https://esm.sh/htm@3.1.1";
 import {ReactFlow,ReactFlowProvider,Background,Controls,Handle,Position,MarkerType,useReactFlow} from "https://esm.sh/@xyflow/react@12?deps=react@18.3.1,react-dom@18.3.1";
+import {gateKey,guidanceFor} from "./guidance.mjs";
 
 const html=htm.bind(React.createElement);
 const MECH_COLORS={Frame:"#6e68d8",Commit:"#c67b2b",Equip:"#2478b5",Assure:"#a05486",Operate:"#27865e",Learn:"#73883c"};
@@ -27,10 +28,11 @@ function StageNode({data}){
   const {gate,count,selected,assessmentState,remaining}=data;
   const cls="stage-node"+(selected?" selected":"")+(count===0?" empty":"")+(assessmentState?` assessment-${assessmentState}`:"");
   const countLabel=data.preview?`${data.gapCount} gaps · ${data.unanswered} unanswered`:assessmentState==="done"?"✓ Done":assessmentState==="empty"?"No blockers mapped":assessmentState?`${remaining} remaining`:`${count} blocker${count===1?"":"s"}`;
-  return html`<div className=${cls+(data.dimmed?" dimmed":"")} role="button" tabIndex="0" aria-pressed=${selected?"true":"false"} onKeyDown=${e=>{if((e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}>
+  return html`<div className=${cls+(data.dimmed?" dimmed":"")} role=${selected?"group":"button"} tabIndex="0" aria-label=${`Gate ${gate.id}: ${gate.label}`} aria-pressed=${selected?undefined:"false"} onKeyDown=${e=>{if(e.key==="Enter"||e.key===" "){e.stopPropagation();if(e.target===e.currentTarget&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}}>
     <${Handle} type="target" position=${Position.Left} style=${{opacity:0}} />
     <div className="stage-top"><span className="stage-number">${assessmentState==="done"?"✓":gate.id}</span><span className="stage-count">${countLabel}</span></div>
     <strong>${gate.label}</strong><p>${data.zoom>0.62?(assessmentState==="done"?"All mapped blockers were marked resolved.":assessmentState==="empty"?"No blockers are currently mapped to this gate.":"Click to reveal the blockers at this stage."):""}</p>
+    ${selected?html`<button className="deep-dive-plus stage-guidance-more nodrag nopan" data-guidance-key=${gateKey(gate)} aria-label=${`Mais — Stage Gate ${gate.id} guidance`} aria-haspopup="dialog" onClick=${e=>{e.preventDefault();e.stopPropagation();data.onGuidance?.(gate,e.currentTarget)}}><span aria-hidden="true">+</span><em>Mais</em></button>`:null}
     <${Handle} type="source" position=${Position.Right} style=${{opacity:0}} />
   </div>`;
 }
@@ -65,9 +67,16 @@ function EnablerNode({data}){
 }
 const nodeTypes={stage:StageNode,blocker:BlockerNode,mechanism:MechanismNode,enabler:EnablerNode};
 
-function AppCanvas({data}){
+function AppCanvas({data,guidance,guidanceLoading}){
   const flow=useReactFlow();
   const lastFocusedBlocker=useRef(null);
+  const guidanceTrigger=useRef(null);
+  const guidanceClose=useRef(null);
+  const [guidanceKey,setGuidanceKey]=useState(null);
+  const openGuidance=useCallback((gate,trigger)=>{guidanceTrigger.current=trigger;setGuidanceKey(gateKey(gate))},[]);
+  const closeGuidance=useCallback(()=>{setGuidanceKey(null);requestAnimationFrame(()=>guidanceTrigger.current?.isConnected&&guidanceTrigger.current.focus({preventScroll:true}))},[]);
+  const gateGuidance=useMemo(()=>guidanceFor(guidance,guidanceKey),[guidance,guidanceKey]);
+  useEffect(()=>{if(!guidanceKey)return;guidanceClose.current?.focus({preventScroll:true});const escape=e=>{if(e.key==="Escape"){e.preventDefault();e.stopImmediatePropagation();closeGuidance()}};document.addEventListener("keydown",escape,true);return()=>document.removeEventListener("keydown",escape,true)},[guidanceKey,closeGuidance]);
   const [savedCount,setSavedCount]=useState(()=>{try{const x=JSON.parse(localStorage.getItem("aistExplorerBookmarks")||"{\"blockers\":[],\"enablers\":[]}");return (x.blockers?.length||0)+(x.enablers?.length||0)}catch{return 0}});
   const [zoom,setZoom]=useState(.72);
   const [selectedGate,setSelectedGate]=useState(null);
@@ -76,6 +85,7 @@ function AppCanvas({data}){
   const [selectedMechanism,setSelectedMechanism]=useState(null);
   const [selectedEnabler,setSelectedEnabler]=useState(null);
   const [showCompleted,setShowCompleted]=useState(false);
+  useEffect(()=>{setGuidanceKey(null)},[selectedGate,selectedBlocker]);
   const assessment=useMemo(()=>readCompanyAssessment(),[]);
   const assessmentMode=!!assessment;
   const previewMode=!!assessment?.preview;
@@ -126,7 +136,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
     const edgeBase={type:"smoothstep",style:{stroke:"#aec7d7",strokeWidth:1.2},markerEnd:{type:MarkerType.ArrowClosed,width:14,height:14,color:"#aec7d7"}};
     data.stageGates.forEach(g=>{
       const ga=assessmentMode?gateAssessment(g.id):null;
-      nodes.push({id:`stage-${g.id}`,type:"stage",position:{x:stageX(g.id),y:0},data:{gate:g,count:data.blockers.filter(b=>b.stageGate===g.id).length,selected:selectedGate===g.id,zoom,assessmentState:ga?.state,remaining:ga?.remaining,preview:previewMode,gapCount:ga?.gaps,unanswered:ga?.unanswered,dimmed:!!selectedBlocker&&selectedGate!==g.id,keyboardActivate:()=>{setSelectedGate(g.id);setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}},zIndex:selectedGate===g.id?5:1});
+      nodes.push({id:`stage-${g.id}`,type:"stage",position:{x:stageX(g.id),y:0},data:{gate:g,count:data.blockers.filter(b=>b.stageGate===g.id).length,selected:selectedGate===g.id,zoom,assessmentState:ga?.state,remaining:ga?.remaining,preview:previewMode,gapCount:ga?.gaps,unanswered:ga?.unanswered,dimmed:!!selectedBlocker&&selectedGate!==g.id,onGuidance:openGuidance,keyboardActivate:()=>{setSelectedGate(selectedGate===g.id&&!selectedBlocker?null:g.id);setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}},zIndex:selectedGate===g.id?5:1});
       if(g.id<data.stageGates.length-1)edges.push({id:`stage-edge-${g.id}`,source:`stage-${g.id}`,target:`stage-${g.id+1}`,...edgeBase,style:{stroke:"#c9dce8",strokeWidth:2}});
     });
 
@@ -136,7 +146,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       const stepX=phoneViewport?0:compactViewport?275:300;
       const baseX=phoneViewport?stageX(selectedGate):stageX(selectedGate)-(compactViewport?138:280);
       blockers.forEach((b,i)=>{const row=Math.floor(i/cols),col=i%cols,x=baseX+col*stepX,y=(phoneViewport?180:195)+row*(phoneViewport?150:165);
-        nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x,y},data:{blocker:b,selected:false,domainTitle:domains[b.domain]||"",zoom,maturityScore:assessment?.blockerScores?.[b.id],status:assessmentMode?blockerStatus(b.id):null,keyboardActivate:()=>{setSelectedBlocker(b.id);setSelectedGate(b.stageGate);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}}});
+        nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x,y:y+55},data:{blocker:b,selected:false,domainTitle:domains[b.domain]||"",zoom,maturityScore:assessment?.blockerScores?.[b.id],status:assessmentMode?blockerStatus(b.id):null,keyboardActivate:()=>{setSelectedBlocker(b.id);setSelectedGate(b.stageGate);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}}});
         edges.push({id:`gate-blocker-${b.id}`,source:`stage-${selectedGate}`,target:`blocker-${b.id}`,...edgeBase,style:{stroke:"#d8e6ee",strokeWidth:1}});
       });
     }
@@ -210,7 +220,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
 
   const onNodeClick=(evt,node)=>{
     if(node.type==="stage"){
-      setSelectedGate(node.data.gate.id);
+      setSelectedGate(selectedGate===node.data.gate.id&&!selectedBlocker?null:node.data.gate.id);
       setSelectedBlocker(null);
       setDetailOpen(false);
       setSelectedMechanism(null);
@@ -272,7 +282,16 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       <div className="breadcrumbs"><button onClick=${reset}>Timeline</button>${crumbs.map((c,i)=>html`<${React.Fragment} key=${i}><i>›</i>${c.action?html`<button onClick=${c.action}>${c.label}</button>`:html`<span>${c.label}</span>`}</${React.Fragment}>`)}</div>
       <div className="zoom-readout">Zoom ${Math.round(zoom*100)}%</div>
 
-      ${detailOpen&&selectedBlockerObj?html`<aside className="inspector" aria-labelledby="timeline-inspector-title">
+      ${guidanceKey?html`<aside className="inspector guidance-inspector" role="dialog" aria-modal="false" aria-labelledby="gate-guidance-title">
+        <div className="inspector-head"><div><div className="eyebrow">Stage Gate Guidance</div><h2 id="gate-guidance-title">${gateGuidance?.display_title||`Gate ${guidanceKey.slice(1)}`}</h2></div><button ref=${guidanceClose} className="close-inspector" onClick=${closeGuidance} aria-label="Close guidance" title="Close guidance">×</button></div>
+        <div className="inspector-body">${guidanceLoading?html`<p role="status">Loading guidance…</p>`:!gateGuidance?html`<p role="status">Guidance is not available for this Stage Gate.</p>`:html`
+          <div className="info-box"><small>Lifecycle transition</small><span>${gateGuidance.phase_label||"Not provided"}</span></div>
+          <section className="inspector-section"><h3>Gate purpose</h3><p>${gateGuidance.gate_purpose||"Not provided"}</p></section>
+          <section className="inspector-section"><h3>Key actions</h3>${gateGuidance.actions.length?html`<ol className="guidance-actions">${gateGuidance.actions.map(a=>html`<li key=${a.id}>${a.text}</li>`)}</ol>`:html`<p>Not provided</p>`}</section>
+          <section className="inspector-section"><h3>Intersecting ISO lines</h3><div className="guidance-categories">${gateGuidance.categories.map(c=>html`<span className="guidance-category" key=${c.token}><i style=${{background:c.color}} aria-hidden="true"></i>${c.label}</span>`)}</div></section>
+        `}</div>
+      </aside>`:null}
+      ${!guidanceKey&&detailOpen&&selectedBlockerObj?html`<aside className="inspector" aria-labelledby="timeline-inspector-title">
         <div className="inspector-head"><div><div className="eyebrow">Gate ${selectedBlockerObj.stageGate} · blocker detail</div><h2 id="timeline-inspector-title">${selectedBlockerObj.title}</h2></div><button className="close-inspector" onClick=${closeDetail} aria-label="Close" title="Close">×</button></div>
         <div className="inspector-body">
           ${selectedEnablerPair?html`<div className="enabler-detail"><span className="tag">${selectedMechanism} enabler</span><h3>${selectedEnablerPair.enabler.title}</h3><p>${selectedEnablerPair.enabler.description}</p><div className="inspector-section"><h3>Practical actions</h3><p>${selectedEnablerPair.enabler.practicalActions}</p></div><div className="inspector-section"><h3>Expected outcome</h3><p>${selectedEnablerPair.enabler.expectedOutcome||"—"}</p></div><div className="inspector-section"><h3>Stakeholders</h3><p>${selectedEnablerPair.enabler.stakeholders.join(" · ")}</p></div><div className="rationale">${selectedEnablerPair.relationship.rationale||""}</div></div>`
@@ -290,6 +309,8 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
 
 function Root(){
   const[data,setData]=useState(null),[error,setError]=useState(null);
+  const[guidance,setGuidance]=useState(null),[guidanceLoading,setGuidanceLoading]=useState(true);
+  useEffect(()=>{let active=true;fetch("../data/stage-gate-guidance.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("Guidance unavailable");return r.json()}).then(value=>{if(active)setGuidance(value)}).catch(()=>{if(active)setGuidance(null)}).finally(()=>{if(active)setGuidanceLoading(false)});return()=>{active=false}},[]);
   useEffect(()=>{
     if(new URLSearchParams(location.search).get("assessment")==="questionnaire"){
       const snapshot=readCompanyAssessment();
@@ -299,6 +320,6 @@ function Root(){
     fetch("../data/explorer-data.json?v=20261001-gates-0-5", {cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("Could not load explorer-data.json");return r.json()}).then(setData).catch(e=>setError(e.message))},[]);
   if(error)return html`<div style=${{padding:"40px",fontFamily:"system-ui"}}><h2>Could not load data</h2><p>${error}</p></div>`;
   if(!data)return html`<div className="timeline-loading"><span className="loading-spinner" aria-hidden="true"></span><span>Loading spatial timeline…</span></div>`;
-  return html`<${ReactFlowProvider}><${AppCanvas} data=${data}/></${ReactFlowProvider}>`;
+  return html`<${ReactFlowProvider}><${AppCanvas} data=${data} guidance=${guidance} guidanceLoading=${guidanceLoading}/></${ReactFlowProvider}>`;
 }
 createRoot(document.getElementById("root")).render(html`<${Root}/>`);

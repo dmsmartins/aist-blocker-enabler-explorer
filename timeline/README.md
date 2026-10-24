@@ -35,3 +35,21 @@ For rapid prototyping without changing the current build/deployment pipeline, th
 - HTM for JSX-like templates without a bundler
 
 If this interaction model is approved, the next engineering step is to move the same component model into a conventional Vite build and, if desired, a separate repository.
+# Stage Gate guidance
+
+Expand a Stage Gate, then use **+ Mais** to open its guidance. The panel uses
+the blocker inspector's visual style and leaves the timeline selection and
+assessment state unchanged. Close it with × or Escape; focus returns to Mais.
+Missing guidance is reported inside the panel without blocking the timeline.
+
+`../data/stage-gate-guidance.json` is exported from `Stage_Gates` and `ISO_Lines`
+in the integrated workbook. It also loads in questionnaire timelines, independently
+of their saved assessment snapshot. Numeric timeline IDs map to stable `G0`–`G5`
+keys. ISO tokens remain unchanged; only `display_label` is shown to users.
+
+Regenerate this supplemental data without replacing the live Explorer catalog:
+
+```sh
+python tools/export_stage_gate_guidance.py Blockers_Enablers_Integrated_Stage_Gates.xlsx data/stage-gate-guidance.json
+node --test timeline/guidance.test.mjs
+```

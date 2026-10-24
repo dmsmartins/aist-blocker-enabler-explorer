@@ -303,3 +303,13 @@
 .blocker-node.critical-core{border-left:4px solid #ad482c;background:#fff8f4}.criticality-label{font-size:11px;color:#85614f;margin-top:8px}.blocker-node.critical-core .criticality-label{color:#a13d24;font-weight:700}
 
 .assessment-status.maturity-3{background:#e1f1fc;color:#155d91}.assessment-status.maturity-4{background:#d9f3e9;color:#126449}
+
+/* Guidance overlays the canvas without changing its viewport or selection. */
+.guidance-inspector{position:absolute;inset:14px 16px 16px auto;width:min(410px,calc(100% - 32px));height:auto;max-height:none;grid-area:auto}
+.guidance-actions{padding-left:22px;margin:0;color:#61798b;font-size:12px;line-height:1.6}
+.guidance-actions li+li{margin-top:10px}
+.guidance-categories{display:flex;flex-wrap:wrap;gap:8px}
+.guidance-category{display:inline-flex;align-items:center;gap:7px;padding:6px 9px;border:1px solid #d6e4ed;border-radius:20px;font-size:12px;color:#20425a}
+.guidance-category i{width:10px;height:10px;border-radius:50%;flex:none}
+.stage-guidance-more:focus-visible,.stage-node[role="group"]:focus-visible{outline:3px solid #267db3;outline-offset:3px}
+@media(max-width:600px){.guidance-inspector{inset:8px;width:calc(100% - 16px)}.guidance-inspector .close-inspector{min-width:44px;min-height:44px}}
