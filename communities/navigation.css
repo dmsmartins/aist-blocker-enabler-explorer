@@ -1,0 +1,41 @@
+/* Viewport and interaction layer for the existing community browser. */
+html,body,#app{height:100%;overflow:hidden}
+.explorer{height:100%;padding:8px 10px;display:flex;flex-direction:column;gap:6px}
+.explore-title{display:none}
+.filters{margin:0;gap:12px;flex-wrap:nowrap}.filters label{min-width:0;flex:0 1 280px}.filters select{width:100%;max-width:none;min-height:40px}.filters #count{white-space:nowrap}
+.legend{margin:0;gap:12px;font-size:11px}.legend span:nth-child(2){display:none}
+#view{flex:1;min-height:0;display:flex;flex-direction:column}
+.cloud-toolbar{padding:4px 0 8px;gap:8px;flex-wrap:wrap}
+.breadcrumbs{display:flex;align-items:center;gap:8px;flex:1;min-width:180px}.breadcrumbs button{white-space:nowrap}.breadcrumbs span{font-size:13px;max-width:440px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.map-controls{display:flex;gap:4px}.map-controls button{min-width:44px;min-height:44px}.link-toggle{font-size:12px;display:flex;align-items:center;gap:4px}
+.cloud-layout,.cloud-layout.detail-open{display:block;flex:1;min-height:0;position:relative}
+.canvas{height:100%;border-radius:16px;background:#f7fafc;box-shadow:none}
+.canvas svg,.canvas svg.deep{height:100%;min-height:0;display:block;cursor:grab;touch-action:none;user-select:none}
+.canvas svg:active{cursor:grabbing}.canvas:after{display:none}
+.map-hint{position:absolute;bottom:8px;left:14px;margin:0;padding:3px 8px;border-radius:6px;font-size:11px;background:#ffffffd9;color:#52697b;pointer-events:none}
+.orb-surface{filter:none;stroke-width:1.5}.orb-halo{display:none}
+.orb-content{height:100%;gap:12px;padding:8px;justify-content:center;text-align:center;font-size:22px;pointer-events:none}
+.orb-content strong{font:600 23px/1.24 'Segoe UI',sans-serif;color:#254b69}.orb-count{font-size:30px;line-height:1}.orb-count small{font-size:16px;margin-left:6px}.orb-critical{font-size:15px;color:#9e503b}
+.community-title{font:600 22px/1.2 'Segoe UI',sans-serif}.community-title small{font-size:13px;margin-top:6px}
+.blocker rect,.blocker:hover rect{fill:#fff;stroke:#d2dfe8;stroke-width:1.5;filter:none}.blocker:hover rect{stroke:#5c9cc7}.blocker.selected rect{fill:#f0f8ff;stroke:#2475ad;stroke-width:3}
+.node-title{display:flex;flex-direction:column;gap:9px;height:100%;font:16px/1.28 'Segoe UI',sans-serif;overflow:hidden;pointer-events:none}
+.node-title strong{font-size:16px;font-weight:600;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.node-meta{font-size:11px;color:#567186;letter-spacing:.5px;text-transform:uppercase}.node-status{margin-top:auto;font-size:11px;color:#567186}.node-status.critical{color:#a04428;font-weight:600}
+#detail{position:absolute;z-index:4;right:10px;top:10px;bottom:10px;width:min(380px,45%);max-height:none;margin:0;overflow:auto;overscroll-behavior:contain;touch-action:pan-y;background:white;border:1px solid #d9e4ed;border-radius:16px;padding:24px;box-shadow:0 8px 24px #18395218}
+#detail h2{font-size:22px;margin-top:14px;padding-right:18px}#detail p{font-size:14px;line-height:1.65}#close-detail{position:sticky;top:0;float:right;min-width:44px;min-height:44px;background:white;z-index:1}#expand-detail{display:none}
+#app:fullscreen{background:var(--surface);height:100dvh;width:100vw}
+@media(max-width:619px){
+ .explorer{padding:4px;gap:4px}.filters{gap:6px}.filters label{flex:1;font-size:10px}.filters select{font-size:12px;min-height:38px;padding:6px}.filters #count{display:none}.legend{display:none}
+ .cloud-toolbar{gap:4px;padding:0 0 4px}.breadcrumbs{flex-basis:100%;min-width:0;gap:6px}.breadcrumbs button{min-height:44px}.breadcrumbs span{font-size:11px}.map-controls{flex:1}.map-controls button{padding:6px 10px;font-size:12px}.link-toggle{font-size:10px;max-width:105px;line-height:1.2}.link-toggle input{min-width:20px;min-height:20px}
+ .orb-content{gap:12px;padding:0}.orb-content strong{font-size:27px;line-height:1.16}.orb-count{font-size:25px}.orb-count small{font-size:22px}.map-hint{font-size:10px;bottom:4px;left:6px}
+ #detail{top:auto;bottom:0;right:0;width:100%;height:55%;max-height:none;border-radius:18px 18px 0 0;padding:16px 20px;box-shadow:0 -4px 20px #18395220;transition:height .18s}
+ #detail.expanded{height:92%}#expand-detail{display:inline-block;min-height:44px;margin-bottom:12px}#detail h2{font-size:20px}
+}
+@media(prefers-reduced-motion:reduce){#detail{transition:none}}
+
+/* Override legacy sizing at the same specificity. */
+.filters{padding:6px 12px}.breadcrumbs{justify-content:flex-start;width:auto}
+.cloud-layout.detail-open .canvas svg{min-height:0}
+.cloud-layout #detail{max-height:none;margin-top:0}
+#detail .dependency{font-size:13px}#detail .dependency small{font-size:11px}
+@media(max-width:619px){.filters{padding:4px 8px}.filters label{min-width:0}}
