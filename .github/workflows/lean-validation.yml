@@ -1,0 +1,29 @@
+name: Explorer lean validation
+
+on:
+  push:
+    branches:
+      - audit/lean-explorer-2026-10-25
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'data/**'
+      - '*.js'
+      - '*.mjs'
+      - 'tools/quick_check.py'
+      - '.github/workflows/lean-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Quick structural check
+        run: python3 tools/quick_check.py
+      - name: Existing Node tests
+        run: node --test --test-isolation=none readiness.test.mjs dependencies.test.mjs stage-dependencies.test.mjs validation.test.mjs
