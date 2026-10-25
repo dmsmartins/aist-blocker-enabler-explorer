@@ -20,7 +20,7 @@ def main():
         problems.append("Missing index.html")
     else:
         html = html_path.read_text(encoding="utf-8")
-        assets = re.findall(r'<(?:script|link)\\b[^>]*?\\b(?:src|href)\\s*=\\s*["\']([^"\']+)', html, re.I)
+        assets = re.findall(r'<(?:script|link)\b[^>]*?\b(?:src|href)\s*=\s*["\']([^"\']+)', html, re.I)
         for asset in assets:
             path = asset.split("?", 1)[0].split("#", 1)[0]
             if not path or path.startswith(("http:", "https:", "//", "data:", "#")):
