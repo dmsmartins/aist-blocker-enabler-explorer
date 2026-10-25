@@ -1,0 +1,40 @@
+name: Explorer lean validation
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'index.html'
+      - 'data/**'
+      - '*.js'
+      - '*.mjs'
+      - 'tools/quick_check.py'
+      - '.github/workflows/lean-validation.yml'
+  workflow_dispatch:
+
+# Share a group for push/PR runs on the same source branch; keep manual runs separate.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.head_ref || github.ref_name }}-${{ github.event_name == 'workflow_dispatch' && 'manual' || 'ci' }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Quick structural check
+        run: python3 tools/quick_check.py
+      - name: Existing Node tests
+        run: node --test --test-isolation=none readiness.test.mjs dependencies.test.mjs stage-dependencies.test.mjs validation.test.mjs
