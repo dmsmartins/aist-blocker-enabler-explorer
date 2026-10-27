@@ -1,5 +1,6 @@
 {
-  "sourceWorkbook": "Blockers_Enablers_Integrated_Stage_Gates.xlsx",
+  "sourceWorkbook": "AIST_Explorer_Master.xlsx",
+  "sourceWorkbookSha256": "7dd2d1db0089fd3ae9b7d8f2b5af09656d9a30a3d0b65e176891c361d1d205fb",
   "stageGates": [
     {
       "gate_id": "G0",
@@ -246,7 +247,7 @@
     {
       "iso_line": "People",
       "color_hex": "#079C52",
-      "display_label": "People",
+      "display_label": "People/Stakeholders",
       "description": "Mapping category shown in the provided stage-gate diagrams; not an ISO clause reference."
     },
     {
