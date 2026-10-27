@@ -834,7 +834,7 @@ body:has(.community-page){height:100dvh;display:flex;flex-direction:column;overf
 </style>
   <link rel="stylesheet" href="dependencies.css" />
   <link rel="stylesheet" href="stage-dependencies.css?v=20261002-stage-map" />
-<link rel="stylesheet" href="community-metadata.css" /><link rel="stylesheet" href="entry.css?v=20261021-depth">
+<link rel="stylesheet" href="community-metadata.css" /><link rel="stylesheet" href="entry.css?v=20261027-journey">
 </head>
 <body>
   <svg class="svg-sprite" aria-hidden="true" width="0" height="0">
@@ -1037,40 +1037,66 @@ function entryCard(title, text, link, action, symbol) {
 }
 
 
-// One observer follows responsive layout; the decorative layer never captures clicks.
-let journeyResizeObserver;
+// Decorative connectors follow the cards; navigation remains on the gate links.
+let journeyConnectionsCleanup;
 function mountJourneyConnections() {
-  journeyResizeObserver?.disconnect();
+  journeyConnectionsCleanup?.();
   const art = app.querySelector('.journey-art');
   if (!art) return;
-  const svg = art.querySelector('.journey-connections');
+  const lines = art.querySelector('.jc-lines'), dots = art.querySelector('.jc-dots');
   const cards = [...art.querySelectorAll('.journey-card')];
+  const mq = matchMedia('(min-width:1200px)');
+  let hovered = -1;
+  const highlight = () => {
+    const focused = cards.indexOf(document.activeElement), active = focused < 0 ? hovered : focused;
+    art.querySelectorAll('[data-link]').forEach(el => {
+      const hit = Number(el.dataset.link) === active || Number(el.dataset.link) === active - 1;
+      el.classList.toggle('is-on', active >= 0 && hit);
+      el.classList.toggle('is-dim', active >= 0 && !hit);
+    });
+  };
   const draw = () => {
-    if (!art.isConnected) { journeyResizeObserver.disconnect(); return; }
-    svg.setAttribute('viewBox', `0 0 ${art.clientWidth} ${art.clientHeight}`);
-    // Static, untransformed cards keep text crisp and connections aligned.
-    const points = cards.map(card => ({
-      x: card.offsetLeft + card.offsetWidth / 2,
-      y: card.offsetTop + card.offsetHeight / 2,
-      w: card.offsetWidth,
+    if (!art.isConnected) { cleanup(); return; }
+    lines.replaceChildren(); dots.replaceChildren();
+    if (!mq.matches) return;
+    for (const svg of [lines, dots]) svg.setAttribute('viewBox', `0 0 ${art.clientWidth} ${art.clientHeight}`);
+    const points = cards.map(card => ({x: card.offsetLeft, y: card.offsetTop, w: card.offsetWidth, h: card.offsetHeight,
       color: getComputedStyle(card).getPropertyValue('--journey-color').trim()
     }));
-    svg.innerHTML = points.slice(0,-1).map((a,i) => {
-      const b = points[i+1];
-      let d;
-      if (Math.abs(a.x-b.x) < 10) {
-        const bend = a.x + a.w * .8;
-        d = `M${a.x},${a.y} C${bend},${a.y} ${bend},${b.y} ${b.x},${b.y}`;
+    const paths = [], stops = [], endpoints = [];
+    points.slice(0,-1).forEach((a,i) => {
+      const b = points[i+1], x2 = b.x, y2 = b.y + b.h / 2;
+      let x1, y1, d;
+      if (b.y < a.y) {
+        x1 = a.x + a.w * .4; y1 = a.y;
+        d = `M${x1} ${y1} C${x1} ${y2} ${x1} ${y2} ${x2} ${y2}`;
       } else {
-        const mid = (a.x+b.x)/2;
-        d = `M${a.x},${a.y} C${mid},${a.y} ${mid},${b.y} ${b.x},${b.y}`;
+        x1 = a.x + a.w; y1 = a.y + a.h * .45;
+        const bend = Math.max(45, (x2-x1) * .8);
+        d = `M${x1} ${y1} C${x1+bend} ${y1} ${x2-bend} ${y2} ${x2} ${y2}`;
       }
-      return `<defs><linearGradient id="gate-link-${i}" gradientUnits="userSpaceOnUse" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}"><stop stop-color="${a.color}"/><stop offset="1" stop-color="${b.color}"/></linearGradient></defs><path d="${d}" stroke="url(#gate-link-${i})"/>`;
-    }).join('');
+      stops.push(`<linearGradient id="gate-link-${i}" gradientUnits="userSpaceOnUse" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"><stop stop-color="${a.color}"/><stop offset="1" stop-color="${b.color}"/></linearGradient>`);
+      paths.push(`<path d="${d}" stroke="url(#gate-link-${i})" pathLength="1" data-link="${i}" style="--i:${i}"/>`);
+      endpoints.push(...[[x1,y1,a.color],[x2,y2,b.color]].map(([x,y,color]) => `<circle cx="${x}" cy="${y}" r="4.5" stroke="${color}" data-link="${i}" style="--i:${i}"/>`));
+    });
+    lines.innerHTML = `<defs>${stops.join('')}</defs>${paths.join('')}`;
+    dots.innerHTML = endpoints.join('');
+    highlight();
   };
-  journeyResizeObserver = new ResizeObserver(draw);
-  journeyResizeObserver.observe(art);
-  cards.forEach(card => journeyResizeObserver.observe(card));
+  cards.forEach((card,i) => {
+    card.addEventListener('mouseenter', () => { hovered = i; highlight(); });
+    card.addEventListener('mouseleave', () => { hovered = -1; highlight(); });
+    card.addEventListener('focus', highlight);
+    card.addEventListener('blur', () => queueMicrotask(highlight));
+  });
+  const observer = new ResizeObserver(draw);
+  const finish = setTimeout(() => { lines.classList.add('jc-done'); dots.classList.add('jc-done'); }, 2500);
+  const cleanup = () => { observer.disconnect(); mq.removeEventListener('change', draw); clearTimeout(finish); };
+  journeyConnectionsCleanup = cleanup;
+  observer.observe(art);
+  cards.forEach(card => observer.observe(card));
+  mq.addEventListener('change', draw);
+  document.fonts?.ready.then(() => { if (art.isConnected) draw(); });
   draw();
 }
 
@@ -1084,7 +1110,7 @@ function timelinePreviewSvg() {
     '<path d="M4 7h12l-3-3m3 3-3 3M20 17H8l3-3m-3 3 3 3"/>'
   ];
   const captions=['Define ambition and value','Design a feasible solution','Build and verify','Deploy into operations','Operate and improve','Retire and transition'];
-  return `<div class="journey-pill">Assessment <span>→</span> Timeline <span>→</span> Action</div><div class="journey-art">
+  return `<div class="journey-pill"><b style="--c:#1485ed">Assessment</b><span aria-hidden="true">→</span><b style="--c:#8b5cf6">Timeline</b><span aria-hidden="true">→</span><b style="--c:#10a37f">Action</b></div><div class="journey-art">
     <svg class="journey-orbits" viewBox="0 0 1000 650" preserveAspectRatio="none" aria-hidden="true" focusable="false">
       <g transform="rotate(-18 500 325)">
         <ellipse class="orbit-track" cx="500" cy="355" rx="520" ry="235"/>
@@ -1093,8 +1119,9 @@ function timelinePreviewSvg() {
         <ellipse class="orbit-glow orbit-secondary" cx="540" cy="260" rx="390" ry="230" pathLength="100"/>
       </g>
     </svg>
-    <svg class="journey-connections" aria-hidden="true" focusable="false"></svg>
-    ${state.data.stageGates.map((g,i)=>`<a href="./timeline/?gate=${g.id}" class="journey-card journey-${i}" style="--journey-color:${['#1485ed','#1878cb','#8254dc','#169b79','#e07c24','#8550db'][i]}"><span class="journey-card-heading"><span class="journey-number">${g.id}</span><svg class="journey-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${gateIcons[i] || ''}</svg></span><small>STAGE GATE</small><strong>${escapeHtml(g.label)}</strong><span class="journey-caption">${captions[i]||''}</span></a>`).join('')}</div>`;
+    <svg class="jc-lines" aria-hidden="true" focusable="false"></svg>
+    <svg class="jc-dots" aria-hidden="true" focusable="false"></svg>
+    ${state.data.stageGates.map((g,i)=>`<a href="./timeline/?gate=${g.id}" class="journey-card journey-${i}" style="--journey-color:${['#1485ed','#1a6fd1','#7c4ddb','#10a37f','#e8780c','#8b5cf6'][i]}"><span class="journey-card-heading"><span class="journey-number">${g.id}</span><svg class="journey-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${gateIcons[i] || ''}</svg></span><small>STAGE GATE</small><strong>${escapeHtml(g.label)}</strong><span class="journey-caption">${captions[i]||''}</span></a>`).join('')}</div>`;
 }
 
 function renderExplore() {
