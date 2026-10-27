@@ -29,12 +29,28 @@
   function timeline(c, report, session) {
     const stakeholders = value => String(value || '').split(';').map(x=>x.trim()).filter(Boolean);
     const statuses = Object.fromEntries(report.blockers.map(b=>[b.blocker_id,b.status==='not_applicable'?'not_applicable':b.score===null?'unanswered':b.score<=2?'gap':'review']));
-    return {assessment_id:session.assessment_id,preview:true,blockerStatuses:statuses,blockerScores:Object.fromEntries(report.blockers.map(b=>[b.blocker_id,b.score])),mode:session.mode,
+    return {assessment_id:session.assessment_id,assessment_name:session.assessment_name,created_at:session.created_at,completed_at:session.completed_at,preview:true,blockerStatuses:statuses,blockerScores:Object.fromEntries(report.blockers.map(b=>[b.blocker_id,b.score])),mode:session.mode,
       data:{stageGates:labels.map((label,id)=>({id,label})),domains:[],mechanisms:[...new Map(c.blocker_enabler_relationships.map(r=>[r.attribute,{key:r.attribute,description:r.attribute_description}])).values()],
         blockers:c.blockers.map(b=>({id:b.blocker_id,title:b.title,statement:b.statement,cluster:b.cluster,dimension:b.dimension,stageGate:gateNumber(b.stage_gate),stageGateDescription:b.stage_gate,whyItMatters:b.why_it_matters,consequence:b.consequence,stakeholders:stakeholders(b.stakeholders),classification:b.dependency_analysis?.state,communityName:b.dependency_analysis?.community})),
         enablers:c.enablers.map(e=>({id:e.enabler_id,title:e.enabler_title,description:e.enabler_description,practicalActions:e.practical_actions,expectedOutcome:e.expected_outcome,stageGate:null,stakeholders:stakeholders(e.stakeholders)})),
         relationships:c.blocker_enabler_relationships.map(r=>({id:r.relationship_id,blockerId:r.blocker_id,enablerId:r.enabler_id,mechanism:r.attribute,rationale:r.rationale})),
         blockerDependencies:c.blocker_dependencies.map(r=>({id:r.relationship_id,blockerId:r.blocker_id,dependsOnBlockerId:r.depends_on_blocker_id,dependencyImportance:r.dependency_importance}))}};
   }
-  root.AssessmentViews = { escape, gateAxes, radar, enablerReport, timeline };
+
+  function questionContext(q) {
+    const lines=t=>escape(t||'').replace(/\n/g,'<br>');
+    return `${q.why_this_matters?`<details class="question-help"><summary>Why this matters</summary><p>${lines(q.why_this_matters)}</p></details>`:''}
+      ${q.what_to_consider?`<details class="question-help"><summary>What to consider</summary><p>${lines(q.what_to_consider)}</p></details>`:''}
+      ${q.evidence_examples?`<details class="question-help"><summary>Evidence examples</summary><p>${lines(q.evidence_examples)}</p></details>`:''}`;
+  }
+  function answerGuidance(q,level) {
+    let guidance=q.answer_guidance?.find(a=>a.score===level);
+    if(!guidance){
+      const [description,examples]=String(q['rubric_'+level]||'').split(/\r?\nExamples \(illustrative, not actual findings\):\r?\n/);
+      guidance={description,behavioral_examples:examples?examples.split(/\r?\n/).filter(Boolean).map(text=>({text:text.replace(/^\d+:\s*/, '')})):[]};
+    }
+    if(!guidance.behavioral_examples.length)return `<span class="answer-description">${escape(guidance.description)}</span>`;
+    return `<span class="answer-description">${escape(guidance.description)}</span><span class="answer-examples"><b>For example</b>${guidance.behavioral_examples.map(e=>`<span>${escape(e.text)}</span>`).join('')}</span>`;
+  }
+  root.AssessmentViews = { questionContext, answerGuidance, escape, gateAxes, radar, enablerReport, timeline };
 })(globalThis);

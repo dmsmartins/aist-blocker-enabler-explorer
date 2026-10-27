@@ -44,10 +44,24 @@
   function create(c,q,id,now) {
     return {assessment_id:id,entity_id:'',entity_name:'',scope:'',target_scale:'',author:'',assessment_date:now.slice(0,10),created_at:now,updated_at:now,catalog_version:c.catalog_version,maps_version:c.maps_version,questionnaire_key:key(q),assessment_type:q.assessment_type,mode:q.mode,questionnaire_version:q.questionnaire_version,questionnaire_snapshot:structuredClone(q),source_quick_assessment_id:null,answers:Object.fromEntries(q.questions.map(x=>[x.question_id,{score:null,applicability:'undecided',evidence:'',na_reason:'',all_blockers_not_applicable:false,effective_weight:x.default_weight,review_comment:'',author:'',updated_at:now}])),current_step:0};
   }
+  function defaultName(s) {
+    return `${s.assessment_type==='company'?'Company':'Project'} · ${s.mode==='quick'?'Quick':'Expert'} — ${(s.created_at||s.assessment_date||'').slice(0,10)}`;
+  }
+  function displayName(s) {
+    return text(s.assessment_name)?s.assessment_name:`${s.assessment_type==='company'?'Company':'Project'} · ${s.mode==='quick'?'Quick':'Expert'}`;
+  }
+  function nameAssessment(s,name,timestamp,r) {
+    assert(text(name)&&name.trim().length<=160,'Enter an assessment name (up to 160 characters).');
+    s.assessment_name=name.trim();
+    s.updated_at=timestamp;
+    s.named_saved_at=timestamp;
+    if(!s.completed_at && r.rows.every(row=>['valid','not_applicable','information_gap'].includes(row.status)))s.completed_at=timestamp;
+    return s;
+  }
   function classify(a,q,mode,selfReport=false) {
     if (!a || !weightOK(a.effective_weight)) return 'invalid';
-    if(a.applicability==='not_applicable') return a.score===null && (selfReport || text(a.na_reason) && (mode!=='quick'||a.all_blockers_not_applicable===true)) ? 'not_applicable':'na_reason_missing';
-    if(a.score===null) return 'unanswered';
+    if(a.applicability==='not_applicable') return a.score===null && (selfReport && !(q.na_guidance||q.when_to_use_na) || text(a.na_reason) && (mode!=='quick'||a.all_blockers_not_applicable===true)) ? 'not_applicable':'na_reason_missing';
+    if(a.score===null) return a.response_state==='dont_know'?'information_gap':'unanswered';
     if(a.applicability!=='applicable'||!Number.isInteger(a.score)||a.score<0||a.score>4) return 'invalid';
     return selfReport||text(a.evidence)?'valid':'evidence_missing';
   }
@@ -63,12 +77,14 @@
       assert(a.score===null||Number.isInteger(a.score)&&a.score>=0&&a.score<=4,'Invalid score.');
       assert(['applicable','not_applicable','undecided'].includes(a.applicability),'Invalid applicability.');
       assert(a.applicability==='applicable'||a.score===null,'Score incompatible with applicability.');
+      assert(a.response_state===undefined||['rated','not_applicable','dont_know','unanswered'].includes(a.response_state),'Invalid response state.');
+      assert(a.response_state!=='dont_know'||a.score===null&&a.applicability==='undecided','Invalid unknown response.');
       for (const field of ['evidence','na_reason','review_comment']) assert(typeof a[field]==='string','Invalid answer text.');
     }
     return s;
   }
   function report(c,s) {
-    const q=questionnaire(c,s), rows=[], counts={valid:0,not_applicable:0,unanswered:0,evidence_missing:0,na_reason_missing:0,invalid:0,zero_weight:0};
+    const q=questionnaire(c,s), rows=[], counts={information_gap:0,valid:0,not_applicable:0,unanswered:0,evidence_missing:0,na_reason_missing:0,invalid:0,zero_weight:0};
     let numerator=0,denominator=0;
     const blockers=[];
     for (const question of q.questions) {
@@ -101,5 +117,5 @@
     recommendations.sort((a,b)=>b.priority-a.priority||a.enabler_id-b.enabler_id);
     return {maturity_percent:denominator?100*numerator/denominator:null,numerator,denominator,completion:(counts.valid+counts.not_applicable)/q.questions.length,counts,rows,blockers,groups,recommendations,partial:counts.valid+counts.not_applicable<q.questions.length};
   }
-  root.AssessmentPreview={validate,key,create,classify,questionnaire,validateAssessment,report,weightOK};
+  root.AssessmentPreview={defaultName,displayName,nameAssessment,validate,key,create,classify,questionnaire,validateAssessment,report,weightOK};
 })(globalThis);
