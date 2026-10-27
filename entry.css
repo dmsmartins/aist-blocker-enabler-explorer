@@ -184,3 +184,95 @@
   .orbit-glow { animation: none; }
   .journey-card { transition: none; }
 }
+
+/* Landing illustration: coloured milestones and a connected zigzag journey. */
+.hero-visual .journey-pill {
+  margin: 0 6% 22px auto; gap: 14px;
+  background: #ffffffcc; box-shadow: 0 8px 30px #1479d212;
+}
+.hero-visual .journey-pill b { display: inline-flex; align-items: center; gap: 8px; color: #183c60; }
+.hero-visual .journey-pill b::before {
+  content: ''; width: 20px; height: 10px; flex: 0 0 20px;
+  background: radial-gradient(circle at 5px 50%,var(--c) 4px,transparent 4.5px),
+    linear-gradient(var(--c),var(--c)) 8px 50% / 12px 2px no-repeat;
+}
+.hero-visual .jc-lines, .hero-visual .jc-dots {
+  position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none;
+}
+.hero-visual .jc-lines { z-index: 1; }
+.hero-visual .jc-dots { z-index: 4; }
+.jc-lines path {
+  fill: none; stroke-width: 2; stroke-linecap: round;
+  transition: opacity .2s, stroke-width .2s;
+}
+.jc-dots circle { fill: #fff; stroke-width: 2.5; transition: opacity .2s; }
+.jc-lines .is-dim, .jc-dots .is-dim { opacity: .2; }
+.jc-lines .is-on { stroke-width: 3; }
+@media (min-width: 1200px) {
+  .hero-visual .journey-art {
+    display: block; position: relative; height: 520px; padding: 0;
+    margin: 0 2% 0 4%; transform: rotate(-4deg); transform-origin: 50% 50%;
+  }
+  .hero-visual .journey-art .journey-card {
+    position: absolute; left: var(--x); top: var(--y); width: 17.5%;
+    min-height: 190px; padding: 16px 12px; margin: 0; gap: 6px;
+    background: #fff; border: 1px solid #dbe9f6; border-radius: 18px;
+    box-shadow: 0 1px 2px #102f500a, 0 22px 40px -16px #173f5f45;
+    transform: none; animation: none; z-index: 2;
+  }
+  .hero-visual .journey-art .journey-0 { --x: 0%; --y: 95px; }
+  .hero-visual .journey-art .journey-1 { --x: 20%; --y: 270px; }
+  .hero-visual .journey-art .journey-2 { --x: 32%; --y: 35px; z-index: 3; }
+  .hero-visual .journey-art .journey-3 { --x: 50%; --y: 265px; }
+  .hero-visual .journey-art .journey-4 { --x: 63.5%; --y: 15px; z-index: 3; }
+  .hero-visual .journey-art .journey-5 { --x: 82.5%; --y: 120px; }
+  .hero-visual .journey-art .journey-0 {
+    border: 1.5px solid #1485ed;
+    box-shadow: 0 0 0 6px #1485ed12, 0 0 0 24px #57c9ff0c,
+      0 0 90px 40px #57c9ff33, 0 22px 40px -16px #1485ed66;
+  }
+  .hero-visual .journey-art .journey-0::before { content: none; }
+  .hero-visual .journey-card-heading { gap: 10px; margin-bottom: 8px; }
+  .hero-visual .journey-number {
+    width: 30px; height: 30px; font-size: 14px; flex-shrink: 0;
+    background: color-mix(in srgb,var(--journey-color) 12%,#fff);
+  }
+  .hero-visual .journey-icon { width: 30px; height: 30px; flex-shrink: 0; }
+  .hero-visual .journey-card small { display: none; }
+  .hero-visual .journey-card strong { font-size: 14px; font-weight: 800; line-height: 1.25; color: #0f2a47; }
+  .hero-visual .journey-caption { font-size: 12px; line-height: 1.4; color: #5a7590; }
+  .hero-visual .journey-art .journey-card:hover,
+  .hero-visual .journey-art .journey-card:focus-visible {
+    border-color: var(--journey-color);
+    box-shadow: 0 0 0 4px color-mix(in srgb,var(--journey-color) 14%,transparent),
+      0 24px 44px -16px #173f5f55;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .hero-visual .journey-art .journey-card { width: 20%; padding-inline: 8px; }
+  .hero-visual .journey-art .journey-4 { --x: 62%; }
+  .hero-visual .journey-card strong { font-size: 13.5px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .jc-lines:not(.jc-done) path {
+    stroke-dasharray: 1; stroke-dashoffset: 1;
+    animation: jc-draw .8s ease forwards; animation-delay: calc(var(--i) * 150ms + .3s);
+  }
+  .jc-dots:not(.jc-done) circle {
+    opacity: 0; animation: jc-pop .3s ease forwards; animation-delay: calc(var(--i) * 150ms + .3s);
+  }
+}
+@keyframes jc-draw { to { stroke-dashoffset: 0; } }
+@keyframes jc-pop { to { opacity: 1; } }
+@media (max-width: 1199px) {
+  .hero-visual .jc-lines, .hero-visual .jc-dots { display: none; }
+  .hero-visual .journey-pill { margin-inline: auto; }
+}
+@media (max-width: 600px) {
+  .hero-visual .journey-pill { gap: 8px; padding: 12px; font-size: 12px; }
+  .hero-visual .journey-pill b { gap: 5px; }
+  .hero-visual .journey-pill b::before { width: 15px; flex-basis: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jc-lines path, .jc-dots circle { animation: none; transition: none; }
+}
