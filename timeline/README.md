@@ -18,7 +18,8 @@ Live path on GitHub Pages:
 - blockers revealed within a selected Stage Gate
 - blocker-centred upstream/downstream dependency graph
 - select a blocker to open **How to unlock** first
-- six mechanism buttons with blocker-specific enabler counts (empty mechanisms disabled)
+- mechanism buttons with blocker-specific enabler counts (only mechanisms with mapped enablers are shown)
+- the blocker card itself opens or reopens details by click, Enter or Space, without an extra details button
 - a sole available mechanism is selected automatically; otherwise choose one
 - numbered enabler list synchronized with the cards below the central blocker
 - direct connections and a legend use the selected mechanism's colour
@@ -53,7 +54,8 @@ node --test --test-isolation=none timeline/unlock.test.mjs timeline/guidance.tes
 Manual browser checks: select multi-mechanism and single-mechanism blockers;
 compare counts to source relationships; switch mechanisms; select an enabler in
 both places; expand Relations and follow a dependency; close with Escape; reopen
-with **Details & enablers**; reload a share link and use browser Back/Forward.
+by clicking the blocker card or pressing Enter/Space on it; reload a share link
+and use browser Back/Forward. Mechanisms with zero mapped enablers stay hidden.
 Check overview, all six Stage Gates, Guidance, canvas controls, pan/zoom, company
 and questionnaire timeline filters. Repeat at desktop and narrow widths,
 including a mechanism with seven enablers, and check the console for errors.

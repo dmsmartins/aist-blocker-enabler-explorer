@@ -42,13 +42,12 @@ function BlockerNode({data}){
   const showStatement=selected||zoom>0.92;
   const score=data.maturityScore;
   const statusCls=status?` status-${status}`:"";
-  return html`<div className=${"blocker-node"+(selected?" selected":"")+statusCls+(blocker.classification==='Critical core'?' critical-core':'')+(data.relationsHighlighted?" relations-highlighted":"")} role=${selected?"group":"button"} tabIndex=${selected?-1:0} data-blocker-node=${blocker.id} aria-pressed=${selected?undefined:"false"} onKeyDown=${e=>{if(!selected&&(e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}>
+  return html`<div className=${"blocker-node"+(selected?" selected":"")+statusCls+(blocker.classification==='Critical core'?' critical-core':'')+(data.relationsHighlighted?" relations-highlighted":"")} role="button" tabIndex="0" data-blocker-node=${blocker.id} aria-pressed=${selected} aria-expanded=${selected?data.detailOpen:undefined} onKeyDown=${e=>{if((e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();e.stopPropagation();data.keyboardActivate()}}}>
     <${Handle} type="target" position=${Position.Left} style=${{opacity:0}} />
     <div className="node-kicker"><span>Gate ${blocker.stageGate} · ${domainTitle}</span><span>${relationLabel||""}</span></div>
     ${status?html`<div className=${"assessment-status"+(status==="review"?(score>=4?" maturity-4":" maturity-3"):"")} title=${status==="review"?"Self-reported maturity; not yet verified":undefined}>${status==="gap"?"● Gap identified":status==="review"?(score>=4?"◆ L4 · Sustained*":"◕ L3 · Implemented*"):status==="unanswered"?"Not assessed":status==="not_applicable"?"Not applicable":status==="resolved"?"✓ Resolved":status==="partial"?"◐ Partial":"● Open"}</div>`:null}
     <strong>${blocker.title}</strong>${blocker.classification?html`<div className="criticality-label">${blocker.classification}</div>`:null}
     ${showStatement?html`<p>${truncate(blocker.statement,selected?185:100)}</p>`:null}
-    ${selected?html`<button className="deep-dive-plus" title="Open blocker details and enablers" aria-label="Open blocker details and enablers" onClick=${(e)=>{e.preventDefault();e.stopPropagation();data.onDeepDive?.(blocker)}}><span>+</span><em>Details & enablers</em></button>`:null}
     <${Handle} type="source" position=${Position.Right} style=${{opacity:0}} />
     <${Handle} id="unlock" type="source" position=${Position.Bottom} style=${{opacity:0}} />
   </div>`;
@@ -185,7 +184,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       const focusX=phoneViewport?stageX(b.stageGate):compactViewport?620:760;
       const focusY=phoneViewport?235:350,items=detailOpen&&selectedMechanism?groupsForBlocker(b.id)[selectedMechanism]||[]:[];
       const layout=enablerLayout(items.length,canvasSize.width,focusX,focusY,phoneViewport?260:330,canvasSize.height);
-      nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x:focusX,y:focusY},data:{blocker:b,selected:true,domainTitle:domains[b.domain]||"",zoom,onDeepDive:openDeepDive,maturityScore:assessment?.blockerScores?.[b.id],status:assessmentMode?blockerStatus(b.id):null,keyboardActivate:()=>openDeepDive(b)},zIndex:8});
+      nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x:focusX,y:focusY},data:{blocker:b,selected:true,detailOpen,domainTitle:domains[b.domain]||"",zoom,maturityScore:assessment?.blockerScores?.[b.id],status:assessmentMode?blockerStatus(b.id):null,keyboardActivate:()=>openDeepDive(b)},zIndex:8});
       const placeSide=(items,side)=>{const x=detailOpen?(side==="up"?layout.dependencyLeft:layout.dependencyRight):phoneViewport?(side==="up"?focusX-285:focusX+315):(side==="up"?380:1140),label=side==="up"?"Depends on":"Depends on this";
         items.filter(xBlock=>!assessmentMode || showCompleted || blockerStatus(xBlock.id)!=="resolved").forEach((xBlock,i)=>{const y=(phoneViewport?180:210)+i*(detailOpen?230:phoneViewport?138:145);
           // Reciprocal dependencies use one card with both directional edges.
@@ -264,6 +263,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
 
   const selectedBlockerObj=selectedBlocker?byId(data.blockers,selectedBlocker):null;
   const groups=selectedBlockerObj?groupsForBlocker(selectedBlockerObj.id):{};
+  const availableMechanisms=data.mechanisms.filter(m=>groups[m.key]?.length);
   const deps=selectedBlockerObj?dependencyContext(selectedBlockerObj.id):{upstream:[],downstream:[]};
   const selectedEnablerPair=groups[selectedMechanism]?.find(x=>x.enabler.id===selectedEnabler);
 
@@ -314,14 +314,14 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
           <details className="unlock-section" open=${unlockOpen} onToggle=${e=>setUnlockOpen(e.currentTarget.open)}>
             <summary>How to unlock</summary>
             <div className="mechanism-grid" aria-label="Enabling mechanisms">
-              ${data.mechanisms.map(m=>{const count=groups[m.key]?.length||0,active=selectedMechanism===m.key;return html`<button key=${m.key} className=${"mechanism-choice"+(active?" active":"")} style=${{"--mech":MECH_COLORS[m.key]}} disabled=${!count} aria-disabled=${!count} aria-pressed=${active} aria-controls="mechanism-enablers" onClick=${()=>{if(count){setSelectedMechanism(m.key);setSelectedEnabler(null)}}}><i aria-hidden="true"></i><span>${m.key}<small>${count} enabler${count===1?"":"s"}</small></span><b aria-hidden="true">${active?"✓":""}</b></button>`})}
+              ${availableMechanisms.map(m=>{const count=groups[m.key].length,active=selectedMechanism===m.key;return html`<button key=${m.key} className=${"mechanism-choice"+(active?" active":"")} style=${{"--mech":MECH_COLORS[m.key]}} aria-pressed=${active} aria-controls="mechanism-enablers" onClick=${()=>{setSelectedMechanism(m.key);setSelectedEnabler(null)}}><i aria-hidden="true"></i><span>${m.key}<small>${count} enabler${count===1?"":"s"}</small></span><b aria-hidden="true">${active?"✓":""}</b></button>`})}
             </div>
             <div id="mechanism-enablers">
               ${selectedMechanism?html`<div className="mechanism-content" style=${{"--mech":MECH_COLORS[selectedMechanism]}}><h3>${selectedMechanism}</h3><p>${data.mechanisms.find(m=>m.key===selectedMechanism)?.description}</p>
                 <ol className="unlock-enablers">${groups[selectedMechanism].map(({enabler,relationship},i)=>html`<li key=${enabler.id} data-enabler-item=${enabler.id} className=${selectedEnabler===enabler.id?"selected":""}><button className="enabler-item" aria-pressed=${selectedEnabler===enabler.id} aria-expanded=${selectedEnabler===enabler.id} aria-controls=${selectedEnabler===enabler.id?`enabler-detail-${enabler.id}`:undefined} onClick=${()=>selectEnabler(enabler.id)}><span className="enabler-number">${i+1}</span><span>${enabler.title}</span>${selectedEnabler===enabler.id?html`<b aria-label="Selected">✓</b>`:null}</button><p>${enabler.description}</p>
                   ${selectedEnabler===enabler.id?html`<div id=${`enabler-detail-${enabler.id}`} className="enabler-detail"><h4>Practical actions</h4><p>${enabler.practicalActions||"—"}</p><h4>Expected outcome</h4><p>${enabler.expectedOutcome||"—"}</p><h4>Stakeholders</h4><p>${enabler.stakeholders.join(" · ")||"—"}</p>${relationship.rationale?html`<div className="rationale">${relationship.rationale}</div>`:null}</div>`:null}
                 </li>`)}</ol>
-              </div>`:html`<p className="unlock-hint">Choose a mechanism to explore how to overcome this blocker.</p>`}
+              </div>`:html`<p className="unlock-hint">${availableMechanisms.length?"Choose a mechanism to explore how to overcome this blocker.":"No enablers are mapped to this blocker yet."}</p>`}
             </div>
           </details>
           <details className="blocker-accordion relations-section" open=${relationsOpen} onToggle=${e=>setRelationsOpen(e.currentTarget.open)}><summary>Relations<small>${deps.upstream.length} this depends on · ${deps.downstream.length} depend on this</small></summary><div className="relation-list">${[{label:"This depends on",items:deps.upstream},{label:"Depend on this",items:deps.downstream}].map(({label,items})=>html`<h3>${label}</h3>${items.length?items.map(b=>html`<button key=${b.id} onClick=${()=>openDeepDive(b)}>${b.title}<span aria-hidden="true"> →</span></button>`):html`<p>No dependencies mapped.</p>`}`)}</div></details>

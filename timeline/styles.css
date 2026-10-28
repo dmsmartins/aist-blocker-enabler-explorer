@@ -330,8 +330,7 @@
 .mechanism-choice b{width:12px;font-size:12px}
 .mechanism-choice:hover:enabled{background:#f4f8fb}
 .mechanism-choice.active{border:2px solid var(--mech);padding:9px;background:color-mix(in srgb,var(--mech) 8%,white)}
-.mechanism-choice:disabled{cursor:default;border-style:dashed;background:#f3f5f7;color:#526575}
-.mechanism-choice:disabled i{background:transparent;border:1px solid #6b7c88}
+.mechanism-choice:only-child{grid-column:1/-1}
 .unlock-hint,.mechanism-content>p{font-size:12px;line-height:1.5;color:#39566c;margin:8px 0 14px}
 .mechanism-content h3{font-size:13px;margin:15px 0 5px;color:#23465f}
 .unlock-enablers{list-style:none;padding:0;margin:0}
