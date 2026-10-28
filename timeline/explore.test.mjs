@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {collectionId,collections,matchingBlockers,explorationFromHash,explorationHash,visibleDependencies} from './explore.mjs';
+import {collectionId,collections,matchingBlockers,collectionAssessment,explorationFromHash,explorationHash,visibleDependencies} from './explore.mjs';
 const data=JSON.parse(fs.readFileSync(new URL('../data/explorer-data.json',import.meta.url)));
 
 test('communities and gates partition the same source blockers without changing IDs or memberships',()=>{
@@ -61,4 +61,17 @@ test('dependency review filtering distinguishes validated, unreviewed, missing a
   assert.deepEqual(visibleDependencies({blockerDependencies:rows}),rows.slice(0,3));
   assert.deepEqual(visibleDependencies({blockerDependencies:rows},false),[rows[0]]);
   assert.equal(visibleDependencies(data).length,127);
+});
+
+test('a completed stakeholder subset cannot mark an incomplete collection done',()=>{
+  const roles=[...new Set(data.blockers.flatMap(b=>b.stakeholders))];
+  for(const mode of ['community','gate']){
+    const scope=collections(data,mode).flatMap(g=>roles.map(stakeholder=>({group:g.id,stakeholder,all:matchingBlockers(data,{mode,group:g.id}),visible:matchingBlockers(data,{mode,group:g.id,stakeholder})}))).find(s=>s.visible.length>0&&s.visible.length<s.all.length);
+    assert.ok(scope);
+    const statuses=Object.fromEntries(scope.visible.map(b=>[b.id,'resolved']));
+    assert.deepEqual(collectionAssessment(data,{...scope,mode,statuses}),{state:'active',remaining:0});
+    scope.all.forEach(b=>{statuses[b.id]='resolved'});
+    assert.deepEqual(collectionAssessment(data,{...scope,mode,statuses}),{state:'done',remaining:0});
+    assert.equal(collectionAssessment(data,{...scope,mode,statuses,preview:true}).state,'active');
+  }
 });

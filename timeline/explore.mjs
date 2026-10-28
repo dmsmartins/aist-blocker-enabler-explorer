@@ -12,6 +12,14 @@ export function matchingBlockers(data,{mode='gate',group=null,stakeholder=''}={}
   return data.blockers.filter(b=>(group==null||collectionId(b,mode)===group)&&(!stakeholder||b.stakeholders.includes(stakeholder)));
 }
 
+export function collectionAssessment(data,{mode='gate',group,stakeholder='',statuses={},preview=false}){
+  const all=matchingBlockers(data,{mode,group}),visible=matchingBlockers(data,{mode,group,stakeholder});
+  if(!all.length)return{state:'empty',remaining:0};
+  const status=b=>statuses[b.id]||'open';
+  if(preview){const gaps=visible.filter(b=>status(b)==='gap').length;return{state:'active',remaining:gaps,gaps,unanswered:visible.filter(b=>status(b)==='unanswered').length}}
+  return{state:all.every(b=>status(b)==='resolved')?'done':'active',remaining:visible.filter(b=>status(b)!=='resolved').length};
+}
+
 export function explorationFromHash(data,hash,search='',mode='gate'){
   const selection=selectionFromHash(data,hash,search),params=new URLSearchParams(hash.replace(/^#/,''));
   const query=new URLSearchParams(search),blocker=data.blockers.find(b=>b.id===selection.blocker);

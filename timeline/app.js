@@ -4,7 +4,7 @@ import htm from "https://esm.sh/htm@3.1.1";
 import {ReactFlow,ReactFlowProvider,Background,Controls,Handle,Position,MarkerType,useReactFlow} from "https://esm.sh/@xyflow/react@12?deps=react@18.3.1,react-dom@18.3.1";
 import {gateKey,guidanceFor} from "./guidance.mjs";
 import {mechanismGroups,initialMechanism,firstSentence,enablerLayout} from "./unlock.mjs";
-import {collectionId,collections,matchingBlockers,explorationFromHash,explorationHash,visibleDependencies} from "./explore.mjs";
+import {collectionId,collections,matchingBlockers,collectionAssessment,explorationFromHash,explorationHash,visibleDependencies} from "./explore.mjs";
 
 const html=htm.bind(React.createElement);
 const communityMode=document.documentElement.dataset.explorer==="community";
@@ -122,13 +122,7 @@ function AppCanvas({data,guidance,guidanceLoading}){
   const dependencies=useMemo(()=>visibleDependencies(data,includeUnreviewed),[data,includeUnreviewed]);
   const roles=useMemo(()=>uniq(data.blockers.flatMap(b=>b.stakeholders)).sort(),[data]);
 const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[assessment]);
-  const groupAssessment=useCallback(gateId=>{
-    const bs=sourceBlockers.filter(b=>groupId(b)===gateId);
-    if(!bs.length)return{state:"empty",remaining:0};
-    if(assessment?.preview)return{state:"active",remaining:bs.filter(b=>blockerStatus(b.id)==="gap").length,gaps:bs.filter(b=>blockerStatus(b.id)==="gap").length,unanswered:bs.filter(b=>blockerStatus(b.id)==="unanswered").length};
-    const remaining=bs.filter(b=>blockerStatus(b.id)!=="resolved").length;
-    return{state:remaining===0?"done":"active",remaining};
-  },[sourceBlockers,groupId,blockerStatus,assessment]);
+  const groupAssessment=useCallback(group=>collectionAssessment(data,{mode,group,stakeholder,statuses:assessment?.blockerStatuses,preview:assessment?.preview}),[data,stakeholder,assessment]);
 
   const dependencyContext=useCallback(id=>{
     const upstreamIds=uniq(dependencies.filter(d=>d.blockerId===id).map(d=>d.dependsOnBlockerId));

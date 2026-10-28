@@ -40,6 +40,8 @@ The collection filter and the canvas selection stay in sync. Role filters refine
 the blocker list; a linked blocker outside that role clears the incompatible role
 when opened. Reset clears filters and selection. No matching blockers is an
 explicit empty state with a Clear filters action.
+Assessment completion still considers all mapped blockers in the collection;
+stakeholder filters refine displayed counts without turning a partial view into Done.
 
 Collection and stakeholder filters are shareable, for example `#community=1`
 or `#gate=0&role=Asset+management`. Both entry points accept the same blocker and
