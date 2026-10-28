@@ -2,7 +2,7 @@
 
 ## Scope and safety
 - This is a static GitHub Pages application. Preserve relative paths and existing functionality.
-- Work on the requested feature branch; never merge into main or publish without explicit approval.
+- Work on the requested feature branch; never merge into main without explicit approval.
 - First inspect README.md and only the files directly relevant to the task. Do not scan or reproduce entire large files unless needed.
 - Before edits, state a short plan and list affected paths. Prefer the smallest viable patch. Avoid unrelated refactoring.
 - Treat the current data schema and IDs as contracts. Preserve blocker/enabler references, dependencies, gate mappings and review statuses.
