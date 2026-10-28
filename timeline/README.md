@@ -1,13 +1,17 @@
 # Spatial Timeline
 
-This folder contains an isolated React + React Flow prototype of the AI Scalability Explorer.
+This folder contains the shared React + React Flow canvas of the AI Scalability Explorer.
 
-This is the promoted visual Timeline used by the main Explorer navigation.
+Both **Timeline** and **Communities** load this implementation and its styles.
+Timeline starts with Stage Gates; Communities starts with the existing community
+groups. Blocker cards, dependencies, the How to unlock inspector, mechanisms,
+enablers, keyboard interaction, pan, zoom and fullscreen are shared.
 
 Live path on GitHub Pages:
 
 ```text
 /timeline/
+/communities/
 ```
 
 ## What it demonstrates
@@ -28,6 +32,20 @@ Live path on GitHub Pages:
 - collapsed Relations, Why it matters, Consequence if not addressed and Stakeholders
 - expand Relations to emphasize incoming/outgoing dependencies and navigate to them
 - shareable `#blocker=1323&mech=assure` links and browser Back/Forward
+- Community + Stakeholder filters in Communities, Stage Gate + Stakeholder filters in Timeline
+- source-based matching counts, with dependency context still available across groups
+- solid validated dependencies and dashed unreviewed dependencies, with an Unreviewed links toggle
+
+The collection filter and the canvas selection stay in sync. Role filters refine
+the blocker list; a linked blocker outside that role clears the incompatible role
+when opened. Reset clears filters and selection. No matching blockers is an
+explicit empty state with a Clear filters action.
+
+Collection and stakeholder filters are shareable, for example `#community=1`
+or `#gate=0&role=Asset+management`. Both entry points accept the same blocker and
+mechanism hashes. The alternate-view link preserves the active blocker, mechanism,
+compatible stakeholder and assessment query. Communities are not presented as a
+lifecycle sequence; Stage Gate progression and Guidance remain specific to Timeline.
 
 The prototype reads the existing shared dataset at `../data/explorer-data.json`, so production data is not duplicated.
 
@@ -48,7 +66,7 @@ revisiting its browser history entry; a freshly opened share link opens the pane
 Targeted checks:
 
 ```sh
-node --test --test-isolation=none timeline/unlock.test.mjs timeline/guidance.test.mjs
+node --test --test-isolation=none timeline/unlock.test.mjs timeline/explore.test.mjs timeline/guidance.test.mjs communities/zoom.test.mjs
 ```
 
 Manual browser checks: select multi-mechanism and single-mechanism blockers;
@@ -56,6 +74,9 @@ compare counts to source relationships; switch mechanisms; select an enabler in
 both places; expand Relations and follow a dependency; close with Escape; reopen
 by clicking the blocker card or pressing Enter/Space on it; reload a share link
 and use browser Back/Forward. Mechanisms with zero mapped enablers stay hidden.
+Repeat in Communities, compare each group's members with source community IDs,
+intersect the collection and stakeholder filters, and exercise an empty selection,
+filter links, reload/history, the alternate-view link and fullscreen.
 Check overview, all six Stage Gates, Guidance, canvas controls, pan/zoom, company
 and questionnaire timeline filters. Repeat at desktop and narrow widths,
 including a mechanism with seven enablers, and check the console for errors.

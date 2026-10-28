@@ -1111,8 +1111,7 @@ function activePerspectiveHtml() {
 }
 
 function renderDomains() {
-  app.innerHTML = `<section class="page community-page"><div class="community-page-heading"><button class="back-btn" id="backExplore">${icon('back')} Explore</button><h2>Communities</h2></div><iframe title="Community clusters and blocker dependencies" src="./communities/" allowfullscreen></iframe></section>`;
-  document.getElementById('backExplore').onclick=()=>navigate('explore');
+  window.location.replace('./communities/');
 }
 function domainSymbol(slug) {
   return ({'data-foundations':'◫','technology-infrastructure':'▣','governance-organisation':'◇','people-adoption':'●','legal-safety-assurance':'◆','value-delivery-scale':'▤'})[slug] || '○';
