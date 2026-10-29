@@ -1,7 +1,7 @@
 import React,{useEffect,useMemo,useState,useCallback,useRef} from "https://esm.sh/react@18.3.1";
 import {createRoot} from "https://esm.sh/react-dom@18.3.1/client";
 import htm from "https://esm.sh/htm@3.1.1";
-import {ReactFlow,ReactFlowProvider,Background,Controls,Handle,Position,MarkerType,useReactFlow} from "https://esm.sh/@xyflow/react@12?deps=react@18.3.1,react-dom@18.3.1";
+import {ReactFlow,ReactFlowProvider,Background,Controls,Handle,Position,MarkerType,useReactFlow,BaseEdge,getSmoothStepPath} from "https://esm.sh/@xyflow/react@12?deps=react@18.3.1,react-dom@18.3.1";
 import {gateKey,guidanceFor} from "./guidance.mjs";
 import {mechanismGroups,initialMechanism,firstSentence,enablerLayout} from "./unlock.mjs";
 import {collectionId,collections,matchingBlockers,collectionAssessment,explorationFromHash,explorationHash,visibleDependencies} from "./explore.mjs";
@@ -41,19 +41,29 @@ function StageNode({data}){
     <${Handle} type="source" position=${Position.Right} style=${{opacity:0}} />
   </div>`;
 }
-// Keep the original organic community overview; deeper levels use the Timeline cards.
+// Communities retain their organic identity at both overview and member levels.
 function CommunityNode({data}){
   const {gate,members,index,assessmentState}=data;
   const core=members.filter(b=>b.classification==='Critical core').length;
-  return html`<div className=${`community-orb tone-${index}`} style=${{width:data.size,height:data.size}} role="button" tabIndex="0" aria-label=${`${gate.label}: ${members.length} blockers, ${core} critical core`} onKeyDown=${e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();data.keyboardActivate()}}}>
+  const activate=e=>{e.preventDefault();e.stopPropagation();data.keyboardActivate()};
+  return html`<div className=${`community-orb tone-${index}`} style=${{width:data.size,height:data.size}} role="group" aria-label=${gate.label}>
     <svg viewBox="0 0 400 400" aria-hidden="true"><path className="orb-surface" d="M 15 200 C 7 80, 105 0, 200 15 S 400 80, 385 205 S 305 400, 195 385 S 0 305, 15 200"/>
       ${members.map((b,j)=>{const a=j/members.length*Math.PI*2;return html`<circle key=${b.id} cx=${200+Math.cos(a)*165} cy=${200+Math.sin(a)*165} r=${b.classification==='Critical core'?5:3} className=${b.classification==='Critical core'?'member-dot critical-dot':'member-dot'}/>`})}
     </svg>
-    <div className="orb-content"><strong>${gate.label}</strong><span className="orb-count">${members.length}<small>blockers</small></span><span className="orb-critical">${core} critical core</span>
+    <button className="orb-open-group nodrag nopan" aria-label=${`Explore ${gate.label}: ${members.length} blockers`} onClick=${activate}>
+      <strong>${gate.label}</strong><span className="orb-count">${members.length}<small>blockers</small></span><span className="orb-critical">${core} critical core</span>
       ${assessmentState?html`<small className="orb-assessment">${data.preview?`${data.gapCount} gaps · ${data.unanswered} unanswered`:assessmentState==='done'?'✓ Done':`${data.remaining} remaining`}</small>`:null}
-    </div>
+    </button>
+    ${members.map((b,j)=>{const a=j/members.length*Math.PI*2;return html`<button key=${b.id} className="orb-member nodrag nopan" data-community-blocker=${b.id} style=${{left:`${50+Math.cos(a)*41.25}%`,top:`${50+Math.sin(a)*41.25}%`}} title=${b.title} aria-label=${`Open blocker: ${b.title}`} onClick=${e=>{e.preventDefault();e.stopPropagation();data.openBlocker(b)}}/>`})}
+    <${Handle} type="source" position=${Position.Bottom} style=${{opacity:0}} />
   </div>`;
 }
+
+function DependencyEdge(props){
+  const [path]=getSmoothStepPath(props);
+  return html`<${React.Fragment}><${BaseEdge} id=${props.id} path=${path} style=${props.style} markerEnd=${props.markerEnd}/><circle className="dependency-pulse" r="3" fill=${props.style?.stroke||"#3b86b7"} opacity=${props.style?.opacity??1} pointerEvents="none"><animateMotion dur="2.8s" repeatCount="indefinite" path=${path}/></circle></${React.Fragment}>`;
+}
+const edgeTypes={dependency:DependencyEdge};
 
 function BlockerNode({data}){
   const blockerElement=useRef(null);
@@ -199,10 +209,11 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
     const edgeBase={type:"smoothstep",style:{stroke:"#aec7d7",strokeWidth:1.2},markerEnd:{type:MarkerType.ArrowClosed,width:14,height:14,color:"#aec7d7"}};
     groupRows.forEach((g,index)=>{
       const ga=assessmentMode?groupAssessment(g.id):null;
-      if(communityMode&&selectedGroup==null){
+      if(communityMode){
+        if(selectedGroup!=null&&g.id!==selectedGroup)return;
         const places=phoneViewport?[[0,0],[0,420],[0,840],[0,1260],[0,1680]]:[[50,0],[520,0],[900,330],[450,390],[0,400]];
-        const [x,y]=places[index]||[(index%3)*430,Math.floor(index/3)*430];
-        nodes.push({id:`community-${g.id}`,type:"community",position:{x,y},data:{gate:g,index,size:phoneViewport?400:([400,400,400,380,360][index]||400),members:sourceBlockers.filter(b=>groupId(b)===g.id),assessmentState:ga?.state,remaining:ga?.remaining,preview:previewMode,gapCount:ga?.gaps,unanswered:ga?.unanswered,keyboardActivate:()=>selectGroup(g.id)}});
+        const [x,y]=selectedBlocker?[groupX(g.id),-220]:(places[index]||[(index%3)*430,Math.floor(index/3)*430]);
+        nodes.push({id:`community-${g.id}`,type:"community",position:{x,y},data:{gate:g,index,size:phoneViewport?400:([400,400,400,380,360][index]||400),members:sourceBlockers.filter(b=>groupId(b)===g.id),assessmentState:ga?.state,remaining:ga?.remaining,preview:previewMode,gapCount:ga?.gaps,unanswered:ga?.unanswered,keyboardActivate:()=>selectGroup(g.id),openBlocker:openDeepDive}});
         return;
       }
       nodes.push({id:`stage-${g.id}`,type:"stage",position:{x:groupX(g.id),y:0},data:{gate:g,count:sourceBlockers.filter(b=>groupId(b)===g.id).length,selected:selectedGroup===g.id,zoom,assessmentState:ga?.state,remaining:ga?.remaining,preview:previewMode,gapCount:ga?.gaps,unanswered:ga?.unanswered,dimmed:!!selectedBlocker&&selectedGroup!==g.id,onGuidance:openGuidance,keyboardActivate:()=>selectGroup(selectedGroup===g.id&&!selectedBlocker?null:g.id)},zIndex:selectedGroup===g.id?5:1});
@@ -213,10 +224,13 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       const blockers=eligibleBlockers.filter(b=>groupId(b)===selectedGroup);
       const cols=phoneViewport?1:compactViewport?2:3;
       const stepX=phoneViewport?0:compactViewport?275:300;
-      const baseX=phoneViewport?groupX(selectedGroup):groupX(selectedGroup)-(compactViewport?138:280);
-      blockers.forEach((b,i)=>{const row=Math.floor(i/cols),col=i%cols,x=baseX+col*stepX,y=(phoneViewport?180:195)+row*(phoneViewport?150:165);
-        nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x,y:y+55},data:{blocker:b,selected:false,domainTitle:domains[b.domain]||"",zoom,maturityScore:assessment?.blockerScores?.[b.id],status:assessmentMode?blockerStatus(b.id):null,keyboardActivate:()=>openDeepDive(b)}});
-        edges.push({id:`gate-blocker-${b.id}`,source:`stage-${selectedGroup}`,target:`blocker-${b.id}`,...edgeBase,style:{stroke:"#d8e6ee",strokeWidth:1}});
+      const community=communityMode?nodes.find(n=>n.type==="community"):null;
+      const centreX=community?community.position.x+community.data.size/2:0;
+      const baseX=community?centreX-(phoneViewport?130:compactViewport?267.5:427.5):phoneViewport?groupX(selectedGroup):groupX(selectedGroup)-(compactViewport?138:280);
+      const baseY=community?community.position.y+community.data.size+65:(phoneViewport?235:250);
+      blockers.forEach((b,i)=>{const row=Math.floor(i/cols),col=i%cols,x=baseX+col*stepX,y=baseY+row*(communityMode?200:phoneViewport?150:165);
+        nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x,y},data:{blocker:b,selected:false,domainTitle:domains[b.domain]||"",zoom,maturityScore:assessment?.blockerScores?.[b.id],status:assessmentMode?blockerStatus(b.id):null,keyboardActivate:()=>openDeepDive(b)}});
+        edges.push({id:`gate-blocker-${b.id}`,source:`${communityMode?"community":"stage"}-${selectedGroup}`,target:`blocker-${b.id}`,...edgeBase,style:{stroke:"#d8e6ee",strokeWidth:1}});
       });
     }
 
@@ -232,7 +246,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
           if(!nodes.some(n=>n.id===`blocker-${xBlock.id}`))nodes.push({id:`blocker-${xBlock.id}`,type:"blocker",position:{x,y},data:{blocker:xBlock,selected:false,relationsHighlighted:relationsOpen,domainTitle:domains[xBlock.domain]||"",zoom,relationLabel:label,maturityScore:assessment?.blockerScores?.[xBlock.id],status:assessmentMode?blockerStatus(xBlock.id):null,keyboardActivate:()=>openDeepDive(xBlock)}});
           const edge=side==="up"?{source:`blocker-${xBlock.id}`,target:`blocker-${b.id}`}:{source:`blocker-${b.id}`,target:`blocker-${xBlock.id}`};
           const relation=dependencies.find(d=>side==="up"?d.blockerId===b.id&&d.dependsOnBlockerId===xBlock.id:d.blockerId===xBlock.id&&d.dependsOnBlockerId===b.id);
-          edges.push({id:`dep-${side}-${xBlock.id}`,...edge,...edgeBase,style:{stroke:side==="up"?"#6e97b3":"#3b86b7",strokeWidth:relationsOpen?2.5:1.5,strokeDasharray:relation?.reviewStatus==="Validated"?undefined:"5 4",opacity:detailOpen&&!relationsOpen?.25:1}});
+          edges.push({id:`dep-${side}-${xBlock.id}`,...edge,...edgeBase,type:"dependency",style:{stroke:side==="up"?"#6e97b3":"#3b86b7",strokeWidth:relationsOpen?2.5:1.5,strokeDasharray:relation?.reviewStatus==="Validated"?undefined:"5 4",opacity:detailOpen&&!relationsOpen?.25:1}});
         });
       };
       placeSide(deps.upstream,"up");placeSide(deps.downstream,"down");
@@ -265,7 +279,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
         const selected=all.find(n=>n.id===`blocker-${selectedBlocker}`);
         focus=detailOpen?all.filter(n=>n.id===selected?.id||n.type==="enabler"||n.type==="legend"||(relationsOpen&&n.type==="blocker")):phone?[selected].filter(Boolean):all.filter(n=>n.type==="blocker");
       }else if((selectedGroup != null)){
-        const gate=all.find(n=>n.id===`stage-${selectedGroup}`);
+        const gate=all.find(n=>n.id===`${communityMode?"community":"stage"}-${selectedGroup}`);
         const blockers=all.filter(n=>n.type==="blocker");
         focus=[gate,...blockers.slice(0,phone?2:tablet?4:6)].filter(Boolean);
       }else{
@@ -275,7 +289,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       flow.fitView({
         nodes:focus.length?focus:all,
         padding:detailOpen?.2:selectedBlocker?(phone?.22:.12):(selectedGroup != null)?(phone?.16:.10):.10,
-        duration:reduced?0:320,
+        duration:reduced?0:420,
         minZoom:communityMode&&selectedGroup==null?.2:detailOpen?.1:selectedBlocker?(phone?.88:.56):(selectedGroup != null)?(phone?.78:tablet?.64:.52):(phone?.76:tablet?.62:.48),
         maxZoom:selectedBlocker?(phone?1.02:1.05):(selectedGroup != null)?(phone?.96:.92):(phone?.92:.90)
       });
@@ -289,7 +303,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
 
   const onNodeClick=(evt,node)=>{
     if(node.type==="stage"||node.type==="community"){
-      selectGroup(selectedGroup===node.data.gate.id&&!selectedBlocker?null:node.data.gate.id);
+      selectGroup(node.type==="community"?node.data.gate.id:selectedGroup===node.data.gate.id&&!selectedBlocker?null:node.data.gate.id);
       return;
     }
     if(node.type==="blocker"){
@@ -338,7 +352,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       <div className=${"intro"+((selectedGroup != null)?" compact":"")}><div className="eyebrow">${previewMode?"Self-reported assessment":assessmentMode?"Assessment result · illustrative":"Semantic zoom"}</div><h1>${introTitle}</h1><p>${introText}</p></div>
       <div className="depth"><span>Overview</span><i></i><span>Deep dive</span></div>
       <div className="flow-wrap" ref=${canvasRef}>
-        <${ReactFlow} nodes=${flowNodes} onNodesChange=${onNodesChange} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${communityMode&&selectedGroup==null?.2:detailOpen?.1:.35} maxZoom=${1.7} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMoveEnd=${onMoveEnd} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
+        <${ReactFlow} nodes=${flowNodes} onNodesChange=${onNodesChange} edges=${graph.edges} nodeTypes=${nodeTypes} edgeTypes=${edgeTypes} minZoom=${communityMode&&selectedGroup==null?.2:detailOpen?.1:.35} maxZoom=${1.7} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMoveEnd=${onMoveEnd} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
           <${Background} gap=${32} size=${1} color="#d9e5ec" />
           <${Controls} showInteractive=${false} position="bottom-left"><button className="react-flow__controls-button" onClick=${toggleFullscreen} aria-label=${fullscreen?"Exit fullscreen":"Enter fullscreen"} title=${fullscreen?"Exit fullscreen":"Enter fullscreen"}><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></${Controls}>
         </${ReactFlow}>

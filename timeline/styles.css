@@ -419,3 +419,12 @@
 .community-orb .orb-critical{font-size:15px;color:#9e503b;margin-top:20px}.community-orb .orb-assessment{font-size:15px;color:#527b70}
 .community-orb.tone-2 .orb-count{color:#4b8f85}.community-orb.tone-3 .orb-count{color:#807095}.community-orb.tone-4 .orb-count{color:#758e67}
 .community-overview .react-flow__background{opacity:0}.community-overview .intro{top:12px;padding:10px 14px}.community-overview .intro p,.community-overview .depth{display:none}.community-overview .intro h1{font-size:18px;margin:0}.community-overview .intro .eyebrow{display:none}
+
+/* The group and its member dots are separate keyboard-accessible actions. */
+.community-orb .orb-open-group{position:absolute;inset:65px 44px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;color:inherit;background:none;border:0;padding:0;cursor:pointer;border-radius:60px}
+.community-orb .orb-open-group:focus-visible{outline:2px solid #479bd7;outline-offset:5px}
+.community-orb:focus-within .orb-surface{stroke:#479bd7;stroke-width:2}
+.community-orb .orb-member{position:absolute;transform:translate(-50%,-50%);width:28px;height:28px;padding:0;border:2px solid transparent;border-radius:50%;background:transparent;cursor:pointer}
+.community-orb .orb-member:hover,.community-orb .orb-member:focus-visible{outline:none;border-color:#479bd7;background:#479bd71a}
+.dependency-pulse{filter:drop-shadow(0 0 3px #3b86b780)}
+@media(prefers-reduced-motion:reduce){.dependency-pulse{display:none}}
