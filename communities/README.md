@@ -6,7 +6,7 @@ attribute changes the first collection layer and filter label to Communities.
 All blocker, mechanism, enabler, dependency and accessibility interactions remain
 shared. Data is loaded from the existing `../data/explorer-data.json`.
 
-Choose a community card or the Community filter, then explore its blockers.
+Choose an organic community group or the Community filter, then explore its blockers.
 Stakeholder intersects that membership. The counter reports matching blockers;
 related blockers remain available as dependency context. An explicit empty state
 allows the filters to be cleared. The original critical-core visual treatment and

@@ -402,3 +402,20 @@
   .filter-fields select{font-size:10px;padding-inline:0}
   .dependency-legend{font-size:8.5px}
 }
+
+/* Organic Communities overview. Blocker and enabler cards remain shared with Timeline. */
+.community-orb{position:relative;width:400px;height:400px;cursor:pointer;outline:none;color:#254b69}
+.community-orb svg{width:100%;height:100%;overflow:visible;pointer-events:none}
+.community-orb .orb-surface{fill:#fbfdff;stroke:#c9ddeb;stroke-width:1.5;transition:fill .15s,stroke .15s}
+.community-orb:hover .orb-surface,.community-orb:focus-visible .orb-surface{fill:#f0f8ff;stroke:#479bd7;stroke-width:3}
+.community-orb.tone-1 .orb-surface{stroke:#ced8ed;fill:#f9fbff}
+.community-orb.tone-2 .orb-surface{stroke:#d0e4df;fill:#f8fcfb}
+.community-orb.tone-3 .orb-surface{stroke:#dcd6e8;fill:#fcfaff}
+.community-orb.tone-4 .orb-surface{stroke:#dce6d9;fill:#fbfdfb}
+.community-orb .member-dot{fill:#a2bfd5;opacity:.7}.community-orb .critical-dot{fill:#b6674d;opacity:1}
+.community-orb .orb-content{position:absolute;inset:65px 44px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;pointer-events:none}
+.community-orb strong{font:600 23px/1.24 'Segoe UI',sans-serif}
+.community-orb .orb-count{font-size:30px;color:#256d9c;line-height:1}.community-orb .orb-count small{font-size:16px;margin-left:10px;color:#829bb3}
+.community-orb .orb-critical{font-size:15px;color:#9e503b;margin-top:20px}.community-orb .orb-assessment{font-size:15px;color:#527b70}
+.community-orb.tone-2 .orb-count{color:#4b8f85}.community-orb.tone-3 .orb-count{color:#807095}.community-orb.tone-4 .orb-count{color:#758e67}
+.community-overview .react-flow__background{opacity:0}.community-overview .intro{top:12px;padding:10px 14px}.community-overview .intro p,.community-overview .depth{display:none}.community-overview .intro h1{font-size:18px;margin:0}.community-overview .intro .eyebrow{display:none}

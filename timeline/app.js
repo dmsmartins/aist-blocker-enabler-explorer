@@ -41,6 +41,20 @@ function StageNode({data}){
     <${Handle} type="source" position=${Position.Right} style=${{opacity:0}} />
   </div>`;
 }
+// Keep the original organic community overview; deeper levels use the Timeline cards.
+function CommunityNode({data}){
+  const {gate,members,index,assessmentState}=data;
+  const core=members.filter(b=>b.classification==='Critical core').length;
+  return html`<div className=${`community-orb tone-${index}`} style=${{width:data.size,height:data.size}} role="button" tabIndex="0" aria-label=${`${gate.label}: ${members.length} blockers, ${core} critical core`} onKeyDown=${e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();data.keyboardActivate()}}}>
+    <svg viewBox="0 0 400 400" aria-hidden="true"><path className="orb-surface" d="M 15 200 C 7 80, 105 0, 200 15 S 400 80, 385 205 S 305 400, 195 385 S 0 305, 15 200"/>
+      ${members.map((b,j)=>{const a=j/members.length*Math.PI*2;return html`<circle key=${b.id} cx=${200+Math.cos(a)*165} cy=${200+Math.sin(a)*165} r=${b.classification==='Critical core'?5:3} className=${b.classification==='Critical core'?'member-dot critical-dot':'member-dot'}/>`})}
+    </svg>
+    <div className="orb-content"><strong>${gate.label}</strong><span className="orb-count">${members.length}<small>blockers</small></span><span className="orb-critical">${core} critical core</span>
+      ${assessmentState?html`<small className="orb-assessment">${data.preview?`${data.gapCount} gaps · ${data.unanswered} unanswered`:assessmentState==='done'?'✓ Done':`${data.remaining} remaining`}</small>`:null}
+    </div>
+  </div>`;
+}
+
 function BlockerNode({data}){
   const blockerElement=useRef(null);
   useEffect(()=>{if(data.restoreFocus&&data.focusReady)blockerElement.current?.focus({preventScroll:true})},[data.restoreFocus,data.focusReady]);
@@ -67,7 +81,7 @@ function EnablerNode({data}){
 function MechanismLegend({data}){
   return html`<div className="mechanism-legend" style=${{"--mech":MECH_COLORS[data.mechanism]}}><i aria-hidden="true"></i>${data.mechanism} · ${data.count} enabler${data.count===1?"":"s"}</div>`;
 }
-const nodeTypes={stage:StageNode,blocker:BlockerNode,legend:MechanismLegend,enabler:EnablerNode};
+const nodeTypes={community:CommunityNode,stage:StageNode,blocker:BlockerNode,legend:MechanismLegend,enabler:EnablerNode};
 
 function AppCanvas({data,guidance,guidanceLoading}){
   const flow=useReactFlow();
@@ -97,6 +111,8 @@ function AppCanvas({data,guidance,guidanceLoading}){
   useEffect(()=>{if(!guidanceKey)return;guidanceClose.current?.focus({preventScroll:true});const escape=e=>{if(e.key==="Escape"){e.preventDefault();e.stopImmediatePropagation();closeGuidance()}};document.addEventListener("keydown",escape,true);return()=>document.removeEventListener("keydown",escape,true)},[guidanceKey,closeGuidance]);
   const [savedCount,setSavedCount]=useState(()=>{try{const x=JSON.parse(localStorage.getItem("aistExplorerBookmarks")||"{\"blockers\":[],\"enablers\":[]}");return (x.blockers?.length||0)+(x.enablers?.length||0)}catch{return 0}});
   const [zoom,setZoom]=useState(.72);
+  // React Flow owns the live transform. Update semantic detail only when a gesture ends.
+  const onMoveEnd=useCallback((_,viewport)=>setZoom(viewport.zoom),[]);
   const [selectedGroup,setSelectedGroup]=useState(initialSelection.group);
   const [selectedBlocker,setSelectedBlocker]=useState(initialSelection.blocker);
   const [detailOpen,setDetailOpen]=useState(initialSelection.detail);
@@ -183,6 +199,12 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
     const edgeBase={type:"smoothstep",style:{stroke:"#aec7d7",strokeWidth:1.2},markerEnd:{type:MarkerType.ArrowClosed,width:14,height:14,color:"#aec7d7"}};
     groupRows.forEach((g,index)=>{
       const ga=assessmentMode?groupAssessment(g.id):null;
+      if(communityMode&&selectedGroup==null){
+        const places=phoneViewport?[[0,0],[0,420],[0,840],[0,1260],[0,1680]]:[[50,0],[520,0],[900,330],[450,390],[0,400]];
+        const [x,y]=places[index]||[(index%3)*430,Math.floor(index/3)*430];
+        nodes.push({id:`community-${g.id}`,type:"community",position:{x,y},data:{gate:g,index,size:phoneViewport?400:([400,400,400,380,360][index]||400),members:sourceBlockers.filter(b=>groupId(b)===g.id),assessmentState:ga?.state,remaining:ga?.remaining,preview:previewMode,gapCount:ga?.gaps,unanswered:ga?.unanswered,keyboardActivate:()=>selectGroup(g.id)}});
+        return;
+      }
       nodes.push({id:`stage-${g.id}`,type:"stage",position:{x:groupX(g.id),y:0},data:{gate:g,count:sourceBlockers.filter(b=>groupId(b)===g.id).length,selected:selectedGroup===g.id,zoom,assessmentState:ga?.state,remaining:ga?.remaining,preview:previewMode,gapCount:ga?.gaps,unanswered:ga?.unanswered,dimmed:!!selectedBlocker&&selectedGroup!==g.id,onGuidance:openGuidance,keyboardActivate:()=>selectGroup(selectedGroup===g.id&&!selectedBlocker?null:g.id)},zIndex:selectedGroup===g.id?5:1});
       if(!communityMode&&index<groupRows.length-1)edges.push({id:`stage-edge-${g.id}`,source:`stage-${g.id}`,target:`stage-${groupRows[index+1].id}`,...edgeBase,style:{stroke:"#c9dce8",strokeWidth:2}});
     });
@@ -247,14 +269,14 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
         const blockers=all.filter(n=>n.type==="blocker");
         focus=[gate,...blockers.slice(0,phone?2:tablet?4:6)].filter(Boolean);
       }else{
-        const stages=all.filter(n=>n.type==="stage");
+        const stages=all.filter(n=>n.type==="stage"||n.type==="community");
         focus=phone?stages.slice(0,2):tablet?stages.slice(0,3):stages;
       }
       flow.fitView({
         nodes:focus.length?focus:all,
         padding:detailOpen?.2:selectedBlocker?(phone?.22:.12):(selectedGroup != null)?(phone?.16:.10):.10,
         duration:reduced?0:320,
-        minZoom:detailOpen?.1:selectedBlocker?(phone?.88:.56):(selectedGroup != null)?(phone?.78:tablet?.64:.52):(phone?.76:tablet?.62:.48),
+        minZoom:communityMode&&selectedGroup==null?.2:detailOpen?.1:selectedBlocker?(phone?.88:.56):(selectedGroup != null)?(phone?.78:tablet?.64:.52):(phone?.76:tablet?.62:.48),
         maxZoom:selectedBlocker?(phone?1.02:1.05):(selectedGroup != null)?(phone?.96:.92):(phone?.92:.90)
       });
     };
@@ -266,7 +288,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
   const back=()=>{if(selectedEnabler){setSelectedEnabler(null);return}if(selectedMechanism){setSelectedMechanism(null);return}if(detailOpen){closeDetail();return}if(selectedBlocker){setSelectedBlocker(null);return}if((selectedGroup != null)){setSelectedGroup(null)}};
 
   const onNodeClick=(evt,node)=>{
-    if(node.type==="stage"){
+    if(node.type==="stage"||node.type==="community"){
       selectGroup(selectedGroup===node.data.gate.id&&!selectedBlocker?null:node.data.gate.id);
       return;
     }
@@ -312,11 +334,11 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       <span className="filter-count" role="status" title="Blockers matching the filters. Related blockers remain available as context.">${matchingCount} of ${data.blockers.length} blockers</span></div>
       <div className="dependency-legend"><span className="critical-key">Critical core</span><span>Solid = validated dependency</span><span>Dashed = unreviewed dependency</span><label><input type="checkbox" checked=${includeUnreviewed} onChange=${e=>setIncludeUnreviewed(e.target.checked)}/>Unreviewed links</label></div>
     </section>
-    <main className=${"workspace"+(detailOpen?" detail-open":"")}>
+    <main className=${"workspace"+(detailOpen?" detail-open":"")+(communityMode&&selectedGroup==null?" community-overview":"")}>
       <div className=${"intro"+((selectedGroup != null)?" compact":"")}><div className="eyebrow">${previewMode?"Self-reported assessment":assessmentMode?"Assessment result · illustrative":"Semantic zoom"}</div><h1>${introTitle}</h1><p>${introText}</p></div>
       <div className="depth"><span>Overview</span><i></i><span>Deep dive</span></div>
       <div className="flow-wrap" ref=${canvasRef}>
-        <${ReactFlow} nodes=${flowNodes} onNodesChange=${onNodesChange} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${detailOpen?.1:.35} maxZoom=${1.7} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
+        <${ReactFlow} nodes=${flowNodes} onNodesChange=${onNodesChange} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${communityMode&&selectedGroup==null?.2:detailOpen?.1:.35} maxZoom=${1.7} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMoveEnd=${onMoveEnd} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
           <${Background} gap=${32} size=${1} color="#d9e5ec" />
           <${Controls} showInteractive=${false} position="bottom-left"><button className="react-flow__controls-button" onClick=${toggleFullscreen} aria-label=${fullscreen?"Exit fullscreen":"Enter fullscreen"} title=${fullscreen?"Exit fullscreen":"Enter fullscreen"}><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></${Controls}>
         </${ReactFlow}>
