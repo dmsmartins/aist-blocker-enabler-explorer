@@ -1,0 +1,277 @@
+{
+  "schema_version": "1.0.0",
+  "generator": "aist-stakeholder-challenge",
+  "rules_version": "1.0.0",
+  "stakeholders": [
+    {
+      "id": "STK-01",
+      "Stakeholder_Name": "IT / data platform",
+      "Role_Description": "Provide shared infrastructure, data services, identity, integration and deployment capabilities for enterprise AI solutions.",
+      "Key_Priorities": "Reliable platforms; Secure data access; Scalability; Maintainability",
+      "AI_Adoption_Perspective": "Assess hosting, pipelines, interoperability, access management and operational support needed to scale AI.",
+      "Typical_Challenges": "Technical debt; Siloed systems; Limited capacity; Unclear ownership of production services",
+      "Decision_Authority": "Set platform standards and technical controls; approve deployment within delegated IT governance.",
+      "Role_Qualification_Question": "Do you feel qualified to evaluate AI adoption blockers from this stakeholder’s perspective?",
+      "Status": "Draft",
+      "Source": "Blockers!Stakeholders",
+      "Blockers_Linked": 35,
+      "qualification_question_id": "Q01"
+    },
+    {
+      "id": "STK-02",
+      "Stakeholder_Name": "Data science / AI teams",
+      "Role_Description": "Develop, validate and maintain analytical and AI solutions that address railway business problems.",
+      "Key_Priorities": "Model validity; Reproducible pipelines; Access to fit-for-purpose data; Responsible deployment",
+      "AI_Adoption_Perspective": "Translate operational needs into testable models and explain limitations, uncertainty and monitoring requirements.",
+      "Typical_Challenges": "Fragmented data; Unclear success criteria; Difficult production handover; Limited operational feedback",
+      "Decision_Authority": "Choose modelling and validation approaches; advise on technical feasibility; typically cannot approve business adoption.",
+      "Role_Qualification_Question": "Do you feel qualified to evaluate AI adoption blockers from this stakeholder’s perspective?",
+      "Status": "Draft",
+      "Source": "Blockers!Stakeholders",
+      "Blockers_Linked": 41,
+      "qualification_question_id": "Q01"
+    },
+    {
+      "id": "STK-03",
+      "Stakeholder_Name": "Asset management",
+      "Role_Description": "Plan and prioritise interventions across railway assets using condition, risk, lifecycle cost and service objectives.",
+      "Key_Priorities": "Asset condition and risk; Whole-life value; Investment prioritisation; Reliable asset information",
+      "AI_Adoption_Perspective": "Assess whether AI improves inspection, deterioration forecasting, maintenance prioritisation and asset decisions.",
+      "Typical_Challenges": "Inconsistent asset registers; Uncertain benefits; Data gaps; Competing investment priorities",
+      "Decision_Authority": "Set asset decision requirements and recommend priorities; budget approval may sit with senior leadership.",
+      "Role_Qualification_Question": "Do you feel qualified to evaluate AI adoption blockers from this stakeholder’s perspective?",
+      "Status": "Draft",
+      "Source": "Blockers!Stakeholders",
+      "Blockers_Linked": 41,
+      "qualification_question_id": "Q01"
+    },
+    {
+      "id": "STK-04",
+      "Stakeholder_Name": "Maintenance / operations",
+      "Role_Description": "Deliver day-to-day railway maintenance and operational activities while maintaining service continuity and safe working conditions.",
+      "Key_Priorities": "Operational safety; Service availability; Practical work planning; Efficient resources",
+      "AI_Adoption_Perspective": "Evaluate whether AI guidance is actionable, trustworthy and compatible with frontline decisions and operational constraints.",
+      "Typical_Challenges": "Time pressure; Limited training; Disconnected tools; Unclear escalation and responsibility",
+      "Decision_Authority": "Influence operational procedures and local adoption; major investment or policy decisions require escalation.",
+      "Role_Qualification_Question": "Do you feel qualified to evaluate AI adoption blockers from this stakeholder’s perspective?",
+      "Status": "Draft",
+      "Source": "Blockers!Stakeholders",
+      "Blockers_Linked": 37,
+      "qualification_question_id": "Q01"
+    },
+    {
+      "id": "STK-05",
+      "Stakeholder_Name": "Legal / safety / compliance",
+      "Role_Description": "Interpret and oversee applicable legal, regulatory, safety, privacy and assurance obligations for railway activities and technology.",
+      "Key_Priorities": "Regulatory compliance; Safety assurance; Data protection; Auditability",
+      "AI_Adoption_Perspective": "Evaluate the evidence, controls and responsibilities required for lawful and safe AI deployment.",
+      "Typical_Challenges": "Ambiguous regulation; Incomplete documentation; Opaque models; Unclear liability",
+      "Decision_Authority": "Define assurance requirements and advise on approvals; formal sign-off depends on designated authorities.",
+      "Role_Qualification_Question": "Do you feel qualified to evaluate AI adoption blockers from this stakeholder’s perspective?",
+      "Status": "Draft",
+      "Source": "Blockers!Stakeholders",
+      "Blockers_Linked": 20,
+      "qualification_question_id": "Q01"
+    },
+    {
+      "id": "STK-06",
+      "Stakeholder_Name": "Asset Owner (technical owner of asset)",
+      "Role_Description": "Provide technical stewardship of a defined asset class, including standards, condition criteria and acceptance of technical changes.",
+      "Key_Priorities": "Asset integrity; Technical standards; Safety and reliability; Traceable engineering decisions",
+      "AI_Adoption_Perspective": "Judge whether AI outputs are technically credible and usable for decisions affecting the owned asset class.",
+      "Typical_Challenges": "Limited explainability; Sparse failure evidence; Incompatible technical standards; Unclear accountability",
+      "Decision_Authority": "Approve or recommend technical acceptance within delegated authority; escalate safety or investment decisions.",
+      "Role_Qualification_Question": "Do you feel qualified to evaluate AI adoption blockers from this stakeholder’s perspective?",
+      "Status": "Draft",
+      "Source": "Blockers!Stakeholders",
+      "Blockers_Linked": 41,
+      "qualification_question_id": "Q01"
+    },
+    {
+      "id": "STK-07",
+      "Stakeholder_Name": "ERP  (SAP/Maximo) IT Managers",
+      "Role_Description": "Own the technical operation, architecture and integration of enterprise asset and maintenance platforms such as SAP or Maximo.",
+      "Key_Priorities": "System availability; Cybersecurity; Integration integrity; Controlled change",
+      "AI_Adoption_Perspective": "Evaluate how AI services connect securely and sustainably with enterprise transactional systems and master data.",
+      "Typical_Challenges": "Legacy interfaces; Access controls; Integration complexity; Release constraints",
+      "Decision_Authority": "Decide on platform configuration and technical integration within IT governance; not the owner of operational business decisions.",
+      "Role_Qualification_Question": "Do you feel qualified to evaluate AI adoption blockers from this stakeholder’s perspective?",
+      "Status": "Draft",
+      "Source": "Blockers!Stakeholders",
+      "Blockers_Linked": 41,
+      "qualification_question_id": "Q01"
+    },
+    {
+      "id": "STK-08",
+      "Stakeholder_Name": "(SAP/Maximo) Business Application Managers",
+      "Role_Description": "Own the business configuration, workflows and functional requirements of SAP or Maximo applications used by operational teams.",
+      "Key_Priorities": "Usable workflows; Process consistency; Data correctness; User adoption",
+      "AI_Adoption_Perspective": "Assess how AI recommendations can be embedded into work orders, asset records and established business processes.",
+      "Typical_Challenges": "Workflow misfit; Poor master data; Training needs; Conflicting process requirements",
+      "Decision_Authority": "Prioritise functional requirements and business configuration; coordinate acceptance with process owners and IT.",
+      "Role_Qualification_Question": "Do you feel qualified to evaluate AI adoption blockers from this stakeholder’s perspective?",
+      "Status": "Draft",
+      "Source": "Blockers!Stakeholders",
+      "Blockers_Linked": 41,
+      "qualification_question_id": "Q01"
+    },
+    {
+      "id": "STK-09",
+      "Stakeholder_Name": "Executive / senior management",
+      "Role_Description": "Set organisational direction, allocate resources and establish accountability for strategic initiatives and operational transformation.",
+      "Key_Priorities": "Strategic value; Risk exposure; Budget stewardship; Organisational accountability",
+      "AI_Adoption_Perspective": "Decide where AI merits investment, sponsorship and governance attention across the organisation.",
+      "Typical_Challenges": "Uncertain return on investment; Competing priorities; Weak ownership; Change resistance",
+      "Decision_Authority": "Sponsor programmes, approve priorities and budgets within mandate, and assign accountable owners.",
+      "Role_Qualification_Question": "Do you feel qualified to evaluate AI adoption blockers from this stakeholder’s perspective?",
+      "Status": "Draft",
+      "Source": "Blockers!Stakeholders",
+      "Blockers_Linked": 25,
+      "qualification_question_id": "Q01"
+    },
+    {
+      "id": "STK-10",
+      "Stakeholder_Name": "Change management / HR",
+      "Role_Description": "Support organisational readiness, workforce development, communications and adoption of new ways of working.",
+      "Key_Priorities": "Skills and capability; Employee engagement; Clear communication; Sustainable adoption",
+      "AI_Adoption_Perspective": "Assess workforce impacts, role changes, training needs and trust required for effective AI adoption.",
+      "Typical_Challenges": "Skills gaps; Resistance to change; Unclear role impacts; Limited training capacity",
+      "Decision_Authority": "Design change and learning programmes; advise on workforce implications; operational ownership remains with business leaders.",
+      "Role_Qualification_Question": "Do you feel qualified to evaluate AI adoption blockers from this stakeholder’s perspective?",
+      "Status": "Draft",
+      "Source": "Blockers!Stakeholders",
+      "Blockers_Linked": 6,
+      "qualification_question_id": "Q01"
+    },
+    {
+      "id": "STK-11",
+      "Stakeholder_Name": "Systems engineering",
+      "Role_Description": "Manage technical requirements, interfaces, verification and system-level integration across railway technologies and processes.",
+      "Key_Priorities": "Requirements traceability; Interface compatibility; Verification evidence; System reliability",
+      "AI_Adoption_Perspective": "Examine how AI components fit into the wider railway system and its validation and lifecycle processes.",
+      "Typical_Challenges": "Unspecified interfaces; Integration dependencies; Incomplete verification; Configuration complexity",
+      "Decision_Authority": "Set or validate system engineering requirements and acceptance evidence within delegated scope.",
+      "Role_Qualification_Question": "Do you feel qualified to evaluate AI adoption blockers from this stakeholder’s perspective?",
+      "Status": "Draft",
+      "Source": "Blockers!Stakeholders",
+      "Blockers_Linked": 8,
+      "qualification_question_id": "Q01"
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q01",
+      "stage": "Role qualification",
+      "text": "Do you feel qualified to evaluate AI adoption blockers from this stakeholder’s perspective?",
+      "required": true,
+      "status": "Draft",
+      "response_type": "single_choice",
+      "options": [
+        {
+          "id": "Q01:YES",
+          "code": "YES",
+          "label": "Yes — I understand this role well enough",
+          "description": "Proceed with standard self-reported familiarity",
+          "display_order": 1
+        },
+        {
+          "id": "Q01:SOMEWHAT",
+          "code": "SOMEWHAT",
+          "label": "Somewhat — I have limited knowledge",
+          "description": "Proceed and flag limited familiarity",
+          "display_order": 2
+        },
+        {
+          "id": "Q01:NO",
+          "code": "NO",
+          "label": "No — please assign me another role",
+          "description": "Assign a different role and record rejection",
+          "display_order": 3
+        }
+      ]
+    },
+    {
+      "id": "Q02",
+      "stage": "Blocker evaluation",
+      "text": "From your stakeholder’s perspective, how does this blocker relate to your role?",
+      "required": true,
+      "status": "Draft",
+      "response_type": "multiple_choice",
+      "options": [
+        {
+          "id": "Q02:RESPONSIBLE",
+          "code": "RESPONSIBLE",
+          "label": "Responsible",
+          "description": "I have responsibility or authority to help resolve this blocker",
+          "display_order": 1
+        },
+        {
+          "id": "Q02:AFFECTED",
+          "code": "AFFECTED",
+          "label": "Affected",
+          "description": "This blocker directly affects my responsibilities or work",
+          "display_order": 2
+        },
+        {
+          "id": "Q02:CONTRIBUTOR",
+          "code": "CONTRIBUTOR",
+          "label": "Contributor",
+          "description": "I can contribute to resolving this blocker",
+          "display_order": 3
+        },
+        {
+          "id": "Q02:NOT_RELEVANT",
+          "code": "NOT_RELEVANT",
+          "label": "Not relevant",
+          "description": "This blocker has no meaningful relationship with my role",
+          "display_order": 4
+        },
+        {
+          "id": "Q02:NOT_SURE",
+          "code": "NOT_SURE",
+          "label": "Not sure",
+          "description": "I cannot confidently assess this relationship",
+          "display_order": 5
+        }
+      ],
+      "exclusive_response_codes": [
+        "NOT_RELEVANT",
+        "NOT_SURE"
+      ]
+    },
+    {
+      "id": "Q03",
+      "stage": "Optional explanation",
+      "text": "What is the main reason for your assessment?",
+      "required": false,
+      "status": "Draft",
+      "response_type": "free_text",
+      "options": [
+        {
+          "id": "Q03:FREE_TEXT",
+          "code": "FREE_TEXT",
+          "label": "Optional explanation",
+          "description": "Free-text explanation, maximum length to be defined by implementation",
+          "display_order": 1
+        }
+      ],
+      "max_length": null
+    }
+  ],
+  "settings": {
+    "qualification_question_id": "Q01",
+    "blocker_question_id": "Q02",
+    "explanation_question_id": "Q03",
+    "blockers_source": "external_explorer_dataset",
+    "qualification_actions": {
+      "YES": "proceed",
+      "SOMEWHAT": "proceed_with_limited_familiarity",
+      "NO": "reassign_role"
+    }
+  },
+  "warnings": [
+    "Dataset contains Draft content; generation does not imply editorial approval.",
+    "Q03 maximum text length is unspecified in the source; max_length=null means no limit is defined by this dataset."
+  ],
+  "dataset_version": "sha256:d0551a4175cc06ba19254cdb245f50e91dc12010066812fd1dd627794c9d91f9"
+}

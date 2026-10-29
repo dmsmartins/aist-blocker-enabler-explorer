@@ -31,6 +31,8 @@ Validation: `node --test --test-isolation=none readiness.test.mjs dependencies.t
 
 ## Current experience
 
+- **Stakeholder Challenge (local preview)**: a role card, qualification and six blocker assessments, with browser drafts and JSON export. Open `stakeholder-challenge.html`; see [phase-2 documentation](stakeholder-challenge/README.md). Answers are not submitted to the project team yet.
+
 - **Explore by Community**
 - **Explore by Stage Gate**
 - **All Blockers**

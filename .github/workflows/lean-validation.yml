@@ -13,6 +13,8 @@ on:
       - '*.js'
       - '*.mjs'
       - 'tools/quick_check.py'
+      - 'stakeholder-challenge.html'
+      - 'stakeholder-challenge/**'
       - '.github/workflows/lean-validation.yml'
   workflow_dispatch:
 
@@ -38,5 +40,7 @@ jobs:
         run: python3 tools/quick_check.py
       - name: Existing Node tests
         run: node --test --test-isolation=none readiness.test.mjs dependencies.test.mjs stage-dependencies.test.mjs validation.test.mjs
+      - name: Stakeholder Challenge tests
+        run: node --test stakeholder-challenge/model.test.mjs
       - name: Questionnaire review, guidance and community tests
         run: node --test --test-isolation=none assessment-preview/model.test.mjs assessment-preview/views.test.mjs assessment-preview/feedback.test.mjs timeline/guidance.test.mjs communities/zoom.test.mjs
