@@ -1,10 +1,15 @@
 import React,{useEffect,useMemo,useState,useCallback,useRef} from "https://esm.sh/react@18.3.1";
 import {createRoot} from "https://esm.sh/react-dom@18.3.1/client";
 import htm from "https://esm.sh/htm@3.1.1";
-import {ReactFlow,ReactFlowProvider,Background,Controls,Handle,Position,MarkerType,useReactFlow} from "https://esm.sh/@xyflow/react@12?deps=react@18.3.1,react-dom@18.3.1";
+import {ReactFlow,ReactFlowProvider,Background,Controls,Handle,Position,MarkerType,useReactFlow,BaseEdge,getSmoothStepPath} from "https://esm.sh/@xyflow/react@12?deps=react@18.3.1,react-dom@18.3.1";
 import {gateKey,guidanceFor} from "./guidance.mjs";
+import {mechanismGroups,initialMechanism,firstSentence,enablerLayout} from "./unlock.mjs";
+import {collectionId,collections,matchingBlockers,collectionAssessment,explorationFromHash,explorationHash,visibleDependencies} from "./explore.mjs";
 
 const html=htm.bind(React.createElement);
+const communityMode=document.documentElement.dataset.explorer==="community";
+const mode=communityMode?"community":"gate";
+const collectionLabel=communityMode?"Community":"Stage Gate";
 const MECH_COLORS={Frame:"#6e68d8",Commit:"#c67b2b",Equip:"#2478b5",Assure:"#a05486",Operate:"#27865e",Learn:"#73883c"};
 const truncate=(s,n=120)=>{s=String(s||"");return s.length>n?s.slice(0,n).trimEnd()+"…":s};
 const byId=(rows,id)=>rows.find(x=>x.id===Number(id));
@@ -28,48 +33,85 @@ function StageNode({data}){
   const {gate,count,selected,assessmentState,remaining}=data;
   const cls="stage-node"+(selected?" selected":"")+(count===0?" empty":"")+(assessmentState?` assessment-${assessmentState}`:"");
   const countLabel=data.preview?`${data.gapCount} gaps · ${data.unanswered} unanswered`:assessmentState==="done"?"✓ Done":assessmentState==="empty"?"No blockers mapped":assessmentState?`${remaining} remaining`:`${count} blocker${count===1?"":"s"}`;
-  return html`<div className=${cls+(data.dimmed?" dimmed":"")} role=${selected?"group":"button"} tabIndex="0" aria-label=${`Gate ${gate.id}: ${gate.label}`} aria-pressed=${selected?undefined:"false"} onKeyDown=${e=>{if(e.key==="Enter"||e.key===" "){e.stopPropagation();if(e.target===e.currentTarget&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}}>
+  return html`<div className=${cls+(data.dimmed?" dimmed":"")+(communityMode?" community-node":"")} role=${selected&&!communityMode?"group":"button"} tabIndex="0" aria-label=${`${collectionLabel} ${gate.id}: ${gate.label}`} aria-pressed=${selected&&!communityMode?undefined:String(selected)} onKeyDown=${e=>{if(e.key==="Enter"||e.key===" "){e.stopPropagation();if(e.target===e.currentTarget&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}}>
     <${Handle} type="target" position=${Position.Left} style=${{opacity:0}} />
     <div className="stage-top"><span className="stage-number">${assessmentState==="done"?"✓":gate.id}</span><span className="stage-count">${countLabel}</span></div>
-    <strong>${gate.label}</strong><p>${data.zoom>0.62?(assessmentState==="done"?"All mapped blockers were marked resolved.":assessmentState==="empty"?"No blockers are currently mapped to this gate.":"Click to reveal the blockers at this stage."):""}</p>
-    ${selected?html`<button className="deep-dive-plus stage-guidance-more nodrag nopan" data-guidance-key=${gateKey(gate)} aria-label=${`Guidance — Stage Gate ${gate.id} guidance`} aria-haspopup="dialog" onClick=${e=>{e.preventDefault();e.stopPropagation();data.onGuidance?.(gate,e.currentTarget)}}><span aria-hidden="true">+</span><em>Guidance</em></button>`:null}
+    <strong>${gate.label}</strong><p>${data.zoom>0.62?(assessmentState==="done"?"All mapped blockers were marked resolved.":count===0?"No blockers match the current filters.":communityMode?"Click to reveal the blockers in this community.":"Click to reveal the blockers at this stage."):""}</p>
+    ${selected&&!communityMode?html`<button className="deep-dive-plus stage-guidance-more nodrag nopan" data-guidance-key=${gateKey(gate)} aria-label=${`Guidance — Stage Gate ${gate.id} guidance`} aria-haspopup="dialog" onClick=${e=>{e.preventDefault();e.stopPropagation();data.onGuidance?.(gate,e.currentTarget)}}><span aria-hidden="true">+</span><em>Guidance</em></button>`:null}
     <${Handle} type="source" position=${Position.Right} style=${{opacity:0}} />
   </div>`;
 }
+// Communities retain their organic identity at both overview and member levels.
+function CommunityNode({data}){
+  const {gate,members,index,assessmentState}=data;
+  const core=members.filter(b=>b.classification==='Critical core').length;
+  const activate=e=>{e.preventDefault();e.stopPropagation();data.keyboardActivate()};
+  return html`<div className=${`community-orb tone-${index}`} style=${{width:data.size,height:data.size}} role="group" aria-label=${gate.label}>
+    <svg viewBox="0 0 400 400" aria-hidden="true"><path className="orb-surface" d="M 15 200 C 7 80, 105 0, 200 15 S 400 80, 385 205 S 305 400, 195 385 S 0 305, 15 200"/>
+      ${members.map((b,j)=>{const a=j/members.length*Math.PI*2;return html`<circle key=${b.id} cx=${200+Math.cos(a)*165} cy=${200+Math.sin(a)*165} r=${b.classification==='Critical core'?5:3} className=${b.classification==='Critical core'?'member-dot critical-dot':'member-dot'}/>`})}
+    </svg>
+    <button className="orb-open-group nodrag nopan" aria-label=${`Explore ${gate.label}: ${members.length} blockers`} onClick=${activate}>
+      <strong>${gate.label}</strong><span className="orb-count">${members.length}<small>blockers</small></span><span className="orb-critical">${core} critical core</span>
+      ${assessmentState?html`<small className="orb-assessment">${data.preview?`${data.gapCount} gaps · ${data.unanswered} unanswered`:assessmentState==='done'?'✓ Done':`${data.remaining} remaining`}</small>`:null}
+    </button>
+    ${members.map((b,j)=>{const a=j/members.length*Math.PI*2;return html`<button key=${b.id} className="orb-member nodrag nopan" data-community-blocker=${b.id} style=${{left:`${50+Math.cos(a)*41.25}%`,top:`${50+Math.sin(a)*41.25}%`}} title=${b.title} aria-label=${`Open blocker: ${b.title}`} onClick=${e=>{e.preventDefault();e.stopPropagation();data.openBlocker(b)}}/>`})}
+    <${Handle} type="source" position=${Position.Bottom} style=${{opacity:0}} />
+  </div>`;
+}
+
+function DependencyEdge(props){
+  const [path]=getSmoothStepPath(props);
+  return html`<${React.Fragment}><${BaseEdge} id=${props.id} path=${path} style=${props.style} markerEnd=${props.markerEnd}/><circle className="dependency-pulse" r="3" fill=${props.style?.stroke||"#3b86b7"} opacity=${props.style?.opacity??1} pointerEvents="none"><animateMotion dur="2.8s" repeatCount="indefinite" path=${path}/></circle></${React.Fragment}>`;
+}
+const edgeTypes={dependency:DependencyEdge};
+
 function BlockerNode({data}){
+  const blockerElement=useRef(null);
+  useEffect(()=>{if(data.restoreFocus&&data.focusReady)blockerElement.current?.focus({preventScroll:true})},[data.restoreFocus,data.focusReady]);
   const {blocker,selected,domainTitle,zoom,relationLabel,status}=data;
   const showStatement=selected||zoom>0.92;
   const score=data.maturityScore;
   const statusCls=status?` status-${status}`:"";
-  return html`<div className=${"blocker-node"+(selected?" selected":"")+statusCls+(blocker.classification==='Critical core'?' critical-core':'')+(data.dimmed?" dimmed":"")} role=${selected?"group":"button"} tabIndex=${selected?-1:0} data-blocker-node=${blocker.id} aria-pressed=${selected?undefined:"false"} onKeyDown=${e=>{if(!selected&&(e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}>
+  return html`<div ref=${blockerElement} className=${"blocker-node"+(selected?" selected":"")+statusCls+(blocker.classification==='Critical core'?' critical-core':'')+(data.relationsHighlighted?" relations-highlighted":"")} role="button" tabIndex="0" data-blocker-node=${blocker.id} aria-pressed=${selected} aria-expanded=${selected?data.detailOpen:undefined} onKeyDown=${e=>{if((e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();e.stopPropagation();data.keyboardActivate()}}}>
     <${Handle} type="target" position=${Position.Left} style=${{opacity:0}} />
     <div className="node-kicker"><span>Gate ${blocker.stageGate} · ${domainTitle}</span><span>${relationLabel||""}</span></div>
     ${status?html`<div className=${"assessment-status"+(status==="review"?(score>=4?" maturity-4":" maturity-3"):"")} title=${status==="review"?"Self-reported maturity; not yet verified":undefined}>${status==="gap"?"● Gap identified":status==="review"?(score>=4?"◆ L4 · Sustained*":"◕ L3 · Implemented*"):status==="unanswered"?"Not assessed":status==="not_applicable"?"Not applicable":status==="resolved"?"✓ Resolved":status==="partial"?"◐ Partial":"● Open"}</div>`:null}
     <strong>${blocker.title}</strong>${blocker.classification?html`<div className="criticality-label">${blocker.classification}</div>`:null}
     ${showStatement?html`<p>${truncate(blocker.statement,selected?185:100)}</p>`:null}
-    ${selected?html`<button className="deep-dive-plus" title="Open blocker details and enablers" aria-label="Open blocker details and enablers" onClick=${(e)=>{e.preventDefault();e.stopPropagation();data.onDeepDive?.(blocker)}}><span>+</span><em>Details & enablers</em></button>`:null}
     <${Handle} type="source" position=${Position.Right} style=${{opacity:0}} />
-  </div>`;
-}
-function MechanismNode({data}){
-  const color=MECH_COLORS[data.mechanism]||"#397db0";
-  return html`<div className=${"mechanism-node"+(data.selected?" selected":"")} style=${{"--mech":color}} role="button" tabIndex="0" aria-pressed=${data.selected?"true":"false"} onKeyDown=${e=>{if((e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}>
-    <${Handle} type="target" position=${Position.Top} style=${{opacity:0}} />
-    <div className="mech-top"><strong>${data.mechanism}</strong><span>${data.count}</span></div><p>${data.description}</p>
-    <${Handle} type="source" position=${Position.Bottom} style=${{opacity:0}} />
+    <${Handle} id="unlock" type="source" position=${Position.Bottom} style=${{opacity:0}} />
   </div>`;
 }
 function EnablerNode({data}){
-  return html`<div className=${"enabler-node"+(data.selected?" selected":"")} role="button" tabIndex="0" aria-pressed=${data.selected?"true":"false"} onKeyDown=${e=>{if((e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();data.keyboardActivate()}}}>
+  return html`<div className=${"enabler-node"+(data.selected?" selected":"")} style=${{"--mech":MECH_COLORS[data.mechanism]}} data-enabler-node=${data.enabler.id} role="button" tabIndex="0" aria-pressed=${data.selected?"true":"false"} onKeyDown=${e=>{if((e.key==="Enter"||e.key===" ")&&data.keyboardActivate){e.preventDefault();e.stopPropagation();data.keyboardActivate()}}}>
     <${Handle} type="target" position=${Position.Top} style=${{opacity:0}} />
-    <div className="mini-label">${data.mechanism} enabler</div><strong>${data.enabler.title}</strong><p>${truncate(data.enabler.description,110)}</p>
+    <div className="mini-label">${data.number} · ${data.mechanism} enabler ${data.selected?"· Selected":""}</div><strong>${data.enabler.title}</strong><p>${truncate(data.enabler.description,110)}</p>
   </div>`;
 }
-const nodeTypes={stage:StageNode,blocker:BlockerNode,mechanism:MechanismNode,enabler:EnablerNode};
+function MechanismLegend({data}){
+  return html`<div className="mechanism-legend" style=${{"--mech":MECH_COLORS[data.mechanism]}}><i aria-hidden="true"></i>${data.mechanism} · ${data.count} enabler${data.count===1?"":"s"}</div>`;
+}
+const nodeTypes={community:CommunityNode,stage:StageNode,blocker:BlockerNode,legend:MechanismLegend,enabler:EnablerNode};
 
 function AppCanvas({data,guidance,guidanceLoading}){
   const flow=useReactFlow();
-  const lastFocusedBlocker=useRef(null);
+  const canvasRef=useRef(null);
+  const inspectorClose=useRef(null);
+  const restoringHistory=useRef(null);
+  const historyReady=useRef(false);
+  const initialSelection=useMemo(()=>explorationFromHash(data,location.hash,location.search,mode),[data]);
+  const [canvasSize,setCanvasSize]=useState({width:800,height:600});
+  const [measurements,setMeasurements]=useState({});
+  const onNodesChange=useCallback(changes=>{
+    const dimensions=changes.filter(change=>change.type==="dimensions"&&change.dimensions);
+    if(!dimensions.length)return;
+    setMeasurements(previous=>{const next={...previous};let changed=false;for(const change of dimensions){const before=previous[change.id],after=change.dimensions;if(before?.width!==after.width||before?.height!==after.height){next[change.id]=after;changed=true}}return changed?next:previous});
+  },[]);
+  const [fullscreen,setFullscreen]=useState(false);
+  const [canvasMessage,setCanvasMessage]=useState("");
+  useEffect(()=>{const observer=new ResizeObserver(([entry])=>setCanvasSize({width:Math.round(entry.contentRect.width),height:Math.round(entry.contentRect.height)}));observer.observe(canvasRef.current);return()=>observer.disconnect()},[]);
+  useEffect(()=>{const sync=()=>setFullscreen(document.fullscreenElement===canvasRef.current?.closest(".shell"));document.addEventListener("fullscreenchange",sync);return()=>document.removeEventListener("fullscreenchange",sync)},[]);
+  const toggleFullscreen=async()=>{setCanvasMessage("");try{if(document.fullscreenElement)await document.exitFullscreen();else await canvasRef.current.closest(".shell").requestFullscreen()}catch{setCanvasMessage("Fullscreen is not available in this browser.")}};
   const guidanceTrigger=useRef(null);
   const guidanceClose=useRef(null);
   const [guidanceKey,setGuidanceKey]=useState(null);
@@ -79,208 +121,247 @@ function AppCanvas({data,guidance,guidanceLoading}){
   useEffect(()=>{if(!guidanceKey)return;guidanceClose.current?.focus({preventScroll:true});const escape=e=>{if(e.key==="Escape"){e.preventDefault();e.stopImmediatePropagation();closeGuidance()}};document.addEventListener("keydown",escape,true);return()=>document.removeEventListener("keydown",escape,true)},[guidanceKey,closeGuidance]);
   const [savedCount,setSavedCount]=useState(()=>{try{const x=JSON.parse(localStorage.getItem("aistExplorerBookmarks")||"{\"blockers\":[],\"enablers\":[]}");return (x.blockers?.length||0)+(x.enablers?.length||0)}catch{return 0}});
   const [zoom,setZoom]=useState(.72);
-  const [selectedGate,setSelectedGate]=useState(null);
-  const [selectedBlocker,setSelectedBlocker]=useState(null);
-  const [detailOpen,setDetailOpen]=useState(false);
-  const [selectedMechanism,setSelectedMechanism]=useState(null);
+  // React Flow owns the live transform. Update semantic detail only when a gesture ends.
+  const onMoveEnd=useCallback((_,viewport)=>setZoom(viewport.zoom),[]);
+  const [selectedGroup,setSelectedGroup]=useState(initialSelection.group);
+  const [selectedBlocker,setSelectedBlocker]=useState(initialSelection.blocker);
+  const [detailOpen,setDetailOpen]=useState(initialSelection.detail);
+  const [selectedMechanism,setSelectedMechanism]=useState(initialSelection.mechanism);
   const [selectedEnabler,setSelectedEnabler]=useState(null);
+  const [relationsOpen,setRelationsOpen]=useState(false);
+  const [unlockOpen,setUnlockOpen]=useState(true);
   const [showCompleted,setShowCompleted]=useState(false);
-  useEffect(()=>{setGuidanceKey(null)},[selectedGate,selectedBlocker]);
+  const [stakeholder,setStakeholder]=useState(initialSelection.stakeholder);
+  const [includeUnreviewed,setIncludeUnreviewed]=useState(true);
+  useEffect(()=>{setGuidanceKey(null)},[selectedGroup,selectedBlocker]);
   const assessment=useMemo(()=>readCompanyAssessment(),[]);
   const assessmentMode=!!assessment;
   const previewMode=!!assessment?.preview;
   useEffect(()=>{const sync=()=>{try{const x=JSON.parse(localStorage.getItem("aistExplorerBookmarks")||"{\"blockers\":[],\"enablers\":[]}");setSavedCount((x.blockers?.length||0)+(x.enablers?.length||0))}catch{setSavedCount(0)}};window.addEventListener("storage",sync);return()=>window.removeEventListener("storage",sync)},[]);
   const phoneViewport=window.innerWidth<600;
   const compactViewport=window.innerWidth<900;
-  const stageX=id=>id*(phoneViewport?250:compactViewport?260:270);
+  const groupX=id=>Math.max(0,groupRows.findIndex(g=>g.id===id))*(phoneViewport?250:compactViewport?260:270);
   const domains=useMemo(()=>Object.fromEntries(data.domains.map(d=>[d.slug,d.title])),[data]);
+  const groupRows=useMemo(()=>collections(data,mode),[data]);
+  const groupId=useCallback(b=>collectionId(b,mode),[]);
+  const sourceBlockers=useMemo(()=>matchingBlockers(data,{stakeholder}),[data,stakeholder]);
+  const dependencies=useMemo(()=>visibleDependencies(data,includeUnreviewed),[data,includeUnreviewed]);
+  const roles=useMemo(()=>uniq(data.blockers.flatMap(b=>b.stakeholders)).sort(),[data]);
 const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[assessment]);
-  const gateAssessment=useCallback(gateId=>{
-    const bs=data.blockers.filter(b=>b.stageGate===gateId);
-    if(!bs.length)return{state:"empty",remaining:0};
-    if(assessment?.preview)return{state:"active",remaining:bs.filter(b=>blockerStatus(b.id)==="gap").length,gaps:bs.filter(b=>blockerStatus(b.id)==="gap").length,unanswered:bs.filter(b=>blockerStatus(b.id)==="unanswered").length};
-    const remaining=bs.filter(b=>blockerStatus(b.id)!=="resolved").length;
-    return{state:remaining===0?"done":"active",remaining};
-  },[data,blockerStatus,assessment]);
+  const groupAssessment=useCallback(group=>collectionAssessment(data,{mode,group,stakeholder,statuses:assessment?.blockerStatuses,preview:assessment?.preview}),[data,stakeholder,assessment]);
 
   const dependencyContext=useCallback(id=>{
-    const upstreamIds=uniq(data.blockerDependencies.filter(d=>d.blockerId===id).map(d=>d.dependsOnBlockerId));
-    const downstreamIds=uniq(data.blockerDependencies.filter(d=>d.dependsOnBlockerId===id).map(d=>d.blockerId));
+    const upstreamIds=uniq(dependencies.filter(d=>d.blockerId===id).map(d=>d.dependsOnBlockerId));
+    const downstreamIds=uniq(dependencies.filter(d=>d.dependsOnBlockerId===id).map(d=>d.blockerId));
     return{upstream:upstreamIds.map(x=>byId(data.blockers,x)).filter(Boolean),downstream:downstreamIds.map(x=>byId(data.blockers,x)).filter(Boolean)};
-  },[data]);
+  },[data,dependencies]);
 
-  const mechanismGroups=useCallback(id=>{
-    const out={};
-    data.relationships.filter(r=>r.blockerId===id).forEach(r=>{const e=byId(data.enablers,r.enablerId);if(!e)return;(out[r.mechanism]||=[]).push({enabler:e,relationship:r})});
-    return out;
+  const groupsForBlocker=useCallback(id=>mechanismGroups(data,id),[data]);
+
+  // Store panel visibility in this entry, while keeping shareable IDs in the hash.
+  useEffect(()=>{
+    const restore=()=>{
+      const stored=history.state?.timeline;
+      const parsed=explorationFromHash(data,location.hash,location.search,mode);
+      const next=stored?.hash===location.hash?{...parsed,detail:!!stored.detail,mechanism:stored.detail&&stored.mechanism?parsed.mechanism:null}:parsed;
+      restoringHistory.current=JSON.stringify(next);
+      setSelectedGroup(next.group);setStakeholder(next.stakeholder);setSelectedBlocker(next.blocker);setDetailOpen(next.detail);setSelectedMechanism(next.mechanism);setSelectedEnabler(null);setRelationsOpen(false);setUnlockOpen(true);
+    };
+    window.addEventListener("popstate",restore);window.addEventListener("hashchange",restore);
+    return()=>{window.removeEventListener("popstate",restore);window.removeEventListener("hashchange",restore)};
   },[data]);
+  useEffect(()=>{
+    const selection={group:selectedGroup,blocker:selectedBlocker,detail:detailOpen,mechanism:selectedMechanism,stakeholder};
+    const restored=restoringHistory.current===JSON.stringify(selection);
+    restoringHistory.current=null;
+    if(restored)return;
+    const hash=explorationHash(selection,mode),state={...history.state,timeline:{hash,detail:detailOpen,mechanism:selectedMechanism}};
+    const url=location.pathname+location.search+hash;
+    if(!historyReady.current||location.hash===hash)history.replaceState(state,"",url);else history.pushState(state,"",url);
+    historyReady.current=true;
+  },[selectedGroup,selectedBlocker,detailOpen,selectedMechanism,stakeholder]);
+  useEffect(()=>{setRelationsOpen(false);setUnlockOpen(true)},[selectedBlocker]);
+  useEffect(()=>{if(detailOpen)inspectorClose.current?.focus({preventScroll:true})},[detailOpen,selectedBlocker]);
+  useEffect(()=>{if(selectedEnabler&&unlockOpen)document.querySelector(`[data-enabler-item="${selectedEnabler}"]`)?.scrollIntoView({block:"nearest"})},[selectedEnabler,unlockOpen]);
+  const selectEnabler=useCallback(id=>{setSelectedEnabler(id);setUnlockOpen(true)},[]);
+  const selectGroup=useCallback(id=>{setSelectedGroup(id);setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null);setGuidanceKey(null)},[]);
+  const eligibleBlockers=useMemo(()=>sourceBlockers.filter(b=>!assessmentMode||showCompleted||blockerStatus(b.id)!=="resolved"),[sourceBlockers,assessmentMode,showCompleted,blockerStatus]);
+  const matchingCount=eligibleBlockers.filter(b=>selectedGroup==null||groupId(b)===selectedGroup).length;
 
   const openDeepDive=useCallback((blocker)=>{
     if(!blocker)return;
-    lastFocusedBlocker.current=blocker.id;
+    if(blocker.id===selectedBlocker&&detailOpen){inspectorClose.current?.focus({preventScroll:true});return;}
     setSelectedBlocker(blocker.id);
-    setSelectedGate(blocker.stageGate);
+    setSelectedGroup(groupId(blocker));
+    if(stakeholder&&!blocker.stakeholders.includes(stakeholder))setStakeholder("");
     setDetailOpen(true);
-    setSelectedMechanism(null);
+    setSelectedMechanism(initialMechanism(data,blocker.id));
     setSelectedEnabler(null);
-  },[]);
+    setRelationsOpen(false);setUnlockOpen(true);
+  },[data,selectedBlocker,detailOpen,groupId,stakeholder]);
   const closeDetail=useCallback(()=>{
     setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null);
-    const id=lastFocusedBlocker.current||selectedBlocker;
-    requestAnimationFrame(()=>document.querySelector(`[data-blocker-node="${id}"]`)?.focus());
   },[selectedBlocker]);
   useEffect(()=>{if(!detailOpen)return;const onKey=e=>{if(e.key==="Escape"){e.preventDefault();closeDetail()}};document.addEventListener("keydown",onKey);return()=>document.removeEventListener("keydown",onKey)},[detailOpen,closeDetail]);
 
   const graph=useMemo(()=>{
     const nodes=[],edges=[];
     const edgeBase={type:"smoothstep",style:{stroke:"#aec7d7",strokeWidth:1.2},markerEnd:{type:MarkerType.ArrowClosed,width:14,height:14,color:"#aec7d7"}};
-    data.stageGates.forEach(g=>{
-      const ga=assessmentMode?gateAssessment(g.id):null;
-      nodes.push({id:`stage-${g.id}`,type:"stage",position:{x:stageX(g.id),y:0},data:{gate:g,count:data.blockers.filter(b=>b.stageGate===g.id).length,selected:selectedGate===g.id,zoom,assessmentState:ga?.state,remaining:ga?.remaining,preview:previewMode,gapCount:ga?.gaps,unanswered:ga?.unanswered,dimmed:!!selectedBlocker&&selectedGate!==g.id,onGuidance:openGuidance,keyboardActivate:()=>{setSelectedGate(selectedGate===g.id&&!selectedBlocker?null:g.id);setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}},zIndex:selectedGate===g.id?5:1});
-      if(g.id<data.stageGates.length-1)edges.push({id:`stage-edge-${g.id}`,source:`stage-${g.id}`,target:`stage-${g.id+1}`,...edgeBase,style:{stroke:"#c9dce8",strokeWidth:2}});
+    groupRows.forEach((g,index)=>{
+      const ga=assessmentMode?groupAssessment(g.id):null;
+      if(communityMode){
+        if(selectedGroup!=null&&g.id!==selectedGroup)return;
+        const places=phoneViewport?[[0,0],[0,420],[0,840],[0,1260],[0,1680]]:[[50,0],[520,0],[900,330],[450,390],[0,400]];
+        const [x,y]=selectedBlocker?[groupX(g.id),-220]:(places[index]||[(index%3)*430,Math.floor(index/3)*430]);
+        nodes.push({id:`community-${g.id}`,type:"community",position:{x,y},data:{gate:g,index,size:phoneViewport?400:([400,400,400,380,360][index]||400),members:sourceBlockers.filter(b=>groupId(b)===g.id),assessmentState:ga?.state,remaining:ga?.remaining,preview:previewMode,gapCount:ga?.gaps,unanswered:ga?.unanswered,keyboardActivate:()=>selectGroup(g.id),openBlocker:openDeepDive}});
+        return;
+      }
+      nodes.push({id:`stage-${g.id}`,type:"stage",position:{x:groupX(g.id),y:0},data:{gate:g,count:sourceBlockers.filter(b=>groupId(b)===g.id).length,selected:selectedGroup===g.id,zoom,assessmentState:ga?.state,remaining:ga?.remaining,preview:previewMode,gapCount:ga?.gaps,unanswered:ga?.unanswered,dimmed:!!selectedBlocker&&selectedGroup!==g.id,onGuidance:openGuidance,keyboardActivate:()=>selectGroup(selectedGroup===g.id&&!selectedBlocker?null:g.id)},zIndex:selectedGroup===g.id?5:1});
+      if(!communityMode&&index<groupRows.length-1)edges.push({id:`stage-edge-${g.id}`,source:`stage-${g.id}`,target:`stage-${groupRows[index+1].id}`,...edgeBase,style:{stroke:"#c9dce8",strokeWidth:2}});
     });
 
-    if((selectedGate != null)&&!selectedBlocker){
-      const blockers=data.blockers.filter(b=>b.stageGate===selectedGate && (!assessmentMode || showCompleted || blockerStatus(b.id)!=="resolved"));
+    if((selectedGroup != null)&&!selectedBlocker){
+      const blockers=eligibleBlockers.filter(b=>groupId(b)===selectedGroup);
       const cols=phoneViewport?1:compactViewport?2:3;
       const stepX=phoneViewport?0:compactViewport?275:300;
-      const baseX=phoneViewport?stageX(selectedGate):stageX(selectedGate)-(compactViewport?138:280);
-      blockers.forEach((b,i)=>{const row=Math.floor(i/cols),col=i%cols,x=baseX+col*stepX,y=(phoneViewport?180:195)+row*(phoneViewport?150:165);
-        nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x,y:y+55},data:{blocker:b,selected:false,domainTitle:domains[b.domain]||"",zoom,maturityScore:assessment?.blockerScores?.[b.id],status:assessmentMode?blockerStatus(b.id):null,keyboardActivate:()=>{setSelectedBlocker(b.id);setSelectedGate(b.stageGate);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}}});
-        edges.push({id:`gate-blocker-${b.id}`,source:`stage-${selectedGate}`,target:`blocker-${b.id}`,...edgeBase,style:{stroke:"#d8e6ee",strokeWidth:1}});
+      const community=communityMode?nodes.find(n=>n.type==="community"):null;
+      const centreX=community?community.position.x+community.data.size/2:0;
+      const baseX=community?centreX-(phoneViewport?130:compactViewport?267.5:427.5):phoneViewport?groupX(selectedGroup):groupX(selectedGroup)-(compactViewport?138:280);
+      const baseY=community?community.position.y+community.data.size+65:(phoneViewport?235:250);
+      blockers.forEach((b,i)=>{const row=Math.floor(i/cols),col=i%cols,x=baseX+col*stepX,y=baseY+row*(communityMode?200:phoneViewport?150:165);
+        nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x,y},data:{blocker:b,selected:false,domainTitle:domains[b.domain]||"",zoom,maturityScore:assessment?.blockerScores?.[b.id],status:assessmentMode?blockerStatus(b.id):null,keyboardActivate:()=>openDeepDive(b)}});
+        edges.push({id:`gate-blocker-${b.id}`,source:`${communityMode?"community":"stage"}-${selectedGroup}`,target:`blocker-${b.id}`,...edgeBase,style:{stroke:"#d8e6ee",strokeWidth:1}});
       });
     }
 
     if(selectedBlocker){
       const b=byId(data.blockers,selectedBlocker),deps=dependencyContext(b.id);
-      const focusX=phoneViewport?stageX(b.stageGate):compactViewport?620:760;
-      nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x:focusX,y:phoneViewport?235:350},data:{blocker:b,selected:true,domainTitle:domains[b.domain]||"",zoom,onDeepDive:openDeepDive,maturityScore:assessment?.blockerScores?.[b.id],status:assessmentMode?blockerStatus(b.id):null,keyboardActivate:()=>openDeepDive(b)},zIndex:8});
-      const placeSide=(items,side)=>{const x=phoneViewport?(side==="up"?focusX-285:focusX+315):(side==="up"?380:1140),label=side==="up"?"Depends on":"Depends on this";
-        items.filter(xBlock=>!assessmentMode || showCompleted || blockerStatus(xBlock.id)!=="resolved").forEach((xBlock,i)=>{const y=(phoneViewport?180:210)+i*(phoneViewport?138:145);
-          nodes.push({id:`blocker-${xBlock.id}`,type:"blocker",position:{x,y},data:{blocker:xBlock,selected:false,domainTitle:domains[xBlock.domain]||"",zoom,relationLabel:label,maturityScore:assessment?.blockerScores?.[xBlock.id],status:assessmentMode?blockerStatus(xBlock.id):null,keyboardActivate:()=>{setSelectedBlocker(xBlock.id);setSelectedGate(xBlock.stageGate);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}}});
+      const focusX=phoneViewport?groupX(groupId(b)):compactViewport?620:760;
+      const focusY=phoneViewport?235:350,items=detailOpen&&selectedMechanism?groupsForBlocker(b.id)[selectedMechanism]||[]:[];
+      const layout=enablerLayout(items.length,canvasSize.width,focusX,focusY,phoneViewport?260:330,canvasSize.height);
+      nodes.push({id:`blocker-${b.id}`,type:"blocker",position:{x:focusX,y:focusY},data:{blocker:b,selected:true,detailOpen,restoreFocus:!detailOpen,domainTitle:domains[b.domain]||"",zoom,maturityScore:assessment?.blockerScores?.[b.id],status:assessmentMode?blockerStatus(b.id):null,keyboardActivate:()=>openDeepDive(b)},zIndex:8});
+      const placeSide=(items,side)=>{const x=detailOpen?(side==="up"?layout.dependencyLeft:layout.dependencyRight):phoneViewport?(side==="up"?focusX-285:focusX+315):(side==="up"?380:1140),label=side==="up"?"Depends on":"Depends on this";
+        items.filter(xBlock=>!assessmentMode || showCompleted || blockerStatus(xBlock.id)!=="resolved").forEach((xBlock,i)=>{const y=(phoneViewport?180:210)+i*(detailOpen?230:phoneViewport?138:145);
+          // Reciprocal dependencies use one card with both directional edges.
+          if(!nodes.some(n=>n.id===`blocker-${xBlock.id}`))nodes.push({id:`blocker-${xBlock.id}`,type:"blocker",position:{x,y},data:{blocker:xBlock,selected:false,relationsHighlighted:relationsOpen,domainTitle:domains[xBlock.domain]||"",zoom,relationLabel:label,maturityScore:assessment?.blockerScores?.[xBlock.id],status:assessmentMode?blockerStatus(xBlock.id):null,keyboardActivate:()=>openDeepDive(xBlock)}});
           const edge=side==="up"?{source:`blocker-${xBlock.id}`,target:`blocker-${b.id}`}:{source:`blocker-${b.id}`,target:`blocker-${xBlock.id}`};
-          edges.push({id:`dep-${side}-${xBlock.id}`,...edge,...edgeBase,animated:true,style:{stroke:side==="up"?"#6e97b3":"#3b86b7",strokeWidth:1.5}});
+          const relation=dependencies.find(d=>side==="up"?d.blockerId===b.id&&d.dependsOnBlockerId===xBlock.id:d.blockerId===xBlock.id&&d.dependsOnBlockerId===b.id);
+          edges.push({id:`dep-${side}-${xBlock.id}`,...edge,...edgeBase,type:"dependency",style:{stroke:side==="up"?"#6e97b3":"#3b86b7",strokeWidth:relationsOpen?2.5:1.5,strokeDasharray:relation?.reviewStatus==="Validated"?undefined:"5 4",opacity:detailOpen&&!relationsOpen?.25:1}});
         });
       };
       placeSide(deps.upstream,"up");placeSide(deps.downstream,"down");
 
-      if(detailOpen){
-        const groups=mechanismGroups(b.id),mechanisms=data.mechanisms.filter(m=>groups[m.key]?.length),centerX=phoneViewport?focusX:760,startX=centerX-((mechanisms.length-1)*(phoneViewport?195:205))/2;
-        mechanisms.forEach((m,i)=>{
-          nodes.push({id:`mechanism-${m.key}`,type:"mechanism",position:{x:startX+i*(phoneViewport?195:205),y:phoneViewport?650:760},data:{mechanism:m.key,description:m.description,count:groups[m.key].length,selected:selectedMechanism===m.key,keyboardActivate:()=>{setSelectedMechanism(m.key);setSelectedEnabler(null)}}});
-          edges.push({id:`blocker-mech-${m.key}`,source:`blocker-${b.id}`,target:`mechanism-${m.key}`,...edgeBase,style:{stroke:MECH_COLORS[m.key]||"#7a9bb1",strokeWidth:1.3}});
+      if(items.length){
+        const color=MECH_COLORS[selectedMechanism];
+        nodes.push({id:"mechanism-legend",type:"legend",position:layout.legend,data:{mechanism:selectedMechanism,count:items.length},selectable:false});
+        items.forEach((item,i)=>{
+          nodes.push({id:`enabler-${item.enabler.id}`,type:"enabler",position:layout.positions[i],data:{enabler:item.enabler,number:i+1,mechanism:selectedMechanism,selected:selectedEnabler===item.enabler.id,keyboardActivate:()=>selectEnabler(item.enabler.id)}});
+          edges.push({id:`unlock-enabler-${item.enabler.id}`,source:`blocker-${b.id}`,sourceHandle:"unlock",target:`enabler-${item.enabler.id}`,...edgeBase,markerEnd:{...edgeBase.markerEnd,color},style:{stroke:color,strokeWidth:1.6}});
         });
-        if(selectedMechanism&&groups[selectedMechanism]){
-          const items=groups[selectedMechanism],enablerCols=phoneViewport?1:Math.min(4,Math.max(1,items.length)),center=centerX,width=(enablerCols-1)*(phoneViewport?250:270),base=center-width/2;
-          items.forEach((item,i)=>{const row=Math.floor(i/enablerCols),col=i%enablerCols;
-            nodes.push({id:`enabler-${item.enabler.id}`,type:"enabler",position:{x:base+col*(phoneViewport?250:270),y:(phoneViewport?890:1010)+row*(phoneViewport?145:150)},data:{enabler:item.enabler,mechanism:selectedMechanism,selected:selectedEnabler===item.enabler.id,keyboardActivate:()=>setSelectedEnabler(item.enabler.id)}});
-            edges.push({id:`mech-enabler-${item.enabler.id}`,source:`mechanism-${selectedMechanism}`,target:`enabler-${item.enabler.id}`,...edgeBase,style:{stroke:MECH_COLORS[selectedMechanism]||"#7a9bb1",strokeWidth:1.1}});
-          });
-        }
       }
     }
     return{nodes,edges};
-  },[data,selectedGate,selectedBlocker,detailOpen,selectedMechanism,selectedEnabler,zoom,domains,dependencyContext,mechanismGroups,openDeepDive,assessmentMode,showCompleted,blockerStatus,gateAssessment]);
+  },[data,selectedGroup,selectedBlocker,detailOpen,selectedMechanism,selectedEnabler,zoom,domains,dependencyContext,groupsForBlocker,openDeepDive,assessmentMode,showCompleted,blockerStatus,groupAssessment,relationsOpen,canvasSize.width,canvasSize.height,selectEnabler,groupRows,sourceBlockers,eligibleBlockers,groupId,selectGroup,dependencies]);
+
+  const flowNodes=useMemo(()=>graph.nodes.map(node=>({...node,measured:measurements[node.id],data:{...node.data,focusReady:!!measurements[node.id]}})),[graph.nodes,measurements]);
 
   useEffect(()=>{
     let cancelled=false,raf2=0,retry=0;
     const fit=()=>{
       if(cancelled)return;
       const all=flow.getNodes();
-      if(!all.length){retry=setTimeout(fit,60);return;}
+      if(!all.length||all.some(n=>!flow.getInternalNode(n.id)?.measured?.width)){retry=setTimeout(fit,60);return;}
       let focus=[];
       const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const phone=window.innerWidth<600;
       const tablet=window.innerWidth<900;
       if(selectedBlocker){
         const selected=all.find(n=>n.id===`blocker-${selectedBlocker}`);
-        focus=phone?[selected].filter(Boolean):all.filter(n=>n.type==="blocker");
-      }else if((selectedGate != null)){
-        const gate=all.find(n=>n.id===`stage-${selectedGate}`);
+        focus=detailOpen?all.filter(n=>n.id===selected?.id||n.type==="enabler"||n.type==="legend"||(relationsOpen&&n.type==="blocker")):phone?[selected].filter(Boolean):all.filter(n=>n.type==="blocker");
+      }else if((selectedGroup != null)){
+        const gate=all.find(n=>n.id===`${communityMode?"community":"stage"}-${selectedGroup}`);
         const blockers=all.filter(n=>n.type==="blocker");
         focus=[gate,...blockers.slice(0,phone?2:tablet?4:6)].filter(Boolean);
       }else{
-        const stages=all.filter(n=>n.type==="stage");
+        const stages=all.filter(n=>n.type==="stage"||n.type==="community");
         focus=phone?stages.slice(0,2):tablet?stages.slice(0,3):stages;
       }
       flow.fitView({
         nodes:focus.length?focus:all,
-        padding:selectedBlocker?(phone?.22:.12):(selectedGate != null)?(phone?.16:.10):.10,
-        duration:reduced?0:320,
-        minZoom:selectedBlocker?(phone?.88:.56):(selectedGate != null)?(phone?.78:tablet?.64:.52):(phone?.76:tablet?.62:.48),
-        maxZoom:selectedBlocker?(phone?1.02:1.05):(selectedGate != null)?(phone?.96:.92):(phone?.92:.90)
+        padding:detailOpen?.2:selectedBlocker?(phone?.22:.12):(selectedGroup != null)?(phone?.16:.10):.10,
+        duration:reduced?0:420,
+        minZoom:communityMode&&selectedGroup==null?.2:detailOpen?.1:selectedBlocker?(phone?.88:.56):(selectedGroup != null)?(phone?.78:tablet?.64:.52):(phone?.76:tablet?.62:.48),
+        maxZoom:selectedBlocker?(phone?1.02:1.05):(selectedGroup != null)?(phone?.96:.92):(phone?.92:.90)
       });
     };
     const raf1=requestAnimationFrame(()=>{raf2=requestAnimationFrame(fit)});
     return()=>{cancelled=true;cancelAnimationFrame(raf1);if(raf2)cancelAnimationFrame(raf2);if(retry)clearTimeout(retry)};
-  },[selectedGate,selectedBlocker,detailOpen,showCompleted,graph.nodes.length]);
+  },[selectedGroup,selectedBlocker,detailOpen,selectedMechanism,relationsOpen,showCompleted,graph.nodes.length,canvasSize.width,canvasSize.height,stakeholder,includeUnreviewed]);
 
-  const reset=()=>{setSelectedGate(null);setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)};
-  const back=()=>{if(selectedEnabler){setSelectedEnabler(null);return}if(selectedMechanism){setSelectedMechanism(null);return}if(detailOpen){closeDetail();return}if(selectedBlocker){setSelectedBlocker(null);return}if((selectedGate != null)){setSelectedGate(null)}};
+  const reset=()=>{selectGroup(null);setStakeholder("")};
+  const back=()=>{if(selectedEnabler){setSelectedEnabler(null);return}if(selectedMechanism){setSelectedMechanism(null);return}if(detailOpen){closeDetail();return}if(selectedBlocker){setSelectedBlocker(null);return}if((selectedGroup != null)){setSelectedGroup(null)}};
 
   const onNodeClick=(evt,node)=>{
-    if(node.type==="stage"){
-      setSelectedGate(selectedGate===node.data.gate.id&&!selectedBlocker?null:node.data.gate.id);
-      setSelectedBlocker(null);
-      setDetailOpen(false);
-      setSelectedMechanism(null);
-      setSelectedEnabler(null);
+    if(node.type==="stage"||node.type==="community"){
+      selectGroup(node.type==="community"?node.data.gate.id:selectedGroup===node.data.gate.id&&!selectedBlocker?null:node.data.gate.id);
       return;
     }
     if(node.type==="blocker"){
-      if(node.data.selected) return;
-      setSelectedBlocker(node.data.blocker.id);
-      setSelectedGate(node.data.blocker.stageGate);
-      setDetailOpen(false);
-      setSelectedMechanism(null);
-      setSelectedEnabler(null);
+      if(!node.data.selected||!detailOpen)openDeepDive(node.data.blocker);
       return;
     }
-    if(node.type==="mechanism"){
-      setSelectedMechanism(node.data.mechanism);
-      setSelectedEnabler(null);
-      return;
-    }
-    if(node.type==="enabler") setSelectedEnabler(node.data.enabler.id);
+    if(node.type==="enabler") selectEnabler(node.data.enabler.id);
   };
 
-  useEffect(()=>{if(selectedBlocker&&!detailOpen)requestAnimationFrame(()=>document.querySelector(`[data-blocker-node="${selectedBlocker}"]`)?.focus())},[selectedBlocker,detailOpen]);
 
   const selectedBlockerObj=selectedBlocker?byId(data.blockers,selectedBlocker):null;
-  const groups=selectedBlockerObj?mechanismGroups(selectedBlockerObj.id):{};
-  const selectedEnablerPair=selectedBlockerObj&&selectedEnabler?Object.values(groups).flat().find(x=>x.enabler.id===selectedEnabler):null;
+  const groups=selectedBlockerObj?groupsForBlocker(selectedBlockerObj.id):{};
+  const availableMechanisms=data.mechanisms.filter(m=>groups[m.key]?.length);
+  const deps=selectedBlockerObj?dependencyContext(selectedBlockerObj.id):{upstream:[],downstream:[]};
+  const selectedEnablerPair=groups[selectedMechanism]?.find(x=>x.enabler.id===selectedEnabler);
 
   const crumbs=[];
-  if((selectedGate != null))crumbs.push({label:`Gate ${selectedGate}`,action:()=>{setSelectedBlocker(null);setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}});
+  if((selectedGroup != null))crumbs.push({label:communityMode?groupRows.find(g=>g.id===selectedGroup)?.label:`Gate ${selectedGroup}`,action:()=>selectGroup(selectedGroup)});
   if(selectedBlockerObj)crumbs.push({label:truncate(selectedBlockerObj.title,38),action:()=>{setDetailOpen(false);setSelectedMechanism(null);setSelectedEnabler(null)}});
   if(detailOpen)crumbs.push({label:"Detail",action:()=>{setSelectedMechanism(null);setSelectedEnabler(null)}});
   if(selectedMechanism)crumbs.push({label:selectedMechanism,action:()=>setSelectedEnabler(null)});
   if(selectedEnablerPair)crumbs.push({label:truncate(selectedEnablerPair.enabler.title,28),action:null});
+  const introTitle=assessmentMode?(selectedGroup!=null?"Focus on what remains.":"Your AI scalability path."):selectedGroup!=null?"Keep exploring.":communityMode?"Start with a community.":"Start with the lifecycle.";
+  const introText=previewMode?`Choose a ${communityMode?"community":"Stage Gate"} to explore assessed gaps, dependencies and enablers. * Self-reported, not yet verified. No blockers are closed.`:assessmentMode?(selectedGroup!=null?"Resolved blockers are hidden by default. Open a remaining blocker to explore dependencies and enablers.":"Done groups have all currently mapped blockers resolved. Other groups show what remains."):selectedGroup!=null?"Pan and zoom freely. Choose a blocker, then select a mechanism in How to unlock to explore its enablers.":`Choose a ${communityMode?"community":"Stage Gate"}. Complexity only appears when you ask for it.`;
+  const alternateUrl=`../${communityMode?"timeline":"communities"}/${location.search}${explorationHash({group:null,blocker:selectedBlocker,detail:detailOpen,mechanism:selectedMechanism,stakeholder},communityMode?"gate":"community")}`;
 
   return html`<div className="shell">
-    ${previewMode?html`<header className="topbar"><a className="brand" href=${"../assessment-preview/?resume="+encodeURIComponent(assessment.assessment_id)}><span className="brand-mark"></span><span>AI Scalability Explorer</span></a><div className="top-title">My scalability timeline</div><div className="top-actions"><a className="top-link" href=${"../assessment-preview/?resume="+encodeURIComponent(assessment.assessment_id)}>← Results</a>${selectedGate!=null?html`<button className="ghost-top" onClick=${back}>← Back one level</button>`:null}<button className="ghost-top" onClick=${reset}>Reset view</button></div></header>`:html`    <header className="topbar">
+    ${previewMode?html`<header className="topbar"><a className="brand" href=${"../assessment-preview/?resume="+encodeURIComponent(assessment.assessment_id)}><span className="brand-mark"></span><span>AI Scalability Explorer</span></a><div className="top-title">${communityMode?"My scalability communities":"My scalability timeline"}</div><div className="top-actions"><a className="top-link" href=${"../assessment-preview/?resume="+encodeURIComponent(assessment.assessment_id)}>← Results</a><a className="top-link" href=${alternateUrl}>${communityMode?"Timeline ↗":"Communities ↗"}</a>${selectedGroup!=null?html`<button className="ghost-top" onClick=${back}>← Back one level</button>`:null}<button className="ghost-top" onClick=${reset}>Reset view</button></div></header>`:html`    <header className="topbar">
       <a className="brand" href="../#home"><span className="brand-mark"></span><span>AI Scalability Explorer</span></a>
-      <div className="top-title">${assessmentMode?"My AI Scalability Timeline":"Spatial Timeline"}</div>
+      <div className="top-title">${communityMode?"Communities":assessmentMode?"My AI Scalability Timeline":"Spatial Timeline"}</div>
       <div className="top-actions">
         <a className="icon-top" href="../?search=1#explore" aria-label="Search" title="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg></a>
         <a className="icon-top" href="../#selection" aria-label="My selection" title="My selection"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5h10v15l-5-3.1-5 3.1z"></path></svg>${savedCount?html`<span className="saved-count">${savedCount}</span>`:null}</a>
-        ${(selectedGate != null)?html`<button className="ghost-top" onClick=${back}>← Back one level</button>`:null}
+        ${(selectedGroup != null)?html`<button className="ghost-top" onClick=${back}>← Back one level</button>`:null}
         ${assessmentMode?html`<button className=${"ghost-top"+(showCompleted?" active-toggle":"")} onClick=${()=>setShowCompleted(v=>!v)}>${showCompleted?"Hide completed":"Show completed"}</button>`:null}
-        <button className="ghost-top" onClick=${reset}>Reset</button><a className="top-link" href="../#explore">Explorer ↗</a><a className="top-link" href="../#dependencies">Dependencies ↗</a><a className="top-link" href="../play/">Play ↗</a>
+        <button className="ghost-top" onClick=${reset}>Reset</button><a className="top-link" href=${alternateUrl}>${communityMode?"Timeline ↗":"Communities ↗"}</a><a className="top-link" href="../#explore">Explorer ↗</a><a className="top-link" href="../#dependencies">Dependencies ↗</a><a className="top-link" href="../play/">Play ↗</a>
       </div>
     </header>`}
-    <main className=${"workspace"+(detailOpen?" detail-open":"")}>
-      <div className=${"intro"+((selectedGate != null)?" compact":"")}><div className="eyebrow">${previewMode?"Self-reported assessment":assessmentMode?"Assessment result · illustrative":"Semantic zoom"}</div><h1>${assessmentMode?((selectedGate != null)?"Focus on what remains.":"Your AI scalability path."):((selectedGate != null)?"Keep exploring.":"Start with the lifecycle.")}</h1><p>${previewMode?"Choose a Stage Gate to explore assessed gaps, dependencies and enablers. * Self-reported, not yet verified. No blockers are closed.":assessmentMode?((selectedGate != null)?"Resolved blockers are hidden by default. Open a remaining blocker to explore dependencies and enablers.":"Done gates have all currently mapped blockers resolved. Other gates show what remains."):((selectedGate != null)?"Pan and zoom freely. Click a blocker to focus it, then use the + button on the central blocker to open details and enablers.":"Choose a Stage Gate. Complexity only appears when you ask for it.")}</p></div>
+    <section className="explorer-filters" aria-label="Explorer filters">
+      <div className="filter-fields"><label>${collectionLabel}<select aria-label=${collectionLabel} value=${selectedGroup==null?"":String(selectedGroup)} onChange=${e=>selectGroup(e.target.value===""?null:Number(e.target.value))}><option value="">${communityMode?"All communities":"All Stage Gates"}</option>${groupRows.map(g=>html`<option key=${g.id} value=${String(g.id)}>${communityMode?g.label:`Gate ${g.id} · ${g.label}`}</option>`)}</select></label>
+      <label>Stakeholder<select aria-label="Stakeholder" value=${stakeholder} onChange=${e=>{setStakeholder(e.target.value);selectGroup(selectedGroup)}}><option value="">All stakeholders</option>${roles.map(role=>html`<option key=${role} value=${role}>${role}</option>`)}</select></label>
+      <span className="filter-count" role="status" title="Blockers matching the filters. Related blockers remain available as context.">${matchingCount} of ${data.blockers.length} blockers</span></div>
+      <div className="dependency-legend"><span className="critical-key">Critical core</span><span>Solid = validated dependency</span><span>Dashed = unreviewed dependency</span><label><input type="checkbox" checked=${includeUnreviewed} onChange=${e=>setIncludeUnreviewed(e.target.checked)}/>Unreviewed links</label></div>
+    </section>
+    <main className=${"workspace"+(detailOpen?" detail-open":"")+(communityMode&&selectedGroup==null?" community-overview":"")}>
+      <div className=${"intro"+((selectedGroup != null)?" compact":"")}><div className="eyebrow">${previewMode?"Self-reported assessment":assessmentMode?"Assessment result · illustrative":"Semantic zoom"}</div><h1>${introTitle}</h1><p>${introText}</p></div>
       <div className="depth"><span>Overview</span><i></i><span>Deep dive</span></div>
-      <div className="flow-wrap">
-        <${ReactFlow} nodes=${graph.nodes} edges=${graph.edges} nodeTypes=${nodeTypes} minZoom=${0.35} maxZoom=${1.7} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMove=${(_,viewport)=>setZoom(viewport.zoom)} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
+      <div className="flow-wrap" ref=${canvasRef}>
+        <${ReactFlow} nodes=${flowNodes} onNodesChange=${onNodesChange} edges=${graph.edges} nodeTypes=${nodeTypes} edgeTypes=${edgeTypes} minZoom=${communityMode&&selectedGroup==null?.2:detailOpen?.1:.35} maxZoom=${1.7} onNodeClick=${onNodeClick} zoomOnDoubleClick=${false} onMoveEnd=${onMoveEnd} nodesDraggable=${false} nodesConnectable=${false} elementsSelectable panOnScroll zoomOnScroll zoomOnPinch selectionOnDrag=${false}>
           <${Background} gap=${32} size=${1} color="#d9e5ec" />
-          <${Controls} showInteractive=${false} position="bottom-left" />
+          <${Controls} showInteractive=${false} position="bottom-left"><button className="react-flow__controls-button" onClick=${toggleFullscreen} aria-label=${fullscreen?"Exit fullscreen":"Enter fullscreen"} title=${fullscreen?"Exit fullscreen":"Enter fullscreen"}><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></${Controls}>
         </${ReactFlow}>
-      </div>
-      ${selectedGate == null?html`<div className="hint"><strong>${assessmentMode?"Your personalised timeline":"Click a Stage Gate"}</strong><span>${previewMode?"Explore gaps and enablers by Stage Gate.":assessmentMode?"Open a gate to explore remaining blockers.":"Then keep zooming into what interests you."}</span></div>`:null}
-      <div className="breadcrumbs"><button onClick=${reset}>Timeline</button>${crumbs.map((c,i)=>html`<${React.Fragment} key=${i}><i>›</i>${c.action?html`<button onClick=${c.action}>${c.label}</button>`:html`<span>${c.label}</span>`}</${React.Fragment}>`)}</div>
+      <div className="breadcrumbs"><button onClick=${reset}>${communityMode?"Communities":"Timeline"}</button>${crumbs.map((c,i)=>html`<${React.Fragment} key=${i}><i>›</i>${c.action?html`<button onClick=${c.action}>${c.label}</button>`:html`<span>${c.label}</span>`}</${React.Fragment}>`)}</div>
       <div className="zoom-readout">Zoom ${Math.round(zoom*100)}%</div>
+      ${canvasMessage?html`<div className="canvas-message" role="status">${canvasMessage}</div>`:null}
+      ${!selectedBlocker&&matchingCount===0?html`<div className="canvas-empty" role="status"><strong>No blockers match these filters.</strong><p>Choose another ${communityMode?"community":"Stage Gate"} or stakeholder.</p><button onClick=${reset}>Clear filters</button></div>`:null}
+      </div>
+      ${selectedGroup == null&&matchingCount>0?html`<div className="hint"><strong>${assessmentMode?"Your personalised explorer":`Click a ${communityMode?"community":"Stage Gate"}`}</strong><span>Then keep zooming into what interests you.</span></div>`:null}
 
       ${guidanceKey?html`<aside className="inspector guidance-inspector" role="dialog" aria-modal="false" aria-labelledby="gate-guidance-title">
         <div className="inspector-head"><div><div className="eyebrow">Stage Gate Guidance</div><h2 id="gate-guidance-title">${gateGuidance?.display_title||`Gate ${guidanceKey.slice(1)}`}</h2></div><button ref=${guidanceClose} className="close-inspector" onClick=${closeGuidance} aria-label="Close guidance" title="Close guidance">×</button></div>
@@ -291,16 +372,27 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
           <section className="inspector-section"><h3>Intersecting ISO lines</h3><div className="guidance-categories">${gateGuidance.categories.map(c=>html`<span className="guidance-category" key=${c.token}><i style=${{background:c.color}} aria-hidden="true"></i>${c.label}</span>`)}</div></section>
         `}</div>
       </aside>`:null}
-      ${!guidanceKey&&detailOpen&&selectedBlockerObj?html`<aside className="inspector" aria-labelledby="timeline-inspector-title">
-        <div className="inspector-head"><div><div className="eyebrow">Gate ${selectedBlockerObj.stageGate} · blocker detail</div><h2 id="timeline-inspector-title">${selectedBlockerObj.title}</h2></div><button className="close-inspector" onClick=${closeDetail} aria-label="Close" title="Close">×</button></div>
+      ${!guidanceKey&&detailOpen&&selectedBlockerObj?html`<aside key=${selectedBlockerObj.id} className="inspector blocker-inspector" aria-labelledby="timeline-inspector-title">
+        <div className="inspector-head"><div><div className="eyebrow">GATE ${selectedBlockerObj.stageGate} · BLOCKER DETAIL</div><h2 id="timeline-inspector-title">${selectedBlockerObj.title}</h2><p className="blocker-summary" title=${firstSentence(selectedBlockerObj.statement)}>${firstSentence(selectedBlockerObj.statement)}</p></div><button ref=${inspectorClose} className="close-inspector" onClick=${closeDetail} aria-label="Close blocker details" title="Close blocker details">×</button></div>
         <div className="inspector-body">
-          ${selectedEnablerPair?html`<div className="enabler-detail"><span className="tag">${selectedMechanism} enabler</span><h3>${selectedEnablerPair.enabler.title}</h3><p>${selectedEnablerPair.enabler.description}</p><div className="inspector-section"><h3>Practical actions</h3><p>${selectedEnablerPair.enabler.practicalActions}</p></div><div className="inspector-section"><h3>Expected outcome</h3><p>${selectedEnablerPair.enabler.expectedOutcome||"—"}</p></div><div className="inspector-section"><h3>Stakeholders</h3><p>${selectedEnablerPair.enabler.stakeholders.join(" · ")}</p></div><div className="rationale">${selectedEnablerPair.relationship.rationale||""}</div></div>`
-          :html`<div className="blocker-inspector-content"><p className="inspector-statement">${selectedBlockerObj.statement}</p>
-            <div className="info-grid"><div className="info-box"><small>Stage Gate</small><span>${selectedBlockerObj.stageGateDescription}</span></div><div className="info-box"><small>Dimension</small><span>${selectedBlockerObj.dimension}</span></div><div className="info-box"><small>Domain</small><span>${domains[selectedBlockerObj.domain]||"—"}</span></div><div className="info-box"><small>Community</small><span>${selectedBlockerObj.communityName||"—"}</span></div></div>
-            <div className="inspector-section"><h3>Why it matters</h3><p>${selectedBlockerObj.whyItMatters}</p></div><div className="inspector-section"><h3>Consequence</h3><p>${selectedBlockerObj.consequence}</p></div><div className="inspector-section"><h3>Stakeholders</h3><p>${selectedBlockerObj.stakeholders.join(" · ")}</p></div>
-            <div className="inspector-section"><h3>Enabling mechanisms</h3><p>Choose one to reveal its enablers directly on the canvas.</p><div className="mechanism-chips">${data.mechanisms.filter(m=>groups[m.key]?.length).map(m=>html`<button className=${"mech-chip"+(selectedMechanism===m.key?" active":"")} style=${{"--mech":MECH_COLORS[m.key]||"#397db0"}} onClick=${()=>{setSelectedMechanism(m.key);setSelectedEnabler(null)}}>${m.key} · ${groups[m.key].length}</button>`)}</div></div>
-            ${!selectedMechanism?html`<button className="deep-button" onClick=${()=>{const first=data.mechanisms.find(m=>groups[m.key]?.length);if(first)setSelectedMechanism(first.key)}}>Go one layer deeper → mechanisms & enablers</button>`:null}
-          </div>`}
+          <details className="unlock-section" open=${unlockOpen} onToggle=${e=>setUnlockOpen(e.currentTarget.open)}>
+            <summary>How to unlock</summary>
+            <div className="mechanism-grid" aria-label="Enabling mechanisms">
+              ${availableMechanisms.map(m=>{const count=groups[m.key].length,active=selectedMechanism===m.key;return html`<button key=${m.key} className=${"mechanism-choice"+(active?" active":"")} style=${{"--mech":MECH_COLORS[m.key]}} aria-pressed=${active} aria-controls="mechanism-enablers" onClick=${()=>{setSelectedMechanism(m.key);setSelectedEnabler(null)}}><i aria-hidden="true"></i><span>${m.key}<small>${count} enabler${count===1?"":"s"}</small></span><b aria-hidden="true">${active?"✓":""}</b></button>`})}
+            </div>
+            <div id="mechanism-enablers">
+              ${selectedMechanism?html`<div className="mechanism-content" style=${{"--mech":MECH_COLORS[selectedMechanism]}}><h3>${selectedMechanism}</h3><p>${data.mechanisms.find(m=>m.key===selectedMechanism)?.description}</p>
+                <ol className="unlock-enablers">${groups[selectedMechanism].map(({enabler,relationship},i)=>html`<li key=${enabler.id} data-enabler-item=${enabler.id} className=${selectedEnabler===enabler.id?"selected":""}><button className="enabler-item" aria-pressed=${selectedEnabler===enabler.id} aria-expanded=${selectedEnabler===enabler.id} aria-controls=${selectedEnabler===enabler.id?`enabler-detail-${enabler.id}`:undefined} onClick=${()=>selectEnabler(enabler.id)}><span className="enabler-number">${i+1}</span><span>${enabler.title}</span>${selectedEnabler===enabler.id?html`<b aria-label="Selected">✓</b>`:null}</button><p>${enabler.description}</p>
+                  ${selectedEnabler===enabler.id?html`<div id=${`enabler-detail-${enabler.id}`} className="enabler-detail"><h4>Practical actions</h4><p>${enabler.practicalActions||"—"}</p><h4>Expected outcome</h4><p>${enabler.expectedOutcome||"—"}</p><h4>Stakeholders</h4><p>${enabler.stakeholders.join(" · ")||"—"}</p>${relationship.rationale?html`<div className="rationale">${relationship.rationale}</div>`:null}</div>`:null}
+                </li>`)}</ol>
+              </div>`:html`<p className="unlock-hint">${availableMechanisms.length?"Choose a mechanism to explore how to overcome this blocker.":"No enablers are mapped to this blocker yet."}</p>`}
+            </div>
+          </details>
+          <details className="blocker-accordion relations-section" open=${relationsOpen} onToggle=${e=>setRelationsOpen(e.currentTarget.open)}><summary>Relations<small>${deps.upstream.length} this depends on · ${deps.downstream.length} depend on this</small></summary><div className="relation-list">${[{label:"This depends on",items:deps.upstream},{label:"Depend on this",items:deps.downstream}].map(({label,items})=>html`<h3>${label}</h3>${items.length?items.map(b=>html`<button key=${b.id} onClick=${()=>openDeepDive(b)}>${b.title}<span aria-hidden="true"> →</span></button>`):html`<p>No dependencies mapped.</p>`}`)}</div></details>
+          <details className="blocker-accordion"><summary>Why it matters</summary><p>${selectedBlockerObj.whyItMatters||"—"}</p></details>
+          <details className="blocker-accordion"><summary>Consequence if not addressed</summary><p>${selectedBlockerObj.consequence||"—"}</p></details>
+          <details className="blocker-accordion"><summary>Stakeholders</summary><p>${selectedBlockerObj.stakeholders.join(" · ")||"—"}</p></details>
+          <p className="blocker-metadata"><span title=${selectedBlockerObj.stageGateDescription}>Stage Gate ${selectedBlockerObj.stageGate}</span><span title="Dimension">${selectedBlockerObj.dimension}</span><span title="Domain">${domains[selectedBlockerObj.domain]||"—"}</span><span title="Community">${selectedBlockerObj.communityName||"—"}</span></p>
         </div>
       </aside>`:null}
     </main>

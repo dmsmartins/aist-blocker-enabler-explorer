@@ -45,6 +45,12 @@ Validation: `node --test --test-isolation=none readiness.test.mjs dependencies.t
 
 The interface deliberately uses progressive disclosure: the first view stays light and additional detail appears only as the user explores deeper.
 
+Communities and Timeline share the same spatial canvas, blocker inspector and
+mechanism/enabler interactions. The Communities overview retains its organic groups and member dots; Stage Gates retain their cards. Deeper blocker and enabler views are shared.
+Each view has a matching collection filter plus Stakeholder, a dynamic blocker
+count and a dependency review-status legend. Existing community navigation now
+opens the shared experience directly, without embedding a second application.
+
 ## Data model
 
 The live application reads:
