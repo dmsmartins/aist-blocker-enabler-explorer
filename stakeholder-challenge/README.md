@@ -1,6 +1,6 @@
 # Stakeholder Challenge — phase 2
 
-Open `../stakeholder-challenge.html` through a local HTTP server. The root navigation includes a Stakeholder Challenge link. This is a browser-only preview; there is no POST request, Worker integration, receipt, or claim that votes have been collected.
+Open `../stakeholder-challenge.html` through a local HTTP server. The root navigation includes **Review**, a simple hub linking to dependency review, stakeholder review and assessment question ratings. Assessment question review uses the existing questionnaire's **Rate this question** controls for relevance and clarity; it does not introduce another assessment or change scoring. The Stakeholder Challenge is a browser-only preview; there is no POST request, Worker integration, receipt, or claim that stakeholder votes have been collected.
 
 ## Preview
 

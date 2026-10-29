@@ -1,0 +1,11 @@
+.review-hub{width:min(1120px,92%);margin:48px auto 72px;color:#102f50}
+.review-hub h1{font-size:clamp(30px,4vw,46px);line-height:1.15;letter-spacing:-.035em;margin:10px 0 18px}
+.review-intro{font-size:17px;line-height:1.65;color:#526e8b;max-width:680px}
+.review-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:32px}
+.review-links article{display:flex;flex-direction:column;align-items:flex-start;background:white;border:1px solid #d6e7f5;border-radius:16px;padding:26px;min-width:0}
+.review-links h2{font-size:21px;margin:0 0 14px}
+.review-links p{line-height:1.65;color:#526e8b;font-size:15px;margin:0 0 18px}
+.review-links .review-note{font-size:13px}
+.review-links .primary-btn{margin-top:auto;display:inline-flex;text-decoration:none;line-height:1.5;white-space:normal}
+.review-links a:focus-visible{outline:3px solid #167ed0;outline-offset:4px}
+@media(max-width:850px){.review-links{grid-template-columns:1fr}.review-hub{margin-top:32px}.review-links article{padding:24px}}
