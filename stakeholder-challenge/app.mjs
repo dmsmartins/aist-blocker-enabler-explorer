@@ -1,4 +1,4 @@
-import {request,assignmentBody,acceptAssignment,submissionBody,confirmReceipt,MAX_EXPLANATION} from './api.mjs';
+import {request,assignmentBody,acceptAssignment,submissionBody,confirmReceipt,MAX_EXPLANATION,acceptRoleOrder,reviewHistory,rememberReview} from './api.mjs';
 import {STORAGE_KEY, SESSION_SIZE, validateCatalog, newSession, qualify, toggleRelationship, answerError, validateSession, exportSession} from './model.mjs';
 
 const host = document.getElementById('challenge');
@@ -57,7 +57,26 @@ function renderIntro() {
   finishRender(false);
 }
 
-function start() { session = newSession(catalog, explorerVersion); session.participant_id=participantId; session.is_test=testMode; view = session.screen; persist(); render(); }
+const historyKey='aist-stakeholder-history-v1'+(testMode?'-test':'');
+let history;
+function completedHistory(){
+  if(!history){let raw=null;try{raw=localStorage.getItem(historyKey);}catch{}history=reviewHistory(raw,catalog,explorerVersion);}
+  rememberReview(history,session);
+  try{localStorage.setItem(historyKey,JSON.stringify(history));}catch{}
+  return history;
+}
+async function start() {
+  if(busy)return;
+  busy=true;const buttons=[...host.querySelectorAll('button')];buttons.forEach(b=>b.disabled=true);
+  try{
+    const h=completedHistory();
+    const result=await request('/stakeholder-roles',{datasetVersion:catalog.challenge.dataset_version,explorerVersion,seenRoleIds:Object.keys(h.roles)});
+    const order=acceptRoleOrder(result,catalog,explorerVersion);
+    session=newSession(catalog,explorerVersion);session.role_order=order;session.participant_id=participantId;session.is_test=testMode;
+    view=session.screen;persist();render();
+  }catch(error){host.querySelector('#start-error')?.remove();const notice=document.createElement('p');notice.id='start-error';notice.className='notice error';notice.setAttribute('role','alert');notice.textContent=error.message;host.append(notice);}
+  finally{busy=false;buttons.forEach(b=>b.disabled=false);}
+}
 function restart() { if (window.confirm('Start a new session? This replaces the draft saved in this browser. Download it first if you want to keep it.')) start(); }
 
 function renderRole() {
@@ -71,7 +90,7 @@ function renderRole() {
     const next=structuredClone(session); qualify(next, code, catalog);
     if(code==='NO'){session=next;view=session.screen;persist();render();return;}
     busy=true;const button=event.currentTarget.querySelector('button');button.disabled=true;button.textContent='Preparing 20 blockers…';
-    try{const result=await request('/stakeholder-session',assignmentBody(next,testMode));session=acceptAssignment(next,result,catalog);view=session.screen;persist();render();}
+    try{const result=await request('/stakeholder-session',assignmentBody(next,testMode,completedHistory().roles[next.stakeholder_id]||[]));session=acceptAssignment(next,result,catalog);view=session.screen;persist();render();}
     catch(error){host.querySelector('#qualification-error')?.remove();const notice=document.createElement('p');notice.id='qualification-error';notice.className='notice error';notice.setAttribute('role','alert');notice.textContent=error.message;host.querySelector('#qualification').append(notice);}
     finally{busy=false;button.disabled=false;button.textContent='Continue →';}
   };
@@ -83,7 +102,7 @@ function renderEvaluate() {
   const question = catalog.questions.get('Q02'), explanation = catalog.questions.get('Q03');
   const answer = session.answers[blocker.id] || {relationships: [], explanation: ''};
   const answered = session.blocker_ids.filter(id => !answerError(session.answers[id], catalog)).length;
-  host.innerHTML = `${preview}<div class="progress-row"><span>02 / Consider each blocker</span><span id="answered-count">${answered} of ${SESSION_SIZE} answered</span></div><progress id="progress" value="${answered}" max="${SESSION_SIZE}" aria-label="Answered blockers"></progress><details class="role-summary"><summary>Your perspective: ${escape(role.Stakeholder_Name)} · View role card</summary><p>${escape(role.Role_Description)}</p>${roleDetails(role)}</details><div class="columns"><article class="panel blocker-card"><p class="eyebrow">Blocker ${session.index + 1} of ${SESSION_SIZE}</p><h1 class="page-title">${escape(blocker.title)}</h1><p>${escape(blocker.statement)}</p>${blocker.whyItMatters?`<details><summary>Why it matters</summary><p>${escape(blocker.whyItMatters)}</p></details>`:''}${blocker.consequence?`<details><summary>What can happen</summary><p>${escape(blocker.consequence)}</p></details>`:''}</article><section class="panel"><form id="assessment" novalidate><fieldset aria-describedby="selection-hint selection-error"><legend>${escape(question.text)}</legend><p class="small" id="selection-hint">Select all that apply. “Not relevant” and “Not sure” must each be selected alone.</p><div class="choice-stack">${question.options.map((option,i) => `${i===3?'<div class="divider" aria-hidden="true"></div>':''}<label class="choice ${question.exclusive_response_codes.includes(option.code)?'exclusive':''}"><input type="checkbox" name="relationship" value="${escape(option.code)}" ${answer.relationships.includes(option.code)?'checked':''}><span><strong>${escape(option.label)}</strong><small>${escape(option.description)}</small></span></label>`).join('')}</div></fieldset><label class="explanation" for="explanation">${escape(explanation.text)} <span>(${explanation.required?'required':'optional'})</span></label><textarea id="explanation" rows="3" maxlength="${explanation.max_length ?? MAX_EXPLANATION}" placeholder="Add context for your choices…">${escape(answer.explanation)}</textarea><p class="small">Maximum 500 characters. Please avoid personal or confidential information.</p><p id="selection-error" class="notice error" role="alert" hidden></p><div class="form-actions"><button type="button" id="previous" ${session.index===0?'disabled':''}>← Previous</button><button class="primary" type="submit">${session.index===SESSION_SIZE-1?'Review answers':'Next blocker →'}</button></div></form><p id="storage-status" role="status"></p></section></div><div class="actions"><button id="export">Download draft</button><button id="pause">Pause & return to start</button></div>`;
+  host.innerHTML = `${preview}<div class="progress-row"><span>02 / Consider each blocker</span><span id="answered-count">${answered} of ${SESSION_SIZE} answered</span></div><progress id="progress" value="${answered}" max="${SESSION_SIZE}" aria-label="Answered blockers"></progress><details class="role-summary"><summary>Your perspective: ${escape(role.Stakeholder_Name)} · View role card</summary><p>${escape(role.Role_Description)}</p>${roleDetails(role)}</details><div class="columns"><article class="panel blocker-card"><p class="eyebrow">Blocker ${session.index + 1} of ${SESSION_SIZE}</p><h1 class="page-title">${escape(blocker.title)}</h1><p>${escape(blocker.statement)}</p>${blocker.whyItMatters?`<details><summary>Why it matters</summary><p>${escape(blocker.whyItMatters)}</p></details>`:''}${blocker.consequence?`<details><summary>What can happen</summary><p>${escape(blocker.consequence)}</p></details>`:''}</article><section class="panel"><form id="assessment" novalidate><fieldset aria-describedby="selection-hint selection-error"><legend>${escape(question.text)}</legend><p class="small" id="selection-hint">Select all that apply. “Not relevant” and “Not sure” must each be selected alone.</p><div class="choice-stack">${question.options.map((option,i) => `${i===3?'<div class="divider" aria-hidden="true"></div>':''}<label class="choice ${question.exclusive_response_codes.includes(option.code)?'exclusive':''}"><input type="checkbox" name="relationship" value="${escape(option.code)}" ${answer.relationships.includes(option.code)?'checked':''}><span><strong>${escape(option.label)}</strong><small>${escape(option.description)}</small></span></label>`).join('')}</div></fieldset><label class="explanation" for="explanation">${escape(explanation.text)} <span>(${explanation.required?'required':'optional'})</span></label><textarea id="explanation" rows="3" maxlength="${explanation.max_length ?? MAX_EXPLANATION,acceptRoleOrder,reviewHistory,rememberReview}" placeholder="Add context for your choices…">${escape(answer.explanation)}</textarea><p class="small">Maximum 500 characters. Please avoid personal or confidential information.</p><p id="selection-error" class="notice error" role="alert" hidden></p><div class="form-actions"><button type="button" id="previous" ${session.index===0?'disabled':''}>← Previous</button><button class="primary" type="submit">${session.index===SESSION_SIZE-1?'Review answers':'Next blocker →'}</button></div></form><p id="storage-status" role="status"></p></section></div><div class="actions"><button id="export">Download draft</button><button id="pause">Pause & return to start</button></div>`;
   const capture = () => {
     session.answers[blocker.id] = {relationships: [...host.querySelectorAll('[name="relationship"]:checked')].map(el => el.value), explanation: host.querySelector('#explanation').value};
     persist();
@@ -126,7 +145,7 @@ function renderReview() {
   host.querySelector('#complete').onclick = async () => {
     if(busy||session.expired)return;
     session.pending ||= submissionBody(session);persist();busy=true;submitError='';render();
-    try{const result=await request('/stakeholder-votes',session.pending);session.receipt=confirmReceipt(result,session);session.submitted=true;session.screen='done';view='done';delete session.pending;persist();}
+    try{const result=await request('/stakeholder-votes',session.pending);session.receipt=confirmReceipt(result,session);session.submitted=true;session.screen='done';view='done';delete session.pending;persist();completedHistory();}
     catch(error){submitError=error.message;if([400,409,410].includes(error.status)){session.expired=true;persist();}}
     finally{busy=false;render();}
   };
@@ -172,3 +191,4 @@ try {
   host.innerHTML=`<section class="panel completion"><h1 class="page-title">The challenge could not be opened.</h1><p role="alert">${escape(error.message)}</p><p>Check your connection and try again. Existing drafts have not been removed.</p><button id="retry">Try again</button> <a href="./index.html">Back to Explorer</a></section>`;
   host.querySelector('#retry').onclick=()=>location.reload();
 }
+

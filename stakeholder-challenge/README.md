@@ -25,3 +25,11 @@ Serve the repository root with `python -m http.server 8000`. The production API 
 Run `node --test --test-isolation=none stakeholder-challenge/model.test.mjs stakeholder-challenge/api.test.mjs readiness.test.mjs dependencies.test.mjs stage-dependencies.test.mjs validation.test.mjs assessment-preview/feedback.test.mjs`.
 
 Publish the Worker first, verify `/health` reports 20 and the matching catalogue version, then publish the client. A live test submission must use test mode and its record must be verified in the private repository. Test duplicate submission returns the same receipt, and conflicting retries must fail.
+
+
+
+## Coverage-based assignment
+
+New sessions call `/stakeholder-roles` before replacing the current draft. The service prioritizes roles with less coverage, with random ties; completed roles in this browser move behind unseen roles. Qualification remains required. `/stakeholder-session` receives completed blocker IDs for the accepted role and prioritizes unseen, less-reviewed pairs within the existing balanced pools. Every session still contains exactly 20 distinct blockers.
+
+Only server-confirmed submissions enter `aist-stakeholder-history-v1` (separate `-test` key). History is versioned, survives new drafts, and does not migrate obsolete preview data. Existing in-progress sessions retain their assignments. Failed start requests preserve the previous draft and expose a retryable message. Clearing storage or using another device removes personal repeat avoidance. Limited pools and simultaneous sessions can still cause repeats. Counts refresh after the private report workflow plus at most 60 seconds of cache.
