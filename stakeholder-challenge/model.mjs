@@ -1,6 +1,6 @@
-// Phase 2: browser-only trial. No vote API or server submission is implemented.
-export const STORAGE_KEY = 'aist-stakeholder-challenge-preview-v1';
-export const SESSION_SIZE = 6;
+// Stakeholder review: versioned local drafts and server-confirmed submissions.
+export const STORAGE_KEY = 'aist-stakeholder-challenge-v1';
+export const SESSION_SIZE = 20;
 const assert = (condition, message) => { if (!condition) throw new Error(message); };
 const nonempty = value => typeof value === 'string' && value.trim().length > 0;
 
@@ -72,7 +72,7 @@ export function sampleBlockers(catalog, roleId, random = Math.random) {
 
 export function newSession(catalog, explorerVersion, random = Math.random) {
   return {
-    type: 'stakeholder-challenge-preview', schema_version: '1.0.0',
+    type: 'stakeholder-challenge', schema_version: '1.0.0',
     session_id: crypto.randomUUID(), created_at: new Date().toISOString(),
     dataset_version: catalog.challenge.dataset_version, explorer_version: explorerVersion,
     submitted: false, screen: 'role', role_order: shuffle([...catalog.roles.keys()], random),
@@ -113,13 +113,14 @@ export function answerError(answer, catalog) {
   if (answer.relationships.length > 1 && answer.relationships.some(code => q.exclusive_response_codes.includes(code))) return 'Not relevant and Not sure must each be selected alone.';
   if (typeof answer.explanation !== 'string') return 'Invalid explanation.';
   if (explanation.required && !answer.explanation.trim()) return 'Please add an explanation.';
-  if (explanation.max_length != null && answer.explanation.length > explanation.max_length) return `Use at most ${explanation.max_length} characters.`;
+  if (answer.explanation.length > (explanation.max_length ?? 500)) return `Use at most ${explanation.max_length ?? 500} characters.`;
   return '';
 }
 
 export function validateSession(session, catalog, explorerVersion) {
-  assert(session?.type === 'stakeholder-challenge-preview' && session.submitted === false, 'Unrecognised local draft.');
+  assert(session?.type === 'stakeholder-challenge' && typeof session.submitted === 'boolean', 'Unrecognised local draft.');
   assert(session.dataset_version === catalog.challenge.dataset_version && session.explorer_version === explorerVersion, 'The datasets have changed since this draft was started.');
+  assert(!session.submitted || (session.screen === 'done' && session.receipt?.session_id === session.session_id), 'Missing save receipt.');
   assert(nonempty(session.session_id) && nonempty(session.created_at), 'Invalid session identity.');
   assert(['role', 'evaluate', 'review', 'done', 'exhausted'].includes(session.screen), 'Invalid draft screen.');
   assert(Array.isArray(session.role_order) && session.role_order.length === catalog.roles.size && new Set(session.role_order).size === catalog.roles.size && session.role_order.every(id => catalog.roles.has(id)), 'Invalid role assignment.');
@@ -149,7 +150,6 @@ export function validateSession(session, catalog, explorerVersion) {
 }
 
 export function exportSession(session) {
-  // Preview exports are deliberately labelled and cannot be mistaken for server receipts.
-  return {...session, is_test: true, submitted: false, submission_status: 'not_submitted',
+  return {...session, submission_status: session.submitted ? 'saved' : 'not_submitted',
     assessments: session.blocker_ids.map(id => ({blocker_id: id, stakeholder_id: session.stakeholder_id, qualification: session.qualification, ...session.answers[id]}))};
 }

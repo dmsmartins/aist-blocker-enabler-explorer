@@ -14,17 +14,17 @@ test('real source maps 11 roles and 41 blockers, with Q03 optional',()=>{
   assert.equal(catalog.questions.get('Q03').required,false);
   for(const role of catalog.roles.values()) assert.equal(explorer.blockers.filter(b=>b.stakeholders.includes(role.Stakeholder_Name)).length,role.Blockers_Linked);
 });
-test('sampling yields six unique IDs and balanced pools when both exist',()=>{
+test('sampling yields 20 unique IDs and balanced pools when both exist',()=>{
   for(let seed=1;seed<=80;seed++)for(const role of catalog.roles.values()){
     const ids=sampleBlockers(catalog,role.id,rng(seed));
-    assert.equal(ids.length,6);assert.equal(new Set(ids).size,6);
+    assert.equal(ids.length,20);assert.equal(new Set(ids).size,20);
     const totalLinked=explorer.blockers.filter(b=>b.stakeholders.includes(role.Stakeholder_Name)).length;
     const selectedLinked=ids.filter(id=>catalog.blockers.get(id).stakeholders.includes(role.Stakeholder_Name)).length;
-    assert.equal(selectedLinked,totalLinked===41?6:3);
+    assert.equal(selectedLinked,Math.min(totalLinked,Math.max(10,20-(41-totalLinked))));
   }
 });
 test('sampling favours gate diversity without replacement',()=>{
-  const synthetic=clone(explorer);synthetic.blockers=Array.from({length:12},(_,i)=>({...explorer.blockers[0],id:i,stageGate:i%6,stakeholders:i<6?[challenge.stakeholders[0].Stakeholder_Name]:[challenge.stakeholders[1].Stakeholder_Name]}));
+  const synthetic=clone(explorer);synthetic.blockers=Array.from({length:40},(_,i)=>({...explorer.blockers[0],id:i,stageGate:i%6,stakeholders:i<20?[challenge.stakeholders[0].Stakeholder_Name]:[challenge.stakeholders[1].Stakeholder_Name]}));
   const c={...catalog,explorer:synthetic};
   const ids=sampleBlockers(c,challenge.stakeholders[0].id,rng());
   assert.equal(new Set(ids.map(id=>synthetic.blockers[id].stageGate)).size,6);
@@ -56,7 +56,7 @@ test('answers require selections, reject impossible combinations, allow empty op
 test('complete draft survives reload, exports only as unsent test data',()=>{
   const s=accepted();for(const id of s.blocker_ids)s.answers[id]={relationships:['AFFECTED'],explanation:''};s.screen='done';
   const saved=JSON.parse(JSON.stringify(s));assert.deepEqual(validateSession(saved,catalog,'test'),s);
-  const output=exportSession(saved);assert.equal(output.assessments.length,6);assert.equal(output.submitted,false);assert.equal(output.is_test,true);assert.equal(output.submission_status,'not_submitted');
+  const output=exportSession(saved);assert.equal(output.assessments.length,20);assert.equal(output.submitted,false);assert.equal(output.type,'stakeholder-challenge');assert.equal(output.submission_status,'not_submitted');
 });
 test('bad or outdated drafts are rejected instead of silently reassigned',()=>{
   const s=accepted();
