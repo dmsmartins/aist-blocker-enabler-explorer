@@ -1,53 +1,27 @@
-# Stakeholder Challenge — phase 2
+# Stakeholder Challenge — persistence and validation
 
-Open `../stakeholder-challenge.html` through a local HTTP server. The root navigation includes **Review**, a simple hub linking to dependency review, stakeholder review and assessment question ratings. Assessment question review uses the existing questionnaire's **Rate this question** controls for relevance and clarity; it does not introduce another assessment or change scoring. The Stakeholder Challenge is a browser-only preview; there is no POST request, Worker integration, receipt, or claim that stakeholder votes have been collected.
+Open `stakeholder-challenge.html`, or Review → Stakeholders. Each questionnaire has **20 distinct blocker assessments** for one stakeholder, preceded by role qualification. NO offers another role; YES and SOMEWHAT continue, retaining the self-reported qualification. Each assessment supports multiple relationships and an optional explanation (maximum 500 characters). Not relevant and Not sure are exclusive.
 
-## Preview
+The existing Cloudflare Worker issues signed 20-blocker assignments through `/stakeholder-session`. After review, Submit 20 assessments sends `/stakeholder-votes`. Only a matching server receipt displays success. Pending answers are locked after uncertain delivery; retrying sends the same payload and cannot create another record. Expired or invalid sessions can be exported before starting again. Confirmed submissions are immutable.
 
-From the repository root:
+## Storage and privacy
 
-```sh
-python -m http.server 8000
-```
+Drafts use `aist-stakeholder-challenge-v1`; test mode adds `-test`. Anonymous browser IDs use `aist-stakeholder-participant-v1`. The earlier phase-2 preview key is untouched and its six-blocker drafts are not migrated or submitted. Browser storage failure is reported. Use one tab per draft; there is no cross-tab or cross-device synchronisation.
 
-Open `http://localhost:8000/stakeholder-challenge.html`. HTTPS or localhost is required for Web Crypto. Do not open the HTML directly with `file://`.
+Submitted role, qualification history, 20 assessments and optional explanations go to the private votes repository under `stakeholder-sessions/`. No name or email is requested. Participants should avoid personal/confidential information. A receipt identifies the record. Test sessions (`?stakeholderTest=1`) use `test-stakeholder-sessions/` and are excluded from research results. Other exercises retain their existing endpoints and storage.
 
-## Experience
+## Data and sampling
 
-The role order is shuffled once per session. Each NO advances to a different role; after all eleven rejections the participant can leave or explicitly restart. YES and SOMEWHAT both continue, with qualification retained in the draft and export. There are six unique blockers per session. Back, pause/resume, answer editing, review, local completion and JSON download are supported.
+`data/stakeholder-challenge.json` and `data/explorer-data.json` remain unchanged. Existing IDs and exact stakeholder-name mappings are preserved. The browser pins the challenge version and a SHA-256 of `JSON.stringify` of the parsed Explorer dataset. The backend has its own matching catalogue snapshot, separate from dependency voting.
 
-RESPONSIBLE, AFFECTED and CONTRIBUTOR can coexist. NOT_RELEVANT and NOT_SURE each replace every other selection. Selecting an ordinary relationship clears either exclusive option. Every blocker needs at least one selection. The explanation follows Q03's `required` and `max_length` configuration.
+The server targets 10 linked and 10 unlinked blockers, fills from the remaining pool when necessary, prefers unused Stage Gates and shuffles the result. Five roles currently link to all 41 blockers, so their 20 assigned blockers necessarily come from existing links. Link status is hidden during assessment, though the underlying Explorer data is public. No coverage weighting is introduced in this release. Blockers may recur in a later questionnaire, but never within one questionnaire.
 
-The storage key `aist-stakeholder-challenge-preview-v1` is separate from existing assessments and dependency voting. Storage failures are shown. Changed datasets or invalid drafts offer a raw draft download before replacement. A new session asks before replacing the prior draft. Concurrent editing in multiple tabs is not synchronised; use one tab per draft. Exported files are marked `is_test: true`, `submitted: false` and `submission_status: not_submitted`; they are not production vote records or trusted assignments.
+Q03 is optional in the phase-2 corrected source copy (`Challenge_Questions!H10 = No`). The workbook itself defines no text limit; the 500-character limit is an explicit service/UI transport rule. All role cards remain Draft. Regenerate only through `tools/generate_stakeholder_challenge.py`; do not hand-edit generated JSON. Coordinate any new dataset version with the backend snapshot before publication.
 
-## Data and selection
+## Local validation
 
-`data/explorer-data.json` remains unchanged and supplies all blocker cards. Its numeric internal `id` is preserved in exports; no new blocker IDs are invented. `data/stakeholder-challenge.json` supplies roles and questions. Role-to-blocker matching uses exact `Stakeholder_Name` membership in the Explorer's `stakeholders` arrays. The mapping is validated at load; all eleven names match the current dataset. Do not silently rename roles in one dataset only.
+Serve the repository root with `python -m http.server 8000`. The production API accepts the published Explorer origin only. Local browser integration tests must mock the API or use the real Worker with an isolated in-memory GitHub store; they must not bypass production CORS.
 
-Selection aims for three linked and three unlinked blockers. If a pool is too small, fill from the remaining blockers without replacement. Five roles are linked to all 41 blockers, so all six selected blockers are necessarily existing links for those roles. Within each pool, shuffled candidates from unused Stage Gates are preferred; the pool priority and final order are also shuffled. Existing link status, priorities, counts and other stakeholders are hidden in the voting interface. These data remain public in the Explorer: this is interface blinding, not access control. Selection is not weighted by prior votes in phase 2.
+Run `node --test --test-isolation=none stakeholder-challenge/model.test.mjs stakeholder-challenge/api.test.mjs readiness.test.mjs dependencies.test.mjs stage-dependencies.test.mjs validation.test.mjs assessment-preview/feedback.test.mjs`.
 
-The local draft pins both the challenge `dataset_version` and a SHA-256 of the parsed Explorer JSON serialized with `JSON.stringify`. Changing either dataset requires a fresh session. Draft IDs and qualification history are preserved across reloads; no server trust is implied.
-
-## Source correction and regeneration
-
-The phase-2 source workbook copy `AIST_Explorer_Master_Stakeholder_Roles_Phase2.xlsx` changes only `Challenge_Questions!H10` from Yes to No, making Q03 optional. The original workbook was left untouched because it was open. Use that corrected copy for future generation, or apply the same cell correction to the authoritative source before regenerating. The corrected workbook is delivered separately, not committed to the public repository. All content remains Draft. The maximum explanation length remains unspecified (`null`).
-
-```sh
-python -m pip install openpyxl
-python tools/generate_stakeholder_challenge.py /path/to/AIST_Explorer_Master_Stakeholder_Roles_Phase2.xlsx --output data/stakeholder-challenge.json
-```
-
-The generator requires Python 3.10+. It keeps existing IDs, validates repeated question metadata and response codes, rejects invalid cells, and writes the dedicated JSON atomically. Use `--check` to validate without writing. Do not hand-edit the generated JSON. The original Explorer converter and JSON are not changed.
-
-## Verification
-
-```sh
-node --test --test-isolation=none stakeholder-challenge/model.test.mjs readiness.test.mjs dependencies.test.mjs stage-dependencies.test.mjs validation.test.mjs
-python tools/excel_to_explorer_json_v2.py /path/to/AIST_Explorer_Master_Stakeholder_Roles_Phase2.xlsx --check-only
-```
-
-30 Node tests passed: 10 challenge tests plus 20 existing tests. The existing Excel converter's check-only validation passed. Browser checks in isolated Edge covered keyboard start, role rejection/reassignment, required selections, multi-selection/exclusivity, refresh/resume, answer editing, HTML-safe explanations, completion/download, 390px layout, stale drafts, denied browser storage and failed data loading. No page errors or POST requests occurred during the complete test flow. Desktop and mobile screenshots were visually inspected.
-
-## Phase 3 boundary
-
-The private `dmsmartins/aist-dependency-votes` repository was inspected read-only. Existing `/session` and `/votes` endpoints store signed dependency assignments; `/question-feedback` stores a different versioned questionnaire payload. Do not send these preview exports to those endpoints. Phase 3 needs a separate stakeholder contract, server validation of role/blocker/question versions and exclusive codes, idempotent submission, separate records/analysis and optional coverage-aware assignment. Retain the existing endpoint contracts and the repository's private visibility. No infrastructure or vote records were changed here.
+Publish the Worker first, verify `/health` reports 20 and the matching catalogue version, then publish the client. A live test submission must use test mode and its record must be verified in the private repository. Test duplicate submission returns the same receipt, and conflicting retries must fail.
