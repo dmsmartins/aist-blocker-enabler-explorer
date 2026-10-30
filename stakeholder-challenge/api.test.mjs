@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {assignmentBody,acceptAssignment,submissionBody,confirmReceipt,request} from './api.mjs';
+import {assignmentBody,acceptAssignment,submissionBody,confirmReceipt,request,acceptRoleOrder,reviewHistory,rememberReview} from './api.mjs';
 test('only assignment and answer fields enter API payloads',()=>{
   const session={participant_id:'p',dataset_version:'d',explorer_version:'e',stakeholder_id:'r',qualification:'YES',qualifications:[],token:'signed',blocker_ids:[1],answers:{1:{relationships:['AFFECTED'],explanation:''}},unrelated:'private'};
   assert.equal(assignmentBody(session,true).isTest,true);assert.equal('unrelated' in assignmentBody(session,true),false);
@@ -19,3 +19,16 @@ test('failed HTTP requests remain errors with actionable status',async()=>{
   const old=fetch;globalThis.fetch=async()=>Response.json({error:'expired'},{status:410});
   try{await assert.rejects(()=>request('/stakeholder-votes',{}),e=>e.status===410&&e.message==='expired');}finally{globalThis.fetch=old;}
 });
+test('role order accepts only a complete version-matched permutation',()=>{
+  const c={challenge:{dataset_version:'d'},roles:new Map([['r',{}],['s',{}]])};const r={datasetVersion:'d',explorerVersion:'e',roleIds:['s','r']};
+  assert.deepEqual(acceptRoleOrder(r,c,'e'),['s','r']);
+  for(const patch of [{roleIds:['r','r']},{roleIds:['r']},{datasetVersion:'x'},{explorerVersion:'x'}])assert.throws(()=>acceptRoleOrder({...r,...patch},c,'e'));
+});
+test('completed history is versioned, deduplicated and excludes unfinished sessions',()=>{
+  const c={challenge:{dataset_version:'d'},roles:new Map([['r',{}]]),blockers:new Map([[1,{}],[2,{}]])};
+  const h=reviewHistory(null,c,'e'),s={dataset_version:'d',explorer_version:'e',stakeholder_id:'r',blocker_ids:[1,2]};
+  rememberReview(h,s);assert.deepEqual(h.roles,{});
+  Object.assign(s,{submitted:true,receipt:{}});rememberReview(h,s);rememberReview(h,s);assert.deepEqual(h.roles.r,[1,2]);
+  assert.deepEqual(reviewHistory(JSON.stringify(h),c,'e').roles.r,[1,2]);assert.deepEqual(reviewHistory(JSON.stringify(h),c,'other').roles,{});
+});
+
