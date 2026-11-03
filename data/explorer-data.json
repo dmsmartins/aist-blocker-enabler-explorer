@@ -3,7 +3,7 @@
     "title": "AI Scalability Explorer",
     "schemaVersion": "3.1",
     "sourceWorkbook": "AIST_Explorer_Master.xlsx",
-    "sourceWorkbookSha256": "192834954d2265083253d699e433260a2290dde7a89abf176e70f5e538635e05",
+    "sourceWorkbookSha256": "d1761fdb7063af6f665a874f83cee9c1cd709860c548b1aab85730de615aab2a",
     "exporterVersion": "2.0.0",
     "internalIdsVisibleInUi": false,
     "relationshipTypeUsedInUi": false,
@@ -195,7 +195,9 @@
         "Maintenance",
         "Operations / traffic control",
         "AI office / innovation (AI CoE)",
-        "Data science / AI teams"
+        "Data science / AI teams",
+        "Frontline users / field staff",
+        "IT / data platform"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
@@ -225,7 +227,8 @@
         "Operations / traffic control",
         "Frontline users / field staff",
         "Change management / HR",
-        "Finance / controlling"
+        "Finance / controlling",
+        "AI office / innovation (AI CoE)"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
@@ -255,7 +258,12 @@
         "IT / data platform",
         "Project / portfolio management",
         "Data science / AI teams",
-        "Railway safety & assurance"
+        "Railway safety & assurance",
+        "AI office / innovation (AI CoE)",
+        "Cybersecurity (IT/OT)",
+        "Legal & compliance",
+        "Maintenance",
+        "Systems engineering"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
@@ -409,7 +417,9 @@
         "Executive / senior management",
         "IT / data platform",
         "Data science / AI teams",
-        "EAM/ERP system owner (SAP, Maximo)"
+        "EAM/ERP system owner (SAP, Maximo)",
+        "Finance / controlling",
+        "Frontline users / field staff"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation",
@@ -471,7 +481,8 @@
         "Operations / traffic control",
         "Asset management",
         "EAM/ERP system owner (SAP, Maximo)",
-        "Finance / controlling"
+        "Finance / controlling",
+        "Change management / HR"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation",
@@ -531,7 +542,8 @@
         "Frontline users / field staff",
         "Change management / HR",
         "Asset management",
-        "Executive / senior management"
+        "Executive / senior management",
+        "EAM/ERP system owner (SAP, Maximo)"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption",
@@ -561,7 +573,8 @@
         "Frontline users / field staff",
         "Executive / senior management",
         "IT / data platform",
-        "EAM/ERP system owner (SAP, Maximo)"
+        "EAM/ERP system owner (SAP, Maximo)",
+        "AI office / innovation (AI CoE)"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption",
@@ -591,7 +604,8 @@
         "Maintenance",
         "Data science / AI teams",
         "IT / data platform",
-        "Finance / controlling"
+        "Finance / controlling",
+        "Change management / HR"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption",
@@ -622,7 +636,9 @@
         "Asset management",
         "Asset Owner (technical owner of asset)",
         "Data science / AI teams",
-        "IT / data platform"
+        "IT / data platform",
+        "Legal & compliance",
+        "Procurement"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption",
@@ -652,7 +668,8 @@
         "Maintenance",
         "Legal & compliance",
         "EAM/ERP system owner (SAP, Maximo)",
-        "Cybersecurity (IT/OT)"
+        "Cybersecurity (IT/OT)",
+        "Systems engineering"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "data-foundations",
@@ -768,7 +785,9 @@
         "Data science / AI teams",
         "IT / data platform",
         "Asset management",
-        "Railway safety & assurance"
+        "Railway safety & assurance",
+        "Change management / HR",
+        "Finance / controlling"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
@@ -951,7 +970,8 @@
         "Systems engineering",
         "Maintenance",
         "Operations / traffic control",
-        "Cybersecurity (IT/OT)"
+        "Cybersecurity (IT/OT)",
+        "Frontline users / field staff"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
@@ -1012,7 +1032,10 @@
         "Asset Owner (technical owner of asset)",
         "Maintenance",
         "Data science / AI teams",
-        "Systems engineering"
+        "Systems engineering",
+        "Legal & compliance",
+        "Procurement",
+        "Project / portfolio management"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
@@ -1043,7 +1066,8 @@
         "Cybersecurity (IT/OT)",
         "Maintenance",
         "Asset Owner (technical owner of asset)",
-        "Data science / AI teams"
+        "Data science / AI teams",
+        "Frontline users / field staff"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
@@ -1073,7 +1097,8 @@
         "Asset Owner (technical owner of asset)",
         "Railway safety & assurance",
         "Frontline users / field staff",
-        "Asset management"
+        "Asset management",
+        "Change management / HR"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "value-delivery-scale",
@@ -1133,7 +1158,8 @@
         "Maintenance",
         "Frontline users / field staff",
         "EAM/ERP system owner (SAP, Maximo)",
-        "Legal & compliance"
+        "Legal & compliance",
+        "Systems engineering"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "data-foundations",
@@ -1197,7 +1223,8 @@
         "IT / data platform",
         "Data science / AI teams",
         "Systems engineering",
-        "Railway safety & assurance"
+        "Railway safety & assurance",
+        "Change management / HR"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
@@ -1288,7 +1315,9 @@
         "Maintenance",
         "Operations / traffic control",
         "Legal & compliance",
-        "EAM/ERP system owner (SAP, Maximo)"
+        "EAM/ERP system owner (SAP, Maximo)",
+        "Cybersecurity (IT/OT)",
+        "Systems engineering"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "data-foundations",
@@ -1373,10 +1402,12 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Asset management",
-        "Maintenance / operations",
-        "IT / data platform",
+        "Maintenance",
+        "Operations / traffic control",
+        "Frontline users / field staff",
         "Data science / AI teams",
-        "Executive / senior management"
+        "IT / data platform",
+        "AI office / innovation (AI CoE)"
       ]
     },
     {
@@ -1391,9 +1422,8 @@
       "stakeholders": [
         "Executive / senior management",
         "Asset management",
-        "Maintenance / operations",
-        "Data science / AI teams",
-        "IT / data platform"
+        "Maintenance",
+        "Operations / traffic control"
       ]
     },
     {
@@ -1408,9 +1438,8 @@
       "stakeholders": [
         "Executive / senior management",
         "Asset management",
-        "Maintenance / operations",
-        "IT / data platform",
-        "Data science / AI teams"
+        "Maintenance",
+        "AI office / innovation (AI CoE)"
       ]
     },
     {
@@ -1423,9 +1452,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
         "Asset management",
-        "Maintenance / operations",
+        "Maintenance",
+        "Operations / traffic control",
+        "Frontline users / field staff",
+        "Finance / controlling",
         "Data science / AI teams"
       ]
     },
@@ -1439,11 +1470,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
+        "Finance / controlling",
         "Asset management",
-        "Maintenance / operations",
+        "Maintenance",
         "Data science / AI teams",
-        "IT / data platform"
+        "Executive / senior management"
       ]
     },
     {
@@ -1456,11 +1487,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
+        "AI office / innovation (AI CoE)",
         "Executive / senior management",
         "Asset management",
-        "Maintenance / operations",
-        "Data science / AI teams",
-        "IT / data platform"
+        "Maintenance",
+        "Finance / controlling"
       ]
     },
     {
@@ -1473,10 +1504,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
-        "Asset management",
-        "Executive / senior management",
-        "Data science / AI teams"
+        "Maintenance",
+        "Operations / traffic control",
+        "Frontline users / field staff",
+        "Asset management"
       ]
     },
     {
@@ -1489,11 +1520,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
+        "Finance / controlling",
         "Asset management",
-        "Maintenance / operations",
-        "Legal / safety / compliance",
-        "Change management / HR"
+        "Maintenance",
+        "Data science / AI teams",
+        "AI office / innovation (AI CoE)"
       ]
     },
     {
@@ -1506,11 +1537,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
-        "Maintenance / operations",
-        "Asset management",
         "Change management / HR",
-        "Data science / AI teams"
+        "Executive / senior management",
+        "Maintenance",
+        "Frontline users / field staff"
       ]
     },
     {
@@ -1523,11 +1553,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
+        "Finance / controlling",
         "Executive / senior management",
-        "Asset management",
-        "IT / data platform",
-        "Data science / AI teams",
-        "Maintenance / operations"
+        "AI office / innovation (AI CoE)",
+        "Project / portfolio management"
       ]
     },
     {
@@ -1540,11 +1569,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
-        "Asset management",
+        "Finance / controlling",
+        "AI office / innovation (AI CoE)",
         "IT / data platform",
-        "Data science / AI teams",
-        "Legal / safety / compliance"
+        "Executive / senior management"
       ]
     },
     {
@@ -1557,11 +1585,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
+        "Finance / controlling",
         "Asset management",
         "Data science / AI teams",
-        "Legal / safety / compliance",
-        "IT / data platform"
+        "Railway safety & assurance",
+        "Legal & compliance"
       ]
     },
     {
@@ -1574,11 +1602,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
         "Asset management",
-        "Maintenance / operations",
-        "Legal / safety / compliance",
-        "Data science / AI teams"
+        "Railway safety & assurance",
+        "Maintenance",
+        "Finance / controlling",
+        "Executive / senior management"
       ]
     },
     {
@@ -1591,12 +1619,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
+        "Finance / controlling",
         "Executive / senior management",
-        "Asset management",
-        "IT / data platform",
-        "Data science / AI teams",
-        "Maintenance / operations",
-        "Legal / safety / complianc"
+        "AI office / innovation (AI CoE)",
+        "Project / portfolio management"
       ]
     },
     {
@@ -1610,10 +1636,9 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Executive / senior management",
+        "AI office / innovation (AI CoE)",
         "Asset management",
-        "Maintenance / operations",
-        "Data science / AI teams",
-        "Change management / HR"
+        "Maintenance"
       ]
     },
     {
@@ -1628,9 +1653,7 @@
       "stakeholders": [
         "Executive / senior management",
         "Change management / HR",
-        "Asset management",
-        "Maintenance / operations",
-        "Data science / AI teams"
+        "AI office / innovation (AI CoE)"
       ]
     },
     {
@@ -1644,10 +1667,8 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Executive / senior management",
-        "Asset management",
         "Change management / HR",
-        "IT / data platform",
-        "Data science / AI teams"
+        "AI office / innovation (AI CoE)"
       ]
     },
     {
@@ -1660,11 +1681,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
+        "AI office / innovation (AI CoE)",
         "Asset management",
-        "Maintenance / operations",
-        "Legal / safety / compliance",
-        "Executive / senior management",
-        "Data science / AI teams"
+        "Maintenance",
+        "Operations / traffic control",
+        "Change management / HR"
       ]
     },
     {
@@ -1678,10 +1699,8 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Executive / senior management",
-        "Asset management",
-        "Maintenance / operations",
-        "Change management / HR",
-        "Data science / AI teams"
+        "AI office / innovation (AI CoE)",
+        "Asset management"
       ]
     },
     {
@@ -1694,9 +1713,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
+        "AI office / innovation (AI CoE)",
         "Asset management",
-        "Maintenance / operations",
+        "Maintenance",
+        "Operations / traffic control",
         "IT / data platform",
         "Data science / AI teams"
       ]
@@ -1711,11 +1731,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
+        "AI office / innovation (AI CoE)",
+        "Project / portfolio management",
+        "Finance / controlling",
         "Executive / senior management",
-        "Asset management",
-        "IT / data platform",
-        "Data science / AI teams",
-        "Maintenance / operations"
+        "IT / data platform"
       ]
     },
     {
@@ -1729,10 +1749,10 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Executive / senior management",
-        "Asset management",
         "IT / data platform",
-        "Data science / AI teams",
-        "Maintenance / operations"
+        "Asset management",
+        "Maintenance",
+        "AI office / innovation (AI CoE)"
       ]
     },
     {
@@ -1745,11 +1765,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
+        "AI office / innovation (AI CoE)",
         "Executive / senior management",
         "Asset management",
-        "Maintenance / operations",
-        "Data science / AI teams",
-        "IT / data platform"
+        "Maintenance",
+        "Data science / AI teams"
       ]
     },
     {
@@ -1763,11 +1783,11 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Executive / senior management",
-        "Asset management",
-        "Maintenance / operations",
-        "Data science / AI teams",
+        "AI office / innovation (AI CoE)",
+        "Railway safety & assurance",
+        "Legal & compliance",
         "IT / data platform",
-        "Legal / safety / compliance"
+        "Asset management"
       ]
     },
     {
@@ -1781,11 +1801,10 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Executive / senior management",
+        "AI office / innovation (AI CoE)",
         "Asset management",
-        "Maintenance / operations",
-        "IT / data platform",
-        "Data science / AI teams",
-        "Legal / safety / compliance"
+        "Maintenance",
+        "Project / portfolio management"
       ]
     },
     {
@@ -1798,12 +1817,15 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
+        "Project / portfolio management",
+        "AI office / innovation (AI CoE)",
         "Executive / senior management",
         "Asset management",
-        "Maintenance / operations",
+        "Maintenance",
         "Data science / AI teams",
         "IT / data platform",
-        "Legal / safety / compliance"
+        "Railway safety & assurance",
+        "Legal & compliance"
       ]
     },
     {
@@ -1817,10 +1839,7 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Executive / senior management",
-        "Asset management",
-        "Maintenance / operations",
-        "Data science / AI teams",
-        "IT / data platform"
+        "AI office / innovation (AI CoE)"
       ]
     },
     {
@@ -1834,10 +1853,10 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Executive / senior management",
-        "Asset management",
-        "Change management / HR",
-        "IT / data platform",
-        "Data science / AI teams"
+        "AI office / innovation (AI CoE)",
+        "Project / portfolio management",
+        "Finance / controlling",
+        "Change management / HR"
       ]
     },
     {
@@ -1852,7 +1871,7 @@
       "stakeholders": [
         "Executive / senior management",
         "Asset management",
-        "Maintenance / operations",
+        "Maintenance",
         "IT / data platform",
         "Data science / AI teams"
       ]
@@ -1868,10 +1887,13 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Asset management",
-        "Maintenance / operations",
+        "Maintenance",
+        "Operations / traffic control",
+        "Frontline users / field staff",
         "IT / data platform",
         "Data science / AI teams",
-        "Executive / senior management"
+        "Finance / controlling",
+        "EAM/ERP system owner (SAP, Maximo)"
       ]
     },
     {
@@ -1884,11 +1906,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
         "Asset management",
-        "Maintenance / operations",
-        "Data science / AI teams",
-        "Change management / HR"
+        "Maintenance",
+        "Operations / traffic control",
+        "Finance / controlling",
+        "Executive / senior management"
       ]
     },
     {
@@ -1901,11 +1923,12 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
-        "Asset management",
-        "Legal / safety / compliance",
-        "Data science / AI teams",
-        "Executive / senior management"
+        "Maintenance",
+        "Operations / traffic control",
+        "Railway safety & assurance",
+        "Legal & compliance",
+        "Frontline users / field staff",
+        "Asset management"
       ]
     },
     {
@@ -1918,12 +1941,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Legal / safety / compliance",
-        "Maintenance / operations",
-        "Asset management",
-        "Executive / senior management",
-        "IT / data platform",
-        "Data science / AI teams"
+        "Railway safety & assurance",
+        "Legal & compliance",
+        "Maintenance",
+        "Operations / traffic control",
+        "Change management / HR"
       ]
     },
     {
@@ -1936,11 +1958,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Asset management",
-        "Maintenance / operations",
         "IT / data platform",
         "Data science / AI teams",
-        "Executive / senior management"
+        "Maintenance",
+        "Operations / traffic control",
+        "EAM/ERP system owner (SAP, Maximo)"
       ]
     },
     {
@@ -1954,9 +1976,7 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
-        "Data science / AI teams",
-        "Maintenance / operations",
-        "Asset management"
+        "Data science / AI teams"
       ]
     },
     {
@@ -1969,11 +1989,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
-        "Asset management",
-        "Maintenance / operations",
+        "Finance / controlling",
         "IT / data platform",
-        "Data science / AI teams"
+        "Maintenance",
+        "EAM/ERP system owner (SAP, Maximo)",
+        "Asset management"
       ]
     },
     {
@@ -1986,12 +2006,12 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
-        "Asset management",
-        "Maintenance / operations",
-        "IT / data platform",
+        "Change management / HR",
         "Data science / AI teams",
-        "Change management / HR"
+        "Maintenance",
+        "Operations / traffic control",
+        "Frontline users / field staff",
+        "IT / data platform"
       ]
     },
     {
@@ -2004,11 +2024,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
+        "Change management / HR",
+        "Data science / AI teams",
         "Asset management",
-        "Maintenance / operations",
-        "IT / data platform",
-        "Data science / AI teams"
+        "Maintenance"
       ]
     },
     {
@@ -2022,10 +2041,7 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Change management / HR",
-        "Executive / senior management",
-        "Maintenance / operations",
-        "Asset management",
-        "Data science / AI teams"
+        "Executive / senior management"
       ]
     },
     {
@@ -2038,11 +2054,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
-        "Asset management",
-        "IT / data platform",
+        "Maintenance",
+        "Operations / traffic control",
+        "Frontline users / field staff",
         "Data science / AI teams",
-        "Change management / HR"
+        "Asset Owner (technical owner of asset)"
       ]
     },
     {
@@ -2055,11 +2071,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
         "Change management / HR",
-        "Asset management",
-        "Executive / senior management",
-        "Data science / AI teams"
+        "Maintenance",
+        "Operations / traffic control",
+        "Frontline users / field staff"
       ]
     },
     {
@@ -2072,10 +2087,9 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
-        "Maintenance / operations",
-        "Asset management",
         "Change management / HR",
+        "Maintenance",
+        "Frontline users / field staff",
         "Data science / AI teams"
       ]
     },
@@ -2089,11 +2103,12 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
-        "Asset management",
+        "Maintenance",
+        "Operations / traffic control",
+        "Frontline users / field staff",
+        "EAM/ERP system owner (SAP, Maximo)",
         "IT / data platform",
-        "Data science / AI teams",
-        "Systems engineering"
+        "Data science / AI teams"
       ]
     },
     {
@@ -2106,12 +2121,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
         "Change management / HR",
-        "Maintenance / operations",
-        "Asset management",
-        "Data science / AI teams",
-        "IT / data platform"
+        "Executive / senior management",
+        "Maintenance",
+        "Operations / traffic control"
       ]
     },
     {
@@ -2124,11 +2137,9 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
-        "Asset management",
-        "Maintenance / operations",
-        "IT / data platform",
+        "AI office / innovation (AI CoE)",
         "Data science / AI teams",
+        "IT / data platform",
         "Change management / HR"
       ]
     },
@@ -2142,11 +2153,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
-        "Asset management",
         "Data science / AI teams",
-        "IT / data platform",
-        "Change management / HR"
+        "Maintenance",
+        "Frontline users / field staff",
+        "EAM/ERP system owner (SAP, Maximo)"
       ]
     },
     {
@@ -2159,12 +2169,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
+        "AI office / innovation (AI CoE)",
+        "Change management / HR",
         "Executive / senior management",
-        "Asset management",
-        "Maintenance / operations",
-        "IT / data platform",
-        "Data science / AI teams",
-        "Change management / HR"
+        "Data science / AI teams"
       ]
     },
     {
@@ -2177,11 +2185,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
+        "AI office / innovation (AI CoE)",
         "Executive / senior management",
-        "Asset management",
-        "IT / data platform",
-        "Data science / AI teams",
-        "Change management / HR"
+        "Change management / HR",
+        "Data science / AI teams"
       ]
     },
     {
@@ -2194,11 +2201,9 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
-        "Asset management",
-        "Maintenance / operations",
+        "AI office / innovation (AI CoE)",
         "Data science / AI teams",
-        "IT / data platform"
+        "Executive / senior management"
       ]
     },
     {
@@ -2211,11 +2216,12 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
+        "Maintenance",
+        "Operations / traffic control",
+        "Frontline users / field staff",
         "Asset management",
         "Data science / AI teams",
-        "IT / data platform",
-        "Systems engineering"
+        "AI office / innovation (AI CoE)"
       ]
     },
     {
@@ -2228,11 +2234,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Asset management",
-        "Maintenance / operations",
-        "IT / data platform",
+        "AI office / innovation (AI CoE)",
         "Data science / AI teams",
-        "Executive / senior management"
+        "IT / data platform",
+        "Procurement",
+        "Maintenance"
       ]
     },
     {
@@ -2245,11 +2251,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
-        "Asset management",
+        "Procurement",
+        "Legal & compliance",
         "IT / data platform",
-        "Legal / safety / compliance",
-        "Data science / AI teams"
+        "Maintenance",
+        "Operations / traffic control"
       ]
     },
     {
@@ -2263,10 +2269,9 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
-        "Data science / AI teams",
-        "Asset management",
-        "Legal / safety / compliance",
-        "Maintenance / operations"
+        "Legal & compliance",
+        "Cybersecurity (IT/OT)",
+        "Asset management"
       ]
     },
     {
@@ -2281,9 +2286,9 @@
       "stakeholders": [
         "IT / data platform",
         "Asset management",
-        "Maintenance / operations",
-        "Data science / AI teams",
-        "Legal / safety / compliance"
+        "Asset Owner (technical owner of asset)",
+        "Maintenance",
+        "Data science / AI teams"
       ]
     },
     {
@@ -2296,10 +2301,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "IT / data platform",
-        "Data science / AI teams",
         "Asset management",
-        "Maintenance / operations"
+        "Asset Owner (technical owner of asset)",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Maintenance"
       ]
     },
     {
@@ -2312,11 +2318,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
         "Asset management",
         "IT / data platform",
         "Data science / AI teams",
-        "Change management / HR"
+        "Maintenance",
+        "Frontline users / field staff"
       ]
     },
     {
@@ -2330,10 +2336,11 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
-        "Data science / AI teams",
-        "Maintenance / operations",
         "Asset management",
-        "Legal / safety / compliance"
+        "Asset Owner (technical owner of asset)",
+        "Frontline users / field staff",
+        "Data science / AI teams",
+        "Maintenance"
       ]
     },
     {
@@ -2347,10 +2354,10 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
-        "Data science / AI teams",
+        "EAM/ERP system owner (SAP, Maximo)",
         "Asset management",
-        "Maintenance / operations",
-        "Executive / senior manageme"
+        "Data science / AI teams",
+        "Systems engineering"
       ]
     },
     {
@@ -2364,9 +2371,10 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Executive / senior management",
-        "Asset management",
-        "Maintenance / operations",
         "IT / data platform",
+        "Asset management",
+        "Maintenance",
+        "Operations / traffic control",
         "Data science / AI teams"
       ]
     },
@@ -2381,10 +2389,10 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
-        "Legal / safety / compliance",
-        "Asset management",
-        "Executive / senior management",
-        "Data science / AI teams"
+        "Legal & compliance",
+        "Railway safety & assurance",
+        "Cybersecurity (IT/OT)",
+        "Executive / senior management"
       ]
     },
     {
@@ -2397,11 +2405,9 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Legal / safety / compliance",
-        "Executive / senior management",
+        "Legal & compliance",
         "Data science / AI teams",
-        "IT / data platform",
-        "Asset management"
+        "AI office / innovation (AI CoE)"
       ]
     },
     {
@@ -2414,11 +2420,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Legal / safety / compliance",
+        "Legal & compliance",
         "Data science / AI teams",
         "IT / data platform",
-        "Asset management",
-        "Maintenance / operations"
+        "Railway safety & assurance"
       ]
     },
     {
@@ -2431,12 +2436,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Legal / safety / compliance",
+        "Railway safety & assurance",
         "Systems engineering",
-        "Maintenance / operations",
-        "Asset management",
-        "Data science / AI teams",
-        "IT / data platform"
+        "Legal & compliance",
+        "Data science / AI teams"
       ]
     },
     {
@@ -2449,12 +2452,9 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Legal / safety / compliance",
+        "Railway safety & assurance",
         "Systems engineering",
-        "Maintenance / operations",
-        "Asset management",
-        "Data science / AI teams",
-        "Executive / senior management"
+        "Data science / AI teams"
       ]
     },
     {
@@ -2467,11 +2467,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
-        "Asset management",
-        "Maintenance / operations",
-        "IT / data platform",
-        "Data science / AI teams"
+        "AI office / innovation (AI CoE)",
+        "Project / portfolio management",
+        "Data science / AI teams",
+        "IT / data platform"
       ]
     },
     {
@@ -2484,11 +2483,9 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
-        "Asset management",
-        "Maintenance / operations",
-        "Data science / AI teams",
-        "IT / data platform"
+        "Project / portfolio management",
+        "AI office / innovation (AI CoE)",
+        "Data science / AI teams"
       ]
     },
     {
@@ -2501,12 +2498,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
-        "Asset management",
-        "Maintenance / operations",
-        "IT / data platform",
+        "AI office / innovation (AI CoE)",
+        "Project / portfolio management",
         "Data science / AI teams",
-        "Legal / safety / compliance"
+        "Railway safety & assurance"
       ]
     },
     {
@@ -2519,11 +2514,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
+        "AI office / innovation (AI CoE)",
         "Executive / senior management",
-        "Asset management",
-        "IT / data platform",
-        "Data science / AI teams",
-        "Maintenance / operations"
+        "Finance / controlling",
+        "Project / portfolio management",
+        "Change management / HR"
       ]
     },
     {
@@ -2536,12 +2531,13 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
-        "Asset management",
-        "Maintenance / operations",
-        "IT / data platform",
+        "Project / portfolio management",
+        "AI office / innovation (AI CoE)",
         "Data science / AI teams",
-        "Legal / safety / compliance"
+        "IT / data platform",
+        "Railway safety & assurance",
+        "Legal & compliance",
+        "Maintenance"
       ]
     },
     {
@@ -2554,12 +2550,12 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
-        "Asset management",
-        "IT / data platform",
+        "Project / portfolio management",
+        "Maintenance",
+        "Frontline users / field staff",
         "Data science / AI teams",
-        "Legal / safety / compliance",
-        "Executive / senior management"
+        "Railway safety & assurance",
+        "IT / data platform"
       ]
     },
     {
@@ -2572,11 +2568,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
+        "Project / portfolio management",
+        "Finance / controlling",
         "Executive / senior management",
-        "Asset management",
-        "IT / data platform",
-        "Data science / AI teams",
-        "Maintenance / operations"
+        "AI office / innovation (AI CoE)"
       ]
     },
     {
@@ -2589,10 +2584,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "IT / data platform",
-        "Data science / AI teams",
         "Asset management",
-        "Maintenance / operations"
+        "Asset Owner (technical owner of asset)",
+        "Data science / AI teams",
+        "IT / data platform",
+        "Frontline users / field staff"
       ]
     },
     {
@@ -2607,8 +2603,8 @@
       "stakeholders": [
         "IT / data platform",
         "Data science / AI teams",
-        "Maintenance / operations",
-        "Asset management"
+        "Asset management",
+        "Legal & compliance"
       ]
     },
     {
@@ -2622,10 +2618,9 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
+        "EAM/ERP system owner (SAP, Maximo)",
         "Data science / AI teams",
-        "Asset management",
-        "Maintenance / operations",
-        "Systems"
+        "Systems engineering"
       ]
     },
     {
@@ -2638,10 +2633,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "IT / data platform",
-        "Data science / AI teams",
         "Asset management",
-        "Maintenance / operations"
+        "Data science / AI teams",
+        "IT / data platform",
+        "Asset Owner (technical owner of asset)"
       ]
     },
     {
@@ -2654,11 +2649,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "IT / data platform",
-        "Data science / AI teams",
         "Asset management",
         "Systems engineering",
-        "Maintenance / operations"
+        "IT / data platform",
+        "EAM/ERP system owner (SAP, Maximo)",
+        "Data science / AI teams"
       ]
     },
     {
@@ -2673,9 +2668,8 @@
       "stakeholders": [
         "IT / data platform",
         "Data science / AI teams",
-        "Asset management",
-        "Maintenance / operations",
-        "Systems engineering"
+        "Asset Owner (technical owner of asset)",
+        "Asset management"
       ]
     },
     {
@@ -2689,10 +2683,9 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
+        "Cybersecurity (IT/OT)",
         "Data science / AI teams",
-        "Asset management",
-        "Legal / safety / compliance",
-        "Maintenance / operations"
+        "EAM/ERP system owner (SAP, Maximo)"
       ]
     },
     {
@@ -2706,10 +2699,8 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
-        "Data science / AI teams",
-        "Systems engineering",
-        "Asset management",
-        "Legal / safety / compliance"
+        "Cybersecurity (IT/OT)",
+        "EAM/ERP system owner (SAP, Maximo)"
       ]
     },
     {
@@ -2723,10 +2714,8 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
-        "Legal / safety / compliance",
-        "Data science / AI teams",
-        "Asset management",
-        "Executive / senior management"
+        "Legal & compliance",
+        "Cybersecurity (IT/OT)"
       ]
     },
     {
@@ -2741,8 +2730,7 @@
       "stakeholders": [
         "IT / data platform",
         "Data science / AI teams",
-        "Asset management",
-        "Maintenance / operations",
+        "Cybersecurity (IT/OT)",
         "Executive / senior management"
       ]
     },
@@ -2758,9 +2746,9 @@
       "stakeholders": [
         "IT / data platform",
         "Data science / AI teams",
-        "Maintenance / operations",
-        "Asset management",
-        "Systems engineering"
+        "Systems engineering",
+        "Operations / traffic control",
+        "Maintenance"
       ]
     },
     {
@@ -2775,8 +2763,7 @@
       "stakeholders": [
         "IT / data platform",
         "Data science / AI teams",
-        "Systems engineering",
-        "Asset management"
+        "Systems engineering"
       ]
     },
     {
@@ -2791,9 +2778,9 @@
       "stakeholders": [
         "IT / data platform",
         "Data science / AI teams",
-        "Maintenance / operations",
         "Systems engineering",
-        "Asset management"
+        "Frontline users / field staff",
+        "Operations / traffic control"
       ]
     },
     {
@@ -2808,9 +2795,7 @@
       "stakeholders": [
         "IT / data platform",
         "Data science / AI teams",
-        "Systems engineering",
-        "Asset management",
-        "Executive / senior management"
+        "Finance / controlling"
       ]
     },
     {
@@ -2824,10 +2809,9 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
-        "Data science / AI teams",
         "Systems engineering",
-        "Asset management",
-        "Legal / safety / compliance"
+        "EAM/ERP system owner (SAP, Maximo)",
+        "Procurement"
       ]
     },
     {
@@ -2840,11 +2824,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
+        "Procurement",
         "IT / data platform",
-        "Data science / AI teams",
-        "Executive / senior management",
-        "Asset management",
-        "Legal / safety / compliance"
+        "Finance / controlling",
+        "Legal & compliance"
       ]
     },
     {
@@ -2857,10 +2840,9 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
+        "EAM/ERP system owner (SAP, Maximo)",
         "IT / data platform",
         "Asset management",
-        "Maintenance / operations",
-        "Data science / AI teams",
         "Systems engineering"
       ]
     },
@@ -2875,10 +2857,8 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
-        "Data science / AI teams",
-        "Systems engineering",
-        "Asset management",
-        "Maintenance / operations"
+        "EAM/ERP system owner (SAP, Maximo)",
+        "Data science / AI teams"
       ]
     },
     {
@@ -2891,11 +2871,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Executive / senior management",
+        "Procurement",
         "IT / data platform",
-        "Asset management",
-        "Legal / safety / compliance",
-        "Data science / AI teams"
+        "EAM/ERP system owner (SAP, Maximo)",
+        "Legal & compliance",
+        "Project / portfolio management"
       ]
     },
     {
@@ -2908,10 +2888,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
-        "IT / data platform",
+        "Operations / traffic control",
         "Systems engineering",
-        "Asset management",
+        "IT / data platform",
+        "Cybersecurity (IT/OT)",
         "Data science / AI teams"
       ]
     },
@@ -2925,11 +2905,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
         "IT / data platform",
-        "Systems engineering",
+        "Operations / traffic control",
+        "Cybersecurity (IT/OT)",
         "Data science / AI teams",
-        "Asset management"
+        "Systems engineering"
       ]
     },
     {
@@ -2942,11 +2922,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
-        "Systems engineering",
-        "Asset management",
-        "Legal / safety / compliance",
-        "IT / data platform",
+        "Operations / traffic control",
+        "Railway safety & assurance",
+        "Maintenance",
+        "Frontline users / field staff",
         "Data science / AI teams"
       ]
     },
@@ -2960,11 +2939,12 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
+        "Maintenance",
+        "EAM/ERP system owner (SAP, Maximo)",
         "Asset management",
-        "IT / data platform",
+        "Asset Owner (technical owner of asset)",
         "Data science / AI teams",
-        "Systems engineering"
+        "IT / data platform"
       ]
     },
     {
@@ -2977,11 +2957,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
-        "Asset management",
+        "Maintenance",
+        "Frontline users / field staff",
         "Data science / AI teams",
-        "IT / data platform",
-        "Change management / HR"
+        "EAM/ERP system owner (SAP, Maximo)"
       ]
     },
     {
@@ -2994,11 +2973,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
-        "Asset management",
-        "Systems engineering",
-        "Legal / safety / compliance",
-        "Data science / AI teams"
+        "Maintenance",
+        "Railway safety & assurance",
+        "Asset Owner (technical owner of asset)",
+        "Data science / AI teams",
+        "Systems engineering"
       ]
     },
     {
@@ -3011,11 +2990,11 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
-        "Asset management",
-        "Legal / safety / compliance",
-        "Executive / senior management",
-        "Data science / AI teams"
+        "Maintenance",
+        "Railway safety & assurance",
+        "Frontline users / field staff",
+        "Asset Owner (technical owner of asset)",
+        "Change management / HR"
       ]
     },
     {
@@ -3030,9 +3009,9 @@
       "stakeholders": [
         "IT / data platform",
         "Data science / AI teams",
-        "Maintenance / operations",
-        "Asset management",
-        "Systems engineering"
+        "Systems engineering",
+        "Project / portfolio management",
+        "Railway safety & assurance"
       ]
     },
     {
@@ -3046,9 +3025,7 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
-        "Data science / AI teams",
-        "Systems engineering",
-        "Maintenance / operations"
+        "Data science / AI teams"
       ]
     },
     {
@@ -3063,8 +3040,7 @@
       "stakeholders": [
         "IT / data platform",
         "Data science / AI teams",
-        "Maintenance / operations",
-        "Asset management",
+        "Maintenance",
         "Change management / HR"
       ]
     },
@@ -3080,9 +3056,7 @@
       "stakeholders": [
         "Data science / AI teams",
         "IT / data platform",
-        "Maintenance / operations",
-        "Asset management",
-        "Legal / safety / compliance"
+        "Asset Owner (technical owner of asset)"
       ]
     },
     {
@@ -3097,8 +3071,7 @@
       "stakeholders": [
         "Data science / AI teams",
         "IT / data platform",
-        "Maintenance / operations",
-        "Asset management"
+        "Railway safety & assurance"
       ]
     },
     {
@@ -3111,11 +3084,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
-        "Asset management",
         "Data science / AI teams",
-        "IT / data platform",
-        "Change management / HR"
+        "Maintenance",
+        "Frontline users / field staff",
+        "Operations / traffic control"
       ]
     },
     {
@@ -3129,10 +3101,9 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Data science / AI teams",
-        "IT / data platform",
-        "Maintenance / operations",
-        "Asset management",
-        "Legal / safety / compliance"
+        "Asset Owner (technical owner of asset)",
+        "Railway safety & assurance",
+        "Maintenance"
       ]
     },
     {
@@ -3145,11 +3116,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
-        "Asset management",
         "Data science / AI teams",
-        "IT / data platform",
-        "Legal / safety / compliance"
+        "Frontline users / field staff",
+        "Maintenance",
+        "Operations / traffic control"
       ]
     },
     {
@@ -3163,10 +3133,9 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Data science / AI teams",
-        "Maintenance / operations",
-        "Asset management",
-        "IT / data platform",
-        "Legal / safety / compliance"
+        "Railway safety & assurance",
+        "Maintenance",
+        "Asset Owner (technical owner of asset)"
       ]
     },
     {
@@ -3179,11 +3148,12 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Maintenance / operations",
-        "Asset management",
-        "Legal / safety / compliance",
+        "Railway safety & assurance",
         "Data science / AI teams",
-        "Executive / senior management"
+        "Maintenance",
+        "Operations / traffic control",
+        "Frontline users / field staff",
+        "Change management / HR"
       ]
     },
     {
@@ -3196,11 +3166,12 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Asset management",
-        "Maintenance / operations",
-        "Systems engineering",
+        "AI office / innovation (AI CoE)",
+        "Data science / AI teams",
         "IT / data platform",
-        "Data science / AI team"
+        "Systems engineering",
+        "Procurement",
+        "Finance / controlling"
       ]
     },
     {
@@ -3213,12 +3184,12 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Legal / safety / compliance",
+        "Railway safety & assurance",
         "Systems engineering",
-        "Maintenance / operations",
-        "Asset management",
         "Data science / AI teams",
-        "IT / data platform"
+        "Maintenance",
+        "Operations / traffic control",
+        "Asset Owner (technical owner of asset)"
       ]
     }
   ],
