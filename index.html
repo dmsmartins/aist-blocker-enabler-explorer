@@ -924,6 +924,9 @@ function icon(name, cls='') { return `<svg class="${cls}"><use href="#i-${name}"
 function escapeHtml(value='') {
   return String(value).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 }
+function formatStakeholders(names) {
+  return names.map((name, index) => index === 0 ? `<strong>${escapeHtml(name)}</strong>` : escapeHtml(name)).join(' · ');
+}
 function truncate(text, n=150) {
   const s = String(text || '');
   return s.length > n ? s.slice(0,n).trimEnd() + '…' : s;
@@ -998,10 +1001,9 @@ function renderReview() {
   app.innerHTML = `<section class="review-hub">
     <p class="eyebrow">Review the toolkit</p>
     <h1>Help refine the framework.</h1>
-    <p class="review-intro">Share your judgement on blocker dependencies, stakeholder roles and assessment questions.</p>
+    <p class="review-intro">Share your judgement on blocker dependencies and assessment questions.</p>
     <div class="review-links">
       <article><h2>Dependencies</h2><p>Review 84 selected directed pairs: does addressing blocker A require progress on blocker B?</p><a class="primary-btn" href="#validate-dependencies">Review dependencies →</a></article>
-      <article><h2>Stakeholders</h2><p>Take a stakeholder’s perspective and assess how 20 blockers relate to that role.</p><p class="review-note">Review your answers, then submit them to the project team.</p><a class="primary-btn" href="./stakeholder-challenge.html">Review stakeholders →</a></article>
       <article><h2>Assessment questions</h2><p>Open a Company or Project assessment, then use <strong>Rate this question</strong> to review each question’s relevance and clarity.</p><p class="review-note">Question ratings are separate from your maturity answers and do not affect your score.</p><a class="primary-btn" href="./assessment-preview/">Review assessment questions →</a></article>
     </div>
   </section>`;
@@ -1288,7 +1290,7 @@ function renderStandaloneEnablerCard(e, mechanism) {
         <div class="mini-section"><b>Practical actions</b><p>${escapeHtml(e.practicalActions)}</p></div>
         <div class="mini-section"><b>Expected outcome</b><p>${escapeHtml(e.expectedOutcome || '—')}</p></div>
       </div>
-      <div class="enabler-stakeholders"><b>Stakeholders:</b> ${escapeHtml(e.stakeholders.join(' · '))}</div>
+      <div class="enabler-stakeholders"><b>Stakeholders:</b> ${formatStakeholders(e.stakeholders)}</div>
       <div class="related-blockers-wrap"><h4>Related blockers</h4>${byDomain || '<p class="subtle">No related blockers.</p>'}</div>
     </div>` : ''}
   </article>`;
@@ -1394,7 +1396,7 @@ function renderBlockerDetail(b) {
     </div>
     <div class="meta-row">
       <div class="meta-item"><small>Stage Gate</small><span>${b.stageGate != null ? `Gate ${b.stageGate} · ${escapeHtml(b.stageGateDescription || '')}` : '—'}</span></div>
-      <div class="meta-item"><small>Stakeholders</small><span>${escapeHtml(b.stakeholders.join(' · '))}</span></div>
+      <div class="meta-item"><small>Stakeholders</small><span>${formatStakeholders(b.stakeholders)}</span></div>
       <div class="meta-item"><small>Dimension</small><span>${escapeHtml(b.dimension)}</span></div>
       <div class="meta-item"><small>Cluster</small><span>${escapeHtml(b.cluster.replace(/^\d+\)\s*/,''))}</span></div>
     </div>
@@ -1424,7 +1426,7 @@ function renderEnablerCard(blockerId, e) {
     ${open ? `<div class="enabler-detail">
       <div class="detail-actions"><button class="save-btn ${saved?'saved':''}" data-save-enabler="${e.id}">${icon('bookmark')} ${saved?'Saved':'Save'}</button></div>
       <div class="enabler-detail-grid"><div class="mini-section"><b>Practical actions</b><p>${escapeHtml(e.practicalActions)}</p></div><div class="mini-section"><b>Expected outcome</b><p>${escapeHtml(e.expectedOutcome || '—')}</p></div></div>
-      <div class="enabler-stakeholders"><b>Stakeholders:</b> ${escapeHtml(e.stakeholders.join(' · '))}</div>
+      <div class="enabler-stakeholders"><b>Stakeholders:</b> ${formatStakeholders(e.stakeholders)}</div>
       <button class="relevance-btn" data-relevance="${blockerId}:${e.id}">Why is this relevant?</button>
       <div class="rationale" data-rationale="${blockerId}:${e.id}" hidden>${escapeHtml(e.relationship.rationale)}</div>
     </div>`:''}
@@ -1673,7 +1675,7 @@ function renderTimelineEnablerCard(b,e) {
         <div class="mini-section"><b>Practical actions</b><p>${escapeHtml(e.practicalActions)}</p></div>
         <div class="mini-section"><b>Expected outcome</b><p>${escapeHtml(e.expectedOutcome || '—')}</p></div>
       </div>
-      <div class="enabler-stakeholders"><b>Stakeholders:</b> ${escapeHtml(e.stakeholders.join(' · '))}</div>
+      <div class="enabler-stakeholders"><b>Stakeholders:</b> ${formatStakeholders(e.stakeholders)}</div>
       <div class="rationale">${escapeHtml(e.relationship.rationale || '')}</div>
     </div>`:''}
   </article>`;
@@ -1708,7 +1710,7 @@ function renderTimelineBlockerDetail(b) {
       <div><small>Stage Gate</small><span>Gate ${b.stageGate ?? '—'} · ${escapeHtml(b.stageGateDescription || '')}</span></div>
       <div><small>Dimension</small><span>${escapeHtml(b.dimension)}</span></div>
       <div><small>Cluster</small><span>${escapeHtml(b.cluster.replace(/^\d+\)\s*/,''))}</span></div>
-      <div><small>Stakeholders</small><span>${escapeHtml(b.stakeholders.join(' · '))}</span></div>
+      <div><small>Stakeholders</small><span>${formatStakeholders(b.stakeholders)}</span></div>
     </div>
     <section class="tl-mechanism-section">
       <div class="tl-section-heading"><div><p class="eyebrow">Next layer</p><h3>How can this blocker be addressed?</h3></div><p>Select a mechanism to reveal only the enablers acting through it.</p></div>

@@ -7,6 +7,10 @@ import {mechanismGroups,initialMechanism,firstSentence,enablerLayout} from "./un
 import {collectionId,collections,matchingBlockers,collectionAssessment,explorationFromHash,explorationHash,visibleDependencies} from "./explore.mjs";
 
 const html=htm.bind(React.createElement);
+function formatStakeholders([owner, ...others]) {
+  if (owner === undefined) return "—";
+  return html`<span><strong>${owner}</strong>${others.length ? " · " + others.join(" · ") : ""}</span>`;
+}
 const communityMode=document.documentElement.dataset.explorer==="community";
 const mode=communityMode?"community":"gate";
 const collectionLabel=communityMode?"Community":"Stage Gate";
@@ -383,7 +387,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
             <div id="mechanism-enablers">
               ${selectedMechanism?html`<div className="mechanism-content" style=${{"--mech":MECH_COLORS[selectedMechanism]}}><h3>${selectedMechanism}</h3><p>${data.mechanisms.find(m=>m.key===selectedMechanism)?.description}</p>
                 <ol className="unlock-enablers">${groups[selectedMechanism].map(({enabler,relationship},i)=>html`<li key=${enabler.id} data-enabler-item=${enabler.id} className=${selectedEnabler===enabler.id?"selected":""}><button className="enabler-item" aria-pressed=${selectedEnabler===enabler.id} aria-expanded=${selectedEnabler===enabler.id} aria-controls=${selectedEnabler===enabler.id?`enabler-detail-${enabler.id}`:undefined} onClick=${()=>selectEnabler(enabler.id)}><span className="enabler-number">${i+1}</span><span>${enabler.title}</span>${selectedEnabler===enabler.id?html`<b aria-label="Selected">✓</b>`:null}</button><p>${enabler.description}</p>
-                  ${selectedEnabler===enabler.id?html`<div id=${`enabler-detail-${enabler.id}`} className="enabler-detail"><h4>Practical actions</h4><p>${enabler.practicalActions||"—"}</p><h4>Expected outcome</h4><p>${enabler.expectedOutcome||"—"}</p><h4>Stakeholders</h4><p>${enabler.stakeholders.join(" · ")||"—"}</p>${relationship.rationale?html`<div className="rationale">${relationship.rationale}</div>`:null}</div>`:null}
+                  ${selectedEnabler===enabler.id?html`<div id=${`enabler-detail-${enabler.id}`} className="enabler-detail"><h4>Practical actions</h4><p>${enabler.practicalActions||"—"}</p><h4>Expected outcome</h4><p>${enabler.expectedOutcome||"—"}</p><h4>Stakeholders</h4><p>${formatStakeholders(enabler.stakeholders)}</p>${relationship.rationale?html`<div className="rationale">${relationship.rationale}</div>`:null}</div>`:null}
                 </li>`)}</ol>
               </div>`:html`<p className="unlock-hint">${availableMechanisms.length?"Choose a mechanism to explore how to overcome this blocker.":"No enablers are mapped to this blocker yet."}</p>`}
             </div>
@@ -391,7 +395,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
           <details className="blocker-accordion relations-section" open=${relationsOpen} onToggle=${e=>setRelationsOpen(e.currentTarget.open)}><summary>Relations<small>${deps.upstream.length} this depends on · ${deps.downstream.length} depend on this</small></summary><div className="relation-list">${[{label:"This depends on",items:deps.upstream},{label:"Depend on this",items:deps.downstream}].map(({label,items})=>html`<h3>${label}</h3>${items.length?items.map(b=>html`<button key=${b.id} onClick=${()=>openDeepDive(b)}>${b.title}<span aria-hidden="true"> →</span></button>`):html`<p>No dependencies mapped.</p>`}`)}</div></details>
           <details className="blocker-accordion"><summary>Why it matters</summary><p>${selectedBlockerObj.whyItMatters||"—"}</p></details>
           <details className="blocker-accordion"><summary>Consequence if not addressed</summary><p>${selectedBlockerObj.consequence||"—"}</p></details>
-          <details className="blocker-accordion"><summary>Stakeholders</summary><p>${selectedBlockerObj.stakeholders.join(" · ")||"—"}</p></details>
+          <details className="blocker-accordion"><summary>Stakeholders</summary><p>${formatStakeholders(selectedBlockerObj.stakeholders)}</p></details>
           <p className="blocker-metadata"><span title=${selectedBlockerObj.stageGateDescription}>Stage Gate ${selectedBlockerObj.stageGate}</span><span title="Dimension">${selectedBlockerObj.dimension}</span><span title="Domain">${domains[selectedBlockerObj.domain]||"—"}</span><span title="Community">${selectedBlockerObj.communityName||"—"}</span></p>
         </div>
       </aside>`:null}
