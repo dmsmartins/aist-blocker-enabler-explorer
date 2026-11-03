@@ -1,6 +1,18 @@
 (function(root){
   'use strict';
   const API='https://aist-dependency-votes.diogomsmartins.workers.dev';
+  const REVIEW_SCOPE='dependency-review-84-v1';
+  const ELIGIBLE_PAIR_COUNT=84;
+  function scopeMessage(draft){
+    return draft && draft.reviewScope!==REVIEW_SCOPE
+      ? 'Resuming an earlier session with its original pairs. Your answers can still be submitted until the session expires.'
+      : 'New sessions draw only from 84 selected directed pairs. A → B and B → A are separate. Reverse direction records your judgement about the displayed pair.';
+  }
+  function validateSession(result){
+    if(result.reviewScope!==REVIEW_SCOPE || result.eligiblePairCount!==ELIGIBLE_PAIR_COUNT)
+      throw new Error('The selected-pair review is not available yet. Please try again after the review service has been updated.');
+    return result;
+  }
   const KEY='aist-dependency-review-v1'+(typeof location!=='undefined'&&new URLSearchParams(location.search).get('reviewTest')==='1'?'-test':'');
   const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   let memory;
@@ -10,12 +22,12 @@
   async function request(path,data){
     const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),25000);
     try{const r=await fetch(API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data),signal:controller.signal});
-      const result=await r.json();if(!r.ok)throw Object.assign(new Error(result.error||'The service is unavailable. Please retry.'),{status:r.status});return result;
+      const result=await r.json();if(!r.ok)throw Object.assign(new Error(result.error||'The service is unavailable. Please retry.'),{status:r.status,code:result.code});return result;
     }catch(e){if(e.name==='AbortError'||e instanceof TypeError)throw new Error('The connection was interrupted. Your answers remain here. Please retry.');throw e;}finally{clearTimeout(timer);}
   }
   function mount(host){
     const store=load();store.participantId ||= crypto.randomUUID();store.seen ||= {};
-    let storageOk=save(store),draft=store.draft||null,screen=draft?(draft.pending||draft.expired?'review':'vote'):'start',busy=false,error='',success=null;
+    let storageOk=save(store),draft=store.draft||null,screen=draft?(draft.pending||draft.expired?'review':'vote'):'start',busy=false,error='',success=null,complete=false;
     const testMode=new URLSearchParams(location.search).get('reviewTest')==='1';
     function persist(){store.draft=draft;storageOk=save(store);}
     const alive=()=>host.querySelector('#review-panel');
@@ -24,6 +36,7 @@
       if(location.hash!=='#validate-dependencies')return;
       const answered=draft?payload(draft).votes.length:0;
       host.innerHTML=`<section class="vr-page" id="review-panel"><header class="vr-header"><span class="vr-eyebrow">DEPENDENCY REVIEW</span><h1>Does A depend on B?</h1><p>Two blockers. One direction. Share your judgement to help review the dependency map.</p></header>
+        <p class="vr-hint" role="status">${escape(scopeMessage(draft))}</p>
         ${testMode||draft?.isTest?'<p class="vr-test">Test session — answers are excluded from analysis.</p>':''}
         ${!storageOk?'<p role="status" class="vr-error">This browser cannot save drafts locally. Keep this page open until your answers are submitted.</p>':''}
         <div role="alert" class="vr-error" ${error?'':'hidden'}>${escape(error)}</div>
@@ -32,12 +45,12 @@
       root.stageDependencyNavigation?.();
       const area=host.querySelector('#vr-content');
       if(screen==='start'){
-        area.innerHTML=`<div class="vr-box vr-intro"><h2>Review a few pairs</h2><p>For each pair, consider: <strong>does addressing blocker A require progress on blocker B?</strong> Being related is not enough. You can suggest the reverse direction in the same answer.</p><div class="vr-steps"><span><b>1</b> Read both blockers</span><span><b>2</b> Yes, No, Reverse or Not sure</span><span><b>3</b> Submit your answers</span></div><p>You can stop early or continue with another set. Current links and their importance are hidden while you vote.</p><div class="vr-setup"><label>Pairs in this set<select id="vr-size"><option value="10">10 pairs</option><option value="15">15 pairs</option></select></label><label>Your role (optional)<input id="vr-role" maxlength="100" placeholder="e.g. Operations, IT, project manager" value="${escape(store.role||'')}"></label></div><button class="vr-primary" id="vr-start" ${busy?'disabled':''}>${busy?'Preparing pairs…':'Start reviewing'}</button></div>`;
+        area.innerHTML=`<div class="vr-box vr-intro"><h2>Review a few pairs</h2><p>For each pair, consider: <strong>does addressing blocker A require progress on blocker B?</strong> Being related is not enough. You can suggest the reverse direction in the same answer.</p><div class="vr-steps"><span><b>1</b> Read both blockers</span><span><b>2</b> Yes, No, Reverse or Not sure</span><span><b>3</b> Submit your answers</span></div><p>You can stop early or continue with another set. Pairs you have already submitted in this browser are skipped; the final set may contain fewer pairs. Current links and their importance are hidden while you vote.</p><div class="vr-setup"><label>Pairs in this set<select id="vr-size"><option value="10">10 pairs</option><option value="15">15 pairs</option></select></label><label>Your role (optional)<input id="vr-role" maxlength="100" placeholder="e.g. Operations, IT, project manager" value="${escape(store.role||'')}"></label></div><button class="vr-primary" id="vr-start" ${busy||complete?'disabled':''}>${busy?'Preparing pairs…':complete?'Review complete':'Start reviewing'}</button>${complete?'<p role="status">You have reviewed all 84 selected pairs in this browser. Thank you.</p>':''}</div>`;
         area.querySelector('#vr-start').onclick=async()=>{
           const size=Number(area.querySelector('#vr-size').value);store.role=area.querySelector('#vr-role').value.trim();busy=true;error='';render();
-          try{const result=await request('/session',{participantId:store.participantId,size,exclude:store.seen[store.version]||[],excludeVersion:store.version,isTest:testMode});
+          try{const result=validateSession(await request('/session',{participantId:store.participantId,size,exclude:store.seen[store.version]||[],excludeVersion:store.version,isTest:testMode,reviewScope:REVIEW_SCOPE}));
             draft={...result,role:store.role,answers:{},index:0};store.version=result.version;screen='vote';persist();
-          }catch(e){error=e.message;}finally{busy=false;if(alive())render();}
+          }catch(e){if(e.code==='review_complete'){complete=true;error='';}else error=e.message;}finally{busy=false;if(alive())render();}
         };
       }else if(screen==='vote'){
         const i=draft.index,p=draft.pairs[i],answer=draft.answers[i]||{};
@@ -68,5 +81,5 @@
     }
     render();
   }
-  root.DependencyValidation={mount,payload,escape};
+  root.DependencyValidation={mount,payload,escape,scopeMessage,validateSession};
 })(globalThis);

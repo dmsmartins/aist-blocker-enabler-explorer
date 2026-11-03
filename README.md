@@ -155,3 +155,7 @@ Curves above the gates show dependencies on later stages; curves below show depe
 A dependency on a later stage is not automatically an error or a requirement to complete that entire stage first. The panel describes possible interpretations and preserves access to blocker details.
 
 Validation: `node --test --test-isolation=none stage-dependencies.test.mjs dependencies.test.mjs`.
+
+## Dependency review scope
+
+New reviews use the 84 directed pairs selected on 2026-11-02. The Worker owns the exact allowlist and enforces it in assignment and submission validation. The Explorer requires scope `dependency-review-84-v1` and a count of 84 before starting a new draft. Deploy the validated Worker before releasing this UI. Existing browser drafts retain their original pairs and can be submitted until their signed expiry. Reverse direction remains an answer about the displayed A → B pair. The final set may be smaller than 10/15; completion is shown when no eligible unseen pairs remain. Catalogue data, assessments and stakeholder flows are unchanged.
