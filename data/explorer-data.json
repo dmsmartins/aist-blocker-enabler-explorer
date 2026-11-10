@@ -3,7 +3,7 @@
     "title": "AI Scalability Explorer",
     "schemaVersion": "3.1",
     "sourceWorkbook": "AIST_Explorer_Master.xlsx",
-    "sourceWorkbookSha256": "d1761fdb7063af6f665a874f83cee9c1cd709860c548b1aab85730de615aab2a",
+    "sourceWorkbookSha256": "1a96cad3b36a56970e49282dd038af79a72508ba3b13bb75a2905bd1e809c902",
     "exporterVersion": "2.0.0",
     "internalIdsVisibleInUi": false,
     "relationshipTypeUsedInUi": false,
@@ -129,13 +129,12 @@
       "stageGate": 2,
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
-        "Asset management",
         "Asset Owner (technical owner of asset)",
+        "Maintenance",
+        "Frontline users / field staff",
         "IT / data platform",
         "Data science / AI teams",
-        "Maintenance",
-        "EAM/ERP system owner (SAP, Maximo)",
-        "Frontline users / field staff"
+        "EAM/ERP business application manager (SAP, Maximo)"
       ],
       "source": null,
       "domain": "data-foundations",
@@ -161,11 +160,11 @@
       "stakeholders": [
         "Project / portfolio management",
         "AI office / innovation (AI CoE)",
-        "Data science / AI teams",
+        "Asset manager",
         "Maintenance",
         "Frontline users / field staff",
         "IT / data platform",
-        "Asset management"
+        "Data science / AI teams"
       ],
       "source": null,
       "domain": "value-delivery-scale",
@@ -190,14 +189,13 @@
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Executive / senior management",
-        "Asset management",
+        "AI office / innovation (AI CoE)",
+        "Asset manager",
         "Asset Owner (technical owner of asset)",
         "Maintenance",
         "Operations / traffic control",
-        "AI office / innovation (AI CoE)",
         "Data science / AI teams",
-        "Frontline users / field staff",
-        "IT / data platform"
+        "EAM/ERP business application manager (SAP, Maximo)"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
@@ -222,13 +220,12 @@
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Executive / senior management",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Operations / traffic control",
         "Frontline users / field staff",
         "Change management / HR",
-        "Finance / controlling",
-        "AI office / innovation (AI CoE)"
+        "Finance / controlling"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
@@ -254,16 +251,11 @@
       "stakeholders": [
         "Finance / controlling",
         "Executive / senior management",
-        "Asset management",
-        "IT / data platform",
-        "Project / portfolio management",
-        "Data science / AI teams",
+        "Asset manager",
         "Railway safety & assurance",
-        "AI office / innovation (AI CoE)",
-        "Cybersecurity (IT/OT)",
-        "Legal & compliance",
-        "Maintenance",
-        "Systems engineering"
+        "IT / data platform",
+        "Data science / AI teams",
+        "Project / portfolio management"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
@@ -289,7 +281,7 @@
       "stakeholders": [
         "Executive / senior management",
         "AI office / innovation (AI CoE)",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Operations / traffic control",
         "Change management / HR"
@@ -318,13 +310,13 @@
       "stakeholders": [
         "AI office / innovation (AI CoE)",
         "Executive / senior management",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Operations / traffic control",
         "IT / data platform",
         "Data science / AI teams",
-        "Project / portfolio management",
-        "Finance / controlling"
+        "Finance / controlling",
+        "Project / portfolio management"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation",
@@ -350,10 +342,10 @@
       "stakeholders": [
         "Executive / senior management",
         "AI office / innovation (AI CoE)",
+        "Asset manager",
+        "Maintenance",
         "Railway safety & assurance",
         "Legal & compliance",
-        "Asset management",
-        "Maintenance",
         "IT / data platform",
         "Data science / AI teams",
         "Project / portfolio management"
@@ -382,11 +374,11 @@
       "stakeholders": [
         "Executive / senior management",
         "AI office / innovation (AI CoE)",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
+        "Change management / HR",
         "Finance / controlling",
-        "Project / portfolio management",
-        "Change management / HR"
+        "Project / portfolio management"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation",
@@ -410,16 +402,14 @@
       "stageGate": 3,
       "stageGateDescription": "Operational Deployment & Commissioning",
       "stakeholders": [
-        "Asset management",
+        "Asset manager",
+        "Executive / senior management",
         "Asset Owner (technical owner of asset)",
         "Maintenance",
         "Operations / traffic control",
-        "Executive / senior management",
         "IT / data platform",
         "Data science / AI teams",
-        "EAM/ERP system owner (SAP, Maximo)",
-        "Finance / controlling",
-        "Frontline users / field staff"
+        "EAM/ERP business application manager (SAP, Maximo)"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation",
@@ -444,14 +434,13 @@
       "stageGateDescription": "Operational Deployment & Commissioning",
       "stakeholders": [
         "Maintenance",
+        "Executive / senior management",
+        "Asset Owner (technical owner of asset)",
         "Operations / traffic control",
+        "Frontline users / field staff",
         "Railway safety & assurance",
         "Legal & compliance",
-        "Asset management",
-        "Asset Owner (technical owner of asset)",
-        "Frontline users / field staff",
-        "Change management / HR",
-        "Executive / senior management"
+        "Change management / HR"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation",
@@ -476,13 +465,12 @@
       "stageGateDescription": "Operational Deployment & Commissioning",
       "stakeholders": [
         "IT / data platform",
-        "Data science / AI teams",
         "Maintenance",
         "Operations / traffic control",
-        "Asset management",
-        "EAM/ERP system owner (SAP, Maximo)",
-        "Finance / controlling",
-        "Change management / HR"
+        "Data science / AI teams",
+        "EAM/ERP business application manager (SAP, Maximo)",
+        "EAM/ERP IT application manager (SAP, Maximo)",
+        "Finance / controlling"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation",
@@ -508,7 +496,6 @@
       "stakeholders": [
         "Change management / HR",
         "Executive / senior management",
-        "Asset management",
         "Maintenance",
         "Operations / traffic control",
         "Frontline users / field staff",
@@ -538,12 +525,12 @@
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Maintenance",
+        "Executive / senior management",
+        "Asset manager",
         "Operations / traffic control",
         "Frontline users / field staff",
-        "Change management / HR",
-        "Asset management",
-        "Executive / senior management",
-        "EAM/ERP system owner (SAP, Maximo)"
+        "EAM/ERP business application manager (SAP, Maximo)",
+        "Change management / HR"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption",
@@ -568,13 +555,12 @@
       "stageGateDescription": "Retirement & Transition",
       "stakeholders": [
         "Change management / HR",
+        "Executive / senior management",
         "Maintenance",
         "Operations / traffic control",
         "Frontline users / field staff",
-        "Executive / senior management",
         "IT / data platform",
-        "EAM/ERP system owner (SAP, Maximo)",
-        "AI office / innovation (AI CoE)"
+        "EAM/ERP business application manager (SAP, Maximo)"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption",
@@ -600,12 +586,11 @@
       "stakeholders": [
         "AI office / innovation (AI CoE)",
         "Executive / senior management",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
-        "Data science / AI teams",
         "IT / data platform",
-        "Finance / controlling",
-        "Change management / HR"
+        "Data science / AI teams",
+        "Finance / controlling"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption",
@@ -630,15 +615,14 @@
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "Maintenance",
+        "Asset manager",
+        "Asset Owner (technical owner of asset)",
         "Operations / traffic control",
         "Frontline users / field staff",
         "Railway safety & assurance",
-        "Asset management",
-        "Asset Owner (technical owner of asset)",
-        "Data science / AI teams",
         "IT / data platform",
-        "Legal & compliance",
-        "Procurement"
+        "Data science / AI teams",
+        "EAM/ERP business application manager (SAP, Maximo)"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption",
@@ -663,13 +647,12 @@
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "IT / data platform",
-        "Asset management",
+        "Asset manager",
         "Asset Owner (technical owner of asset)",
         "Maintenance",
         "Legal & compliance",
-        "EAM/ERP system owner (SAP, Maximo)",
         "Cybersecurity (IT/OT)",
-        "Systems engineering"
+        "EAM/ERP business application manager (SAP, Maximo)"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "data-foundations",
@@ -720,11 +703,11 @@
       "stageGateDescription": "Solution Architecture & Feasibility",
       "stakeholders": [
         "Legal & compliance",
-        "Railway safety & assurance",
         "Executive / senior management",
-        "Data science / AI teams",
+        "AI office / innovation (AI CoE)",
+        "Railway safety & assurance",
         "IT / data platform",
-        "AI office / innovation (AI CoE)"
+        "Data science / AI teams"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "legal-safety-assurance",
@@ -749,13 +732,13 @@
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
         "AI office / innovation (AI CoE)",
-        "Project / portfolio management",
         "Executive / senior management",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Operations / traffic control",
+        "IT / data platform",
         "Data science / AI teams",
-        "IT / data platform"
+        "Project / portfolio management"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
@@ -780,14 +763,12 @@
       "stageGateDescription": "Strategic Alignment & Idea Validation",
       "stakeholders": [
         "AI office / innovation (AI CoE)",
-        "Project / portfolio management",
         "Executive / senior management",
-        "Data science / AI teams",
-        "IT / data platform",
-        "Asset management",
+        "Asset manager",
         "Railway safety & assurance",
-        "Change management / HR",
-        "Finance / controlling"
+        "IT / data platform",
+        "Data science / AI teams",
+        "Project / portfolio management"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
@@ -808,20 +789,21 @@
       "dimension": "Technical",
       "whyItMatters": "AI initiatives in railway infrastructure need clear progression criteria, dedicated resources and alignment across technical, operational, legal and funding decisions to move from PoC into operational use and real maintenance workflows",
       "consequence": "Promising initiatives may remain as pilots, fail to operate in real workflows and lose momentum before delivering operational value.",
-      "stageGate": 0,
-      "stageGateDescription": "Strategic Alignment & Idea Validation",
+      "stageGate": 3,
+      "stageGateDescription": "Operational Deployment & Commissioning",
       "stakeholders": [
         "Project / portfolio management",
         "Executive / senior management",
         "AI office / innovation (AI CoE)",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
-        "IT / data platform",
-        "Data science / AI teams",
         "Railway safety & assurance",
         "Legal & compliance",
-        "Finance / controlling",
-        "EAM/ERP system owner (SAP, Maximo)"
+        "IT / data platform",
+        "Data science / AI teams",
+        "EAM/ERP business application manager (SAP, Maximo)",
+        "EAM/ERP IT application manager (SAP, Maximo)",
+        "Finance / controlling"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
@@ -847,13 +829,13 @@
       "stakeholders": [
         "Project / portfolio management",
         "Executive / senior management",
-        "IT / data platform",
-        "Data science / AI teams",
+        "Maintenance",
         "Railway safety & assurance",
         "Legal & compliance",
-        "Maintenance",
-        "Asset management",
-        "EAM/ERP system owner (SAP, Maximo)"
+        "IT / data platform",
+        "Data science / AI teams",
+        "EAM/ERP business application manager (SAP, Maximo)",
+        "EAM/ERP IT application manager (SAP, Maximo)"
       ],
       "source": null,
       "domain": "value-delivery-scale",
@@ -878,11 +860,11 @@
       "stageGateDescription": "Steady-State Operations & Evolution",
       "stakeholders": [
         "IT / data platform",
-        "Data science / AI teams",
         "Executive / senior management",
-        "Finance / controlling",
         "Cybersecurity (IT/OT)",
-        "EAM/ERP system owner (SAP, Maximo)"
+        "Data science / AI teams",
+        "EAM/ERP IT application manager (SAP, Maximo)",
+        "Finance / controlling"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
@@ -906,12 +888,11 @@
       "stageGate": 2,
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
-        "Asset management",
         "Asset Owner (technical owner of asset)",
+        "Maintenance",
         "IT / data platform",
         "Data science / AI teams",
-        "EAM/ERP system owner (SAP, Maximo)",
-        "Maintenance",
+        "EAM/ERP business application manager (SAP, Maximo)",
         "Systems engineering"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
@@ -937,11 +918,11 @@
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
         "IT / data platform",
+        "Asset Owner (technical owner of asset)",
+        "Legal & compliance",
         "Cybersecurity (IT/OT)",
         "Data science / AI teams",
-        "Legal & compliance",
-        "EAM/ERP system owner (SAP, Maximo)",
-        "Asset management"
+        "EAM/ERP IT application manager (SAP, Maximo)"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "data-foundations",
@@ -966,12 +947,11 @@
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
         "IT / data platform",
-        "Data science / AI teams",
-        "Systems engineering",
         "Maintenance",
         "Operations / traffic control",
         "Cybersecurity (IT/OT)",
-        "Frontline users / field staff"
+        "Data science / AI teams",
+        "Systems engineering"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
@@ -996,13 +976,13 @@
       "stageGateDescription": "Steady-State Operations & Evolution",
       "stakeholders": [
         "IT / data platform",
-        "Data science / AI teams",
-        "Systems engineering",
-        "Procurement",
-        "Finance / controlling",
-        "Legal & compliance",
         "Executive / senior management",
-        "EAM/ERP system owner (SAP, Maximo)"
+        "Legal & compliance",
+        "Data science / AI teams",
+        "EAM/ERP IT application manager (SAP, Maximo)",
+        "Systems engineering",
+        "Finance / controlling",
+        "Procurement"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
@@ -1026,16 +1006,13 @@
       "stageGate": 2,
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
-        "EAM/ERP system owner (SAP, Maximo)",
-        "IT / data platform",
-        "Asset management",
+        "EAM/ERP IT application manager (SAP, Maximo)",
         "Asset Owner (technical owner of asset)",
         "Maintenance",
+        "IT / data platform",
         "Data science / AI teams",
-        "Systems engineering",
-        "Legal & compliance",
-        "Procurement",
-        "Project / portfolio management"
+        "EAM/ERP business application manager (SAP, Maximo)",
+        "Systems engineering"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
@@ -1060,14 +1037,13 @@
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
         "Operations / traffic control",
-        "Systems engineering",
+        "Asset Owner (technical owner of asset)",
+        "Maintenance",
         "Railway safety & assurance",
         "IT / data platform",
         "Cybersecurity (IT/OT)",
-        "Maintenance",
-        "Asset Owner (technical owner of asset)",
         "Data science / AI teams",
-        "Frontline users / field staff"
+        "Systems engineering"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
@@ -1092,13 +1068,11 @@
       "stageGateDescription": "Steady-State Operations & Evolution",
       "stakeholders": [
         "Data science / AI teams",
-        "IT / data platform",
-        "Maintenance",
         "Asset Owner (technical owner of asset)",
-        "Railway safety & assurance",
+        "Maintenance",
         "Frontline users / field staff",
-        "Asset management",
-        "Change management / HR"
+        "Railway safety & assurance",
+        "IT / data platform"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "value-delivery-scale",
@@ -1123,11 +1097,10 @@
       "stageGateDescription": "Steady-State Operations & Evolution",
       "stakeholders": [
         "Data science / AI teams",
-        "IT / data platform",
         "Asset Owner (technical owner of asset)",
         "Maintenance",
         "Railway safety & assurance",
-        "Asset management"
+        "IT / data platform"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
@@ -1151,15 +1124,13 @@
       "stageGate": 2,
       "stageGateDescription": "Solution Build & Verification",
       "stakeholders": [
-        "Asset management",
         "Asset Owner (technical owner of asset)",
-        "IT / data platform",
-        "Data science / AI teams",
         "Maintenance",
         "Frontline users / field staff",
-        "EAM/ERP system owner (SAP, Maximo)",
         "Legal & compliance",
-        "Systems engineering"
+        "IT / data platform",
+        "Data science / AI teams",
+        "EAM/ERP business application manager (SAP, Maximo)"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "data-foundations",
@@ -1184,14 +1155,15 @@
       "stageGateDescription": "Solution Architecture & Feasibility",
       "stakeholders": [
         "AI office / innovation (AI CoE)",
-        "Data science / AI teams",
-        "IT / data platform",
-        "Systems engineering",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
-        "Procurement",
+        "IT / data platform",
+        "Data science / AI teams",
+        "EAM/ERP business application manager (SAP, Maximo)",
+        "EAM/ERP IT application manager (SAP, Maximo)",
+        "Systems engineering",
         "Finance / controlling",
-        "EAM/ERP system owner (SAP, Maximo)"
+        "Procurement"
       ],
       "source": null,
       "domain": "value-delivery-scale",
@@ -1216,15 +1188,13 @@
       "stageGateDescription": "Operational Deployment & Commissioning",
       "stakeholders": [
         "Maintenance",
-        "Frontline users / field staff",
-        "EAM/ERP system owner (SAP, Maximo)",
-        "Asset management",
         "Asset Owner (technical owner of asset)",
+        "Frontline users / field staff",
+        "Railway safety & assurance",
         "IT / data platform",
         "Data science / AI teams",
-        "Systems engineering",
-        "Railway safety & assurance",
-        "Change management / HR"
+        "EAM/ERP business application manager (SAP, Maximo)",
+        "Systems engineering"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
@@ -1249,12 +1219,13 @@
       "stageGateDescription": "Steady-State Operations & Evolution",
       "stakeholders": [
         "IT / data platform",
-        "Data science / AI teams",
-        "Systems engineering",
         "Maintenance",
         "Operations / traffic control",
         "Railway safety & assurance",
-        "EAM/ERP system owner (SAP, Maximo)",
+        "Data science / AI teams",
+        "EAM/ERP business application manager (SAP, Maximo)",
+        "EAM/ERP IT application manager (SAP, Maximo)",
+        "Systems engineering",
         "Project / portfolio management"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
@@ -1280,11 +1251,11 @@
       "stageGateDescription": "Operational Deployment & Commissioning",
       "stakeholders": [
         "Data science / AI teams",
+        "Asset Owner (technical owner of asset)",
         "Maintenance",
         "Operations / traffic control",
         "Frontline users / field staff",
         "Railway safety & assurance",
-        "Asset Owner (technical owner of asset)",
         "Change management / HR"
       ],
       "source": "AIST_scalability_blockers_presentation v3",
@@ -1311,13 +1282,12 @@
       "stakeholders": [
         "IT / data platform",
         "Executive / senior management",
-        "Asset management",
+        "Asset manager",
+        "Asset Owner (technical owner of asset)",
         "Maintenance",
         "Operations / traffic control",
         "Legal & compliance",
-        "EAM/ERP system owner (SAP, Maximo)",
-        "Cybersecurity (IT/OT)",
-        "Systems engineering"
+        "EAM/ERP IT application manager (SAP, Maximo)"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "data-foundations",
@@ -1342,12 +1312,12 @@
       "stageGateDescription": "Solution Architecture & Feasibility",
       "stakeholders": [
         "Railway safety & assurance",
-        "Systems engineering",
+        "Asset Owner (technical owner of asset)",
         "Maintenance",
         "Operations / traffic control",
-        "Asset Owner (technical owner of asset)",
+        "Legal & compliance",
         "Data science / AI teams",
-        "Legal & compliance"
+        "Systems engineering"
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "legal-safety-assurance",
@@ -1372,12 +1342,12 @@
       "stageGateDescription": "Solution Architecture & Feasibility",
       "stakeholders": [
         "Railway safety & assurance",
-        "Systems engineering",
-        "Data science / AI teams",
+        "Executive / senior management",
+        "Asset Owner (technical owner of asset)",
         "Maintenance",
         "Operations / traffic control",
-        "Asset Owner (technical owner of asset)",
-        "Executive / senior management"
+        "Data science / AI teams",
+        "Systems engineering"
       ],
       "source": null,
       "domain": "legal-safety-assurance",
@@ -1401,13 +1371,14 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Operations / traffic control",
         "Frontline users / field staff",
         "Data science / AI teams",
         "IT / data platform",
-        "AI office / innovation (AI CoE)"
+        "AI office / innovation (AI CoE)",
+        "EAM/ERP business application manager (SAP, Maximo)"
       ]
     },
     {
@@ -1421,7 +1392,7 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Executive / senior management",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Operations / traffic control"
       ]
@@ -1437,7 +1408,7 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Executive / senior management",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "AI office / innovation (AI CoE)"
       ]
@@ -1452,7 +1423,7 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Operations / traffic control",
         "Frontline users / field staff",
@@ -1471,7 +1442,7 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Finance / controlling",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Data science / AI teams",
         "Executive / senior management"
@@ -1489,7 +1460,7 @@
       "stakeholders": [
         "AI office / innovation (AI CoE)",
         "Executive / senior management",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Finance / controlling"
       ]
@@ -1507,7 +1478,7 @@
         "Maintenance",
         "Operations / traffic control",
         "Frontline users / field staff",
-        "Asset management"
+        "Asset manager"
       ]
     },
     {
@@ -1521,7 +1492,7 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Finance / controlling",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Data science / AI teams",
         "AI office / innovation (AI CoE)"
@@ -1586,7 +1557,7 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Finance / controlling",
-        "Asset management",
+        "Asset manager",
         "Data science / AI teams",
         "Railway safety & assurance",
         "Legal & compliance"
@@ -1602,7 +1573,7 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Asset management",
+        "Asset manager",
         "Railway safety & assurance",
         "Maintenance",
         "Finance / controlling",
@@ -1637,7 +1608,7 @@
       "stakeholders": [
         "Executive / senior management",
         "AI office / innovation (AI CoE)",
-        "Asset management",
+        "Asset manager",
         "Maintenance"
       ]
     },
@@ -1682,7 +1653,7 @@
       "stageGateDescription": null,
       "stakeholders": [
         "AI office / innovation (AI CoE)",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Operations / traffic control",
         "Change management / HR"
@@ -1700,7 +1671,7 @@
       "stakeholders": [
         "Executive / senior management",
         "AI office / innovation (AI CoE)",
-        "Asset management"
+        "Asset manager"
       ]
     },
     {
@@ -1714,7 +1685,7 @@
       "stageGateDescription": null,
       "stakeholders": [
         "AI office / innovation (AI CoE)",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Operations / traffic control",
         "IT / data platform",
@@ -1750,7 +1721,7 @@
       "stakeholders": [
         "Executive / senior management",
         "IT / data platform",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "AI office / innovation (AI CoE)"
       ]
@@ -1767,7 +1738,7 @@
       "stakeholders": [
         "AI office / innovation (AI CoE)",
         "Executive / senior management",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Data science / AI teams"
       ]
@@ -1787,7 +1758,7 @@
         "Railway safety & assurance",
         "Legal & compliance",
         "IT / data platform",
-        "Asset management"
+        "Asset manager"
       ]
     },
     {
@@ -1802,7 +1773,7 @@
       "stakeholders": [
         "Executive / senior management",
         "AI office / innovation (AI CoE)",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Project / portfolio management"
       ]
@@ -1820,7 +1791,7 @@
         "Project / portfolio management",
         "AI office / innovation (AI CoE)",
         "Executive / senior management",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Data science / AI teams",
         "IT / data platform",
@@ -1870,7 +1841,7 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Executive / senior management",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "IT / data platform",
         "Data science / AI teams"
@@ -1886,14 +1857,14 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Operations / traffic control",
         "Frontline users / field staff",
         "IT / data platform",
         "Data science / AI teams",
         "Finance / controlling",
-        "EAM/ERP system owner (SAP, Maximo)"
+        "EAM/ERP business application manager (SAP, Maximo)"
       ]
     },
     {
@@ -1906,7 +1877,7 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Operations / traffic control",
         "Finance / controlling",
@@ -1928,7 +1899,7 @@
         "Railway safety & assurance",
         "Legal & compliance",
         "Frontline users / field staff",
-        "Asset management"
+        "Asset Owner (technical owner of asset)"
       ]
     },
     {
@@ -1962,7 +1933,7 @@
         "Data science / AI teams",
         "Maintenance",
         "Operations / traffic control",
-        "EAM/ERP system owner (SAP, Maximo)"
+        "EAM/ERP IT application manager (SAP, Maximo)"
       ]
     },
     {
@@ -1992,8 +1963,9 @@
         "Finance / controlling",
         "IT / data platform",
         "Maintenance",
-        "EAM/ERP system owner (SAP, Maximo)",
-        "Asset management"
+        "EAM/ERP business application manager (SAP, Maximo)",
+        "EAM/ERP IT application manager (SAP, Maximo)",
+        "Asset manager"
       ]
     },
     {
@@ -2026,7 +1998,7 @@
       "stakeholders": [
         "Change management / HR",
         "Data science / AI teams",
-        "Asset management",
+        "Asset manager",
         "Maintenance"
       ]
     },
@@ -2106,7 +2078,7 @@
         "Maintenance",
         "Operations / traffic control",
         "Frontline users / field staff",
-        "EAM/ERP system owner (SAP, Maximo)",
+        "EAM/ERP business application manager (SAP, Maximo)",
         "IT / data platform",
         "Data science / AI teams"
       ]
@@ -2156,7 +2128,7 @@
         "Data science / AI teams",
         "Maintenance",
         "Frontline users / field staff",
-        "EAM/ERP system owner (SAP, Maximo)"
+        "EAM/ERP business application manager (SAP, Maximo)"
       ]
     },
     {
@@ -2219,9 +2191,10 @@
         "Maintenance",
         "Operations / traffic control",
         "Frontline users / field staff",
-        "Asset management",
+        "Asset manager",
         "Data science / AI teams",
-        "AI office / innovation (AI CoE)"
+        "AI office / innovation (AI CoE)",
+        "EAM/ERP business application manager (SAP, Maximo)"
       ]
     },
     {
@@ -2271,7 +2244,7 @@
         "IT / data platform",
         "Legal & compliance",
         "Cybersecurity (IT/OT)",
-        "Asset management"
+        "Asset Owner (technical owner of asset)"
       ]
     },
     {
@@ -2285,7 +2258,6 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
-        "Asset management",
         "Asset Owner (technical owner of asset)",
         "Maintenance",
         "Data science / AI teams"
@@ -2301,7 +2273,6 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Asset management",
         "Asset Owner (technical owner of asset)",
         "Data science / AI teams",
         "IT / data platform",
@@ -2318,7 +2289,7 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Asset management",
+        "Asset Owner (technical owner of asset)",
         "IT / data platform",
         "Data science / AI teams",
         "Maintenance",
@@ -2336,7 +2307,6 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
-        "Asset management",
         "Asset Owner (technical owner of asset)",
         "Frontline users / field staff",
         "Data science / AI teams",
@@ -2354,8 +2324,8 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
-        "EAM/ERP system owner (SAP, Maximo)",
-        "Asset management",
+        "EAM/ERP IT application manager (SAP, Maximo)",
+        "Asset Owner (technical owner of asset)",
         "Data science / AI teams",
         "Systems engineering"
       ]
@@ -2372,7 +2342,7 @@
       "stakeholders": [
         "Executive / senior management",
         "IT / data platform",
-        "Asset management",
+        "Asset manager",
         "Maintenance",
         "Operations / traffic control",
         "Data science / AI teams"
@@ -2584,7 +2554,6 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Asset management",
         "Asset Owner (technical owner of asset)",
         "Data science / AI teams",
         "IT / data platform",
@@ -2603,7 +2572,7 @@
       "stakeholders": [
         "IT / data platform",
         "Data science / AI teams",
-        "Asset management",
+        "Asset Owner (technical owner of asset)",
         "Legal & compliance"
       ]
     },
@@ -2618,7 +2587,7 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
-        "EAM/ERP system owner (SAP, Maximo)",
+        "EAM/ERP IT application manager (SAP, Maximo)",
         "Data science / AI teams",
         "Systems engineering"
       ]
@@ -2633,10 +2602,9 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Asset management",
+        "Asset Owner (technical owner of asset)",
         "Data science / AI teams",
-        "IT / data platform",
-        "Asset Owner (technical owner of asset)"
+        "IT / data platform"
       ]
     },
     {
@@ -2649,10 +2617,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "Asset management",
+        "Asset Owner (technical owner of asset)",
         "Systems engineering",
         "IT / data platform",
-        "EAM/ERP system owner (SAP, Maximo)",
+        "EAM/ERP business application manager (SAP, Maximo)",
         "Data science / AI teams"
       ]
     },
@@ -2668,8 +2636,7 @@
       "stakeholders": [
         "IT / data platform",
         "Data science / AI teams",
-        "Asset Owner (technical owner of asset)",
-        "Asset management"
+        "Asset Owner (technical owner of asset)"
       ]
     },
     {
@@ -2685,7 +2652,7 @@
         "IT / data platform",
         "Cybersecurity (IT/OT)",
         "Data science / AI teams",
-        "EAM/ERP system owner (SAP, Maximo)"
+        "EAM/ERP IT application manager (SAP, Maximo)"
       ]
     },
     {
@@ -2700,7 +2667,7 @@
       "stakeholders": [
         "IT / data platform",
         "Cybersecurity (IT/OT)",
-        "EAM/ERP system owner (SAP, Maximo)"
+        "EAM/ERP IT application manager (SAP, Maximo)"
       ]
     },
     {
@@ -2810,7 +2777,7 @@
       "stakeholders": [
         "IT / data platform",
         "Systems engineering",
-        "EAM/ERP system owner (SAP, Maximo)",
+        "EAM/ERP IT application manager (SAP, Maximo)",
         "Procurement"
       ]
     },
@@ -2840,9 +2807,10 @@
       "stageGate": null,
       "stageGateDescription": null,
       "stakeholders": [
-        "EAM/ERP system owner (SAP, Maximo)",
+        "EAM/ERP IT application manager (SAP, Maximo)",
+        "EAM/ERP business application manager (SAP, Maximo)",
         "IT / data platform",
-        "Asset management",
+        "Asset Owner (technical owner of asset)",
         "Systems engineering"
       ]
     },
@@ -2857,7 +2825,7 @@
       "stageGateDescription": null,
       "stakeholders": [
         "IT / data platform",
-        "EAM/ERP system owner (SAP, Maximo)",
+        "EAM/ERP IT application manager (SAP, Maximo)",
         "Data science / AI teams"
       ]
     },
@@ -2873,7 +2841,8 @@
       "stakeholders": [
         "Procurement",
         "IT / data platform",
-        "EAM/ERP system owner (SAP, Maximo)",
+        "EAM/ERP business application manager (SAP, Maximo)",
+        "EAM/ERP IT application manager (SAP, Maximo)",
         "Legal & compliance",
         "Project / portfolio management"
       ]
@@ -2940,8 +2909,7 @@
       "stageGateDescription": null,
       "stakeholders": [
         "Maintenance",
-        "EAM/ERP system owner (SAP, Maximo)",
-        "Asset management",
+        "EAM/ERP business application manager (SAP, Maximo)",
         "Asset Owner (technical owner of asset)",
         "Data science / AI teams",
         "IT / data platform"
@@ -2960,7 +2928,7 @@
         "Maintenance",
         "Frontline users / field staff",
         "Data science / AI teams",
-        "EAM/ERP system owner (SAP, Maximo)"
+        "EAM/ERP business application manager (SAP, Maximo)"
       ]
     },
     {
@@ -3171,7 +3139,8 @@
         "IT / data platform",
         "Systems engineering",
         "Procurement",
-        "Finance / controlling"
+        "Finance / controlling",
+        "EAM/ERP business application manager (SAP, Maximo)"
       ]
     },
     {
