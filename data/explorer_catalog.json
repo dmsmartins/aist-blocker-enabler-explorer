@@ -3,7 +3,7 @@
   "rules_version": "2.0.0",
   "source": {
     "workbook_name": "AIST_Explorer_Master.xlsx",
-    "workbook_sha256": "1a96cad3b36a56970e49282dd038af79a72508ba3b13bb75a2905bd1e809c902",
+    "workbook_sha256": "d4d699a7356da2820f925342d80d702fb248a79ea024e93bd3db3462dc499be2",
     "exporter_version": "2.0.0"
   },
   "assessment_instances": [],
@@ -17705,14 +17705,14 @@
     {
       "assessment_type": "company",
       "mode": "expert",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "published_at": null,
       "questions": [
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1024",
-          "text": "How consistently does the company define, assign ownership for and enforce data-quality requirements across AI use cases?",
+          "text": "How consistently does the company define, assign ownership for and enforce data-quality requirements for AI use cases?",
           "default_weight": 1,
           "blocker_ids": [
             1024
@@ -17733,7 +17733,7 @@
           "rubric_2": "Quality dimensions, thresholds and owners are documented for pilot data; monitoring or source coverage is incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1024: The pilot defines a missing-data threshold but has not assigned every source owner.",
           "rubric_3": "All required sources have approved use-case-specific thresholds, accountable owners and working quality controls. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1024: Each source owner monitors approved thresholds and quarantines failing data.",
           "rubric_4": "Quality trends and recurring defects are reviewed; thresholds and corrective actions are improved using measured results. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1024: Repeated defect reviews lead to a verified improvement in inspection data capture.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
@@ -17760,7 +17760,7 @@
           "rubric_2": "An MVP and release sequence are defined; at least one increment has user feedback, but operational validation is incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1043: One MVP is trialled with users while later acceptance criteria remain open.",
           "rubric_3": "Usable increments are tested with operational users; recorded acceptance decisions control expansion of scope. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1043: Users test each release in the intended workflow before scope expands.",
           "rubric_4": "Repeated releases use adoption, usability and performance results to improve MVP scope and delivery decisions. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1043: Release feedback changes the next increment and measured usability improves.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
@@ -17783,11 +17783,11 @@
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
           "rubric_0": "No validated business problem or accountable business owner is identified.\nExamples (illustrative, not actual findings):\n1114: The team starts building a model without identifying the operational problem.",
-          "rubric_1": "A problem and possible owner are discussed, but ownership and process boundaries are informal.\nExamples (illustrative, not actual findings):\n1114: A manager mentions inspection delays but no one accepts ownership.",
+          "rubric_1": "A problem and possible owner are discussed, but ownership and process boundaries are informal.\n\nExamples (illustrative, not actual findings):\n1114: An AI solution to prioritise track maintenance is discussed, but no business owner is confirmed and its role in maintenance planning remains unclear.",
           "rubric_2": "A problem statement and owner are documented; baseline, authority or business approval remains incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1114: A problem statement exists but the delay baseline is unverified.",
           "rubric_3": "An authorised business owner approves the problem, process boundaries, baseline and measurable success criteria. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1114: The process owner approves the baseline and the intended improvement.",
           "rubric_4": "The owner regularly checks results against the original problem and baseline, and adjusts priorities when evidence changes. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1114: The owner compares results with the baseline and changes priorities when benefits fall short.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
@@ -17809,12 +17809,12 @@
           "evidence_examples": "1133: Stakeholder value propositions, benefit measures and recorded stakeholder feedback",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "rubric_0": "Expected value and affected stakeholder groups have not been identified.\nExamples (illustrative, not actual findings):\n1133: Benefits are described only as using AI.",
+          "rubric_0": "Expected value and affected stakeholder groups have not been identified.\nExamples (illustrative, not actual findings):\n1133: Benefits are described only as \"using AI\".",
           "rubric_1": "Benefits are expressed in general terms without stakeholder-specific outcomes or measures.\nExamples (illustrative, not actual findings):\n1133: The team claims time savings without identifying who saves time.",
           "rubric_2": "Benefits and measures are drafted for key groups; some affected groups have not validated them. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1133: Maintenance validates a benefit measure but dispatchers have not been consulted.",
           "rubric_3": "Every affected group has validated its expected benefits, measures and communication approach. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1133: Each affected group agrees its benefit measures and communication approach.",
           "rubric_4": "Measured benefits and stakeholder feedback are reviewed regularly and used to revise value claims and communication. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1133: Benefit reviews reveal extra operator workload and the rollout is adjusted.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
@@ -17841,13 +17841,13 @@
           "rubric_2": "A business case includes lifecycle costs and risks, but funding, sensitivities or shared-cost allocation remains unresolved. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1143: Lifecycle costs are estimated but platform funding is unresolved.",
           "rubric_3": "An approved case covers benefits, lifecycle costs, risks, sensitivities and funded allocation of shared foundations. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1143: Approvers fund the full lifecycle case and agree shared-cost allocation.",
           "rubric_4": "Actual costs and benefits are compared with the case; funding and shared-cost allocations are adjusted using evidence. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1143: Actual support costs trigger a documented funding and scope adjustment.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1211",
-          "text": "How clearly is an agreed AI vision translated into priorities understood across the company?",
+          "text": "How clearly is an agreed AI vision translated into priorities understood across the company? ",
           "default_weight": 1,
           "blocker_ids": [
             1211
@@ -17867,14 +17867,14 @@
           "rubric_1": "Sponsors express an AI ambition, but teams interpret its purpose differently.\nExamples (illustrative, not actual findings):\n1211: Sponsors describe innovation while users expect workload reduction.",
           "rubric_2": "The AI vision and contribution of the assessed activity are documented, but alignment is not agreed by all relevant teams. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1211: A vision is written but different teams interpret success differently.",
           "rubric_3": "Sponsors and teams share an approved AI vision and can explain how objectives and decisions align with it. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1211: Sponsors and teams use the agreed vision to choose initiatives.",
-          "rubric_4": "Strategic alignment and outcomes are reviewed regularly; the vision or priorities change when evidence warrants it. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1211: Outcome reviews lead to an explicit revision of strategic priorities.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "rubric_4": "Strategic alignment and outcomes are reviewed regularly; the vision or priorities change when evidence warrants it. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n\n1211: Outcome reviews drive revisions to strategic priorities, resulting in an aligned AI roadmap that is communicated across the company and guides its direction.",
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1223",
-          "text": "How effectively does the company resolve competing AI priorities and coordinate investment across business units?",
+          "text": "How effectively does the company align AI investments across business units based on shared business objectives, resolve competing priorities, and coordinate investments where needed?",
           "default_weight": 1,
           "blocker_ids": [
             1223
@@ -17894,14 +17894,14 @@
           "rubric_1": "Teams discuss conflicts informally; priorities remain local and unresolved.\nExamples (illustrative, not actual findings):\n1223: Managers negotiate access informally when delivery dates collide.",
           "rubric_2": "Shared prioritisation criteria and overlapping initiatives are documented, but resource or sequencing conflicts remain. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1223: Dependencies are documented but competing resource requests remain open.",
           "rubric_3": "Cross-unit priorities, resource decisions and dependencies are agreed through a working portfolio process. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1223: A portfolio decision resolves shared-resource conflicts and sequencing.",
-          "rubric_4": "Portfolio outcomes and dependency delays are measured and used to rebalance priorities and investment. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1223: Measured dependency delays lead to a revised portfolio allocation.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "rubric_4": "Portfolio outcomes and dependency delays are measured and used to rebalance priorities and investment. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1223: Measured dependency-related delays lead to adjustments in AI project priorities and resource allocation across the portfolio.",
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1233",
-          "text": "How reliably do defined decision rights and review times support timely scale, adapt or stop decisions?",
+          "text": "How fast can we get approval to scale AI pilots into governance compliant productionized solutions?",
           "default_weight": 1,
           "blocker_ids": [
             1233
@@ -17922,13 +17922,13 @@
           "rubric_2": "Governance roles and review steps are documented, but deadlines or escalation routes are not consistently used. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1233: A review process exists but missed deadlines have no escalation route.",
           "rubric_3": "Named approvers make recorded scale, adapt or stop decisions within agreed review and escalation arrangements. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1233: Named approvers record decisions and use the agreed escalation route.",
           "rubric_4": "Decision turnaround and recurring bottlenecks are monitored, and governance is improved using those results. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1233: Decision-time reviews remove a recurring approval bottleneck.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1243",
-          "text": "How consistently do senior sponsors sustain resources and commitment through AI delivery and adoption?",
+          "text": "How consistently do senior sponsors sustain resources and commitment through AI delivery and adoption? ",
           "default_weight": 1,
           "blocker_ids": [
             1243
@@ -17947,15 +17947,15 @@
           "rubric_0": "No active senior sponsor commits support or resources.\nExamples (illustrative, not actual findings):\n1243: No senior sponsor is identified.",
           "rubric_1": "A sponsor expresses support, but resources and follow-through are uncertain.\nExamples (illustrative, not actual findings):\n1243: A sponsor endorses the concept but does not attend reviews.",
           "rubric_2": "Sponsorship and resource commitments are documented, but continuity through rollout is not demonstrated. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1243: Resources are promised for the pilot but not for rollout.",
-          "rubric_3": "The sponsor attends reviews, resolves escalations and maintains approved resources through delivery and adoption. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1243: The sponsor resolves a staffing escalation and maintains rollout funding.",
+          "rubric_3": "The sponsor attends reviews, resolves escalations and maintains approved resources through delivery and adoption. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1243: The sponsor resolves a staffing escalation and maintains rollout funding. Full-time internal ressources are provided for scaling AI in the organization, instead of on-top tasks for existing roles. ",
           "rubric_4": "Sponsorship effectiveness and resource continuity are reviewed across cycles, and weak support is corrected early. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1243: Reviews identify weakening support early and secure replacement commitments.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1314",
-          "text": "How consistently is a business owner accountable for AI benefits and adoption after the prototype stage?",
+          "text": "How consistently is a business owner accountable for AI benefits and adoption after the prototype stage? ",
           "default_weight": 1,
           "blocker_ids": [
             1314
@@ -17975,14 +17975,14 @@
           "rubric_1": "An informal owner is suggested, without agreed authority for adoption or benefits.\nExamples (illustrative, not actual findings):\n1314: A delivery lead is assumed to own adoption without business authority.",
           "rubric_2": "A post-prototype owner is named, but benefit responsibilities or decision authority remain incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1314: A business owner is named but benefit accountability is unresolved.",
           "rubric_3": "A business owner formally accepts authority and accountability for adoption and benefits beyond the prototype. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1314: The owner accepts responsibility for adoption and realised benefits.",
-          "rubric_4": "The owner tracks adoption and realised benefits, acts on gaps and maintains accountability through organisational changes. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1314: An organisational change triggers a documented ownership transfer without interrupting benefit reviews.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "rubric_4": "The owner tracks adoption and realised benefits, acts on gaps and maintains accountability through organisational changes. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1314: An organisational change triggers a documented ownership transfer without interrupting benefit reviews.The owner maintains accountability over the entire life-cycle of the product and ensures the business outcomes are being met. ",
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1323",
-          "text": "How clearly does the company assign human judgement, approval, outcome ownership and escalation for AI-supported decisions?",
+          "text": "How clearly has the company defined who makes and approves decisions based on AI recommendations, who is responsible for the results, and who handles problems or disagreements?",
           "default_weight": 1,
           "blocker_ids": [
             1323
@@ -18003,13 +18003,13 @@
           "rubric_2": "Decision roles and oversight procedures are documented; some decisions or failure scenarios remain untested. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1323: Roles are documented but an ambiguous recommendation has not been rehearsed.",
           "rubric_3": "Every relevant decision has a named human decision-maker, approval authority, outcome owner and tested escalation route. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1323: An exercise confirms who overrides an output and who approves the alternative action.",
           "rubric_4": "Decision incidents and oversight exercises are reviewed regularly and used to improve accountability and escalation. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1323: Incident reviews improve decision authority and escalation procedures.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1334",
-          "text": "How consistently are funded operating models established for AI services after go-live?",
+          "text": "How well does the company ensure that AI services have the staff, budget, responsible owners and agreed levels of support they need once they are in use?",
           "default_weight": 1,
           "blocker_ids": [
             1334
@@ -18030,13 +18030,13 @@
           "rubric_2": "A service model exists, but staffing, funding, service levels or ownership is not fully accepted. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1334: A service plan exists but night-shift support is unfunded.",
           "rubric_3": "A staffed and funded operating model has accepted service ownership, support responsibilities and service levels. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1334: A funded support rota and accepted service levels cover the intended operation.",
           "rubric_4": "Service performance, workload and cost are reviewed; staffing, funding and support arrangements are adjusted accordingly. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1334: Service workload reviews lead to additional support capacity and improved response times.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1413",
-          "text": "How systematically does the company identify and close AI and digital skill gaps for business, technical and operational roles?",
+          "text": "How well does the company identify the AI and digital skills people need for their roles, address gaps, and check that they can apply those skills in practice?",
           "default_weight": 1,
           "blocker_ids": [
             1413
@@ -18057,13 +18057,13 @@
           "rubric_2": "Roles and gaps are assessed and training has started; competence is not yet demonstrated for all required roles. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1413: Role-based training starts but support competence remains untested.",
           "rubric_3": "Delivery, operational and support roles demonstrate required competence; material gaps are closed before rollout. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1413: Users and support teams demonstrate the tasks required before rollout.",
           "rubric_4": "Competence and changing skill needs are reassessed regularly; training effectiveness is measured and improved. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1413: Assessment results drive updated training and improved task performance.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1424",
-          "text": "How effectively does the company involve employees in AI adoption and address trust concerns with evidence?",
+          "text": "How well does the company involve affected employees in testing and introducing AI, address their concerns about trust and changes to their jobs, and check whether they accept and use it?",
           "default_weight": 1,
           "blocker_ids": [
             1424
@@ -18084,13 +18084,13 @@
           "rubric_2": "Users participate in pilots and concerns are recorded, but important trust or job-impact issues remain unresolved. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1424: Pilot users give feedback but important concerns remain unanswered.",
           "rubric_3": "Affected user groups participate in trials; documented responses address concerns and acceptance is evidenced. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1424: Affected groups trial the solution and see documented responses to concerns.",
           "rubric_4": "Adoption and trust feedback are tracked over time and lead to demonstrable changes in the solution or adoption approach. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1424: Usage and trust reviews lead to a verified improvement in the user workflow.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1433",
-          "text": "How well does the company manage the capacity, learning and workload required for repeated AI-driven change?",
+          "text": "How well does the company give employees the time, training and support they need to introduce AI and keep up with later updates.",
           "default_weight": 1,
           "blocker_ids": [
             1433
@@ -18111,13 +18111,13 @@
           "rubric_2": "A change and learning plan identifies workload, but capacity or ongoing-update support remains insufficient. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1433: A change plan exists but release training clashes with operational commitments.",
           "rubric_3": "Operational capacity, learning support and change responsibilities are allocated for rollout and continuing updates. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1433: Staff time and support are allocated for rollout and subsequent updates.",
           "rubric_4": "Change workload, adoption and learning outcomes are monitored and used to adjust rollout pace and support. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1433: Workload and adoption evidence leads to a slower rollout and revised support.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1511",
-          "text": "How well do decision-makers understand AI's data needs, accuracy limits and assurance constraints in railway operations?",
+          "text": "How well do decision-makers understand what data AI needs to work effectively, how accurate its results can be, where its limitations lie, and what checks and safeguards are needed to ensure it is reliable, safe and suitable for use",
           "default_weight": 1,
           "blocker_ids": [
             1511
@@ -18136,15 +18136,15 @@
           "rubric_0": "Decision-makers have no shared understanding of AI capabilities or limitations.\nExamples (illustrative, not actual findings):\n1511: Sponsors assume the model will always be correct.",
           "rubric_1": "Expectations rely on demonstrations or general claims, without data, accuracy or assurance limits.\nExamples (illustrative, not actual findings):\n1511: A successful demo is treated as proof of general reliability.",
           "rubric_2": "Capabilities and limitations are documented and discussed, but some sponsors or users still hold untested expectations. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1511: Limitations are documented but some users still expect autonomous decisions.",
-          "rubric_3": "Sponsors and users agree realistic capabilities, data requirements, accuracy limits and assurance constraints. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1511: Sponsors and users agree what the solution can and cannot support.",
-          "rubric_4": "Observed results and failures are used regularly to update expectations, briefings and investment decisions. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1511: Observed failures are incorporated into updated briefings and investment decisions.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "rubric_3": "Sponsors and users agree realistic capabilities, data requirements, accuracy limits and assurance constraints. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1511: Sponsors and users agree what the solution can and cannot support. around its limitations and the safeguards in place",
+          "rubric_4": "Observed results,and failures and limitations are used regularly to update expectations, briefings and investment decisions. All level-3 conditions continue to be met. Demonstrated across repeated organisational review stages.\nExamples (illustrative, not actual findings):\n1511: Observed failures and limitations are incorporated into updated briefings and investment decisions.",
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1524",
-          "text": "How consistently are railway field conditions built into AI design and service-support decisions?",
+          "text": "How consistently are field deployment software asset management tools built into the AI design to support field service-support decisions?",
           "default_weight": 1,
           "blocker_ids": [
             1524
@@ -18165,13 +18165,13 @@
           "rubric_2": "Possession windows, connectivity, shifts and trackside conditions are documented; trials cover only some scenarios. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1524: A field trial covers daytime operation but not relevant night-shift conditions.",
           "rubric_3": "Representative field trials validate the solution and support arrangements against all relevant operating constraints. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1524: Representative trials validate offline behaviour and shift support arrangements.",
           "rubric_4": "Field-use results and support incidents are reviewed across conditions and used to improve design and service support. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1524: Field incidents lead to a tested change in offline recovery and support.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1614",
-          "text": "How consistently do data ownership, access rules and decision rights enable approved AI use across business units?",
+          "text": "How clearly are responsibilities for owning, accessing and using data defined, and how consistently are these rules applied to support approved AI use across the organisation?",
           "default_weight": 1,
           "blocker_ids": [
             1614
@@ -18191,8 +18191,8 @@
           "rubric_1": "Access is negotiated through local contacts; terms differ and refusals lack clear escalation.\nExamples (illustrative, not actual findings):\n1614: An analyst receives an informal extract from a colleague.",
           "rubric_2": "Owners and access rules are documented for some datasets, but permissions or cross-unit consistency remains incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1614: Owners are identified but one unit's reuse permission is unresolved.",
           "rubric_3": "Every required dataset has an accountable owner, approved permissions, consistent access terms and a working escalation route. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1614: Each required dataset has approved terms and a functioning access route.",
-          "rubric_4": "Access delays, exceptions and governance decisions are reviewed and used to improve cross-unit access arrangements. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1614: Access-delay reviews simplify approvals while maintaining the agreed controls.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "rubric_4": "Access delays, exceptions and governance decisions are reviewed and used to improve cross-unit access arrangements. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1614: Data Access-delay reviews simplify approvals while maintaining the agreed controls.",
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
@@ -18218,14 +18218,14 @@
           "rubric_1": "General legal advice is available only ad hoc, with unclear AI competence or review capacity.\nExamples (illustrative, not actual findings):\n1713: General advice arrives only after design decisions are made.",
           "rubric_2": "Suitable advisers are identified, but AI skills, allocated capacity or timely involvement remains incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1713: An appropriate adviser is identified but review time is not allocated.",
           "rubric_3": "Named advisers have appropriate AI expertise and allocated capacity, and provide timely documented guidance. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1713: A named adviser provides documented guidance at the required decision points.",
-          "rubric_4": "Advice quality, turnaround and emerging skill needs are reviewed; expertise and review capacity are updated. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1713: Review delays and changing advice needs lead to adjusted specialist capacity.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "rubric_4": "Advice quality, turnaround and emerging skill needs are reviewed; expertise and review capacity are updated. All level-3 conditions continue to be met.  Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1713: Review delays and changing advice needs lead to adjusted specialist capacity.",
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1723",
-          "text": "How consistently does the company document and update interpretations of the requirements applicable to AI initiatives?",
+          "text": "How consistently does the company document, review and update the AI initiatives ?",
           "default_weight": 1,
           "blocker_ids": [
             1723
@@ -18246,13 +18246,13 @@
           "rubric_2": "A requirements register and interpretations exist, but design actions, ownership or approval remain incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1723: Requirements are recorded but design actions have no owners.",
           "rubric_3": "Competent reviewers agree documented interpretations and translate them into owned design and approval actions. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1723: Competent reviewers agree interpretations and owners implement the resulting actions.",
           "rubric_4": "Interpretations and actions are reviewed when requirements or use conditions change, with decisions and updates recorded. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1723: A change in use conditions triggers a recorded applicability review and updated actions.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1811",
-          "text": "How consistently does the company define scaling in terms of sites, assets, users, processes and operating conditions?",
+          "text": "How consistently does the company define what 'scaling' an AI initiative means' in terms of sites, assets, users, processes and operating conditions?",
           "default_weight": 1,
           "blocker_ids": [
             1811
@@ -18269,17 +18269,17 @@
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
           "rubric_0": "Scaling has no explicit definition.\nExamples (illustrative, not actual findings):\n1811: Success is described only as scaling up.",
-          "rubric_1": "Scaling means a general increase in use, without agreed boundaries or target conditions.\nExamples (illustrative, not actual findings):\n1811: The team targets more sites without defining assets or users.",
-          "rubric_2": "Some target sites, assets or users are documented, but process or operating-condition boundaries remain unclear. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1811: Target sites are listed but operating conditions remain unspecified.",
+          "rubric_1": "Scaling generally means “using the solution more widely”, but the target scope and boundaries are not agreed.\n\nExamples (illustrative, not actual findings):\n1811: The team targets more sites without defining assets or users.\n",
+          "rubric_2": "Some target sites, assets, users or processes are documented, but the full target scale or operating boundaries remain incomplete or are only defined for some initiatives.\n\nExamples (illustrative, not actual findings):\n1811: Target sites are listed but operating conditions remain unspecified.\n",
           "rubric_3": "Target sites, assets, users, processes and operating conditions are explicitly agreed, including rollout boundaries. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1811: The target deployment scope and exclusions are agreed by the relevant owners.",
           "rubric_4": "Rollout evidence is checked against target scale; scope and assumptions are revised through recorded decisions. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1811: Rollout evidence prompts an approved change to the target operating boundary.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1823",
-          "text": "Do teams use a shared, evidence-based framework to judge AI maturity and readiness at each stage gate?",
+          "text": "How consistently do teams use a shared, evidence-based framework to judge AI maturity and readiness when deciding whether an initiative can move to the next stage?",
           "default_weight": 1,
           "blocker_ids": [
             1823
@@ -18296,17 +18296,17 @@
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
           "rubric_0": "Teams use no shared maturity or readiness criteria.\nExamples (illustrative, not actual findings):\n1823: Teams declare readiness without criteria.",
-          "rubric_1": "Readiness is judged informally and differently across teams.\nExamples (illustrative, not actual findings):\n1823: Each team uses its own informal checklist.",
-          "rubric_2": "A common framework and gate criteria exist, but evidence gaps or readiness judgements are not jointly agreed. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1823: A common checklist exists but approvers disagree on required evidence.",
-          "rubric_3": "Delivery teams and approvers use agreed evidence-based gate criteria and record maturity, gaps and exit decisions. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1823: Teams and approvers use the same evidence-based gate criteria.",
-          "rubric_4": "Gate decisions and later outcomes are reviewed to improve criteria, evidence requirements and calibration between teams. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1823: Post-deployment outcomes are used to improve gate criteria and scoring consistency.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "rubric_1": "Readiness is judged informally and work differently across teams.\nExamples (illustrative, not actual findings):\n1823: Each team uses its own informal checklist.",
+          "rubric_2": "A common framework and gate criteria exist, but evidence gaps or readiness judgements are not jointly agreed. Evidence may be limited to individual units or pilots.\n\nExamples (illustrative, not actual findings):\n1823: A common checklist exists but approvers disagree on required evidence.\n",
+          "rubric_3": "Delivery teams and approvers use agreed evidence-based stage criteria and record maturity, gaps and exit decisions. Required across all assessed units and relevant initiatives.\n\n\nExamples (illustrative, not actual findings):\n1823: Teams and approvers use the same evidence-based gate criteria.",
+          "rubric_4": "Stage decisions and later outcomes are reviewed to improve criteria, evidence requirements and calibration between teams. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\n\nExamples (illustrative, not actual findings):\n1823: Post-deployment outcomes are used to improve gate criteria and scoring consistency.",
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1833",
-          "text": "How reliably are resources, criteria and approval routes secured for the transition from PoC to production?",
+          "text": "How reliably are ownership, resources, acceptance criteria and approval routes secured for the transition from PoC to production?",
           "default_weight": 1,
           "blocker_ids": [
             1833
@@ -18323,17 +18323,17 @@
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
           "rubric_0": "No route from PoC to production is defined.\nExamples (illustrative, not actual findings):\n1833: The PoC has no production route.",
-          "rubric_1": "Production is an aspiration without accepted criteria, resources or approvers.\nExamples (illustrative, not actual findings):\n1833: Deployment is promised without budget or approvers.",
-          "rubric_2": "A transition plan exists, but acceptance criteria, resource commitments or approval dates remain open. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1833: A transition plan exists but operational resources are not committed.",
-          "rubric_3": "An approved transition plan specifies acceptance criteria, owners, production resources and approval milestones. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1833: Owners approve the transition plan, resources and acceptance milestones.",
-          "rubric_4": "Transition delays and acceptance results are reviewed across releases and used to improve the production pathway. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1833: Transition reviews identify recurring delays and improve the next release pathway.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "rubric_1": "Production is an aspiration without defined criteria, resources or approvers.\n\nExamples (illustrative, not actual findings):\n1833: Deployment is promised without budget or approvers.",
+          "rubric_2": "A transition plan exists, but acceptance criteria, resource commitments or approval dates remain open. Evidence may be limited to individual units or pilots.\n\nExamples (illustrative, not actual findings):\n1833: A transition plan exists but operational resources are not committed.",
+          "rubric_3": "An approved transition plan defines acceptance criteria, owners, production resources and approval milestones. Required across all assessed units and relevant initiatives.\n\nExamples (illustrative, not actual findings):\n1833: Owners approve the transition plan, resources and acceptance milestones.",
+          "rubric_4": "Transition delays and acceptance results are reviewed across releases and used to improve the POC-to-production pathway. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\n\nExamples (illustrative, not actual findings):\n1833: Transition reviews identify recurring delays and improve the next release pathway.",
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-1921",
-          "text": "How consistently do AI delivery plans reflect technical maturity, integration, organisational change and assurance lead times?",
+          "text": "How consistently are AI delivery plans based on realistic scope and dependency-aware scheduling?",
           "default_weight": 1,
           "blocker_ids": [
             1921
@@ -18349,18 +18349,18 @@
           "evidence_examples": "1921: Integrated schedule, dependency estimates, assurance milestones and contingency",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "rubric_0": "No credible delivery schedule or bounded scaling ambition exists.\nExamples (illustrative, not actual findings):\n1921: Deployment dates have no supporting plan.",
+          "rubric_0": "No credible delivery schedule or realistic scaling plan\n\nbounded scaling ambition exists.\n\nExamples (illustrative, not actual findings):\n1921: Deployment dates have no supporting plan.",
           "rubric_1": "Dates are aspirational and omit major integration, change or assurance effort.\nExamples (illustrative, not actual findings):\n1921: The schedule includes model work but omits operational acceptance.",
           "rubric_2": "An integrated schedule identifies dependencies, but estimates, capacity or contingency remain unvalidated. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1921: Dependencies are listed but estimates have not been validated.",
           "rubric_3": "Scope and schedule reflect validated technical, integration, change and assurance lead times with contingency. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1921: The plan includes validated integration and assurance lead times and contingency.",
           "rubric_4": "Actual lead times and scope outcomes are reviewed regularly and used to reforecast and improve delivery estimates. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1921: Actual lead times are used to reforecast rollout and refine future estimates.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-2213",
-          "text": "How mature and consistently governed are the company's shared IT foundations for operating AI at scale?",
+          "text": "How mature and consistently governed are the company's shared architecture & platform capabilities for operating AI at scale?",
           "default_weight": 1,
           "blocker_ids": [
             2213
@@ -18377,11 +18377,11 @@
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
           "rubric_0": "No suitable architecture or governed platform is available for production AI.\nExamples (illustrative, not actual findings):\n2213: The solution runs only on an unmanaged laptop.",
-          "rubric_1": "AI relies on isolated environments with unresolved security, resilience or integration foundations.\nExamples (illustrative, not actual findings):\n2213: A shared environment exists without recovery or access arrangements.",
-          "rubric_2": "A target architecture is reviewed, but platform governance or production capability is only partly implemented. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2213: The target architecture is reviewed but resilience tests are incomplete.",
+          "rubric_1": "AI relies on isolated or temporary environments with important security, resilience, access or integration issues unresolved.\n\nExamples (illustrative, not actual findings):\n2213: A shared environment exists without recovery or access arrangements.",
+          "rubric_2": "A target architecture is reviewed, but platform governance or production capability is only partly implemented. Evidence may be limited to individual units or pilots.\n\nExamples (illustrative, not actual findings):\n2213: The target architecture is reviewed but resilience tests are incomplete.",
           "rubric_3": "Approved architecture and governed platforms demonstrate required security, resilience, integration and growth capacity. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2213: The governed platform passes required resilience, access and capacity checks.",
           "rubric_4": "Platform service and scaling results are monitored and drive controlled architecture and foundation improvements. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2213: Platform incidents and capacity trends drive controlled improvements.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
@@ -18408,13 +18408,13 @@
           "rubric_2": "Profiling, quality thresholds and semantic mappings exist, but some sources fail tests or remain unmapped. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2123: Mappings exist but one source still fails the agreed quality tests.",
           "rubric_3": "All required datasets pass agreed quality tests and reconcile definitions, identifiers and units across sources. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2123: All required sources pass quality and identifier/unit reconciliation tests.",
           "rubric_4": "Quality and semantic consistency are monitored over time; recurring defects trigger verified corrections at source. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2123: Recurring semantic defects are corrected at source and the fix is verified.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-2134",
-          "text": "How reliably do technical data pipelines provide controlled, secure and usable access for AI across environments?",
+          "text": "How reliably can the company access the data needed for AI in a secure and controlled way?",
           "default_weight": 1,
           "blocker_ids": [
             2134
@@ -18430,18 +18430,18 @@
           "evidence_examples": "2134: Pipeline tests, access-control tests, lineage and transfer monitoring",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "rubric_0": "Required data cannot be transferred through a controlled, usable pipeline.\nExamples (illustrative, not actual findings):\n2134: Data cannot reach the model through a controlled route.",
-          "rubric_1": "Ad hoc transfers work locally, without reliable access control or traceability.\nExamples (illustrative, not actual findings):\n2134: Staff email extracts to keep the pilot running.",
-          "rubric_2": "Pipelines and permissions are implemented in a pilot, but security, reliability or environment coverage is incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2134: A pipeline works in test but production access and recovery are unproven.",
-          "rubric_3": "End-to-end pipelines demonstrate secure access, reliable transfer, usable data and traceable lineage across required environments. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2134: Production pipeline tests demonstrate permitted access, reliable transfer and lineage.",
-          "rubric_4": "Transfer failures, access exceptions and pipeline performance are monitored and drive tested improvements. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2134: Transfer incidents lead to tested improvements in retries and monitoring.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "rubric_0": "Data cannot be transferred and accessed in a secure and usable way.\nExamples (illustrative, not actual findings):\n2134: Data cannot reach the model through a controlled route.",
+          "rubric_1": "Data is transferred manually or in different ways. Access and changes are not always controlled or tracked.\nExamples (illustrative, not actual findings):\n2134: Staff email extracts to keep the pilot running.",
+          "rubric_2": "Data access and transfer are tested in pilots or individual units, but security, reliability and availability across environments are not yet fully ensured.\n\nExamples (illustrative, not actual findings):\n2134: A pipeline works in test but production access and recovery are unproven.",
+          "rubric_3": "Data can be securely and reliably transferred across all required environments. Access is controlled, data is usable, and its origin and movement can be traced. This is demonstrated through end-to-end testing across all relevant initiatives and assessed units.\n\nExamples (illustrative, not actual findings):\n2134: Production pipeline tests demonstrate permitted access, reliable transfer and lineage.",
+          "rubric_4": "Data transfers, access exceptions and pipeline performance are continuously monitored. Identified issues lead to tested improvements, demonstrated over repeated organisational review cycles. All level 3 requirements remain satisfied.\n\nExamples (illustrative, not actual findings):\n2134: Transfer incidents lead to tested improvements in retries and monitoring.",
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-2221",
-          "text": "How systematically does the company provision AI compute environments against measured workload and deployment needs?",
+          "text": "How well does the company provide the right computing capacity and deployment environment based on measured AI workload requirements?",
           "default_weight": 1,
           "blocker_ids": [
             2221
@@ -18457,18 +18457,18 @@
           "evidence_examples": "2221: Workload benchmarks, capacity sizing and deployment-environment tests",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "rubric_0": "Compute requirements and deployment environment are unspecified.\nExamples (illustrative, not actual findings):\n2221: No workload or compute requirements are defined.",
-          "rubric_1": "An environment is chosen by assumption, without measured workload needs.\nExamples (illustrative, not actual findings):\n2221: An environment is chosen because it worked for another team.",
-          "rubric_2": "Sizing and pilot benchmarks exist, but target-scale latency, memory, processing or availability is unproven. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2221: Pilot benchmarks exist but peak target demand has not been tested.",
-          "rubric_3": "Representative target-scale benchmarks confirm processing, memory, latency and availability requirements are met. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2221: Representative peak-load tests meet the agreed service requirements.",
-          "rubric_4": "Workload and capacity trends are monitored; resizing and performance improvements are validated before demand outgrows capacity. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2221: Capacity trends trigger validated resizing before demand exceeds available resources.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "rubric_0": "Computing requirements and the required deployment environment have not been defined.\n\nExamples (illustrative, not actual findings):\n2221: No workload or compute requirements are defined.",
+          "rubric_1": "The computing environment is selected based on assumptions rather than measured workload and capacity requirements.\nExamples (illustrative, not actual findings):\n2221: An environment is chosen because it worked for another team.",
+          "rubric_2": "Computing requirements and performance have been tested in pilots, but processing speed, memory, response times and availability at the expected full scale remain unproven. Testing may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2221: Pilot benchmarks exist but peak target demand has not been tested.",
+          "rubric_3": "The solution is tested under realistic conditions at the expected full scale. Computing capacity, processing speed, memory, response times and availability meet the agreed requirements across all relevant initiatives and assessed units.\nExamples (illustrative, not actual findings):\n2221: Representative peak-load tests meet the agreed service requirements.",
+          "rubric_4": "Computing workloads, capacity and performance trends are continuously monitored. Capacity adjustments and performance improvements are tested and implemented before demand exceeds available resources. This is demonstrated over repeated organisational review cycles, while all level 3 requirements remain satisfied.\n\nExamples (illustrative, not actual findings):\n2221: Capacity trends trigger validated resizing before demand exceeds available resources.",
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-2231",
-          "text": "How effectively does the company manage software compatibility, tooling constraints and vendor dependence in its AI stack?",
+          "text": "How effectively does the company manage software compatibility, tool limitations and vendor dependence within its AI technology stack?",
           "default_weight": 1,
           "blocker_ids": [
             2231
@@ -18484,18 +18484,18 @@
           "evidence_examples": "2231: Stack review, compatibility tests, licence assessment and exit strategy",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "rubric_0": "Stack, tooling and vendor constraints have not been assessed.\nExamples (illustrative, not actual findings):\n2231: The stack is adopted without checking constraints.",
-          "rubric_1": "Tools are selected for convenience; compatibility, licences and vendor dependence are largely unknown.\nExamples (illustrative, not actual findings):\n2231: A convenient tool is selected without licence or portability review.",
-          "rubric_2": "Stack risks and alternatives are documented, but compatibility, portability or exit arrangements remain untested. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2231: Risks are recorded but a migration approach has not been tested.",
-          "rubric_3": "Compatibility is tested and licensing, tooling limits, portability and vendor-exit risks have accepted mitigations. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2231: Compatibility tests and accepted mitigations cover licensing and exit risks.",
-          "rubric_4": "Upgrade, portability and supplier risks are reviewed regularly and exit or migration arrangements are exercised where relevant. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2231: Upgrade reviews and migration exercises improve portability arrangements.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "rubric_0": "Technology compatibility, tool limitations and supplier risks have not been assessed.\nExamples (illustrative, not actual findings):\n2231: The stack is adopted without checking constraints.",
+          "rubric_1": "Tools are selected mainly for convenience, without a clear understanding of compatibility, licensing requirements or dependence on suppliers.\nExamples (illustrative, not actual findings):\n2231: A convenient tool is selected without licence or portability review.",
+          "rubric_2": "Technology risks and alternative solutions are documented, but compatibility, portability and plans for replacing or migrating tools have not been fully tested. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2231: Risks are recorded but a migration approach has not been tested.",
+          "rubric_3": "Compatibility is tested, licensing and tool limitations are understood, and agreed measures are in place to manage supplier dependence, portability and vendor-exit risks. These requirements are met across all relevant initiatives and assessed units.\n\nExamples (illustrative, not actual findings):\n2231: Compatibility tests and accepted mitigations cover licensing and exit risks.",
+          "rubric_4": "Compatibility, upgrades, portability and supplier risks are regularly reviewed. Plans for migrating or replacing tools are tested where relevant, and findings lead to improvements. This is demonstrated over repeated organisational review cycles, while all level 3 requirements remain satisfied.\n\nExamples (illustrative, not actual findings):\n2231: Upgrade reviews and migration exercises improve portability arrangements.",
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-2313",
-          "text": "How consistently can AI services exchange usable information with enterprise and asset-management systems?",
+          "text": "How reliably can AI systems exchange usable information with enterprise, asset-management and other relevant company systems?",
           "default_weight": 1,
           "blocker_ids": [
             2313
@@ -18511,18 +18511,18 @@
           "evidence_examples": "2313: Interface contracts, identifier mappings and enterprise integration tests",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "rubric_0": "AI outputs are disconnected from required enterprise and asset systems.\nExamples (illustrative, not actual findings):\n2313: Predictions remain in a separate file with no enterprise link.",
-          "rubric_1": "Data is transferred manually without agreed interfaces or reliable asset/work-order identifiers.\nExamples (illustrative, not actual findings):\n2313: Staff retype results into work orders.",
-          "rubric_2": "Interface contracts and mappings exist, but end-to-end enterprise integration is only partly tested. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2313: An interface exists but asset-ID mismatches remain in testing.",
-          "rubric_3": "Required asset, inspection, work-order and planning interfaces pass end-to-end tests with reconciled identifiers. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2313: End-to-end tests create and update the correct asset and work-order records.",
-          "rubric_4": "Interface failures and operational transaction outcomes are monitored and used to improve integration reliability. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2313: Transaction failures are monitored and recurring interface defects are corrected.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "rubric_0": "AI systems cannot exchange the required information with existing enterprise and asset management systems.\nExamples (illustrative, not actual findings):\n2313: Predictions remain in a separate file with no enterprise link.",
+          "rubric_1": "Information is transferred manually, without agreed interfaces or reliable identifiers to connect assets, work orders and other information across systems.\nExamples (illustrative, not actual findings):\n2313: Staff retype results into work orders.",
+          "rubric_2": "Interfaces and data mappings between systems are defined, but end-to-end integration has only been partly tested. Issues with data matching or system connections may remain, and evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2313: An interface exists but asset-ID mismatches remain in testing.",
+          "rubric_3": "AI systems reliably exchange information with relevant asset, inspection, work-order and planning systems. Interfaces and identifiers are validated through successful end-to-end testing across all relevant initiatives and assessed units.\n\nExamples (illustrative, not actual findings):\n2313: End-to-end tests create and update the correct asset and work-order records.",
+          "rubric_4": "System interfaces, transaction results and integration failures are continuously monitored. Identified issues lead to improvements in integration reliability, demonstrated over repeated organisational review cycles. All level 3 requirements remain satisfied.\n\nExamples (illustrative, not actual findings):\n2313: Transaction failures are monitored and recurring interface defects are corrected.",
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-2323",
-          "text": "How consistently are AI services integrated with OT, monitoring, alarm procedures and railway operating workflows?",
+          "text": "How consistently are ML/AI services integrated with OT, monitoring, alarm procedures and railway operating workflows?",
           "default_weight": 1,
           "blocker_ids": [
             2323
@@ -18543,13 +18543,13 @@
           "rubric_2": "OT interfaces and alarm procedures are designed, but representative operating and failure scenarios remain untested. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2323: Procedures exist but loss-of-connection scenarios are untested.",
           "rubric_3": "Required OT interfaces, alarms and response procedures pass representative railway operational acceptance tests. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2323: Operators validate alarms and responses in representative acceptance tests.",
           "rubric_4": "Alarm quality, response outcomes and OT incidents are monitored and drive controlled integration improvements. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2323: Alarm outcomes and OT incidents drive controlled changes to integration.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-2423",
-          "text": "How consistently are deployed AI models monitored, retrained and reviewed as data and operating conditions evolve?",
+          "text": "How consistently are deployed ML/AI models monitored, retrained and reviewed as data and operating conditions evolve?",
           "default_weight": 1,
           "blocker_ids": [
             2423
@@ -18570,13 +18570,13 @@
           "rubric_2": "Monitoring and retraining plans exist, but drift triggers, ownership or update controls are only partly operational. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2423: Monitoring is piloted but retraining approval is unresolved.",
           "rubric_3": "Owned monitoring detects drift and threshold breaches; retraining and model changes follow tested approval and release controls. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2423: A threshold breach triggers owned investigation and controlled model release.",
           "rubric_4": "Detection effectiveness and post-update outcomes are reviewed over repeated cycles and used to refine monitoring and retraining. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2423: Repeated update reviews improve detection thresholds and retraining decisions.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-2513",
-          "text": "How systematically does the company test model performance across the variability introduced by scaling?",
+          "text": "How systematically does the company test and monitor ML/AI-model performance across the variability introduced by scaling?",
           "default_weight": 1,
           "blocker_ids": [
             2513
@@ -18597,13 +18597,13 @@
           "rubric_2": "Thresholds and stratified tests exist, but important assets, sites, seasons or operating conditions remain uncovered. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2513: Stratified tests exist but an important operating condition is missing.",
           "rubric_3": "Representative tests meet agreed thresholds across all relevant target-scale conditions; failures and limitations are documented. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2513: Representative tests meet agreed thresholds across the deployment scope.",
           "rubric_4": "Performance variation is monitored across conditions and time; degradations trigger validated corrective action. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2513: Monitoring detects a condition-specific decline and a corrective change is validated.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-3114",
-          "text": "How consistently is the data needed for AI collected, retained and made available in usable form?",
+          "text": "How consistently is the data needed for AI collected, retained and made available in usable form during the life-cycle?",
           "default_weight": 1,
           "blocker_ids": [
             3114
@@ -18624,7 +18624,7 @@
           "rubric_2": "A data inventory and collection plan exist; gaps in frequency, coverage, retention or availability remain. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n3114: Collection is planned but gaps remain in frequency or retention.",
           "rubric_3": "Required data is collected at agreed coverage and frequency, retained appropriately and demonstrably available for use. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3114: Required datasets are collected, retained and available at the agreed coverage.",
           "rubric_4": "Collection completeness, availability and retention are monitored; recurrent gaps trigger improvements to collection and storage. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3114: Availability reviews identify recurring collection gaps and verify improved capture.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
@@ -18651,7 +18651,7 @@
           "rubric_2": "An options assessment uses stated criteria, but benchmarks, scalability or lifecycle-cost comparisons are incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n3123: An options matrix exists but key alternatives lack benchmarks.",
           "rubric_3": "Credible AI and non-AI options are compared against operational, scalability and lifecycle-cost criteria with an approved rationale. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3123: Approvers select an option using documented comparative evidence.",
           "rubric_4": "Observed outcomes are checked against selection assumptions and trigger a documented reassessment when conditions change. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3123: Observed outcomes challenge an assumption and trigger a documented reassessment.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
@@ -18678,13 +18678,13 @@
           "rubric_2": "A maintenance workflow and feedback route are piloted, but action outcomes or feedback use are incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n3333: A workflow is piloted but completed work does not feed back.",
           "rubric_3": "Users can turn recommendations into tracked maintenance actions, record outcomes and return feedback through an accepted workflow. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3333: An accepted workflow links recommendations, work orders, outcomes and feedback.",
           "rubric_4": "Action outcomes and operator feedback regularly produce verified workflow or model improvements. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3333: Feedback from completed work leads to a verified model or workflow improvement.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-3413",
-          "text": "How reliably do AI releases meet production-readiness, support-ownership and operational handover requirements?",
+          "text": "How consistently are AI solutions ready for production, with clear support ownership, monitoring, recovery procedures and operational handover?",
           "default_weight": 1,
           "blocker_ids": [
             3413
@@ -18700,18 +18700,18 @@
           "evidence_examples": "3413: Go-live checklist, accepted handover, support runbook and rollback exercise",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "rubric_0": "No production-readiness or operational handover arrangement exists.\nExamples (illustrative, not actual findings):\n3413: The pilot is deployed without a handover plan.",
-          "rubric_1": "Deployment relies on the pilot team without accepted support ownership or recovery procedures.\nExamples (illustrative, not actual findings):\n3413: The pilot team offers informal support without recovery instructions.",
-          "rubric_2": "Readiness and handover documents exist, but support, monitoring, rollback or maintenance/safety acceptance remains incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n3413: A checklist exists but rollback and operational acceptance are incomplete.",
-          "rubric_3": "Go-live criteria are met; support ownership, monitoring, tested rollback and maintenance/safety handover are accepted. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3413: Support accepts the runbook after monitoring and rollback tests succeed.",
-          "rubric_4": "Release, rollback and support outcomes are reviewed across cycles and drive improvements to readiness and handover. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3413: Release and recovery reviews improve the next handover and deployment.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "rubric_0": "There is no clear process for preparing AI solutions for production or handing them over to operations. The pilot team remains responsible for running and supporting them.\nExamples (illustrative, not actual findings):\n3413: The pilot is deployed without a handover plan.",
+          "rubric_1": "AI solutions can be deployed to production, but support ownership and recovery procedures are not formally agreed. Deployment and support still depend on the pilot team.\nExamples (illustrative, not actual findings):\n3413: The pilot team offers informal support without recovery instructions.",
+          "rubric_2": "Production-readiness and handover procedures are documented, but support ownership, monitoring, rollback, maintenance or safety acceptance remain incomplete. This may only be demonstrated in individual pilots or units.\nExamples (illustrative, not actual findings):\n3413: A checklist exists but rollback and operational acceptance are incomplete.",
+          "rubric_3": "AI is ready for production. It is clear who supports it, how it is monitored, how changes can be rolled back, and who takes over maintenance and safety responsibilities. This is required across relevant AI initiatives. Go-live criteria are met; support ownership, monitoring, tested rollback and maintenance/safety handover are accepted. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3413: Support accepts the runbook after monitoring and rollback tests succeed.",
+          "rubric_4": "The organisation regularly reviews how AI releases and support work in practice and uses the results to improve. Release, rollback and support outcomes are reviewed across cycles and drive improvements to readiness and handover. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3413: Release and recovery reviews improve the next handover and deployment.",
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-3523",
-          "text": "How consistently are AI explanations designed and tested for the people making field decisions?",
+          "text": "How consistently are AI explanations and instructions designed and tested for the people making field decisions?",
           "default_weight": 1,
           "blocker_ids": [
             3523
@@ -18732,7 +18732,7 @@
           "rubric_2": "Example explanations and uncertainty guidance exist, but interpretation or escalation tests cover only some user groups. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n3523: Examples exist but not all intended user groups have been tested.",
           "rubric_3": "Intended users demonstrate that they can interpret outputs, uncertainty and limits and know when to act or escalate. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3523: Users correctly interpret representative outputs and escalation scenarios.",
           "rubric_4": "Misinterpretations and user feedback are monitored and used to improve explanations and decision guidance. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3523: Misinterpretation reviews lead to tested changes in explanations and guidance.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
@@ -18759,7 +18759,7 @@
           "rubric_2": "Sharing agreements and common definitions are drafted or piloted, but cross-unit reuse remains incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n3634: Agreements are drafted but cross-unit reuse is only piloted.",
           "rubric_3": "Required units use agreed sharing arrangements, interoperable definitions and demonstrably reusable datasets. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3634: Required units repeatedly reuse datasets under agreed terms and definitions.",
           "rubric_4": "Reuse, interoperability failures and sharing friction are measured and used to improve common data arrangements. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3634: Reuse outcomes and remaining barriers drive verified improvements in sharing.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
@@ -18786,13 +18786,13 @@
           "rubric_2": "Early hazard and failure reviews exist, but oversight design or safety actions are not fully integrated into requirements. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n3744: Hazards are recorded but oversight actions remain unassigned.",
           "rubric_3": "Framing identifies relevant hazards, failure modes and human oversight; owned safety actions are incorporated into design. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3744: Early hazard and oversight requirements are traced into owned design actions.",
           "rubric_4": "New findings and operational learning update hazard reviews, oversight design and safety actions throughout delivery. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3744: New trial findings update hazards and produce verified design changes.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         },
         {
           "assessment_type": "company",
           "mode": "expert",
           "question_id": "CE-3734",
-          "text": "How consistently does the company assemble and maintain evidence of AI safety and reliability across scaled deployment conditions?",
+          "text": "How consistently does the companymaintain evidence of AI safety and reliability in production?",
           "default_weight": 1,
           "blocker_ids": [
             3734
@@ -18808,12 +18808,12 @@
           "evidence_examples": "3734: Assurance case, reliability tests, operational envelope and fallback validation",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "rubric_0": "No safety and reliability evidence supports scaled operation.\nExamples (illustrative, not actual findings):\n3734: No safety or reliability evidence supports the intended operation.",
-          "rubric_1": "Pilot results are treated as sufficient without a defined operating envelope or scaled assurance plan.\nExamples (illustrative, not actual findings):\n3734: A successful demo is treated as sufficient assurance.",
-          "rubric_2": "An assurance case and test plan exist, but scale, failure scenarios, reliability or fallback evidence remains incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n3734: An assurance case is drafted but key conditions and fallback remain untested.",
-          "rubric_3": "Authorised reviewers accept safety and reliability evidence for the intended operating envelope, scale, failure modes and fallbacks. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3734: Competent reviewers accept evidence covering the operating envelope and tested fallback.",
-          "rubric_4": "Reliability outcomes and assurance assumptions are monitored; changes trigger updated evidence and renewed acceptance where required. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3734: Operating and change reviews update the assurance case and verify corrective actions.",
-          "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a"
+          "rubric_0": "No safety and reliability evidence supports scaled operation. There is no evidence that the AI is safe and reliable enough for wider use.\nExamples (illustrative, not actual findings):\n3734: No safety or reliability evidence supports the intended operation.",
+          "rubric_1": "Pilot results are treated as sufficient without a defined operating envelope or scaled assurance plan. Pilot results exist, but there is no clear evidence that the AI will remain safe and reliable when used more widely.\nExamples (illustrative, not actual findings):\n3734: A successful demo is treated as sufficient assurance.",
+          "rubric_2": "An assurance case and test plan exist, but scale, failure scenarios, reliability or fallback evidence remains incomplete. Evidence may be limited to individual units or pilots. Safety and reliability have been tested, but testing for larger-scale use, failures, and backup solutions is incomplete. Evidence may only come from some pilots or teams.\nExamples (illustrative, not actual findings):\n3734: An assurance case is drafted but key conditions and fallback remain untested.",
+          "rubric_3": "Authorised reviewers accept safety and reliability evidence for the intended operating envelope, scale, failure modes and fallbacks. The AI has been tested and approved as safe and reliable for its intended use, including larger-scale use, failures, and backup solutions. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3734: Competent reviewers accept evidence covering the operating envelope and tested fallback.",
+          "rubric_4": "Reliability outcomes and assurance assumptions are monitored; changes trigger updated evidence and renewed acceptance where required. Safety and reliability are continuously monitored. When the AI or its use changes, it is reviewed and approved again when needed.All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3734: Operating and change reviews update the assurance case and verify corrective actions.",
+          "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e"
         }
       ],
       "source_sheet": "Company_Expert"
@@ -20939,7 +20939,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1024",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1024,
       "allocated_weight": 1.0,
       "suggested_evidence": "Approved quality thresholds, named data owners, quality reports and corrective-action records",
@@ -20952,7 +20952,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1043",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1043,
       "allocated_weight": 1.0,
       "suggested_evidence": "MVP scope, release plan, user trials and decisions from each increment",
@@ -20965,7 +20965,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1114",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1114,
       "allocated_weight": 1.0,
       "suggested_evidence": "Approved problem statement, baseline, process boundaries and accountable owner",
@@ -20978,7 +20978,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1133",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1133,
       "allocated_weight": 1.0,
       "suggested_evidence": "Stakeholder value propositions, benefit measures and recorded stakeholder feedback",
@@ -20991,7 +20991,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1143",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1143,
       "allocated_weight": 1.0,
       "suggested_evidence": "Business case, cost sensitivities, funding approvals and shared-cost allocation",
@@ -21004,7 +21004,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1211",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1211,
       "allocated_weight": 1.0,
       "suggested_evidence": "AI vision, strategic objectives and documented project alignment",
@@ -21017,7 +21017,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1223",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1223,
       "allocated_weight": 1.0,
       "suggested_evidence": "Portfolio decisions, prioritisation criteria and cross-unit agreements",
@@ -21030,7 +21030,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1233",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1233,
       "allocated_weight": 1.0,
       "suggested_evidence": "Governance charter, decision log, review calendar and escalation records",
@@ -21043,7 +21043,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1243",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1243,
       "allocated_weight": 1.0,
       "suggested_evidence": "Sponsor reviews, resource commitments and resolved escalations",
@@ -21056,7 +21056,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1314",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1314,
       "allocated_weight": 1.0,
       "suggested_evidence": "Ownership acceptance, benefit accountability and post-pilot responsibilities",
@@ -21069,7 +21069,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1323",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1323,
       "allocated_weight": 1.0,
       "suggested_evidence": "Decision responsibility matrix, human oversight procedures and scenario exercises",
@@ -21082,7 +21082,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1334",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1334,
       "allocated_weight": 1.0,
       "suggested_evidence": "Service model, staffing, support budget and agreed service levels",
@@ -21095,7 +21095,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1413",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1413,
       "allocated_weight": 1.0,
       "suggested_evidence": "Role-based skills assessment, training records and demonstrated competence",
@@ -21108,7 +21108,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1424",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1424,
       "allocated_weight": 1.0,
       "suggested_evidence": "User engagement, trial feedback, adoption evidence and concern-resolution records",
@@ -21121,7 +21121,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1433",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1433,
       "allocated_weight": 1.0,
       "suggested_evidence": "Change workload assessment, allocated capacity, learning plan and adoption reviews",
@@ -21134,7 +21134,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1511",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1511,
       "allocated_weight": 1.0,
       "suggested_evidence": "Capability briefings, assumptions register and agreed limitations",
@@ -21147,7 +21147,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1524",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1524,
       "allocated_weight": 1.0,
       "suggested_evidence": "Field observations, operational scenarios, field trials and support requirements",
@@ -21160,7 +21160,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1614",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1614,
       "allocated_weight": 1.0,
       "suggested_evidence": "Data ownership register, access decisions, approved permissions and escalation routes",
@@ -21173,7 +21173,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1713",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1713,
       "allocated_weight": 1.0,
       "suggested_evidence": "Named advisers, skills evidence, allocated review capacity and advice records",
@@ -21186,7 +21186,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1723",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1723,
       "allocated_weight": 1.0,
       "suggested_evidence": "Requirements register, interpretation decisions, assigned actions and review dates",
@@ -21199,7 +21199,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1811",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1811,
       "allocated_weight": 1.0,
       "suggested_evidence": "Scaling scope, rollout boundaries and target operating conditions",
@@ -21212,7 +21212,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1823",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1823,
       "allocated_weight": 1.0,
       "suggested_evidence": "Readiness framework, gate criteria and multidisciplinary review records",
@@ -21225,7 +21225,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1833",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1833,
       "allocated_weight": 1.0,
       "suggested_evidence": "Production transition plan, resource approvals and acceptance criteria",
@@ -21238,7 +21238,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-1921",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 1921,
       "allocated_weight": 1.0,
       "suggested_evidence": "Integrated schedule, dependency estimates, assurance milestones and contingency",
@@ -21251,7 +21251,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-2213",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 2213,
       "allocated_weight": 1.0,
       "suggested_evidence": "Architecture standards, design review, platform capacity and resilience evidence",
@@ -21264,7 +21264,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-2123",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 2123,
       "allocated_weight": 1.0,
       "suggested_evidence": "Profiling results, data dictionary, identifier mappings and quality tests",
@@ -21277,7 +21277,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-2134",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 2134,
       "allocated_weight": 1.0,
       "suggested_evidence": "Pipeline tests, access-control tests, lineage and transfer monitoring",
@@ -21290,7 +21290,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-2221",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 2221,
       "allocated_weight": 1.0,
       "suggested_evidence": "Workload benchmarks, capacity sizing and deployment-environment tests",
@@ -21303,7 +21303,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-2231",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 2231,
       "allocated_weight": 1.0,
       "suggested_evidence": "Stack review, compatibility tests, licence assessment and exit strategy",
@@ -21316,7 +21316,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-2313",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 2313,
       "allocated_weight": 1.0,
       "suggested_evidence": "Interface contracts, identifier mappings and enterprise integration tests",
@@ -21329,7 +21329,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-2323",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 2323,
       "allocated_weight": 1.0,
       "suggested_evidence": "OT interface tests, alarm scenarios and operational acceptance records",
@@ -21342,7 +21342,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-2423",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 2423,
       "allocated_weight": 1.0,
       "suggested_evidence": "Monitoring dashboards, drift thresholds, retraining plan and change approvals",
@@ -21355,7 +21355,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-2513",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 2513,
       "allocated_weight": 1.0,
       "suggested_evidence": "Stratified validation results, scale tests, failure analysis and acceptance thresholds",
@@ -21368,7 +21368,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-3114",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 3114,
       "allocated_weight": 1.0,
       "suggested_evidence": "Data inventory, collection coverage, retention arrangements and availability checks",
@@ -21381,7 +21381,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-3123",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 3123,
       "allocated_weight": 1.0,
       "suggested_evidence": "Options assessment, benchmark results, selection criteria and decision rationale",
@@ -21394,7 +21394,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-3333",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 3333,
       "allocated_weight": 1.0,
       "suggested_evidence": "Workflow trials, work-order outcomes, feedback records and improvement decisions",
@@ -21407,7 +21407,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-3413",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 3413,
       "allocated_weight": 1.0,
       "suggested_evidence": "Go-live checklist, accepted handover, support runbook and rollback exercise",
@@ -21420,7 +21420,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-3523",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 3523,
       "allocated_weight": 1.0,
       "suggested_evidence": "User interpretation tests, example explanations and escalation scenarios",
@@ -21433,7 +21433,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-3634",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 3634,
       "allocated_weight": 1.0,
       "suggested_evidence": "Data-sharing agreements, reusable datasets, common definitions and reuse evidence",
@@ -21446,7 +21446,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-3744",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 3744,
       "allocated_weight": 1.0,
       "suggested_evidence": "Early hazard review, failure scenarios, oversight design and safety actions",
@@ -21459,7 +21459,7 @@
       "assessment_type": "company",
       "mode": "expert",
       "question_id": "CE-3734",
-      "questionnaire_version": "sha256:e79327baf319ad5ed612053f202ff6296a8e256e5edc846b59109a19a6553a1a",
+      "questionnaire_version": "sha256:1f4a6234fdda4bbca4d2ec56e0b68458da4433f5d29ccb62d35195603452076e",
       "blocker_id": 3734,
       "allocated_weight": 1.0,
       "suggested_evidence": "Assurance case, reliability tests, operational envelope and fallback validation",
@@ -22780,6 +22780,6 @@
     "question_blocker": 164,
     "rubrics": 570
   },
-  "maps_version": "sha256:39ac030372500aaecd2d894b6b3513a07d34dacd7c5154bc891f4219afe8ace6",
-  "catalog_version": "sha256:044626633f31612b9534cc5bea3d89f3f2a3be449a417cb8e5c4b92ae3e17acf"
+  "maps_version": "sha256:332c25c3c9146af358c19137fe828dcbcae723f33478e54f5db5740962459ddd",
+  "catalog_version": "sha256:139742fa2469433e79927749527899ebe35de97347550ea1d52bbd5f725281a4"
 }
