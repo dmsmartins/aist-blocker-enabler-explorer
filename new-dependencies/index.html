@@ -1,18 +1,20 @@
 <!doctype html>
-<html lang="en" data-explorer="community" data-dependencies="new">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0f2a43" />
-  <title>AI Scalability Explorer — New dependencies (temporary)</title>
-  <link rel="icon" href="../assets/ai-scalability-logo-v2.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://esm.sh" />
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xyflow/react@12/dist/style.css" />
-  <link rel="stylesheet" href="../timeline/styles.css?v=20261028-shared-explorer" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Dependencies — AI Scalability Explorer</title>
+  <link rel="icon" href="../assets/ai-scalability-logo-v2.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./compare.css">
+  <link rel="stylesheet" href="../dependencies.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script type="module" src="../timeline/app.js?v=new-dependencies-20261120"></script>
+  <header><div class="bar"><a class="brand" href="../#explore">AI Scalability Explorer</a><nav><a href="../#explore">Browse</a><a href="../communities/">Original Communities</a><a href="../new-communities/">New Communities</a></nav></div></header>
+  <main><p class="eyebrow">TEMPORARY COMPARISON</p><h1>New Dependencies</h1>
+    <p class="lead">Compare directed links from the original Explorer with the updated workbook. A → B means A depends on B.</p>
+    <div id="app" aria-live="polite"><p>Loading both datasets…</p></div>
+  </main>
+  <script src="../dependencies.js"></script>
+  <script type="module" src="./compare.mjs"></script>
 </body>
 </html>

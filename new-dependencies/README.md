@@ -1,8 +1,12 @@
 # Temporary new dependencies
 
-This page uses `data/new-dependencies/explorer-data.json`, generated from the
-updated AIST master workbook. The original Communities page and its data remain
-unchanged. This is a comparison view, not a replacement for the live catalogue.
+The comparison page loads both `data/explorer-data.json` and
+`data/new-dependencies/explorer-data.json`, generated from the updated AIST
+master workbook. It compares directed pairs and displays the new network.
+`new-communities/` displays the updated links using the same community
+assignments as the workbook; communities are not recalculated from the graph.
+The original Communities page and its data remain unchanged. These are
+temporary comparison views, not replacements for the live catalogue.
 
 The source marks these dependencies as `reviewed`, not `Validated`. The page
 displays them as reviewed in the source without claiming external validation.
