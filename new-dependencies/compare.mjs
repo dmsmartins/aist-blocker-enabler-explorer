@@ -33,7 +33,7 @@ try {
       <div class="table-wrap"><table><thead><tr><th>Dependent blocker A</th><th>Depends on B</th><th>Change</th><th>Original level</th><th>New level</th></tr></thead><tbody id="rows"></tbody></table></div>
     </section>`;
   const blocker = document.querySelector('#blocker'), change = document.querySelector('#change'), search = document.querySelector('#search');
-  window.DependencyExplorer.mount(document.querySelector('#network'), updated, id => { window.location.href = `../new-communities/#blocker=${id}`; });
+  window.DependencyExplorer.mount(document.querySelector('#network'), updated, id => { window.location.href = `../new-communities/index.html#blocker=${id}`; });
   const badge = s => `<span class="badge ${s.toLowerCase()}">${s}</span>`;
   function renderColumns() {
     const id=Number(blocker.value);

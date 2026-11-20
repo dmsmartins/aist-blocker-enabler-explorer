@@ -1120,8 +1120,8 @@ function renderExplore() {
   <button class="path-card" id="byNewDependencies"><div class="path-visual">↗</div><h3>New Dependencies</h3><p>Compare original and updated blocker connections.</p><span class="card-link">Compare dependencies →</span></button>
   <button class="path-card" id="byNewCommunities"><div class="path-visual">▦</div><h3>New Communities</h3><p>Explore the community view with the updated dependencies.</p><span class="card-link">Explore new communities →</span></button>
   <button class="path-card" id="byDependencies"><div class="path-visual">↗</div><h3>Dependencies</h3><p>Understand what depends on what, and where to act first.</p><span class="card-link">Explore dependencies →</span></button></div></section>`;
-  document.getElementById('byNewDependencies').onclick=()=>{ window.location.href='./new-dependencies/'; };
-  document.getElementById('byNewCommunities').onclick=()=>{ window.location.href='./new-communities/'; };
+  document.getElementById('byNewDependencies').onclick=()=>{ window.location.href='./new-dependencies/index.html'; };
+  document.getElementById('byNewCommunities').onclick=()=>{ window.location.href='./new-communities/index.html'; };
   document.getElementById('byDomain').onclick=()=>navigate('domains');
   document.getElementById('byDependencies').onclick=()=>navigate('dependencies');
 }
