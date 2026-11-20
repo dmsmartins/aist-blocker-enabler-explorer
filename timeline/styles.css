@@ -412,6 +412,7 @@
 .community-orb.tone-2 .orb-surface{stroke:#d0e4df;fill:#f8fcfb}
 .community-orb.tone-3 .orb-surface{stroke:#dcd6e8;fill:#fcfaff}
 .community-orb.tone-4 .orb-surface{stroke:#dce6d9;fill:#fbfdfb}
+.community-orb.tone-5 .orb-surface{stroke:#e2d5c5;fill:#fffaf4}
 .community-orb .member-dot{fill:#a2bfd5;opacity:.7}.community-orb .critical-dot{fill:#b6674d;opacity:1}
 .community-orb .orb-content{position:absolute;inset:65px 44px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;pointer-events:none}
 .community-orb strong{font:600 23px/1.24 'Segoe UI',sans-serif}
@@ -428,3 +429,4 @@
 .community-orb .orb-member:hover,.community-orb .orb-member:focus-visible{outline:none;border-color:#479bd7;background:#479bd71a}
 .dependency-pulse{filter:drop-shadow(0 0 3px #3b86b780)}
 @media(prefers-reduced-motion:reduce){.dependency-pulse{display:none}}
+

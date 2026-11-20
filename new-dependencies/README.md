@@ -3,8 +3,9 @@
 The comparison page loads both `data/explorer-data.json` and
 `data/new-dependencies/explorer-data.json`, generated from the updated AIST
 master workbook. It compares directed pairs and displays the new network.
-`new-communities/` displays the updated links using the same community
-assignments as the workbook; communities are not recalculated from the graph.
+`new-communities/` displays updated links, six community assignments, and
+blocker criticality values imported from the corrected workbook; these values
+are not recalculated by the site.
 The original Communities page and its data remain unchanged. These are
 temporary comparison views, not replacements for the live catalogue.
 

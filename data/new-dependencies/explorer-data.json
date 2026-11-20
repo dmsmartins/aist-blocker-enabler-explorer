@@ -2,8 +2,8 @@
   "meta": {
     "title": "AI Scalability Explorer",
     "schemaVersion": "3.1",
-    "sourceWorkbook": "AIST_Explorer_Master.xlsx",
-    "sourceWorkbookSha256": "b87b101b6543718e75a0e0435179bbb9a7eebac9997bc05b0300d465f4ec6888",
+    "sourceWorkbook": "AIST_Explorer_Master_corrigido.xlsx",
+    "sourceWorkbookSha256": "ab07b72014a12a933181898d4fecd5b0087b9926c50244be186204cd53c226e8",
     "exporterVersion": "2.0.0",
     "internalIdsVisibleInUi": false,
     "relationshipTypeUsedInUi": false,
@@ -138,13 +138,13 @@
       ],
       "source": null,
       "domain": "data-foundations",
-      "communityId": 5,
-      "communityName": "Data quality & accountability foundations",
-      "criticalityComposite": 32.8,
-      "classification": "Peripheral",
+      "communityId": 1,
+      "communityName": "Data, architecture & production foundations",
+      "criticalityComposite": 21.2,
+      "classification": "Watch",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 40 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1043,
@@ -168,13 +168,13 @@
       ],
       "source": null,
       "domain": "value-delivery-scale",
-      "communityId": 1,
-      "communityName": "Scaling strategy & delivery orchestration",
-      "criticalityComposite": 27.6,
+      "communityId": 3,
+      "communityName": "Safety, readiness & delivery discipline",
+      "criticalityComposite": 19,
       "classification": "Watch",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 32 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1114,
@@ -199,13 +199,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
-      "communityId": 3,
-      "communityName": "Human adoption & operational value realization",
-      "criticalityComposite": 20.6,
-      "classification": "High",
+      "communityId": 2,
+      "communityName": "Problem framing & operational fit",
+      "criticalityComposite": 13.4,
+      "classification": "Critical core",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 20 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1133,
@@ -229,13 +229,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
-      "communityId": 3,
-      "communityName": "Human adoption & operational value realization",
-      "criticalityComposite": 13.4,
-      "classification": "Critical core",
+      "communityId": 2,
+      "communityName": "Problem framing & operational fit",
+      "criticalityComposite": 27.8,
+      "classification": "Peripheral",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 11 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1143,
@@ -259,13 +259,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
-      "communityId": 1,
-      "communityName": "Scaling strategy & delivery orchestration",
-      "criticalityComposite": 22.2,
-      "classification": "Watch",
+      "communityId": 2,
+      "communityName": "Problem framing & operational fit",
+      "criticalityComposite": 25.4,
+      "classification": "Peripheral",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 23 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1211,
@@ -288,13 +288,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation",
-      "communityId": 1,
-      "communityName": "Scaling strategy & delivery orchestration",
-      "criticalityComposite": 13.6,
-      "classification": "High",
+      "communityId": 5,
+      "communityName": "Scaling intent, commitment & performance",
+      "criticalityComposite": 24,
+      "classification": "Watch",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 13 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1223,
@@ -320,13 +320,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation",
-      "communityId": 1,
-      "communityName": "Scaling strategy & delivery orchestration",
-      "criticalityComposite": 21,
-      "classification": "High",
+      "communityId": 5,
+      "communityName": "Scaling intent, commitment & performance",
+      "criticalityComposite": 28.2,
+      "classification": "Peripheral",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 21 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1233,
@@ -352,13 +352,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation",
-      "communityId": 2,
-      "communityName": "Governance, architecture & operational integration",
-      "criticalityComposite": 9.8,
-      "classification": "Critical core",
+      "communityId": 4,
+      "communityName": "Ownership, governance & run-model handover",
+      "criticalityComposite": 15.2,
+      "classification": "High",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 8 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1243,
@@ -382,13 +382,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation",
-      "communityId": 1,
-      "communityName": "Scaling strategy & delivery orchestration",
-      "criticalityComposite": 16.4,
+      "communityId": 5,
+      "communityName": "Scaling intent, commitment & performance",
+      "criticalityComposite": 17.4,
       "classification": "High",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 17 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1314,
@@ -413,13 +413,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation",
-      "communityId": 2,
-      "communityName": "Governance, architecture & operational integration",
-      "criticalityComposite": 3.2,
+      "communityId": 4,
+      "communityName": "Ownership, governance & run-model handover",
+      "criticalityComposite": 12.6,
       "classification": "Critical core",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 2 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1323,
@@ -444,13 +444,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation",
-      "communityId": 5,
-      "communityName": "Data quality & accountability foundations",
-      "criticalityComposite": 19,
-      "classification": "High",
+      "communityId": 4,
+      "communityName": "Ownership, governance & run-model handover",
+      "criticalityComposite": 14,
+      "classification": "Critical core",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 18 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1334,
@@ -475,12 +475,12 @@
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "governance-organisation",
       "communityId": 4,
-      "communityName": "Model assurance, lifecycle & safety",
-      "criticalityComposite": 14.8,
-      "classification": "High",
+      "communityName": "Ownership, governance & run-model handover",
+      "criticalityComposite": 11.4,
+      "classification": "Critical core",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 14 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1413,
@@ -504,13 +504,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption",
-      "communityId": 3,
-      "communityName": "Human adoption & operational value realization",
-      "criticalityComposite": 24.4,
+      "communityId": 6,
+      "communityName": "Skills, adoption & explainability",
+      "criticalityComposite": 22,
       "classification": "Watch",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 27 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1424,
@@ -534,13 +534,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption",
-      "communityId": 3,
-      "communityName": "Human adoption & operational value realization",
-      "criticalityComposite": 11,
-      "classification": "Critical core",
+      "communityId": 6,
+      "communityName": "Skills, adoption & explainability",
+      "criticalityComposite": 23.2,
+      "classification": "Watch",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 10 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1433,
@@ -564,13 +564,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption",
-      "communityId": 3,
-      "communityName": "Human adoption & operational value realization",
-      "criticalityComposite": 26,
-      "classification": "Watch",
+      "communityId": 6,
+      "communityName": "Skills, adoption & explainability",
+      "criticalityComposite": 26.8,
+      "classification": "Peripheral",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 30 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1511,
@@ -594,13 +594,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption",
-      "communityId": 3,
-      "communityName": "Human adoption & operational value realization",
-      "criticalityComposite": 22.8,
+      "communityId": 2,
+      "communityName": "Problem framing & operational fit",
+      "criticalityComposite": 24.8,
       "classification": "Watch",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 24 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1524,
@@ -626,13 +626,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "people-adoption",
-      "communityId": 3,
-      "communityName": "Human adoption & operational value realization",
-      "criticalityComposite": 24.4,
-      "classification": "Watch",
+      "communityId": 2,
+      "communityName": "Problem framing & operational fit",
+      "criticalityComposite": 9.8,
+      "classification": "Critical core",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 28 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1614,
@@ -656,13 +656,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "data-foundations",
-      "communityId": 2,
-      "communityName": "Governance, architecture & operational integration",
-      "criticalityComposite": 21.8,
-      "classification": "High",
+      "communityId": 1,
+      "communityName": "Data, architecture & production foundations",
+      "criticalityComposite": 12.4,
+      "classification": "Critical core",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 22 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1713,
@@ -682,13 +682,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "legal-safety-assurance",
-      "communityId": 2,
-      "communityName": "Governance, architecture & operational integration",
-      "criticalityComposite": 29,
-      "classification": "Peripheral",
+      "communityId": 3,
+      "communityName": "Safety, readiness & delivery discipline",
+      "criticalityComposite": 24.6,
+      "classification": "Watch",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 34 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1723,
@@ -711,13 +711,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "legal-safety-assurance",
-      "communityId": 4,
-      "communityName": "Model assurance, lifecycle & safety",
-      "criticalityComposite": 23.8,
+      "communityId": 3,
+      "communityName": "Safety, readiness & delivery discipline",
+      "criticalityComposite": 20.8,
       "classification": "Watch",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 26 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1811,
@@ -742,13 +742,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
-      "communityId": 1,
-      "communityName": "Scaling strategy & delivery orchestration",
-      "criticalityComposite": 32,
-      "classification": "Peripheral",
+      "communityId": 5,
+      "communityName": "Scaling intent, commitment & performance",
+      "criticalityComposite": 18.6,
+      "classification": "High",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 39 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1823,
@@ -772,13 +772,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
-      "communityId": 1,
-      "communityName": "Scaling strategy & delivery orchestration",
-      "criticalityComposite": 30,
-      "classification": "Peripheral",
+      "communityId": 3,
+      "communityName": "Safety, readiness & delivery discipline",
+      "criticalityComposite": 18.2,
+      "classification": "High",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 37 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1833,
@@ -807,13 +807,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "value-delivery-scale",
-      "communityId": 1,
-      "communityName": "Scaling strategy & delivery orchestration",
-      "criticalityComposite": 27.6,
-      "classification": "Watch",
+      "communityId": 4,
+      "communityName": "Ownership, governance & run-model handover",
+      "criticalityComposite": 26,
+      "classification": "Peripheral",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 33 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 1921,
@@ -839,13 +839,13 @@
       ],
       "source": null,
       "domain": "value-delivery-scale",
-      "communityId": 1,
-      "communityName": "Scaling strategy & delivery orchestration",
-      "criticalityComposite": 29.8,
+      "communityId": 3,
+      "communityName": "Safety, readiness & delivery discipline",
+      "criticalityComposite": 27.6,
       "classification": "Peripheral",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 35 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 2213,
@@ -868,13 +868,13 @@
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
-      "communityId": 2,
-      "communityName": "Governance, architecture & operational integration",
-      "criticalityComposite": 9.2,
+      "communityId": 1,
+      "communityName": "Data, architecture & production foundations",
+      "criticalityComposite": 3.8,
       "classification": "Critical core",
       "dependencyAnalysisType": "Tech",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 7 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 2123,
@@ -897,13 +897,13 @@
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "data-foundations",
-      "communityId": 5,
-      "communityName": "Data quality & accountability foundations",
-      "criticalityComposite": 16,
-      "classification": "High",
+      "communityId": 1,
+      "communityName": "Data, architecture & production foundations",
+      "criticalityComposite": 5.6,
+      "classification": "Critical core",
       "dependencyAnalysisType": "Tech",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 16 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 2134,
@@ -926,13 +926,13 @@
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "data-foundations",
-      "communityId": 2,
-      "communityName": "Governance, architecture & operational integration",
-      "criticalityComposite": 6.2,
+      "communityId": 1,
+      "communityName": "Data, architecture & production foundations",
+      "criticalityComposite": 6.8,
       "classification": "Critical core",
       "dependencyAnalysisType": "Tech",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 5 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 2221,
@@ -955,13 +955,13 @@
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
-      "communityId": 1,
-      "communityName": "Scaling strategy & delivery orchestration",
-      "criticalityComposite": 26.8,
+      "communityId": 2,
+      "communityName": "Problem framing & operational fit",
+      "criticalityComposite": 18.8,
       "classification": "Watch",
       "dependencyAnalysisType": "Tech",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 31 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 2231,
@@ -987,12 +987,12 @@
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
       "communityId": 1,
-      "communityName": "Scaling strategy & delivery orchestration",
-      "criticalityComposite": 29.8,
+      "communityName": "Data, architecture & production foundations",
+      "criticalityComposite": 25.4,
       "classification": "Peripheral",
       "dependencyAnalysisType": "Tech",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 36 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 2313,
@@ -1016,13 +1016,13 @@
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
-      "communityId": 2,
-      "communityName": "Governance, architecture & operational integration",
-      "criticalityComposite": 15.2,
-      "classification": "High",
+      "communityId": 1,
+      "communityName": "Data, architecture & production foundations",
+      "criticalityComposite": 29,
+      "classification": "Peripheral",
       "dependencyAnalysisType": "Tech",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 15 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 2323,
@@ -1047,13 +1047,13 @@
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
-      "communityId": 2,
-      "communityName": "Governance, architecture & operational integration",
-      "criticalityComposite": 23.6,
-      "classification": "Watch",
+      "communityId": 1,
+      "communityName": "Data, architecture & production foundations",
+      "criticalityComposite": 27,
+      "classification": "Peripheral",
       "dependencyAnalysisType": "Tech",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 25 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 2423,
@@ -1076,13 +1076,13 @@
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "value-delivery-scale",
-      "communityId": 4,
-      "communityName": "Model assurance, lifecycle & safety",
-      "criticalityComposite": 13.4,
-      "classification": "Critical core",
+      "communityId": 1,
+      "communityName": "Data, architecture & production foundations",
+      "criticalityComposite": 15.4,
+      "classification": "High",
       "dependencyAnalysisType": "Tech",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 12 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 2513,
@@ -1104,13 +1104,13 @@
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
-      "communityId": 4,
-      "communityName": "Model assurance, lifecycle & safety",
-      "criticalityComposite": 5.8,
-      "classification": "Critical core",
+      "communityId": 5,
+      "communityName": "Scaling intent, commitment & performance",
+      "criticalityComposite": 15.2,
+      "classification": "High",
       "dependencyAnalysisType": "Tech",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 4 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 3114,
@@ -1134,13 +1134,13 @@
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "data-foundations",
-      "communityId": 5,
-      "communityName": "Data quality & accountability foundations",
-      "criticalityComposite": 25.6,
-      "classification": "Watch",
+      "communityId": 1,
+      "communityName": "Data, architecture & production foundations",
+      "criticalityComposite": 16.4,
+      "classification": "High",
       "dependencyAnalysisType": "Tech",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 29 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 3123,
@@ -1167,13 +1167,13 @@
       ],
       "source": null,
       "domain": "value-delivery-scale",
-      "communityId": 1,
-      "communityName": "Scaling strategy & delivery orchestration",
-      "criticalityComposite": 35.6,
-      "classification": "Peripheral",
+      "communityId": 2,
+      "communityName": "Problem framing & operational fit",
+      "criticalityComposite": 18.4,
+      "classification": "High",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 42 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 3333,
@@ -1198,13 +1198,13 @@
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
-      "communityId": 3,
-      "communityName": "Human adoption & operational value realization",
-      "criticalityComposite": 5.2,
-      "classification": "Critical core",
+      "communityId": 2,
+      "communityName": "Problem framing & operational fit",
+      "criticalityComposite": 28.6,
+      "classification": "Peripheral",
       "dependencyAnalysisType": "Tech",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 3 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 3413,
@@ -1231,12 +1231,12 @@
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "value-delivery-scale",
       "communityId": 1,
-      "communityName": "Scaling strategy & delivery orchestration",
-      "criticalityComposite": 6.2,
-      "classification": "Critical core",
+      "communityName": "Data, architecture & production foundations",
+      "criticalityComposite": 17.8,
+      "classification": "High",
       "dependencyAnalysisType": "Tech",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 6 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 3523,
@@ -1260,13 +1260,13 @@
       ],
       "source": "AIST_scalability_blockers_presentation v3",
       "domain": "technology-infrastructure",
-      "communityId": 4,
-      "communityName": "Model assurance, lifecycle & safety",
-      "criticalityComposite": 10,
-      "classification": "Critical core",
+      "communityId": 6,
+      "communityName": "Skills, adoption & explainability",
+      "criticalityComposite": 25.2,
+      "classification": "Watch",
       "dependencyAnalysisType": "Tech",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 9 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 3634,
@@ -1291,13 +1291,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "data-foundations",
-      "communityId": 2,
-      "communityName": "Governance, architecture & operational integration",
-      "criticalityComposite": 33.2,
-      "classification": "Peripheral",
+      "communityId": 1,
+      "communityName": "Data, architecture & production foundations",
+      "criticalityComposite": 14.8,
+      "classification": "Critical core",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 41 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 3744,
@@ -1321,13 +1321,13 @@
       ],
       "source": "AIST_Organizational_Blockers_Enablers_CONSOLIDATED",
       "domain": "legal-safety-assurance",
-      "communityId": 4,
-      "communityName": "Model assurance, lifecycle & safety",
-      "criticalityComposite": 30.4,
-      "classification": "Peripheral",
+      "communityId": 3,
+      "communityName": "Safety, readiness & delivery discipline",
+      "criticalityComposite": 8.2,
+      "classification": "Critical core",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 38 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     },
     {
       "id": 3734,
@@ -1351,13 +1351,13 @@
       ],
       "source": null,
       "domain": "legal-safety-assurance",
-      "communityId": 4,
-      "communityName": "Model assurance, lifecycle & safety",
-      "criticalityComposite": 19.4,
+      "communityId": 3,
+      "communityName": "Safety, readiness & delivery discipline",
+      "criticalityComposite": 18,
       "classification": "High",
       "dependencyAnalysisType": "Org",
-      "criticalitySource": "Depdendencies.xlsx | Folha1 / Folha2 | imported 2026-10-23",
-      "dependencyAnalysisSource": "GitHub explorer_catalog.json | Dependency_analysis row 19 | blob c85c59af08374df992f9533c34423e5d580e7388"
+      "criticalitySource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20",
+      "dependencyAnalysisSource": "dependency_analysis (1).xlsx | Dependency_Analysis | 2026-11-20"
     }
   ],
   "enablers": [
@@ -6183,23 +6183,27 @@
   "communities": [
     {
       "id": 1,
-      "name": "Scaling strategy & delivery orchestration"
+      "name": "Data, architecture & production foundations"
     },
     {
       "id": 2,
-      "name": "Governance, architecture & operational integration"
+      "name": "Problem framing & operational fit"
     },
     {
       "id": 3,
-      "name": "Human adoption & operational value realization"
+      "name": "Safety, readiness & delivery discipline"
     },
     {
       "id": 4,
-      "name": "Model assurance, lifecycle & safety"
+      "name": "Ownership, governance & run-model handover"
     },
     {
       "id": 5,
-      "name": "Data quality & accountability foundations"
+      "name": "Scaling intent, commitment & performance"
+    },
+    {
+      "id": 6,
+      "name": "Skills, adoption & explainability"
     }
   ],
   "dependencyGraphAnalysis": [

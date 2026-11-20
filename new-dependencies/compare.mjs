@@ -8,6 +8,7 @@ try {
   const old = new Map(original.blockerDependencies.map(d => [key(d), d]));
   const fresh = new Map(updated.blockerDependencies.map(d => [key(d), d]));
   const blockerById = new Map(updated.blockers.map(b => [b.id,b]));
+  const originalBlockers = new Map(original.blockers.map(b => [b.id,b]));
   const name = id => blockerById.get(id)?.title || `Blocker ${id}`;
   const keys = [...new Set([...old.keys(), ...fresh.keys()])];
   const state = k => old.has(k) && fresh.has(k) ? 'Retained' : fresh.has(k) ? 'Added' : 'Removed';
@@ -21,12 +22,16 @@ try {
       <div><strong>${old.size}</strong><span>Original links</span></div><div><strong>${fresh.size}</strong><span>New links</span></div>
       <div><strong>${counts.Retained}</strong><span>Retained</span></div><div><strong>${counts.Added}</strong><span>Added</span></div><div><strong>${counts.Removed}</strong><span>Removed</span></div>
     </section>
-    <p class="notice">The community names and blocker membership in the workbook are unchanged. The updated dependency links differ. The new 1–4 values were converted from a 0–1 source measure; they should not automatically be interpreted as the same measure as the original importance scores.</p>
+    <p class="notice">The updated version uses six communities and revised blocker criticality values from the corrected master. The new 1–4 link values were converted from a 0–1 source measure; they should not automatically be interpreted as the same measure as the original importance scores.</p>
     <section class="panel"><div id="network"></div></section>
     <section class="panel"><h2>Compare a blocker</h2><p>Select a blocker to see its incoming and outgoing links in both versions.</p>
       <label for="blocker">Blocker</label><select id="blocker">${sorted.map(b=>`<option value="${b.id}" ${b.id===initial?'selected':''}>${escapeHtml(b.title)} (${b.id})</option>`).join('')}</select>
       <div class="columns" id="columns"></div>
     </section>
+    <section class="panel"><h2>Community and criticality comparison</h2><p>Compare assignments and source scores for every blocker. Community labels differ between versions; changes do not by themselves indicate an error.</p>
+      <div class="table-wrap"><table><thead><tr><th>Blocker</th><th>Original community</th><th>New community</th><th>Original classification / score</th><th>New classification / score</th></tr></thead><tbody>
+      ${sorted.map(b=>{const o=originalBlockers.get(b.id); return `<tr><td>${escapeHtml(b.title)} <small>(${b.id})</small></td><td>${escapeHtml(o?.communityName ?? '—')}</td><td>${escapeHtml(b.communityName ?? '—')}</td><td>${escapeHtml(o?.classification ?? '—')} / ${escapeHtml(o?.criticalityComposite ?? '—')}</td><td>${escapeHtml(b.classification ?? '—')} / ${escapeHtml(b.criticalityComposite ?? '—')}</td></tr>`;}).join('')}
+      </tbody></table></div></section>
     <section class="panel"><h2>All dependency pairs</h2><p>Each row is a directed pair. Reversing a pair is a separate relationship.</p>
       <div class="filters"><label>Change<select id="change"><option value="all">All changes</option><option>Added</option><option>Removed</option><option>Retained</option></select></label><label>Search<input id="search" type="search" placeholder="Blocker name or ID"></label></div>
       <p id="result-count" class="result-count"></p>
