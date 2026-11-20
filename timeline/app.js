@@ -12,6 +12,7 @@ function formatStakeholders([owner, ...others]) {
   return html`<span><strong>${owner}</strong>${others.length ? " · " + others.join(" · ") : ""}</span>`;
 }
 const communityMode=document.documentElement.dataset.explorer==="community";
+const newDependenciesMode=document.documentElement.dataset.dependencies==="new";
 const mode=communityMode?"community":"gate";
 const collectionLabel=communityMode?"Community":"Stage Gate";
 const MECH_COLORS={Frame:"#6e68d8",Commit:"#c67b2b",Equip:"#2478b5",Assure:"#a05486",Operate:"#27865e",Learn:"#73883c"};
@@ -337,20 +338,20 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
   return html`<div className="shell">
     ${previewMode?html`<header className="topbar"><a className="brand" href=${"../assessment-preview/?resume="+encodeURIComponent(assessment.assessment_id)}><span className="brand-mark"></span><span>AI Scalability Explorer</span></a><div className="top-title">${communityMode?"My scalability communities":"My scalability timeline"}</div><div className="top-actions"><a className="top-link" href=${"../assessment-preview/?resume="+encodeURIComponent(assessment.assessment_id)}>← Results</a><a className="top-link" href=${alternateUrl}>${communityMode?"Timeline ↗":"Communities ↗"}</a>${selectedGroup!=null?html`<button className="ghost-top" onClick=${back}>← Back one level</button>`:null}<button className="ghost-top" onClick=${reset}>Reset view</button></div></header>`:html`    <header className="topbar">
       <a className="brand" href="../#home"><span className="brand-mark"></span><span>AI Scalability Explorer</span></a>
-      <div className="top-title">${communityMode?"Communities":assessmentMode?"My AI Scalability Timeline":"Spatial Timeline"}</div>
+      <div className="top-title">${newDependenciesMode?"New dependencies · Temporary":communityMode?"Communities":assessmentMode?"My AI Scalability Timeline":"Spatial Timeline"}</div>
       <div className="top-actions">
         <a className="icon-top" href="../?search=1#explore" aria-label="Search" title="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg></a>
         <a className="icon-top" href="../#selection" aria-label="My selection" title="My selection"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5h10v15l-5-3.1-5 3.1z"></path></svg>${savedCount?html`<span className="saved-count">${savedCount}</span>`:null}</a>
         ${(selectedGroup != null)?html`<button className="ghost-top" onClick=${back}>← Back one level</button>`:null}
         ${assessmentMode?html`<button className=${"ghost-top"+(showCompleted?" active-toggle":"")} onClick=${()=>setShowCompleted(v=>!v)}>${showCompleted?"Hide completed":"Show completed"}</button>`:null}
-        <button className="ghost-top" onClick=${reset}>Reset</button><a className="top-link" href=${alternateUrl}>${communityMode?"Timeline ↗":"Communities ↗"}</a><a className="top-link" href="../#explore">Explorer ↗</a><a className="top-link" href="../#dependencies">Dependencies ↗</a><a className="top-link" href="../play/">Play ↗</a>
+        <button className="ghost-top" onClick=${reset}>Reset</button><a className="top-link" href=${alternateUrl}>${communityMode?"Timeline ↗":"Communities ↗"}</a><a className="top-link" href="../#explore">Explorer ↗</a>${newDependenciesMode?html`<a className="top-link" href="../communities/">Original communities ↗</a>`:null}<a className="top-link" href="../#dependencies">Dependencies ↗</a><a className="top-link" href="../play/">Play ↗</a>
       </div>
     </header>`}
     <section className="explorer-filters" aria-label="Explorer filters">
       <div className="filter-fields"><label>${collectionLabel}<select aria-label=${collectionLabel} value=${selectedGroup==null?"":String(selectedGroup)} onChange=${e=>selectGroup(e.target.value===""?null:Number(e.target.value))}><option value="">${communityMode?"All communities":"All Stage Gates"}</option>${groupRows.map(g=>html`<option key=${g.id} value=${String(g.id)}>${communityMode?g.label:`Gate ${g.id} · ${g.label}`}</option>`)}</select></label>
       <label>Stakeholder<select aria-label="Stakeholder" value=${stakeholder} onChange=${e=>{setStakeholder(e.target.value);selectGroup(selectedGroup)}}><option value="">All stakeholders</option>${roles.map(role=>html`<option key=${role} value=${role}>${role}</option>`)}</select></label>
       <span className="filter-count" role="status" title="Blockers matching the filters. Related blockers remain available as context.">${matchingCount} of ${data.blockers.length} blockers</span></div>
-      <div className="dependency-legend"><span className="critical-key">Critical core</span><span>Solid = validated dependency</span><span>Dashed = unreviewed dependency</span><label><input type="checkbox" checked=${includeUnreviewed} onChange=${e=>setIncludeUnreviewed(e.target.checked)}/>Unreviewed links</label></div>
+      <div className="dependency-legend"><span className="critical-key">Critical core</span>${newDependenciesMode?html`<span>Dashed = reviewed in source; not marked as validated</span>`:html`<span>Solid = validated dependency</span><span>Dashed = unreviewed dependency</span><label><input type="checkbox" checked=${includeUnreviewed} onChange=${e=>setIncludeUnreviewed(e.target.checked)}/>Unreviewed links</label>`}</div>
     </section>
     <main className=${"workspace"+(detailOpen?" detail-open":"")+(communityMode&&selectedGroup==null?" community-overview":"")}>
       <div className=${"intro"+((selectedGroup != null)?" compact":"")}><div className="eyebrow">${previewMode?"Self-reported assessment":assessmentMode?"Assessment result · illustrative":"Semantic zoom"}</div><h1>${introTitle}</h1><p>${introText}</p></div>
@@ -413,9 +414,10 @@ function Root(){
       if(snapshot?.data)setData(snapshot.data);else setError("This assessment is not available in this tab. Return to the questionnaire results and open the timeline again.");
       return;
     }
-    fetch("../data/explorer-data.json?v=20261001-gates-0-5", {cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("Could not load explorer-data.json");return r.json()}).then(setData).catch(e=>setError(e.message))},[]);
+    fetch(newDependenciesMode?"../data/new-dependencies/explorer-data.json":"../data/explorer-data.json?v=20261001-gates-0-5", {cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("Could not load explorer-data.json");return r.json()}).then(setData).catch(e=>setError(e.message))},[]);
   if(error)return html`<div style=${{padding:"40px",fontFamily:"system-ui"}}><h2>Could not load data</h2><p>${error}</p></div>`;
   if(!data)return html`<div className="timeline-loading"><span className="loading-spinner" aria-hidden="true"></span><span>Loading spatial timeline…</span></div>`;
   return html`<${ReactFlowProvider}><${AppCanvas} data=${data} guidance=${guidance} guidanceLoading=${guidanceLoading}/></${ReactFlowProvider}>`;
 }
 createRoot(document.getElementById("root")).render(html`<${Root}/>`);
+
