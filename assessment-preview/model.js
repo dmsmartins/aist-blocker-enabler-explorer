@@ -59,6 +59,7 @@
     }
     next.source_quick_assessment_id = prior.assessment_id;
     next.scoring_basis = prior.scoring_basis;
+    for (const field of ['created_at','assessment_name','entity_id','entity_name','scope','target_scale','author','assessment_date']) if (prior[field] !== undefined) next[field] = prior[field];
     next.current_step = Math.max(0, expert.questions.findIndex(q => !quick.questions.some(x => x.question_id === q.question_id)));
     return next;
   }
