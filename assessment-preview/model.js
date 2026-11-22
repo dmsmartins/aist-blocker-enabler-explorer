@@ -111,7 +111,7 @@
       rows.push({question,answer,status});
       for (const id of question.blocker_ids) {
         const b=c.blockers.find(b=>b.blocker_id===id);
-        blockers.push({...b,question_id:question.question_id,status,score:status==='valid'?answer.score:null,allocated_weight:answer.effective_weight/question.blocker_ids.length,score_origin:q.mode==='quick'?'quick_group':'expert',operational_status:'not_reviewed'});
+        blockers.push({...b,question_id:question.question_id,status,score:status==='valid'?answer.score:null,allocated_weight:answer.effective_weight/question.blocker_ids.length,score_origin:q.mode==='quick'?(question.blocker_ids.length>1?'quick_group':'quick_individual'):'expert',operational_status:'not_reviewed'});
       }
     }
     const groups=[];
