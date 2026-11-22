@@ -39,9 +39,9 @@
     // Count once per assessment/question. Never send maturity scores, notes or names.
     if(a&&(a.score!==null&&a.score!==undefined||a.response_state==='dont_know'||a.applicability==='not_applicable'))update(session,questionId,{answered:true});
   }
-  function markup(){return `<details class="question-help question-feedback"><summary>Rate this question <span class="muted">(optional)</span></summary>
+  function markup(change=''){return `<details class="question-help question-feedback"><summary>Rate this question <span class="muted">(optional)</span></summary>
     <p class="feedback-intro">Help us improve the questionnaire. This does not affect your assessment score.</p>
-    <div id="question-stars"></div><div class="feedback-actions"><button type="button" id="feedback-clear">Clear ratings</button><button type="button" id="feedback-retry">Retry</button></div>
+    <div id="question-stars"></div><label for="question-change">What would you change about this question? (optional)</label><textarea id="question-change" rows="3">${change}</textarea><div class="feedback-actions"><button type="button" id="feedback-clear">Clear ratings</button><button type="button" id="feedback-retry">Retry</button></div>
     <p class="feedback-status" role="status" data-feedback-status=""></p>
     <small>Ratings and an anonymous answered/not-answered flag are shared with the research team. Your maturity scores, notes and assessment name stay in this browser.</small></details>`;}
   function mount(session,questionId){
