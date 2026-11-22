@@ -17238,6 +17238,450 @@
   "questionnaires": [
     {
       "assessment_type": "company",
+      "mode": "quick",
+      "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b",
+      "published_at": null,
+      "questions": [
+        {
+          "assessment_type": "company",
+          "mode": "quick",
+          "question_id": "CE-2213",
+          "text": "How mature and consistently governed are the company's shared architecture & platform capabilities for operating AI at scale?",
+          "default_weight": 1,
+          "blocker_ids": [
+            2213
+          ],
+          "criteria": "2213: governed and production-ready platform architecture",
+          "topic": "Immature platform architecture and fragmented IT foundations",
+          "source": {
+            "sheet": "Company_Expert",
+            "row": 36
+          },
+          "why_this_matters": "2213: Shared production foundations determine whether solutions can run reliably beyond isolated pilots.",
+          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n2213: Assess platform governance, security, resilience, integration, capacity and evidence from the intended environment.",
+          "evidence_examples": "2213: Architecture standards, design review, platform capacity and resilience evidence",
+          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
+          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
+          "criticality_composite": 3.8,
+          "criticality": "Critical core",
+          "rubric_0": "No suitable architecture or governed platform is available for production AI.\nExamples (illustrative, not actual findings):\n2213: The solution runs only on an unmanaged laptop.",
+          "rubric_1": "AI relies on isolated or temporary environments with important security, resilience, access or integration issues unresolved.\n\nExamples (illustrative, not actual findings):\n2213: A shared environment exists without recovery or access arrangements.",
+          "rubric_2": "A target architecture is reviewed, but platform governance or production capability is only partly implemented. Evidence may be limited to individual units or pilots.\n\nExamples (illustrative, not actual findings):\n2213: The target architecture is reviewed but resilience tests are incomplete.",
+          "rubric_3": "Approved architecture and governed platforms demonstrate required security, resilience, integration and growth capacity. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2213: The governed platform passes required resilience, access and capacity checks.",
+          "rubric_4": "Platform service and scaling results are monitored and drive controlled architecture and foundation improvements. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2213: Platform incidents and capacity trends drive controlled improvements.",
+          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+        },
+        {
+          "assessment_type": "company",
+          "mode": "quick",
+          "question_id": "CE-2123",
+          "text": "How consistently do shared datasets meet quality and semantic standards needed for reliable AI across systems?",
+          "default_weight": 1,
+          "blocker_ids": [
+            2123
+          ],
+          "criteria": "2123: tested data quality and consistent semantics",
+          "topic": "Data quality, consistency and semantic structure",
+          "source": {
+            "sheet": "Company_Expert",
+            "row": 37
+          },
+          "why_this_matters": "2123: Even available data can mislead a model when meanings, identifiers or units differ across sources.",
+          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n2123: Check profiling results, thresholds, dictionaries, asset identifiers, units, reconciliation and source-level correction.",
+          "evidence_examples": "2123: Profiling results, data dictionary, identifier mappings and quality tests",
+          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
+          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
+          "criticality_composite": 5.6,
+          "criticality": "Critical core",
+          "rubric_0": "Data quality and cross-source meaning are unknown or unusable.\nExamples (illustrative, not actual findings):\n2123: Teams combine datasets without checking definitions.",
+          "rubric_1": "Teams correct obvious defects manually; definitions, units or identifiers remain inconsistent.\nExamples (illustrative, not actual findings):\n2123: An analyst manually corrects mismatched asset identifiers.",
+          "rubric_2": "Profiling, quality thresholds and semantic mappings exist, but some sources fail tests or remain unmapped. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2123: Mappings exist but one source still fails the agreed quality tests.",
+          "rubric_3": "All required datasets pass agreed quality tests and reconcile definitions, identifiers and units across sources. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2123: All required sources pass quality and identifier/unit reconciliation tests.",
+          "rubric_4": "Quality and semantic consistency are monitored over time; recurring defects trigger verified corrections at source. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2123: Recurring semantic defects are corrected at source and the fix is verified.",
+          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+        },
+        {
+          "assessment_type": "company",
+          "mode": "quick",
+          "question_id": "CE-2134",
+          "text": "How reliably can the company access the data needed for AI in a secure and controlled way?",
+          "default_weight": 1,
+          "blocker_ids": [
+            2134
+          ],
+          "criteria": "2134: secure and reliable technical data movement",
+          "topic": "Data architecture, access and controls",
+          "source": {
+            "sheet": "Company_Expert",
+            "row": 38
+          },
+          "why_this_matters": "2134: Reliable, controlled data movement is needed for repeatable operation and traceable decisions.",
+          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n2134: Check end-to-end transfer, access controls, lineage, failure handling and all required environments.",
+          "evidence_examples": "2134: Pipeline tests, access-control tests, lineage and transfer monitoring",
+          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
+          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
+          "criticality_composite": 6.8,
+          "criticality": "Critical core",
+          "rubric_0": "Data cannot be transferred and accessed in a secure and usable way.\nExamples (illustrative, not actual findings):\n2134: Data cannot reach the model through a controlled route.",
+          "rubric_1": "Data is transferred manually or in different ways. Access and changes are not always controlled or tracked.\nExamples (illustrative, not actual findings):\n2134: Staff email extracts to keep the pilot running.",
+          "rubric_2": "Data access and transfer are tested in pilots or individual units, but security, reliability and availability across environments are not yet fully ensured.\n\nExamples (illustrative, not actual findings):\n2134: A pipeline works in test but production access and recovery are unproven.",
+          "rubric_3": "Data can be securely and reliably transferred across all required environments. Access is controlled, data is usable, and its origin and movement can be traced. This is demonstrated through end-to-end testing across all relevant initiatives and assessed units.\n\nExamples (illustrative, not actual findings):\n2134: Production pipeline tests demonstrate permitted access, reliable transfer and lineage.",
+          "rubric_4": "Data transfers, access exceptions and pipeline performance are continuously monitored. Identified issues lead to tested improvements, demonstrated over repeated organisational review cycles. All level 3 requirements remain satisfied.\n\nExamples (illustrative, not actual findings):\n2134: Transfer incidents lead to tested improvements in retries and monitoring.",
+          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+        },
+        {
+          "assessment_type": "company",
+          "mode": "quick",
+          "question_id": "CE-3744",
+          "text": "How consistently are safety implications, failure modes and human oversight considered before AI use cases are approved?",
+          "default_weight": 1,
+          "blocker_ids": [
+            3744
+          ],
+          "criteria": "3744: early safety framing and human oversight",
+          "topic": "Safety implications not identified early",
+          "source": {
+            "sheet": "Company_Expert",
+            "row": 51
+          },
+          "why_this_matters": "3744: Considering hazards early allows design choices and human oversight to address failure before rollout.",
+          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n3744: Check early hazard identification, misuse and failure scenarios, oversight requirements and traceability into design.",
+          "evidence_examples": "3744: Early hazard review, failure scenarios, oversight design and safety actions",
+          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
+          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
+          "criticality_composite": 8.2,
+          "criticality": "Critical core",
+          "rubric_0": "Safety implications and human oversight have not been considered during framing.\nExamples (illustrative, not actual findings):\n3744: No one has considered consequences of wrong recommendations.",
+          "rubric_1": "Safety is recognised as a concern, but hazards, failure modes and oversight remain informal.\nExamples (illustrative, not actual findings):\n3744: Safety concerns are mentioned without recording failure scenarios.",
+          "rubric_2": "Early hazard and failure reviews exist, but oversight design or safety actions are not fully integrated into requirements. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n3744: Hazards are recorded but oversight actions remain unassigned.",
+          "rubric_3": "Framing identifies relevant hazards, failure modes and human oversight; owned safety actions are incorporated into design. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3744: Early hazard and oversight requirements are traced into owned design actions.",
+          "rubric_4": "New findings and operational learning update hazard reviews, oversight design and safety actions throughout delivery. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3744: New trial findings update hazards and produce verified design changes.",
+          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+        },
+        {
+          "assessment_type": "company",
+          "mode": "quick",
+          "question_id": "CE-1524",
+          "text": "How consistently are field deployment software asset management tools built into the AI design to support field service-support decisions?",
+          "default_weight": 1,
+          "blocker_ids": [
+            1524
+          ],
+          "criteria": "1524: fit with railway field conditions and support needs",
+          "topic": "Solutions misaligned with operational context",
+          "source": {
+            "sheet": "Company_Expert",
+            "row": 28
+          },
+          "why_this_matters": "1524: Railway field conditions can make a laboratory solution impractical to use or support.",
+          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n1524: Consider connectivity, weather, trackside access, possessions, shifts, equipment constraints and recovery arrangements.",
+          "evidence_examples": "1524: Field observations, operational scenarios, field trials and support requirements",
+          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
+          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
+          "criticality_composite": 9.8,
+          "criticality": "Critical core",
+          "rubric_0": "Railway field conditions and support needs have not been considered.\nExamples (illustrative, not actual findings):\n1524: Design assumes continuous connectivity without checking the field.",
+          "rubric_1": "Field constraints are discussed informally but do not shape solution requirements.\nExamples (illustrative, not actual findings):\n1524: Teams discuss signal loss but have no trial scenario.",
+          "rubric_2": "Possession windows, connectivity, shifts and trackside conditions are documented; trials cover only some scenarios. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1524: A field trial covers daytime operation but not relevant night-shift conditions.",
+          "rubric_3": "Representative field trials validate the solution and support arrangements against all relevant operating constraints. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1524: Representative trials validate offline behaviour and shift support arrangements.",
+          "rubric_4": "Field-use results and support incidents are reviewed across conditions and used to improve design and service support. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1524: Field incidents lead to a tested change in offline recovery and support.",
+          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+        },
+        {
+          "assessment_type": "company",
+          "mode": "quick",
+          "question_id": "CE-1334",
+          "text": "How well does the company ensure that AI services have the staff, budget, responsible owners and agreed levels of support they need once they are in use?",
+          "default_weight": 1,
+          "blocker_ids": [
+            1334
+          ],
+          "criteria": "1334: funded post-go-live operating model",
+          "topic": "No defined run model after go-live",
+          "source": {
+            "sheet": "Company_Expert",
+            "row": 23
+          },
+          "why_this_matters": "1334: A service cannot remain dependable without funded people and agreed responsibilities after go-live.",
+          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n1334: Check support hours, service levels, budget, staffing, ownership and escalation after the delivery team leaves.",
+          "evidence_examples": "1334: Service model, staffing, support budget and agreed service levels",
+          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
+          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
+          "criticality_composite": 11.4,
+          "criticality": "Critical core",
+          "rubric_0": "No post-go-live operating or support model is defined.\nExamples (illustrative, not actual findings):\n1334: No support arrangement exists beyond the pilot.",
+          "rubric_1": "Support is expected from the delivery team, without agreed budget or service responsibilities.\nExamples (illustrative, not actual findings):\n1334: The data scientist informally handles all incidents.",
+          "rubric_2": "A service model exists, but staffing, funding, service levels or ownership is not fully accepted. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1334: A service plan exists but night-shift support is unfunded.",
+          "rubric_3": "A staffed and funded operating model has accepted service ownership, support responsibilities and service levels. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1334: A funded support rota and accepted service levels cover the intended operation.",
+          "rubric_4": "Service performance, workload and cost are reviewed; staffing, funding and support arrangements are adjusted accordingly. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1334: Service workload reviews lead to additional support capacity and improved response times.",
+          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+        },
+        {
+          "assessment_type": "company",
+          "mode": "quick",
+          "question_id": "CE-1614",
+          "text": "How clearly are responsibilities for owning, accessing and using data defined, and how consistently are these rules applied to support approved AI use across the organisation?",
+          "default_weight": 1,
+          "blocker_ids": [
+            1614
+          ],
+          "criteria": "1614: consistent data ownership and authorised access",
+          "topic": "Fragmented or restrictive data governance",
+          "source": {
+            "sheet": "Company_Expert",
+            "row": 29
+          },
+          "why_this_matters": "1614: Unclear ownership and inconsistent permissions can delay access and prevent scaling beyond local agreements.",
+          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n1614: Check every required dataset's owner, permission terms, approval route, permitted uses and escalation.",
+          "evidence_examples": "1614: Data ownership register, access decisions, approved permissions and escalation routes",
+          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
+          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
+          "criticality_composite": 12.4,
+          "criticality": "Critical core",
+          "rubric_0": "Data owners, access rules and approval routes are undefined.\nExamples (illustrative, not actual findings):\n1614: No one can authorise access to a required dataset.",
+          "rubric_1": "Access is negotiated through local contacts; terms differ and refusals lack clear escalation.\nExamples (illustrative, not actual findings):\n1614: An analyst receives an informal extract from a colleague.",
+          "rubric_2": "Owners and access rules are documented for some datasets, but permissions or cross-unit consistency remains incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1614: Owners are identified but one unit's reuse permission is unresolved.",
+          "rubric_3": "Every required dataset has an accountable owner, approved permissions, consistent access terms and a working escalation route. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1614: Each required dataset has approved terms and a functioning access route.",
+          "rubric_4": "Access delays, exceptions and governance decisions are reviewed and used to improve cross-unit access arrangements. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1614: Data Access-delay reviews simplify approvals while maintaining the agreed controls.",
+          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+        },
+        {
+          "assessment_type": "company",
+          "mode": "quick",
+          "question_id": "CE-1314",
+          "text": "How consistently is a business owner accountable for AI benefits and adoption after the prototype stage? ",
+          "default_weight": 1,
+          "blocker_ids": [
+            1314
+          ],
+          "criteria": "1314: business ownership beyond prototype",
+          "topic": "No business ownership beyond prototype",
+          "source": {
+            "sheet": "Company_Expert",
+            "row": 21
+          },
+          "why_this_matters": "1314: Without post-pilot ownership, adoption and benefits can become nobody's responsibility.",
+          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n1314: Separate technical delivery responsibility from business authority over adoption, process change and realised benefits.",
+          "evidence_examples": "1314: Ownership acceptance, benefit accountability and post-pilot responsibilities",
+          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
+          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
+          "criticality_composite": 12.6,
+          "criticality": "Critical core",
+          "rubric_0": "No business owner is accountable after the prototype.\nExamples (illustrative, not actual findings):\n1314: The pilot ends without a business owner.",
+          "rubric_1": "An informal owner is suggested, without agreed authority for adoption or benefits.\nExamples (illustrative, not actual findings):\n1314: A delivery lead is assumed to own adoption without business authority.",
+          "rubric_2": "A post-prototype owner is named, but benefit responsibilities or decision authority remain incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1314: A business owner is named but benefit accountability is unresolved.",
+          "rubric_3": "A business owner formally accepts authority and accountability for adoption and benefits beyond the prototype. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1314: The owner accepts responsibility for adoption and realised benefits.",
+          "rubric_4": "The owner tracks adoption and realised benefits, acts on gaps and maintains accountability through organisational changes. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1314: An organisational change triggers a documented ownership transfer without interrupting benefit reviews.The owner maintains accountability over the entire life-cycle of the product and ensures the business outcomes are being met. ",
+          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+        },
+        {
+          "assessment_type": "company",
+          "mode": "quick",
+          "question_id": "CE-1114",
+          "text": "How consistently are AI initiatives selected around validated business problems with accountable business owners?",
+          "default_weight": 1,
+          "blocker_ids": [
+            1114
+          ],
+          "criteria": "1114: business-approved problem definition and ownership",
+          "topic": "Technology-push AI initiatives without clear ownership",
+          "source": {
+            "sheet": "Company_Expert",
+            "row": 14
+          },
+          "why_this_matters": "1114: A clear problem and empowered owner prevent investment in solutions that do not address a measurable operational need.",
+          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n1114: Check the affected process, baseline, decision authority, success measures and evidence that the business accepts the problem.",
+          "evidence_examples": "1114: Approved problem statement, baseline, process boundaries and accountable owner",
+          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
+          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
+          "criticality_composite": 13.4,
+          "criticality": "Critical core",
+          "rubric_0": "No validated business problem or accountable business owner is identified.\nExamples (illustrative, not actual findings):\n1114: The team starts building a model without identifying the operational problem.",
+          "rubric_1": "A problem and possible owner are discussed, but ownership and process boundaries are informal.\n\nExamples (illustrative, not actual findings):\n1114: An AI solution to prioritise track maintenance is discussed, but no business owner is confirmed and its role in maintenance planning remains unclear.",
+          "rubric_2": "A problem statement and owner are documented; baseline, authority or business approval remains incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1114: A problem statement exists but the delay baseline is unverified.",
+          "rubric_3": "An authorised business owner approves the problem, process boundaries, baseline and measurable success criteria. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1114: The process owner approves the baseline and the intended improvement.",
+          "rubric_4": "The owner regularly checks results against the original problem and baseline, and adjusts priorities when evidence changes. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1114: The owner compares results with the baseline and changes priorities when benefits fall short.",
+          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+        },
+        {
+          "assessment_type": "company",
+          "mode": "quick",
+          "question_id": "CE-1323",
+          "text": "How clearly has the company defined who makes and approves decisions based on AI recommendations, who is responsible for the results, and who handles problems or disagreements?",
+          "default_weight": 1,
+          "blocker_ids": [
+            1323
+          ],
+          "criteria": "1323: human accountability for AI-supported decisions",
+          "topic": "Unclear human accountability in AI-supported operational decisions",
+          "source": {
+            "sheet": "Company_Expert",
+            "row": 22
+          },
+          "why_this_matters": "1323: AI outputs need accountable human decisions, especially when recommendations are uncertain or disputed.",
+          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n1323: Map who acts, approves, owns outcomes, overrides and escalates for normal and failure scenarios.",
+          "evidence_examples": "1323: Decision responsibility matrix, human oversight procedures and scenario exercises",
+          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
+          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
+          "criticality_composite": 14,
+          "criticality": "Critical core",
+          "rubric_0": "No human accountability is defined for AI-supported operational decisions.\nExamples (illustrative, not actual findings):\n1323: Operators receive recommendations with no decision responsibility defined.",
+          "rubric_1": "People assume who decides, but approval, outcome ownership and escalation are ambiguous.\nExamples (illustrative, not actual findings):\n1323: Staff assume a supervisor will decide but have no agreed procedure.",
+          "rubric_2": "Decision roles and oversight procedures are documented; some decisions or failure scenarios remain untested. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1323: Roles are documented but an ambiguous recommendation has not been rehearsed.",
+          "rubric_3": "Every relevant decision has a named human decision-maker, approval authority, outcome owner and tested escalation route. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1323: An exercise confirms who overrides an output and who approves the alternative action.",
+          "rubric_4": "Decision incidents and oversight exercises are reviewed regularly and used to improve accountability and escalation. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1323: Incident reviews improve decision authority and escalation procedures.",
+          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+        },
+        {
+          "assessment_type": "company",
+          "mode": "quick",
+          "question_id": "CE-3634",
+          "text": "How effectively does the company overcome data silos so datasets can be reused across units and AI initiatives?",
+          "default_weight": 1,
+          "blocker_ids": [
+            3634
+          ],
+          "criteria": "3634: cross-unit data reuse and interoperability",
+          "topic": "Organisational data silos limiting reuse and scaling",
+          "source": {
+            "sheet": "Company_Expert",
+            "row": 50
+          },
+          "why_this_matters": "3634: One-off local access does not establish reusable data across organisational boundaries.",
+          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n3634: Check cross-unit agreements, shared definitions, interoperable formats and actual reuse beyond the originating pilot.",
+          "evidence_examples": "3634: Data-sharing agreements, reusable datasets, common definitions and reuse evidence",
+          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
+          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
+          "criticality_composite": 14.8,
+          "criticality": "Critical core",
+          "rubric_0": "Data remains isolated within units, with no reuse arrangements.\nExamples (illustrative, not actual findings):\n3634: Each unit keeps its data isolated.",
+          "rubric_1": "Sharing depends on personal contacts and one-off extracts.\nExamples (illustrative, not actual findings):\n3634: Sharing depends on a colleague sending a one-off extract.",
+          "rubric_2": "Sharing agreements and common definitions are drafted or piloted, but cross-unit reuse remains incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n3634: Agreements are drafted but cross-unit reuse is only piloted.",
+          "rubric_3": "Required units use agreed sharing arrangements, interoperable definitions and demonstrably reusable datasets. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3634: Required units repeatedly reuse datasets under agreed terms and definitions.",
+          "rubric_4": "Reuse, interoperability failures and sharing friction are measured and used to improve common data arrangements. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3634: Reuse outcomes and remaining barriers drive verified improvements in sharing.",
+          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+        },
+        {
+          "assessment_type": "company",
+          "mode": "quick",
+          "question_id": "CE-1233",
+          "text": "How fast can we get approval to scale AI pilots into governance compliant productionized solutions?",
+          "default_weight": 1,
+          "blocker_ids": [
+            1233
+          ],
+          "criteria": "1233: timely governance decisions and escalation",
+          "topic": "Slow or unclear AI governance",
+          "source": {
+            "sheet": "Company_Expert",
+            "row": 19
+          },
+          "why_this_matters": "1233: Unclear decisions and slow approvals can strand otherwise viable solutions between stages.",
+          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n1233: Check named approvers, authority, expected turnaround, escalation and recorded scale, adapt or stop decisions.",
+          "evidence_examples": "1233: Governance charter, decision log, review calendar and escalation records",
+          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
+          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
+          "criticality_composite": 15.2,
+          "criticality": "High",
+          "rubric_0": "Approvers, decision rights and escalation routes are unknown.\nExamples (illustrative, not actual findings):\n1233: No one knows who can approve deployment.",
+          "rubric_1": "Decisions depend on informal contacts, with no agreed review deadlines.\nExamples (illustrative, not actual findings):\n1233: The team seeks approval through personal contacts.",
+          "rubric_2": "Governance roles and review steps are documented, but deadlines or escalation routes are not consistently used. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1233: A review process exists but missed deadlines have no escalation route.",
+          "rubric_3": "Named approvers make recorded scale, adapt or stop decisions within agreed review and escalation arrangements. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1233: Named approvers record decisions and use the agreed escalation route.",
+          "rubric_4": "Decision turnaround and recurring bottlenecks are monitored, and governance is improved using those results. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1233: Decision-time reviews remove a recurring approval bottleneck.",
+          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+        },
+        {
+          "assessment_type": "company",
+          "mode": "quick",
+          "question_id": "CE-2513",
+          "text": "How systematically does the company test and monitor ML/AI-model performance across the variability introduced by scaling?",
+          "default_weight": 1,
+          "blocker_ids": [
+            2513
+          ],
+          "criteria": "2513: model performance under operational variation and scale",
+          "topic": "Model performance degrades with scale",
+          "source": {
+            "sheet": "Company_Expert",
+            "row": 44
+          },
+          "why_this_matters": "2513: Pilot performance may not hold across the assets and conditions introduced by scale.",
+          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n2513: Check representative sites, assets, seasons, rare conditions, acceptance thresholds and documented limitations.",
+          "evidence_examples": "2513: Stratified validation results, scale tests, failure analysis and acceptance thresholds",
+          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
+          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
+          "criticality_composite": 15.2,
+          "criticality": "High",
+          "rubric_0": "Model performance at target scale has not been assessed.\nExamples (illustrative, not actual findings):\n2513: Only training performance is reported.",
+          "rubric_1": "Performance is reported only on a small or controlled sample without operational acceptance thresholds.\nExamples (illustrative, not actual findings):\n2513: A small convenient sample is used to claim production readiness.",
+          "rubric_2": "Thresholds and stratified tests exist, but important assets, sites, seasons or operating conditions remain uncovered. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2513: Stratified tests exist but an important operating condition is missing.",
+          "rubric_3": "Representative tests meet agreed thresholds across all relevant target-scale conditions; failures and limitations are documented. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2513: Representative tests meet agreed thresholds across the deployment scope.",
+          "rubric_4": "Performance variation is monitored across conditions and time; degradations trigger validated corrective action. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2513: Monitoring detects a condition-specific decline and a corrective change is validated.",
+          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+        },
+        {
+          "assessment_type": "company",
+          "mode": "quick",
+          "question_id": "CE-2423",
+          "text": "How consistently are deployed ML/AI models monitored, retrained and reviewed as data and operating conditions evolve?",
+          "default_weight": 1,
+          "blocker_ids": [
+            2423
+          ],
+          "criteria": "2423: model monitoring and controlled retraining",
+          "topic": "Unsufficient Model monitoring, -retraining and -evolution",
+          "source": {
+            "sheet": "Company_Expert",
+            "row": 43
+          },
+          "why_this_matters": "2423: Model behaviour can degrade as data and operating conditions change, requiring owned detection and controlled updates.",
+          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n2423: Check drift and performance thresholds, monitoring owners, retraining triggers, approval, release and rollback.",
+          "evidence_examples": "2423: Monitoring dashboards, drift thresholds, retraining plan and change approvals",
+          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
+          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
+          "criticality_composite": 15.4,
+          "criticality": "High",
+          "rubric_0": "No model monitoring or update responsibilities are defined.\nExamples (illustrative, not actual findings):\n2423: No one monitors the deployed model.",
+          "rubric_1": "Models are checked or updated reactively, without thresholds or controlled retraining.\nExamples (illustrative, not actual findings):\n2423: A developer checks performance after complaints.",
+          "rubric_2": "Monitoring and retraining plans exist, but drift triggers, ownership or update controls are only partly operational. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2423: Monitoring is piloted but retraining approval is unresolved.",
+          "rubric_3": "Owned monitoring detects drift and threshold breaches; retraining and model changes follow tested approval and release controls. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2423: A threshold breach triggers owned investigation and controlled model release.",
+          "rubric_4": "Detection effectiveness and post-update outcomes are reviewed over repeated cycles and used to refine monitoring and retraining. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2423: Repeated update reviews improve detection thresholds and retraining decisions.",
+          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+        },
+        {
+          "assessment_type": "company",
+          "mode": "quick",
+          "question_id": "CE-3114",
+          "text": "How consistently is the data needed for AI collected, retained and made available in usable form during the life-cycle?",
+          "default_weight": 1,
+          "blocker_ids": [
+            3114
+          ],
+          "criteria": "3114: usable data collection, retention and availability",
+          "topic": "Data collection, storage and usable availability",
+          "source": {
+            "sheet": "Company_Expert",
+            "row": 45
+          },
+          "why_this_matters": "3114: A model cannot operate sustainably if required data are missing, intermittent or inaccessible.",
+          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n3114: Check inventories, coverage, frequency, retention, availability and practical access to historical records.",
+          "evidence_examples": "3114: Data inventory, collection coverage, retention arrangements and availability checks",
+          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
+          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
+          "criticality_composite": 16.4,
+          "criticality": "High",
+          "rubric_0": "Required data is not collected or available in usable form.\nExamples (illustrative, not actual findings):\n3114: Required sensor history has never been collected.",
+          "rubric_1": "Some data can be found manually, but collection, coverage and retention are unreliable.\nExamples (illustrative, not actual findings):\n3114: An analyst assembles sporadic records manually.",
+          "rubric_2": "A data inventory and collection plan exist; gaps in frequency, coverage, retention or availability remain. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n3114: Collection is planned but gaps remain in frequency or retention.",
+          "rubric_3": "Required data is collected at agreed coverage and frequency, retained appropriately and demonstrably available for use. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3114: Required datasets are collected, retained and available at the agreed coverage.",
+          "rubric_4": "Collection completeness, availability and retention are monitored; recurrent gaps trigger improvements to collection and storage. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3114: Availability reviews identify recurring collection gaps and verify improved capture.",
+          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+        }
+      ],
+      "source_sheet": "Company_Expert"
+    },
+    {
+      "assessment_type": "company",
       "mode": "expert",
       "questionnaire_version": "sha256:feff6e14d0609b43fdef66d2847de7bc7246d8cb108707059034a1638cb3d4da",
       "published_at": null,
@@ -18435,16 +18879,16 @@
       "source_sheet": "Company_Expert"
     },
     {
-      "assessment_type": "company",
+      "assessment_type": "project",
       "mode": "quick",
-      "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b",
+      "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f",
       "published_at": null,
       "questions": [
         {
-          "assessment_type": "company",
+          "assessment_type": "project",
           "mode": "quick",
-          "question_id": "CE-2213",
-          "text": "How mature and consistently governed are the company's shared architecture & platform capabilities for operating AI at scale?",
+          "question_id": "PE-2213",
+          "text": "Can the approved architecture support this project's security, resilience, integration and growth requirements?",
           "default_weight": 1,
           "blocker_ids": [
             2213
@@ -18452,28 +18896,28 @@
           "criteria": "2213: governed and production-ready platform architecture",
           "topic": "Immature platform architecture and fragmented IT foundations",
           "source": {
-            "sheet": "Company_Expert",
+            "sheet": "Project_Expert",
             "row": 36
           },
           "why_this_matters": "2213: Shared production foundations determine whether solutions can run reliably beyond isolated pilots.",
-          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n2213: Assess platform governance, security, resilience, integration, capacity and evidence from the intended environment.",
+          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n2213: Assess platform governance, security, resilience, integration, capacity and evidence from the intended environment.",
           "evidence_examples": "2213: Architecture standards, design review, platform capacity and resilience evidence",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
           "criticality_composite": 3.8,
           "criticality": "Critical core",
           "rubric_0": "No suitable architecture or governed platform is available for production AI.\nExamples (illustrative, not actual findings):\n2213: The solution runs only on an unmanaged laptop.",
-          "rubric_1": "AI relies on isolated or temporary environments with important security, resilience, access or integration issues unresolved.\n\nExamples (illustrative, not actual findings):\n2213: A shared environment exists without recovery or access arrangements.",
-          "rubric_2": "A target architecture is reviewed, but platform governance or production capability is only partly implemented. Evidence may be limited to individual units or pilots.\n\nExamples (illustrative, not actual findings):\n2213: The target architecture is reviewed but resilience tests are incomplete.",
-          "rubric_3": "Approved architecture and governed platforms demonstrate required security, resilience, integration and growth capacity. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2213: The governed platform passes required resilience, access and capacity checks.",
-          "rubric_4": "Platform service and scaling results are monitored and drive controlled architecture and foundation improvements. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2213: Platform incidents and capacity trends drive controlled improvements.",
-          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+          "rubric_1": "AI relies on isolated environments with unresolved security, resilience or integration foundations.\nExamples (illustrative, not actual findings):\n2213: A shared environment exists without recovery or access arrangements.",
+          "rubric_2": "A target architecture is reviewed, but platform governance or production capability is only partly implemented. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n2213: The target architecture is reviewed but resilience tests are incomplete.",
+          "rubric_3": "Approved architecture and governed platforms demonstrate required security, resilience, integration and growth capacity. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n2213: The governed platform passes required resilience, access and capacity checks.",
+          "rubric_4": "Platform service and scaling results are monitored and drive controlled architecture and foundation improvements. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n2213: Platform incidents and capacity trends drive controlled improvements.",
+          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         },
         {
-          "assessment_type": "company",
+          "assessment_type": "project",
           "mode": "quick",
-          "question_id": "CE-2123",
-          "text": "How consistently do shared datasets meet quality and semantic standards needed for reliable AI across systems?",
+          "question_id": "PE-2123",
+          "text": "Do the project's datasets meet tested quality thresholds and use reconciled definitions, identifiers and units across sources?",
           "default_weight": 1,
           "blocker_ids": [
             2123
@@ -18481,11 +18925,11 @@
           "criteria": "2123: tested data quality and consistent semantics",
           "topic": "Data quality, consistency and semantic structure",
           "source": {
-            "sheet": "Company_Expert",
+            "sheet": "Project_Expert",
             "row": 37
           },
           "why_this_matters": "2123: Even available data can mislead a model when meanings, identifiers or units differ across sources.",
-          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n2123: Check profiling results, thresholds, dictionaries, asset identifiers, units, reconciliation and source-level correction.",
+          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n2123: Check profiling results, thresholds, dictionaries, asset identifiers, units, reconciliation and source-level correction.",
           "evidence_examples": "2123: Profiling results, data dictionary, identifier mappings and quality tests",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
@@ -18493,16 +18937,16 @@
           "criticality": "Critical core",
           "rubric_0": "Data quality and cross-source meaning are unknown or unusable.\nExamples (illustrative, not actual findings):\n2123: Teams combine datasets without checking definitions.",
           "rubric_1": "Teams correct obvious defects manually; definitions, units or identifiers remain inconsistent.\nExamples (illustrative, not actual findings):\n2123: An analyst manually corrects mismatched asset identifiers.",
-          "rubric_2": "Profiling, quality thresholds and semantic mappings exist, but some sources fail tests or remain unmapped. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2123: Mappings exist but one source still fails the agreed quality tests.",
-          "rubric_3": "All required datasets pass agreed quality tests and reconcile definitions, identifiers and units across sources. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2123: All required sources pass quality and identifier/unit reconciliation tests.",
-          "rubric_4": "Quality and semantic consistency are monitored over time; recurring defects trigger verified corrections at source. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2123: Recurring semantic defects are corrected at source and the fix is verified.",
-          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+          "rubric_2": "Profiling, quality thresholds and semantic mappings exist, but some sources fail tests or remain unmapped. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n2123: Mappings exist but one source still fails the agreed quality tests.",
+          "rubric_3": "All required datasets pass agreed quality tests and reconcile definitions, identifiers and units across sources. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n2123: All required sources pass quality and identifier/unit reconciliation tests.",
+          "rubric_4": "Quality and semantic consistency are monitored over time; recurring defects trigger verified corrections at source. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n2123: Recurring semantic defects are corrected at source and the fix is verified.",
+          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         },
         {
-          "assessment_type": "company",
+          "assessment_type": "project",
           "mode": "quick",
-          "question_id": "CE-2134",
-          "text": "How reliably can the company access the data needed for AI in a secure and controlled way?",
+          "question_id": "PE-2134",
+          "text": "Are the project's data pipelines, access controls and transfer mechanisms tested for security, reliability and usability?",
           "default_weight": 1,
           "blocker_ids": [
             2134
@@ -18510,28 +18954,28 @@
           "criteria": "2134: secure and reliable technical data movement",
           "topic": "Data architecture, access and controls",
           "source": {
-            "sheet": "Company_Expert",
+            "sheet": "Project_Expert",
             "row": 38
           },
           "why_this_matters": "2134: Reliable, controlled data movement is needed for repeatable operation and traceable decisions.",
-          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n2134: Check end-to-end transfer, access controls, lineage, failure handling and all required environments.",
+          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n2134: Check end-to-end transfer, access controls, lineage, failure handling and all required environments.",
           "evidence_examples": "2134: Pipeline tests, access-control tests, lineage and transfer monitoring",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
           "criticality_composite": 6.8,
           "criticality": "Critical core",
-          "rubric_0": "Data cannot be transferred and accessed in a secure and usable way.\nExamples (illustrative, not actual findings):\n2134: Data cannot reach the model through a controlled route.",
-          "rubric_1": "Data is transferred manually or in different ways. Access and changes are not always controlled or tracked.\nExamples (illustrative, not actual findings):\n2134: Staff email extracts to keep the pilot running.",
-          "rubric_2": "Data access and transfer are tested in pilots or individual units, but security, reliability and availability across environments are not yet fully ensured.\n\nExamples (illustrative, not actual findings):\n2134: A pipeline works in test but production access and recovery are unproven.",
-          "rubric_3": "Data can be securely and reliably transferred across all required environments. Access is controlled, data is usable, and its origin and movement can be traced. This is demonstrated through end-to-end testing across all relevant initiatives and assessed units.\n\nExamples (illustrative, not actual findings):\n2134: Production pipeline tests demonstrate permitted access, reliable transfer and lineage.",
-          "rubric_4": "Data transfers, access exceptions and pipeline performance are continuously monitored. Identified issues lead to tested improvements, demonstrated over repeated organisational review cycles. All level 3 requirements remain satisfied.\n\nExamples (illustrative, not actual findings):\n2134: Transfer incidents lead to tested improvements in retries and monitoring.",
-          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+          "rubric_0": "Required data cannot be transferred through a controlled, usable pipeline.\nExamples (illustrative, not actual findings):\n2134: Data cannot reach the model through a controlled route.",
+          "rubric_1": "Ad hoc transfers work locally, without reliable access control or traceability.\nExamples (illustrative, not actual findings):\n2134: Staff email extracts to keep the pilot running.",
+          "rubric_2": "Pipelines and permissions are implemented in a pilot, but security, reliability or environment coverage is incomplete. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n2134: A pipeline works in test but production access and recovery are unproven.",
+          "rubric_3": "End-to-end pipelines demonstrate secure access, reliable transfer, usable data and traceable lineage across required environments. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n2134: Production pipeline tests demonstrate permitted access, reliable transfer and lineage.",
+          "rubric_4": "Transfer failures, access exceptions and pipeline performance are monitored and drive tested improvements. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n2134: Transfer incidents lead to tested improvements in retries and monitoring.",
+          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         },
         {
-          "assessment_type": "company",
+          "assessment_type": "project",
           "mode": "quick",
-          "question_id": "CE-3744",
-          "text": "How consistently are safety implications, failure modes and human oversight considered before AI use cases are approved?",
+          "question_id": "PE-3744",
+          "text": "Were hazards, failure modes and human oversight needs identified during framing and carried into the project design?",
           "default_weight": 1,
           "blocker_ids": [
             3744
@@ -18539,11 +18983,11 @@
           "criteria": "3744: early safety framing and human oversight",
           "topic": "Safety implications not identified early",
           "source": {
-            "sheet": "Company_Expert",
+            "sheet": "Project_Expert",
             "row": 51
           },
           "why_this_matters": "3744: Considering hazards early allows design choices and human oversight to address failure before rollout.",
-          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n3744: Check early hazard identification, misuse and failure scenarios, oversight requirements and traceability into design.",
+          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n3744: Check early hazard identification, misuse and failure scenarios, oversight requirements and traceability into design.",
           "evidence_examples": "3744: Early hazard review, failure scenarios, oversight design and safety actions",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
@@ -18551,16 +18995,16 @@
           "criticality": "Critical core",
           "rubric_0": "Safety implications and human oversight have not been considered during framing.\nExamples (illustrative, not actual findings):\n3744: No one has considered consequences of wrong recommendations.",
           "rubric_1": "Safety is recognised as a concern, but hazards, failure modes and oversight remain informal.\nExamples (illustrative, not actual findings):\n3744: Safety concerns are mentioned without recording failure scenarios.",
-          "rubric_2": "Early hazard and failure reviews exist, but oversight design or safety actions are not fully integrated into requirements. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n3744: Hazards are recorded but oversight actions remain unassigned.",
-          "rubric_3": "Framing identifies relevant hazards, failure modes and human oversight; owned safety actions are incorporated into design. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3744: Early hazard and oversight requirements are traced into owned design actions.",
-          "rubric_4": "New findings and operational learning update hazard reviews, oversight design and safety actions throughout delivery. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3744: New trial findings update hazards and produce verified design changes.",
-          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+          "rubric_2": "Early hazard and failure reviews exist, but oversight design or safety actions are not fully integrated into requirements. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n3744: Hazards are recorded but oversight actions remain unassigned.",
+          "rubric_3": "Framing identifies relevant hazards, failure modes and human oversight; owned safety actions are incorporated into design. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n3744: Early hazard and oversight requirements are traced into owned design actions.",
+          "rubric_4": "New findings and operational learning update hazard reviews, oversight design and safety actions throughout delivery. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n3744: New trial findings update hazards and produce verified design changes.",
+          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         },
         {
-          "assessment_type": "company",
+          "assessment_type": "project",
           "mode": "quick",
-          "question_id": "CE-1524",
-          "text": "How consistently are field deployment software asset management tools built into the AI design to support field service-support decisions?",
+          "question_id": "PE-1524",
+          "text": "Has the solution been validated against possession windows, trackside conditions, connectivity, shifts and support needs?",
           "default_weight": 1,
           "blocker_ids": [
             1524
@@ -18568,11 +19012,11 @@
           "criteria": "1524: fit with railway field conditions and support needs",
           "topic": "Solutions misaligned with operational context",
           "source": {
-            "sheet": "Company_Expert",
+            "sheet": "Project_Expert",
             "row": 28
           },
           "why_this_matters": "1524: Railway field conditions can make a laboratory solution impractical to use or support.",
-          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n1524: Consider connectivity, weather, trackside access, possessions, shifts, equipment constraints and recovery arrangements.",
+          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n1524: Consider connectivity, weather, trackside access, possessions, shifts, equipment constraints and recovery arrangements.",
           "evidence_examples": "1524: Field observations, operational scenarios, field trials and support requirements",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
@@ -18580,16 +19024,16 @@
           "criticality": "Critical core",
           "rubric_0": "Railway field conditions and support needs have not been considered.\nExamples (illustrative, not actual findings):\n1524: Design assumes continuous connectivity without checking the field.",
           "rubric_1": "Field constraints are discussed informally but do not shape solution requirements.\nExamples (illustrative, not actual findings):\n1524: Teams discuss signal loss but have no trial scenario.",
-          "rubric_2": "Possession windows, connectivity, shifts and trackside conditions are documented; trials cover only some scenarios. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1524: A field trial covers daytime operation but not relevant night-shift conditions.",
-          "rubric_3": "Representative field trials validate the solution and support arrangements against all relevant operating constraints. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1524: Representative trials validate offline behaviour and shift support arrangements.",
-          "rubric_4": "Field-use results and support incidents are reviewed across conditions and used to improve design and service support. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1524: Field incidents lead to a tested change in offline recovery and support.",
-          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+          "rubric_2": "Possession windows, connectivity, shifts and trackside conditions are documented; trials cover only some scenarios. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n1524: A field trial covers daytime operation but not relevant night-shift conditions.",
+          "rubric_3": "Representative field trials validate the solution and support arrangements against all relevant operating constraints. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n1524: Representative trials validate offline behaviour and shift support arrangements.",
+          "rubric_4": "Field-use results and support incidents are reviewed across conditions and used to improve design and service support. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n1524: Field incidents lead to a tested change in offline recovery and support.",
+          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         },
         {
-          "assessment_type": "company",
+          "assessment_type": "project",
           "mode": "quick",
-          "question_id": "CE-1334",
-          "text": "How well does the company ensure that AI services have the staff, budget, responsible owners and agreed levels of support they need once they are in use?",
+          "question_id": "PE-1334",
+          "text": "Is the post-go-live operating model agreed, staffed and funded, including support, service levels and ongoing ownership?",
           "default_weight": 1,
           "blocker_ids": [
             1334
@@ -18597,11 +19041,11 @@
           "criteria": "1334: funded post-go-live operating model",
           "topic": "No defined run model after go-live",
           "source": {
-            "sheet": "Company_Expert",
+            "sheet": "Project_Expert",
             "row": 23
           },
           "why_this_matters": "1334: A service cannot remain dependable without funded people and agreed responsibilities after go-live.",
-          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n1334: Check support hours, service levels, budget, staffing, ownership and escalation after the delivery team leaves.",
+          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n1334: Check support hours, service levels, budget, staffing, ownership and escalation after the delivery team leaves.",
           "evidence_examples": "1334: Service model, staffing, support budget and agreed service levels",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
@@ -18609,16 +19053,16 @@
           "criticality": "Critical core",
           "rubric_0": "No post-go-live operating or support model is defined.\nExamples (illustrative, not actual findings):\n1334: No support arrangement exists beyond the pilot.",
           "rubric_1": "Support is expected from the delivery team, without agreed budget or service responsibilities.\nExamples (illustrative, not actual findings):\n1334: The data scientist informally handles all incidents.",
-          "rubric_2": "A service model exists, but staffing, funding, service levels or ownership is not fully accepted. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1334: A service plan exists but night-shift support is unfunded.",
-          "rubric_3": "A staffed and funded operating model has accepted service ownership, support responsibilities and service levels. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1334: A funded support rota and accepted service levels cover the intended operation.",
-          "rubric_4": "Service performance, workload and cost are reviewed; staffing, funding and support arrangements are adjusted accordingly. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1334: Service workload reviews lead to additional support capacity and improved response times.",
-          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+          "rubric_2": "A service model exists, but staffing, funding, service levels or ownership is not fully accepted. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n1334: A service plan exists but night-shift support is unfunded.",
+          "rubric_3": "A staffed and funded operating model has accepted service ownership, support responsibilities and service levels. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n1334: A funded support rota and accepted service levels cover the intended operation.",
+          "rubric_4": "Service performance, workload and cost are reviewed; staffing, funding and support arrangements are adjusted accordingly. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n1334: Service workload reviews lead to additional support capacity and improved response times.",
+          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         },
         {
-          "assessment_type": "company",
+          "assessment_type": "project",
           "mode": "quick",
-          "question_id": "CE-1614",
-          "text": "How clearly are responsibilities for owning, accessing and using data defined, and how consistently are these rules applied to support approved AI use across the organisation?",
+          "question_id": "PE-1614",
+          "text": "Are owners, permissions and escalation routes agreed for every dataset this project needs beyond the pilot?",
           "default_weight": 1,
           "blocker_ids": [
             1614
@@ -18626,11 +19070,11 @@
           "criteria": "1614: consistent data ownership and authorised access",
           "topic": "Fragmented or restrictive data governance",
           "source": {
-            "sheet": "Company_Expert",
+            "sheet": "Project_Expert",
             "row": 29
           },
           "why_this_matters": "1614: Unclear ownership and inconsistent permissions can delay access and prevent scaling beyond local agreements.",
-          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n1614: Check every required dataset's owner, permission terms, approval route, permitted uses and escalation.",
+          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n1614: Check every required dataset's owner, permission terms, approval route, permitted uses and escalation.",
           "evidence_examples": "1614: Data ownership register, access decisions, approved permissions and escalation routes",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
@@ -18638,16 +19082,16 @@
           "criticality": "Critical core",
           "rubric_0": "Data owners, access rules and approval routes are undefined.\nExamples (illustrative, not actual findings):\n1614: No one can authorise access to a required dataset.",
           "rubric_1": "Access is negotiated through local contacts; terms differ and refusals lack clear escalation.\nExamples (illustrative, not actual findings):\n1614: An analyst receives an informal extract from a colleague.",
-          "rubric_2": "Owners and access rules are documented for some datasets, but permissions or cross-unit consistency remains incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1614: Owners are identified but one unit's reuse permission is unresolved.",
-          "rubric_3": "Every required dataset has an accountable owner, approved permissions, consistent access terms and a working escalation route. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1614: Each required dataset has approved terms and a functioning access route.",
-          "rubric_4": "Access delays, exceptions and governance decisions are reviewed and used to improve cross-unit access arrangements. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1614: Data Access-delay reviews simplify approvals while maintaining the agreed controls.",
-          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+          "rubric_2": "Owners and access rules are documented for some datasets, but permissions or cross-unit consistency remains incomplete. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n1614: Owners are identified but one unit's reuse permission is unresolved.",
+          "rubric_3": "Every required dataset has an accountable owner, approved permissions, consistent access terms and a working escalation route. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n1614: Each required dataset has approved terms and a functioning access route.",
+          "rubric_4": "Access delays, exceptions and governance decisions are reviewed and used to improve cross-unit access arrangements. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n1614: Access-delay reviews simplify approvals while maintaining the agreed controls.",
+          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         },
         {
-          "assessment_type": "company",
+          "assessment_type": "project",
           "mode": "quick",
-          "question_id": "CE-1314",
-          "text": "How consistently is a business owner accountable for AI benefits and adoption after the prototype stage? ",
+          "question_id": "PE-1314",
+          "text": "Has a business owner accepted accountability for this solution's adoption and benefits beyond the prototype?",
           "default_weight": 1,
           "blocker_ids": [
             1314
@@ -18655,11 +19099,11 @@
           "criteria": "1314: business ownership beyond prototype",
           "topic": "No business ownership beyond prototype",
           "source": {
-            "sheet": "Company_Expert",
+            "sheet": "Project_Expert",
             "row": 21
           },
           "why_this_matters": "1314: Without post-pilot ownership, adoption and benefits can become nobody's responsibility.",
-          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n1314: Separate technical delivery responsibility from business authority over adoption, process change and realised benefits.",
+          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n1314: Separate technical delivery responsibility from business authority over adoption, process change and realised benefits.",
           "evidence_examples": "1314: Ownership acceptance, benefit accountability and post-pilot responsibilities",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
@@ -18667,16 +19111,16 @@
           "criticality": "Critical core",
           "rubric_0": "No business owner is accountable after the prototype.\nExamples (illustrative, not actual findings):\n1314: The pilot ends without a business owner.",
           "rubric_1": "An informal owner is suggested, without agreed authority for adoption or benefits.\nExamples (illustrative, not actual findings):\n1314: A delivery lead is assumed to own adoption without business authority.",
-          "rubric_2": "A post-prototype owner is named, but benefit responsibilities or decision authority remain incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1314: A business owner is named but benefit accountability is unresolved.",
-          "rubric_3": "A business owner formally accepts authority and accountability for adoption and benefits beyond the prototype. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1314: The owner accepts responsibility for adoption and realised benefits.",
-          "rubric_4": "The owner tracks adoption and realised benefits, acts on gaps and maintains accountability through organisational changes. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1314: An organisational change triggers a documented ownership transfer without interrupting benefit reviews.The owner maintains accountability over the entire life-cycle of the product and ensures the business outcomes are being met. ",
-          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+          "rubric_2": "A post-prototype owner is named, but benefit responsibilities or decision authority remain incomplete. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n1314: A business owner is named but benefit accountability is unresolved.",
+          "rubric_3": "A business owner formally accepts authority and accountability for adoption and benefits beyond the prototype. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n1314: The owner accepts responsibility for adoption and realised benefits.",
+          "rubric_4": "The owner tracks adoption and realised benefits, acts on gaps and maintains accountability through organisational changes. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n1314: An organisational change triggers a documented ownership transfer without interrupting benefit reviews.",
+          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         },
         {
-          "assessment_type": "company",
+          "assessment_type": "project",
           "mode": "quick",
-          "question_id": "CE-1114",
-          "text": "How consistently are AI initiatives selected around validated business problems with accountable business owners?",
+          "question_id": "PE-1114",
+          "text": "Is the operational problem validated and approved by a business owner with authority over the affected process?",
           "default_weight": 1,
           "blocker_ids": [
             1114
@@ -18684,28 +19128,28 @@
           "criteria": "1114: business-approved problem definition and ownership",
           "topic": "Technology-push AI initiatives without clear ownership",
           "source": {
-            "sheet": "Company_Expert",
+            "sheet": "Project_Expert",
             "row": 14
           },
           "why_this_matters": "1114: A clear problem and empowered owner prevent investment in solutions that do not address a measurable operational need.",
-          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n1114: Check the affected process, baseline, decision authority, success measures and evidence that the business accepts the problem.",
+          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n1114: Check the affected process, baseline, decision authority, success measures and evidence that the business accepts the problem.",
           "evidence_examples": "1114: Approved problem statement, baseline, process boundaries and accountable owner",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
           "criticality_composite": 13.4,
           "criticality": "Critical core",
           "rubric_0": "No validated business problem or accountable business owner is identified.\nExamples (illustrative, not actual findings):\n1114: The team starts building a model without identifying the operational problem.",
-          "rubric_1": "A problem and possible owner are discussed, but ownership and process boundaries are informal.\n\nExamples (illustrative, not actual findings):\n1114: An AI solution to prioritise track maintenance is discussed, but no business owner is confirmed and its role in maintenance planning remains unclear.",
-          "rubric_2": "A problem statement and owner are documented; baseline, authority or business approval remains incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1114: A problem statement exists but the delay baseline is unverified.",
-          "rubric_3": "An authorised business owner approves the problem, process boundaries, baseline and measurable success criteria. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1114: The process owner approves the baseline and the intended improvement.",
-          "rubric_4": "The owner regularly checks results against the original problem and baseline, and adjusts priorities when evidence changes. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1114: The owner compares results with the baseline and changes priorities when benefits fall short.",
-          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+          "rubric_1": "A problem and possible owner are discussed, but ownership and process boundaries are informal.\nExamples (illustrative, not actual findings):\n1114: A manager mentions inspection delays but no one accepts ownership.",
+          "rubric_2": "A problem statement and owner are documented; baseline, authority or business approval remains incomplete. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n1114: A problem statement exists but the delay baseline is unverified.",
+          "rubric_3": "An authorised business owner approves the problem, process boundaries, baseline and measurable success criteria. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n1114: The process owner approves the baseline and the intended improvement.",
+          "rubric_4": "The owner regularly checks results against the original problem and baseline, and adjusts priorities when evidence changes. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n1114: The owner compares results with the baseline and changes priorities when benefits fall short.",
+          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         },
         {
-          "assessment_type": "company",
+          "assessment_type": "project",
           "mode": "quick",
-          "question_id": "CE-1323",
-          "text": "How clearly has the company defined who makes and approves decisions based on AI recommendations, who is responsible for the results, and who handles problems or disagreements?",
+          "question_id": "PE-1323",
+          "text": "For each AI-supported operational decision, are the human decision-maker, approval authority and escalation route defined and tested?",
           "default_weight": 1,
           "blocker_ids": [
             1323
@@ -18713,11 +19157,11 @@
           "criteria": "1323: human accountability for AI-supported decisions",
           "topic": "Unclear human accountability in AI-supported operational decisions",
           "source": {
-            "sheet": "Company_Expert",
+            "sheet": "Project_Expert",
             "row": 22
           },
           "why_this_matters": "1323: AI outputs need accountable human decisions, especially when recommendations are uncertain or disputed.",
-          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n1323: Map who acts, approves, owns outcomes, overrides and escalates for normal and failure scenarios.",
+          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n1323: Map who acts, approves, owns outcomes, overrides and escalates for normal and failure scenarios.",
           "evidence_examples": "1323: Decision responsibility matrix, human oversight procedures and scenario exercises",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
@@ -18725,16 +19169,16 @@
           "criticality": "Critical core",
           "rubric_0": "No human accountability is defined for AI-supported operational decisions.\nExamples (illustrative, not actual findings):\n1323: Operators receive recommendations with no decision responsibility defined.",
           "rubric_1": "People assume who decides, but approval, outcome ownership and escalation are ambiguous.\nExamples (illustrative, not actual findings):\n1323: Staff assume a supervisor will decide but have no agreed procedure.",
-          "rubric_2": "Decision roles and oversight procedures are documented; some decisions or failure scenarios remain untested. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1323: Roles are documented but an ambiguous recommendation has not been rehearsed.",
-          "rubric_3": "Every relevant decision has a named human decision-maker, approval authority, outcome owner and tested escalation route. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1323: An exercise confirms who overrides an output and who approves the alternative action.",
-          "rubric_4": "Decision incidents and oversight exercises are reviewed regularly and used to improve accountability and escalation. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1323: Incident reviews improve decision authority and escalation procedures.",
-          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+          "rubric_2": "Decision roles and oversight procedures are documented; some decisions or failure scenarios remain untested. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n1323: Roles are documented but an ambiguous recommendation has not been rehearsed.",
+          "rubric_3": "Every relevant decision has a named human decision-maker, approval authority, outcome owner and tested escalation route. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n1323: An exercise confirms who overrides an output and who approves the alternative action.",
+          "rubric_4": "Decision incidents and oversight exercises are reviewed regularly and used to improve accountability and escalation. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n1323: Incident reviews improve decision authority and escalation procedures.",
+          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         },
         {
-          "assessment_type": "company",
+          "assessment_type": "project",
           "mode": "quick",
-          "question_id": "CE-3634",
-          "text": "How effectively does the company overcome data silos so datasets can be reused across units and AI initiatives?",
+          "question_id": "PE-3634",
+          "text": "Have cross-unit agreements, shared definitions and practical reuse arrangements been established for this project's data?",
           "default_weight": 1,
           "blocker_ids": [
             3634
@@ -18742,11 +19186,11 @@
           "criteria": "3634: cross-unit data reuse and interoperability",
           "topic": "Organisational data silos limiting reuse and scaling",
           "source": {
-            "sheet": "Company_Expert",
+            "sheet": "Project_Expert",
             "row": 50
           },
           "why_this_matters": "3634: One-off local access does not establish reusable data across organisational boundaries.",
-          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n3634: Check cross-unit agreements, shared definitions, interoperable formats and actual reuse beyond the originating pilot.",
+          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n3634: Check cross-unit agreements, shared definitions, interoperable formats and actual reuse beyond the originating pilot.",
           "evidence_examples": "3634: Data-sharing agreements, reusable datasets, common definitions and reuse evidence",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
@@ -18754,16 +19198,16 @@
           "criticality": "Critical core",
           "rubric_0": "Data remains isolated within units, with no reuse arrangements.\nExamples (illustrative, not actual findings):\n3634: Each unit keeps its data isolated.",
           "rubric_1": "Sharing depends on personal contacts and one-off extracts.\nExamples (illustrative, not actual findings):\n3634: Sharing depends on a colleague sending a one-off extract.",
-          "rubric_2": "Sharing agreements and common definitions are drafted or piloted, but cross-unit reuse remains incomplete. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n3634: Agreements are drafted but cross-unit reuse is only piloted.",
-          "rubric_3": "Required units use agreed sharing arrangements, interoperable definitions and demonstrably reusable datasets. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3634: Required units repeatedly reuse datasets under agreed terms and definitions.",
-          "rubric_4": "Reuse, interoperability failures and sharing friction are measured and used to improve common data arrangements. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3634: Reuse outcomes and remaining barriers drive verified improvements in sharing.",
-          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+          "rubric_2": "Sharing agreements and common definitions are drafted or piloted, but cross-unit reuse remains incomplete. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n3634: Agreements are drafted but cross-unit reuse is only piloted.",
+          "rubric_3": "Required units use agreed sharing arrangements, interoperable definitions and demonstrably reusable datasets. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n3634: Required units repeatedly reuse datasets under agreed terms and definitions.",
+          "rubric_4": "Reuse, interoperability failures and sharing friction are measured and used to improve common data arrangements. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n3634: Reuse outcomes and remaining barriers drive verified improvements in sharing.",
+          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         },
         {
-          "assessment_type": "company",
+          "assessment_type": "project",
           "mode": "quick",
-          "question_id": "CE-1233",
-          "text": "How fast can we get approval to scale AI pilots into governance compliant productionized solutions?",
+          "question_id": "PE-1233",
+          "text": "Are this project's approvers, decision rights, review deadlines and escalation routes agreed and working?",
           "default_weight": 1,
           "blocker_ids": [
             1233
@@ -18771,11 +19215,11 @@
           "criteria": "1233: timely governance decisions and escalation",
           "topic": "Slow or unclear AI governance",
           "source": {
-            "sheet": "Company_Expert",
+            "sheet": "Project_Expert",
             "row": 19
           },
           "why_this_matters": "1233: Unclear decisions and slow approvals can strand otherwise viable solutions between stages.",
-          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n1233: Check named approvers, authority, expected turnaround, escalation and recorded scale, adapt or stop decisions.",
+          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n1233: Check named approvers, authority, expected turnaround, escalation and recorded scale, adapt or stop decisions.",
           "evidence_examples": "1233: Governance charter, decision log, review calendar and escalation records",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
@@ -18783,16 +19227,16 @@
           "criticality": "High",
           "rubric_0": "Approvers, decision rights and escalation routes are unknown.\nExamples (illustrative, not actual findings):\n1233: No one knows who can approve deployment.",
           "rubric_1": "Decisions depend on informal contacts, with no agreed review deadlines.\nExamples (illustrative, not actual findings):\n1233: The team seeks approval through personal contacts.",
-          "rubric_2": "Governance roles and review steps are documented, but deadlines or escalation routes are not consistently used. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n1233: A review process exists but missed deadlines have no escalation route.",
-          "rubric_3": "Named approvers make recorded scale, adapt or stop decisions within agreed review and escalation arrangements. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n1233: Named approvers record decisions and use the agreed escalation route.",
-          "rubric_4": "Decision turnaround and recurring bottlenecks are monitored, and governance is improved using those results. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n1233: Decision-time reviews remove a recurring approval bottleneck.",
-          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+          "rubric_2": "Governance roles and review steps are documented, but deadlines or escalation routes are not consistently used. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n1233: A review process exists but missed deadlines have no escalation route.",
+          "rubric_3": "Named approvers make recorded scale, adapt or stop decisions within agreed review and escalation arrangements. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n1233: Named approvers record decisions and use the agreed escalation route.",
+          "rubric_4": "Decision turnaround and recurring bottlenecks are monitored, and governance is improved using those results. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n1233: Decision-time reviews remove a recurring approval bottleneck.",
+          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         },
         {
-          "assessment_type": "company",
+          "assessment_type": "project",
           "mode": "quick",
-          "question_id": "CE-2513",
-          "text": "How systematically does the company test and monitor ML/AI-model performance across the variability introduced by scaling?",
+          "question_id": "PE-2513",
+          "text": "Does the model meet agreed performance thresholds across representative assets, sites, seasons and operating conditions at target scale?",
           "default_weight": 1,
           "blocker_ids": [
             2513
@@ -18800,11 +19244,11 @@
           "criteria": "2513: model performance under operational variation and scale",
           "topic": "Model performance degrades with scale",
           "source": {
-            "sheet": "Company_Expert",
+            "sheet": "Project_Expert",
             "row": 44
           },
           "why_this_matters": "2513: Pilot performance may not hold across the assets and conditions introduced by scale.",
-          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n2513: Check representative sites, assets, seasons, rare conditions, acceptance thresholds and documented limitations.",
+          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n2513: Check representative sites, assets, seasons, rare conditions, acceptance thresholds and documented limitations.",
           "evidence_examples": "2513: Stratified validation results, scale tests, failure analysis and acceptance thresholds",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
@@ -18812,16 +19256,16 @@
           "criticality": "High",
           "rubric_0": "Model performance at target scale has not been assessed.\nExamples (illustrative, not actual findings):\n2513: Only training performance is reported.",
           "rubric_1": "Performance is reported only on a small or controlled sample without operational acceptance thresholds.\nExamples (illustrative, not actual findings):\n2513: A small convenient sample is used to claim production readiness.",
-          "rubric_2": "Thresholds and stratified tests exist, but important assets, sites, seasons or operating conditions remain uncovered. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2513: Stratified tests exist but an important operating condition is missing.",
-          "rubric_3": "Representative tests meet agreed thresholds across all relevant target-scale conditions; failures and limitations are documented. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2513: Representative tests meet agreed thresholds across the deployment scope.",
-          "rubric_4": "Performance variation is monitored across conditions and time; degradations trigger validated corrective action. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2513: Monitoring detects a condition-specific decline and a corrective change is validated.",
-          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+          "rubric_2": "Thresholds and stratified tests exist, but important assets, sites, seasons or operating conditions remain uncovered. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n2513: Stratified tests exist but an important operating condition is missing.",
+          "rubric_3": "Representative tests meet agreed thresholds across all relevant target-scale conditions; failures and limitations are documented. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n2513: Representative tests meet agreed thresholds across the deployment scope.",
+          "rubric_4": "Performance variation is monitored across conditions and time; degradations trigger validated corrective action. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n2513: Monitoring detects a condition-specific decline and a corrective change is validated.",
+          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         },
         {
-          "assessment_type": "company",
+          "assessment_type": "project",
           "mode": "quick",
-          "question_id": "CE-2423",
-          "text": "How consistently are deployed ML/AI models monitored, retrained and reviewed as data and operating conditions evolve?",
+          "question_id": "PE-2423",
+          "text": "Are monitoring thresholds, drift detection, retraining triggers and controlled model updates implemented and assigned to owners?",
           "default_weight": 1,
           "blocker_ids": [
             2423
@@ -18829,11 +19273,11 @@
           "criteria": "2423: model monitoring and controlled retraining",
           "topic": "Unsufficient Model monitoring, -retraining and -evolution",
           "source": {
-            "sheet": "Company_Expert",
+            "sheet": "Project_Expert",
             "row": 43
           },
           "why_this_matters": "2423: Model behaviour can degrade as data and operating conditions change, requiring owned detection and controlled updates.",
-          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n2423: Check drift and performance thresholds, monitoring owners, retraining triggers, approval, release and rollback.",
+          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n2423: Check drift and performance thresholds, monitoring owners, retraining triggers, approval, release and rollback.",
           "evidence_examples": "2423: Monitoring dashboards, drift thresholds, retraining plan and change approvals",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
@@ -18841,16 +19285,16 @@
           "criticality": "High",
           "rubric_0": "No model monitoring or update responsibilities are defined.\nExamples (illustrative, not actual findings):\n2423: No one monitors the deployed model.",
           "rubric_1": "Models are checked or updated reactively, without thresholds or controlled retraining.\nExamples (illustrative, not actual findings):\n2423: A developer checks performance after complaints.",
-          "rubric_2": "Monitoring and retraining plans exist, but drift triggers, ownership or update controls are only partly operational. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n2423: Monitoring is piloted but retraining approval is unresolved.",
-          "rubric_3": "Owned monitoring detects drift and threshold breaches; retraining and model changes follow tested approval and release controls. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n2423: A threshold breach triggers owned investigation and controlled model release.",
-          "rubric_4": "Detection effectiveness and post-update outcomes are reviewed over repeated cycles and used to refine monitoring and retraining. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n2423: Repeated update reviews improve detection thresholds and retraining decisions.",
-          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+          "rubric_2": "Monitoring and retraining plans exist, but drift triggers, ownership or update controls are only partly operational. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n2423: Monitoring is piloted but retraining approval is unresolved.",
+          "rubric_3": "Owned monitoring detects drift and threshold breaches; retraining and model changes follow tested approval and release controls. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n2423: A threshold breach triggers owned investigation and controlled model release.",
+          "rubric_4": "Detection effectiveness and post-update outcomes are reviewed over repeated cycles and used to refine monitoring and retraining. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n2423: Repeated update reviews improve detection thresholds and retraining decisions.",
+          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         },
         {
-          "assessment_type": "company",
+          "assessment_type": "project",
           "mode": "quick",
-          "question_id": "CE-3114",
-          "text": "How consistently is the data needed for AI collected, retained and made available in usable form during the life-cycle?",
+          "question_id": "PE-3114",
+          "text": "Are the required datasets collected at suitable coverage and frequency, retained appropriately and available for project use?",
           "default_weight": 1,
           "blocker_ids": [
             3114
@@ -18858,11 +19302,11 @@
           "criteria": "3114: usable data collection, retention and availability",
           "topic": "Data collection, storage and usable availability",
           "source": {
-            "sheet": "Company_Expert",
+            "sheet": "Project_Expert",
             "row": 45
           },
           "why_this_matters": "3114: A model cannot operate sustainably if required data are missing, intermittent or inaccessible.",
-          "what_to_consider": "Assess consistency across the named business units and initiatives. A single successful pilot does not establish company-wide capability.\n3114: Check inventories, coverage, frequency, retention, availability and practical access to historical records.",
+          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n3114: Check inventories, coverage, frequency, retention, availability and practical access to historical records.",
           "evidence_examples": "3114: Data inventory, collection coverage, retention arrangements and availability checks",
           "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
           "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
@@ -18870,13 +19314,13 @@
           "criticality": "High",
           "rubric_0": "Required data is not collected or available in usable form.\nExamples (illustrative, not actual findings):\n3114: Required sensor history has never been collected.",
           "rubric_1": "Some data can be found manually, but collection, coverage and retention are unreliable.\nExamples (illustrative, not actual findings):\n3114: An analyst assembles sporadic records manually.",
-          "rubric_2": "A data inventory and collection plan exist; gaps in frequency, coverage, retention or availability remain. Evidence may be limited to individual units or pilots.\nExamples (illustrative, not actual findings):\n3114: Collection is planned but gaps remain in frequency or retention.",
-          "rubric_3": "Required data is collected at agreed coverage and frequency, retained appropriately and demonstrably available for use. Required across all assessed units and relevant initiatives.\nExamples (illustrative, not actual findings):\n3114: Required datasets are collected, retained and available at the agreed coverage.",
-          "rubric_4": "Collection completeness, availability and retention are monitored; recurrent gaps trigger improvements to collection and storage. All level-3 conditions continue to be met. Demonstrated across repeated organisational review cycles.\nExamples (illustrative, not actual findings):\n3114: Availability reviews identify recurring collection gaps and verify improved capture.",
-          "questionnaire_version": "sha256:e45536380677766ca1049a7b8a7f6858fcaebd60a751eeb9530eae4ecde05c3b"
+          "rubric_2": "A data inventory and collection plan exist; gaps in frequency, coverage, retention or availability remain. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n3114: Collection is planned but gaps remain in frequency or retention.",
+          "rubric_3": "Required data is collected at agreed coverage and frequency, retained appropriately and demonstrably available for use. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n3114: Required datasets are collected, retained and available at the agreed coverage.",
+          "rubric_4": "Collection completeness, availability and retention are monitored; recurrent gaps trigger improvements to collection and storage. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n3114: Availability reviews identify recurring collection gaps and verify improved capture.",
+          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         }
       ],
-      "source_sheet": "Company_Expert"
+      "source_sheet": "Project_Expert"
     },
     {
       "assessment_type": "project",
@@ -20072,450 +20516,6 @@
           "rubric_3": "Authorised reviewers accept safety and reliability evidence for the intended operating envelope, scale, failure modes and fallbacks. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n3734: Competent reviewers accept evidence covering the operating envelope and tested fallback.",
           "rubric_4": "Reliability outcomes and assurance assumptions are monitored; changes trigger updated evidence and renewed acceptance where required. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n3734: Operating and change reviews update the assurance case and verify corrective actions.",
           "questionnaire_version": "sha256:25d0cc2d7b1f3e9ba76e5795759c17205270a0995666ce77323917e89f935a0f"
-        }
-      ],
-      "source_sheet": "Project_Expert"
-    },
-    {
-      "assessment_type": "project",
-      "mode": "quick",
-      "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f",
-      "published_at": null,
-      "questions": [
-        {
-          "assessment_type": "project",
-          "mode": "quick",
-          "question_id": "PE-2213",
-          "text": "Can the approved architecture support this project's security, resilience, integration and growth requirements?",
-          "default_weight": 1,
-          "blocker_ids": [
-            2213
-          ],
-          "criteria": "2213: governed and production-ready platform architecture",
-          "topic": "Immature platform architecture and fragmented IT foundations",
-          "source": {
-            "sheet": "Project_Expert",
-            "row": 36
-          },
-          "why_this_matters": "2213: Shared production foundations determine whether solutions can run reliably beyond isolated pilots.",
-          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n2213: Assess platform governance, security, resilience, integration, capacity and evidence from the intended environment.",
-          "evidence_examples": "2213: Architecture standards, design review, platform capacity and resilience evidence",
-          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
-          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "criticality_composite": 3.8,
-          "criticality": "Critical core",
-          "rubric_0": "No suitable architecture or governed platform is available for production AI.\nExamples (illustrative, not actual findings):\n2213: The solution runs only on an unmanaged laptop.",
-          "rubric_1": "AI relies on isolated environments with unresolved security, resilience or integration foundations.\nExamples (illustrative, not actual findings):\n2213: A shared environment exists without recovery or access arrangements.",
-          "rubric_2": "A target architecture is reviewed, but platform governance or production capability is only partly implemented. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n2213: The target architecture is reviewed but resilience tests are incomplete.",
-          "rubric_3": "Approved architecture and governed platforms demonstrate required security, resilience, integration and growth capacity. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n2213: The governed platform passes required resilience, access and capacity checks.",
-          "rubric_4": "Platform service and scaling results are monitored and drive controlled architecture and foundation improvements. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n2213: Platform incidents and capacity trends drive controlled improvements.",
-          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
-        },
-        {
-          "assessment_type": "project",
-          "mode": "quick",
-          "question_id": "PE-2123",
-          "text": "Do the project's datasets meet tested quality thresholds and use reconciled definitions, identifiers and units across sources?",
-          "default_weight": 1,
-          "blocker_ids": [
-            2123
-          ],
-          "criteria": "2123: tested data quality and consistent semantics",
-          "topic": "Data quality, consistency and semantic structure",
-          "source": {
-            "sheet": "Project_Expert",
-            "row": 37
-          },
-          "why_this_matters": "2123: Even available data can mislead a model when meanings, identifiers or units differ across sources.",
-          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n2123: Check profiling results, thresholds, dictionaries, asset identifiers, units, reconciliation and source-level correction.",
-          "evidence_examples": "2123: Profiling results, data dictionary, identifier mappings and quality tests",
-          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
-          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "criticality_composite": 5.6,
-          "criticality": "Critical core",
-          "rubric_0": "Data quality and cross-source meaning are unknown or unusable.\nExamples (illustrative, not actual findings):\n2123: Teams combine datasets without checking definitions.",
-          "rubric_1": "Teams correct obvious defects manually; definitions, units or identifiers remain inconsistent.\nExamples (illustrative, not actual findings):\n2123: An analyst manually corrects mismatched asset identifiers.",
-          "rubric_2": "Profiling, quality thresholds and semantic mappings exist, but some sources fail tests or remain unmapped. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n2123: Mappings exist but one source still fails the agreed quality tests.",
-          "rubric_3": "All required datasets pass agreed quality tests and reconcile definitions, identifiers and units across sources. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n2123: All required sources pass quality and identifier/unit reconciliation tests.",
-          "rubric_4": "Quality and semantic consistency are monitored over time; recurring defects trigger verified corrections at source. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n2123: Recurring semantic defects are corrected at source and the fix is verified.",
-          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
-        },
-        {
-          "assessment_type": "project",
-          "mode": "quick",
-          "question_id": "PE-2134",
-          "text": "Are the project's data pipelines, access controls and transfer mechanisms tested for security, reliability and usability?",
-          "default_weight": 1,
-          "blocker_ids": [
-            2134
-          ],
-          "criteria": "2134: secure and reliable technical data movement",
-          "topic": "Data architecture, access and controls",
-          "source": {
-            "sheet": "Project_Expert",
-            "row": 38
-          },
-          "why_this_matters": "2134: Reliable, controlled data movement is needed for repeatable operation and traceable decisions.",
-          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n2134: Check end-to-end transfer, access controls, lineage, failure handling and all required environments.",
-          "evidence_examples": "2134: Pipeline tests, access-control tests, lineage and transfer monitoring",
-          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
-          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "criticality_composite": 6.8,
-          "criticality": "Critical core",
-          "rubric_0": "Required data cannot be transferred through a controlled, usable pipeline.\nExamples (illustrative, not actual findings):\n2134: Data cannot reach the model through a controlled route.",
-          "rubric_1": "Ad hoc transfers work locally, without reliable access control or traceability.\nExamples (illustrative, not actual findings):\n2134: Staff email extracts to keep the pilot running.",
-          "rubric_2": "Pipelines and permissions are implemented in a pilot, but security, reliability or environment coverage is incomplete. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n2134: A pipeline works in test but production access and recovery are unproven.",
-          "rubric_3": "End-to-end pipelines demonstrate secure access, reliable transfer, usable data and traceable lineage across required environments. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n2134: Production pipeline tests demonstrate permitted access, reliable transfer and lineage.",
-          "rubric_4": "Transfer failures, access exceptions and pipeline performance are monitored and drive tested improvements. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n2134: Transfer incidents lead to tested improvements in retries and monitoring.",
-          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
-        },
-        {
-          "assessment_type": "project",
-          "mode": "quick",
-          "question_id": "PE-3744",
-          "text": "Were hazards, failure modes and human oversight needs identified during framing and carried into the project design?",
-          "default_weight": 1,
-          "blocker_ids": [
-            3744
-          ],
-          "criteria": "3744: early safety framing and human oversight",
-          "topic": "Safety implications not identified early",
-          "source": {
-            "sheet": "Project_Expert",
-            "row": 51
-          },
-          "why_this_matters": "3744: Considering hazards early allows design choices and human oversight to address failure before rollout.",
-          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n3744: Check early hazard identification, misuse and failure scenarios, oversight requirements and traceability into design.",
-          "evidence_examples": "3744: Early hazard review, failure scenarios, oversight design and safety actions",
-          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
-          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "criticality_composite": 8.2,
-          "criticality": "Critical core",
-          "rubric_0": "Safety implications and human oversight have not been considered during framing.\nExamples (illustrative, not actual findings):\n3744: No one has considered consequences of wrong recommendations.",
-          "rubric_1": "Safety is recognised as a concern, but hazards, failure modes and oversight remain informal.\nExamples (illustrative, not actual findings):\n3744: Safety concerns are mentioned without recording failure scenarios.",
-          "rubric_2": "Early hazard and failure reviews exist, but oversight design or safety actions are not fully integrated into requirements. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n3744: Hazards are recorded but oversight actions remain unassigned.",
-          "rubric_3": "Framing identifies relevant hazards, failure modes and human oversight; owned safety actions are incorporated into design. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n3744: Early hazard and oversight requirements are traced into owned design actions.",
-          "rubric_4": "New findings and operational learning update hazard reviews, oversight design and safety actions throughout delivery. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n3744: New trial findings update hazards and produce verified design changes.",
-          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
-        },
-        {
-          "assessment_type": "project",
-          "mode": "quick",
-          "question_id": "PE-1524",
-          "text": "Has the solution been validated against possession windows, trackside conditions, connectivity, shifts and support needs?",
-          "default_weight": 1,
-          "blocker_ids": [
-            1524
-          ],
-          "criteria": "1524: fit with railway field conditions and support needs",
-          "topic": "Solutions misaligned with operational context",
-          "source": {
-            "sheet": "Project_Expert",
-            "row": 28
-          },
-          "why_this_matters": "1524: Railway field conditions can make a laboratory solution impractical to use or support.",
-          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n1524: Consider connectivity, weather, trackside access, possessions, shifts, equipment constraints and recovery arrangements.",
-          "evidence_examples": "1524: Field observations, operational scenarios, field trials and support requirements",
-          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
-          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "criticality_composite": 9.8,
-          "criticality": "Critical core",
-          "rubric_0": "Railway field conditions and support needs have not been considered.\nExamples (illustrative, not actual findings):\n1524: Design assumes continuous connectivity without checking the field.",
-          "rubric_1": "Field constraints are discussed informally but do not shape solution requirements.\nExamples (illustrative, not actual findings):\n1524: Teams discuss signal loss but have no trial scenario.",
-          "rubric_2": "Possession windows, connectivity, shifts and trackside conditions are documented; trials cover only some scenarios. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n1524: A field trial covers daytime operation but not relevant night-shift conditions.",
-          "rubric_3": "Representative field trials validate the solution and support arrangements against all relevant operating constraints. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n1524: Representative trials validate offline behaviour and shift support arrangements.",
-          "rubric_4": "Field-use results and support incidents are reviewed across conditions and used to improve design and service support. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n1524: Field incidents lead to a tested change in offline recovery and support.",
-          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
-        },
-        {
-          "assessment_type": "project",
-          "mode": "quick",
-          "question_id": "PE-1334",
-          "text": "Is the post-go-live operating model agreed, staffed and funded, including support, service levels and ongoing ownership?",
-          "default_weight": 1,
-          "blocker_ids": [
-            1334
-          ],
-          "criteria": "1334: funded post-go-live operating model",
-          "topic": "No defined run model after go-live",
-          "source": {
-            "sheet": "Project_Expert",
-            "row": 23
-          },
-          "why_this_matters": "1334: A service cannot remain dependable without funded people and agreed responsibilities after go-live.",
-          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n1334: Check support hours, service levels, budget, staffing, ownership and escalation after the delivery team leaves.",
-          "evidence_examples": "1334: Service model, staffing, support budget and agreed service levels",
-          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
-          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "criticality_composite": 11.4,
-          "criticality": "Critical core",
-          "rubric_0": "No post-go-live operating or support model is defined.\nExamples (illustrative, not actual findings):\n1334: No support arrangement exists beyond the pilot.",
-          "rubric_1": "Support is expected from the delivery team, without agreed budget or service responsibilities.\nExamples (illustrative, not actual findings):\n1334: The data scientist informally handles all incidents.",
-          "rubric_2": "A service model exists, but staffing, funding, service levels or ownership is not fully accepted. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n1334: A service plan exists but night-shift support is unfunded.",
-          "rubric_3": "A staffed and funded operating model has accepted service ownership, support responsibilities and service levels. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n1334: A funded support rota and accepted service levels cover the intended operation.",
-          "rubric_4": "Service performance, workload and cost are reviewed; staffing, funding and support arrangements are adjusted accordingly. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n1334: Service workload reviews lead to additional support capacity and improved response times.",
-          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
-        },
-        {
-          "assessment_type": "project",
-          "mode": "quick",
-          "question_id": "PE-1614",
-          "text": "Are owners, permissions and escalation routes agreed for every dataset this project needs beyond the pilot?",
-          "default_weight": 1,
-          "blocker_ids": [
-            1614
-          ],
-          "criteria": "1614: consistent data ownership and authorised access",
-          "topic": "Fragmented or restrictive data governance",
-          "source": {
-            "sheet": "Project_Expert",
-            "row": 29
-          },
-          "why_this_matters": "1614: Unclear ownership and inconsistent permissions can delay access and prevent scaling beyond local agreements.",
-          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n1614: Check every required dataset's owner, permission terms, approval route, permitted uses and escalation.",
-          "evidence_examples": "1614: Data ownership register, access decisions, approved permissions and escalation routes",
-          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
-          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "criticality_composite": 12.4,
-          "criticality": "Critical core",
-          "rubric_0": "Data owners, access rules and approval routes are undefined.\nExamples (illustrative, not actual findings):\n1614: No one can authorise access to a required dataset.",
-          "rubric_1": "Access is negotiated through local contacts; terms differ and refusals lack clear escalation.\nExamples (illustrative, not actual findings):\n1614: An analyst receives an informal extract from a colleague.",
-          "rubric_2": "Owners and access rules are documented for some datasets, but permissions or cross-unit consistency remains incomplete. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n1614: Owners are identified but one unit's reuse permission is unresolved.",
-          "rubric_3": "Every required dataset has an accountable owner, approved permissions, consistent access terms and a working escalation route. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n1614: Each required dataset has approved terms and a functioning access route.",
-          "rubric_4": "Access delays, exceptions and governance decisions are reviewed and used to improve cross-unit access arrangements. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n1614: Access-delay reviews simplify approvals while maintaining the agreed controls.",
-          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
-        },
-        {
-          "assessment_type": "project",
-          "mode": "quick",
-          "question_id": "PE-1314",
-          "text": "Has a business owner accepted accountability for this solution's adoption and benefits beyond the prototype?",
-          "default_weight": 1,
-          "blocker_ids": [
-            1314
-          ],
-          "criteria": "1314: business ownership beyond prototype",
-          "topic": "No business ownership beyond prototype",
-          "source": {
-            "sheet": "Project_Expert",
-            "row": 21
-          },
-          "why_this_matters": "1314: Without post-pilot ownership, adoption and benefits can become nobody's responsibility.",
-          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n1314: Separate technical delivery responsibility from business authority over adoption, process change and realised benefits.",
-          "evidence_examples": "1314: Ownership acceptance, benefit accountability and post-pilot responsibilities",
-          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
-          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "criticality_composite": 12.6,
-          "criticality": "Critical core",
-          "rubric_0": "No business owner is accountable after the prototype.\nExamples (illustrative, not actual findings):\n1314: The pilot ends without a business owner.",
-          "rubric_1": "An informal owner is suggested, without agreed authority for adoption or benefits.\nExamples (illustrative, not actual findings):\n1314: A delivery lead is assumed to own adoption without business authority.",
-          "rubric_2": "A post-prototype owner is named, but benefit responsibilities or decision authority remain incomplete. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n1314: A business owner is named but benefit accountability is unresolved.",
-          "rubric_3": "A business owner formally accepts authority and accountability for adoption and benefits beyond the prototype. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n1314: The owner accepts responsibility for adoption and realised benefits.",
-          "rubric_4": "The owner tracks adoption and realised benefits, acts on gaps and maintains accountability through organisational changes. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n1314: An organisational change triggers a documented ownership transfer without interrupting benefit reviews.",
-          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
-        },
-        {
-          "assessment_type": "project",
-          "mode": "quick",
-          "question_id": "PE-1114",
-          "text": "Is the operational problem validated and approved by a business owner with authority over the affected process?",
-          "default_weight": 1,
-          "blocker_ids": [
-            1114
-          ],
-          "criteria": "1114: business-approved problem definition and ownership",
-          "topic": "Technology-push AI initiatives without clear ownership",
-          "source": {
-            "sheet": "Project_Expert",
-            "row": 14
-          },
-          "why_this_matters": "1114: A clear problem and empowered owner prevent investment in solutions that do not address a measurable operational need.",
-          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n1114: Check the affected process, baseline, decision authority, success measures and evidence that the business accepts the problem.",
-          "evidence_examples": "1114: Approved problem statement, baseline, process boundaries and accountable owner",
-          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
-          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "criticality_composite": 13.4,
-          "criticality": "Critical core",
-          "rubric_0": "No validated business problem or accountable business owner is identified.\nExamples (illustrative, not actual findings):\n1114: The team starts building a model without identifying the operational problem.",
-          "rubric_1": "A problem and possible owner are discussed, but ownership and process boundaries are informal.\nExamples (illustrative, not actual findings):\n1114: A manager mentions inspection delays but no one accepts ownership.",
-          "rubric_2": "A problem statement and owner are documented; baseline, authority or business approval remains incomplete. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n1114: A problem statement exists but the delay baseline is unverified.",
-          "rubric_3": "An authorised business owner approves the problem, process boundaries, baseline and measurable success criteria. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n1114: The process owner approves the baseline and the intended improvement.",
-          "rubric_4": "The owner regularly checks results against the original problem and baseline, and adjusts priorities when evidence changes. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n1114: The owner compares results with the baseline and changes priorities when benefits fall short.",
-          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
-        },
-        {
-          "assessment_type": "project",
-          "mode": "quick",
-          "question_id": "PE-1323",
-          "text": "For each AI-supported operational decision, are the human decision-maker, approval authority and escalation route defined and tested?",
-          "default_weight": 1,
-          "blocker_ids": [
-            1323
-          ],
-          "criteria": "1323: human accountability for AI-supported decisions",
-          "topic": "Unclear human accountability in AI-supported operational decisions",
-          "source": {
-            "sheet": "Project_Expert",
-            "row": 22
-          },
-          "why_this_matters": "1323: AI outputs need accountable human decisions, especially when recommendations are uncertain or disputed.",
-          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n1323: Map who acts, approves, owns outcomes, overrides and escalates for normal and failure scenarios.",
-          "evidence_examples": "1323: Decision responsibility matrix, human oversight procedures and scenario exercises",
-          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
-          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "criticality_composite": 14,
-          "criticality": "Critical core",
-          "rubric_0": "No human accountability is defined for AI-supported operational decisions.\nExamples (illustrative, not actual findings):\n1323: Operators receive recommendations with no decision responsibility defined.",
-          "rubric_1": "People assume who decides, but approval, outcome ownership and escalation are ambiguous.\nExamples (illustrative, not actual findings):\n1323: Staff assume a supervisor will decide but have no agreed procedure.",
-          "rubric_2": "Decision roles and oversight procedures are documented; some decisions or failure scenarios remain untested. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n1323: Roles are documented but an ambiguous recommendation has not been rehearsed.",
-          "rubric_3": "Every relevant decision has a named human decision-maker, approval authority, outcome owner and tested escalation route. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n1323: An exercise confirms who overrides an output and who approves the alternative action.",
-          "rubric_4": "Decision incidents and oversight exercises are reviewed regularly and used to improve accountability and escalation. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n1323: Incident reviews improve decision authority and escalation procedures.",
-          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
-        },
-        {
-          "assessment_type": "project",
-          "mode": "quick",
-          "question_id": "PE-3634",
-          "text": "Have cross-unit agreements, shared definitions and practical reuse arrangements been established for this project's data?",
-          "default_weight": 1,
-          "blocker_ids": [
-            3634
-          ],
-          "criteria": "3634: cross-unit data reuse and interoperability",
-          "topic": "Organisational data silos limiting reuse and scaling",
-          "source": {
-            "sheet": "Project_Expert",
-            "row": 50
-          },
-          "why_this_matters": "3634: One-off local access does not establish reusable data across organisational boundaries.",
-          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n3634: Check cross-unit agreements, shared definitions, interoperable formats and actual reuse beyond the originating pilot.",
-          "evidence_examples": "3634: Data-sharing agreements, reusable datasets, common definitions and reuse evidence",
-          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
-          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "criticality_composite": 14.8,
-          "criticality": "Critical core",
-          "rubric_0": "Data remains isolated within units, with no reuse arrangements.\nExamples (illustrative, not actual findings):\n3634: Each unit keeps its data isolated.",
-          "rubric_1": "Sharing depends on personal contacts and one-off extracts.\nExamples (illustrative, not actual findings):\n3634: Sharing depends on a colleague sending a one-off extract.",
-          "rubric_2": "Sharing agreements and common definitions are drafted or piloted, but cross-unit reuse remains incomplete. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n3634: Agreements are drafted but cross-unit reuse is only piloted.",
-          "rubric_3": "Required units use agreed sharing arrangements, interoperable definitions and demonstrably reusable datasets. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n3634: Required units repeatedly reuse datasets under agreed terms and definitions.",
-          "rubric_4": "Reuse, interoperability failures and sharing friction are measured and used to improve common data arrangements. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n3634: Reuse outcomes and remaining barriers drive verified improvements in sharing.",
-          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
-        },
-        {
-          "assessment_type": "project",
-          "mode": "quick",
-          "question_id": "PE-1233",
-          "text": "Are this project's approvers, decision rights, review deadlines and escalation routes agreed and working?",
-          "default_weight": 1,
-          "blocker_ids": [
-            1233
-          ],
-          "criteria": "1233: timely governance decisions and escalation",
-          "topic": "Slow or unclear AI governance",
-          "source": {
-            "sheet": "Project_Expert",
-            "row": 19
-          },
-          "why_this_matters": "1233: Unclear decisions and slow approvals can strand otherwise viable solutions between stages.",
-          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n1233: Check named approvers, authority, expected turnaround, escalation and recorded scale, adapt or stop decisions.",
-          "evidence_examples": "1233: Governance charter, decision log, review calendar and escalation records",
-          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
-          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "criticality_composite": 15.2,
-          "criticality": "High",
-          "rubric_0": "Approvers, decision rights and escalation routes are unknown.\nExamples (illustrative, not actual findings):\n1233: No one knows who can approve deployment.",
-          "rubric_1": "Decisions depend on informal contacts, with no agreed review deadlines.\nExamples (illustrative, not actual findings):\n1233: The team seeks approval through personal contacts.",
-          "rubric_2": "Governance roles and review steps are documented, but deadlines or escalation routes are not consistently used. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n1233: A review process exists but missed deadlines have no escalation route.",
-          "rubric_3": "Named approvers make recorded scale, adapt or stop decisions within agreed review and escalation arrangements. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n1233: Named approvers record decisions and use the agreed escalation route.",
-          "rubric_4": "Decision turnaround and recurring bottlenecks are monitored, and governance is improved using those results. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n1233: Decision-time reviews remove a recurring approval bottleneck.",
-          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
-        },
-        {
-          "assessment_type": "project",
-          "mode": "quick",
-          "question_id": "PE-2513",
-          "text": "Does the model meet agreed performance thresholds across representative assets, sites, seasons and operating conditions at target scale?",
-          "default_weight": 1,
-          "blocker_ids": [
-            2513
-          ],
-          "criteria": "2513: model performance under operational variation and scale",
-          "topic": "Model performance degrades with scale",
-          "source": {
-            "sheet": "Project_Expert",
-            "row": 44
-          },
-          "why_this_matters": "2513: Pilot performance may not hold across the assets and conditions introduced by scale.",
-          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n2513: Check representative sites, assets, seasons, rare conditions, acceptance thresholds and documented limitations.",
-          "evidence_examples": "2513: Stratified validation results, scale tests, failure analysis and acceptance thresholds",
-          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
-          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "criticality_composite": 15.2,
-          "criticality": "High",
-          "rubric_0": "Model performance at target scale has not been assessed.\nExamples (illustrative, not actual findings):\n2513: Only training performance is reported.",
-          "rubric_1": "Performance is reported only on a small or controlled sample without operational acceptance thresholds.\nExamples (illustrative, not actual findings):\n2513: A small convenient sample is used to claim production readiness.",
-          "rubric_2": "Thresholds and stratified tests exist, but important assets, sites, seasons or operating conditions remain uncovered. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n2513: Stratified tests exist but an important operating condition is missing.",
-          "rubric_3": "Representative tests meet agreed thresholds across all relevant target-scale conditions; failures and limitations are documented. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n2513: Representative tests meet agreed thresholds across the deployment scope.",
-          "rubric_4": "Performance variation is monitored across conditions and time; degradations trigger validated corrective action. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n2513: Monitoring detects a condition-specific decline and a corrective change is validated.",
-          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
-        },
-        {
-          "assessment_type": "project",
-          "mode": "quick",
-          "question_id": "PE-2423",
-          "text": "Are monitoring thresholds, drift detection, retraining triggers and controlled model updates implemented and assigned to owners?",
-          "default_weight": 1,
-          "blocker_ids": [
-            2423
-          ],
-          "criteria": "2423: model monitoring and controlled retraining",
-          "topic": "Unsufficient Model monitoring, -retraining and -evolution",
-          "source": {
-            "sheet": "Project_Expert",
-            "row": 43
-          },
-          "why_this_matters": "2423: Model behaviour can degrade as data and operating conditions change, requiring owned detection and controlled updates.",
-          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n2423: Check drift and performance thresholds, monitoring owners, retraining triggers, approval, release and rollback.",
-          "evidence_examples": "2423: Monitoring dashboards, drift thresholds, retraining plan and change approvals",
-          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
-          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "criticality_composite": 15.4,
-          "criticality": "High",
-          "rubric_0": "No model monitoring or update responsibilities are defined.\nExamples (illustrative, not actual findings):\n2423: No one monitors the deployed model.",
-          "rubric_1": "Models are checked or updated reactively, without thresholds or controlled retraining.\nExamples (illustrative, not actual findings):\n2423: A developer checks performance after complaints.",
-          "rubric_2": "Monitoring and retraining plans exist, but drift triggers, ownership or update controls are only partly operational. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n2423: Monitoring is piloted but retraining approval is unresolved.",
-          "rubric_3": "Owned monitoring detects drift and threshold breaches; retraining and model changes follow tested approval and release controls. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n2423: A threshold breach triggers owned investigation and controlled model release.",
-          "rubric_4": "Detection effectiveness and post-update outcomes are reviewed over repeated cycles and used to refine monitoring and retraining. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n2423: Repeated update reviews improve detection thresholds and retraining decisions.",
-          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
-        },
-        {
-          "assessment_type": "project",
-          "mode": "quick",
-          "question_id": "PE-3114",
-          "text": "Are the required datasets collected at suitable coverage and frequency, retained appropriately and available for project use?",
-          "default_weight": 1,
-          "blocker_ids": [
-            3114
-          ],
-          "criteria": "3114: usable data collection, retention and availability",
-          "topic": "Data collection, storage and usable availability",
-          "source": {
-            "sheet": "Project_Expert",
-            "row": 45
-          },
-          "why_this_matters": "3114: A model cannot operate sustainably if required data are missing, intermittent or inaccessible.",
-          "what_to_consider": "Assess this named project at its intended deployment scope and current decision gate. Check both documents and demonstrated operation.\n3114: Check inventories, coverage, frequency, retention, availability and practical access to historical records.",
-          "evidence_examples": "3114: Data inventory, collection coverage, retention arrangements and availability checks",
-          "when_to_use_na": "Use only if every mapped criterion is outside the documented assessment scope. Record why and who accepted the scope decision. A future-stage requirement or absent practice is not automatically N/A.",
-          "when_to_use_dont_know": "Use when the requirement may apply but you cannot establish the level from available evidence. Record the information needed and the person who can supply it. Excluded from maturity scoring and retained as an unresolved information gap.",
-          "criticality_composite": 16.4,
-          "criticality": "High",
-          "rubric_0": "Required data is not collected or available in usable form.\nExamples (illustrative, not actual findings):\n3114: Required sensor history has never been collected.",
-          "rubric_1": "Some data can be found manually, but collection, coverage and retention are unreliable.\nExamples (illustrative, not actual findings):\n3114: An analyst assembles sporadic records manually.",
-          "rubric_2": "A data inventory and collection plan exist; gaps in frequency, coverage, retention or availability remain. Evidence is limited to the assessed project or pilot.\nExamples (illustrative, not actual findings):\n3114: Collection is planned but gaps remain in frequency or retention.",
-          "rubric_3": "Required data is collected at agreed coverage and frequency, retained appropriately and demonstrably available for use. Required across the intended project deployment scope.\nExamples (illustrative, not actual findings):\n3114: Required datasets are collected, retained and available at the agreed coverage.",
-          "rubric_4": "Collection completeness, availability and retention are monitored; recurrent gaps trigger improvements to collection and storage. All level-3 conditions continue to be met. Demonstrated across repeated project trials or operating reviews.\nExamples (illustrative, not actual findings):\n3114: Availability reviews identify recurring collection gaps and verify improved capture.",
-          "questionnaire_version": "sha256:cb6301b468410c1d8204e06a63845ad1a9707e06ff5aa25c1966d343e0f0c26f"
         }
       ],
       "source_sheet": "Project_Expert"
@@ -22230,5 +22230,5 @@
     "workbook_sha256": "6e412c3df59e087421fd7f998dd4008478041427580d4aa5e39a71f9ac2ca6ea",
     "exporter_version": "2.0.0"
   },
-  "catalog_version": "sha256:8f797412d27aeb203cdfb13a46fca2b98d3d0e991fc82f3be0c3f887962f9c5b"
+  "catalog_version": "sha256:f9730ee845112e941e8b61a570c6366fc3c5cf802613c33ae5149e59a145edc6"
 }
