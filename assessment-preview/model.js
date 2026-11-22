@@ -10,7 +10,7 @@
     const enablers = new Set(c.enablers.map(e=>e.enabler_id));
     assert(ids.size===41 && c.blockers.length===41 && [...ids].every(Number.isInteger),'Invalid blocker IDs.');
     assert(enablers.size===c.enablers.length,'Duplicate enabler IDs.');
-    assert(c.blocker_dependencies.length===127 && c.blocker_enabler_relationships.length===152,'Unexpected relation counts.');
+    assert(Array.isArray(c.blocker_dependencies) && Array.isArray(c.blocker_enabler_relationships),'Invalid relations.');
     for (const edges of [c.blocker_dependencies,c.blocker_enabler_relationships]) {
       assert(new Set(edges.map(e=>e.relationship_id)).size===edges.length,'Duplicate relationship IDs.');
       for (const e of edges) assert(ids.has(e.blocker_id) && (e.depends_on_blocker_id!==undefined ? ids.has(e.depends_on_blocker_id) : enablers.has(e.enabler_id)), 'Unknown relation endpoint.');
@@ -19,9 +19,9 @@
     let total=0;
     for (const q of c.questionnaires) {
       assert(['company','project'].includes(q.assessment_type) && ['quick','expert'].includes(q.mode),'Invalid questionnaire type.');
-      assert(q.questions.length===(q.mode==='quick'?16:41),'Unexpected question count.');
+      assert(q.mode==='expert'?q.questions.length===41:[15,16].includes(q.questions.length),'Unexpected question count.');
       const pairs=c.question_blocker.filter(m=>key(m)===key(q));
-      assert(pairs.length===41 && new Set(pairs.map(m=>m.blocker_id)).size===41,'Invalid mapping coverage.');
+      assert(pairs.length===(q.mode==='quick'&&q.questions.length===15?15:41) && new Set(pairs.map(m=>m.blocker_id)).size===pairs.length,'Invalid mapping coverage.');
       const seen=new Set();
       for (const question of q.questions) {
         assert(!seen.has(question.question_id) && text(question.text) && key(question)===key(q),'Invalid question identity.');
@@ -33,7 +33,7 @@
       }
       total+=q.questions.length;
     }
-    assert(total===114 && c.question_blocker.length===164,'Invalid catalogue totals.');
+    assert((total===114 && c.question_blocker.length===164)||(total===112 && c.question_blocker.length===112),'Invalid catalogue totals.');
     return c;
   }
   function questionnaire(c,s) {
@@ -46,6 +46,22 @@
   }
   function defaultName(s) {
     return `${s.assessment_type==='company'?'Company':'Project'} · ${s.mode==='quick'?'Quick':'Expert'} — ${(s.created_at||s.assessment_date||'').slice(0,10)}`;
+  }
+  function continueExpert(c, prior, id, now) {
+    const quick = questionnaire(c, prior);
+    assert(quick.mode === 'quick' && quick.questions.length === 15, 'This quick assessment cannot be continued automatically.');
+    const expert = c.questionnaires.find(q => q.assessment_type === quick.assessment_type && q.mode === 'expert');
+    assert(expert, 'Full questionnaire not found.');
+    const next = create(c, expert, id, now);
+    for (const q of quick.questions) {
+      assert(next.answers[q.question_id], 'Quick question is not present in the full questionnaire.');
+      next.answers[q.question_id] = structuredClone(prior.answers[q.question_id]);
+    }
+    next.source_quick_assessment_id = prior.assessment_id;
+    next.scoring_basis = prior.scoring_basis;
+    for (const field of ['created_at','assessment_name','entity_id','entity_name','scope','target_scale','author','assessment_date']) if (prior[field] !== undefined) next[field] = prior[field];
+    next.current_step = Math.max(0, expert.questions.findIndex(q => !quick.questions.some(x => x.question_id === q.question_id)));
+    return next;
   }
   function displayName(s) {
     return text(s.assessment_name)?s.assessment_name:`${s.assessment_type==='company'?'Company':'Project'} · ${s.mode==='quick'?'Quick':'Expert'}`;
@@ -95,7 +111,7 @@
       rows.push({question,answer,status});
       for (const id of question.blocker_ids) {
         const b=c.blockers.find(b=>b.blocker_id===id);
-        blockers.push({...b,question_id:question.question_id,status,score:status==='valid'?answer.score:null,allocated_weight:answer.effective_weight/question.blocker_ids.length,score_origin:q.mode==='quick'?'quick_group':'expert',operational_status:'not_reviewed'});
+        blockers.push({...b,question_id:question.question_id,status,score:status==='valid'?answer.score:null,allocated_weight:answer.effective_weight/question.blocker_ids.length,score_origin:q.mode==='quick'?(question.blocker_ids.length>1?'quick_group':'quick_individual'):'expert',operational_status:'not_reviewed'});
       }
     }
     const groups=[];
@@ -117,5 +133,5 @@
     recommendations.sort((a,b)=>b.priority-a.priority||a.enabler_id-b.enabler_id);
     return {maturity_percent:denominator?100*numerator/denominator:null,numerator,denominator,completion:(counts.valid+counts.not_applicable)/q.questions.length,counts,rows,blockers,groups,recommendations,partial:counts.valid+counts.not_applicable<q.questions.length};
   }
-  root.AssessmentPreview={defaultName,displayName,nameAssessment,validate,key,create,classify,questionnaire,validateAssessment,report,weightOK};
+  root.AssessmentPreview={defaultName,displayName,nameAssessment,validate,key,create,continueExpert,classify,questionnaire,validateAssessment,report,weightOK};
 })(globalThis);

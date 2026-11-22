@@ -62,6 +62,7 @@ class Master:
     def __init__(self, path):
         self.path = Path(path)
         self.wb = load_workbook(self.path, data_only=False)
+        self.cached = load_workbook(self.path, data_only=True, read_only=True)
 
     def records(self, sheet, header=1, stop_blank=False, fields=None):
         require(sheet in self.wb.sheetnames, f"Missing worksheet: {sheet}")
@@ -74,6 +75,8 @@ class Master:
         rows = []
         for line in range(header + 1, ws.max_row + 1):
             vals = [c.value for c in ws[line]]
+            if stop_blank and vals[0] is None:
+                break
             if not any(v is not None for v in vals):
                 if stop_blank:
                     break
@@ -83,7 +86,10 @@ class Master:
                 continue
             row = {k: v for k, v in zip(names, vals) if k and (fields is None or k in fields)}
             for k, v in row.items():
-                require(not (isinstance(v, str) and v.startswith("=")), f"{sheet}!row {line}, {k}: source inputs must be literal values, not formulas")
+                if (isinstance(v, str) and v.startswith('=')) or getattr(v, 'text', '').startswith('='):
+                    value = self.cached[sheet].cell(line, names.index(k)+1).value
+                    require(value is not None and not (isinstance(value, str) and value.startswith('#')), f'{sheet}!row {line}, {k}: missing or invalid cached formula result; recalculate and save in Excel')
+                    row[k] = value
             row['_row'] = line
             rows.append(row)
         return rows
@@ -132,9 +138,13 @@ def build(path):
         return build_master(m)
     finally:
         m.wb.close()
+        m.cached.close()
 
 
 def build_master(m):
+    criticality_rows = m.records('Dependency_Analysis', fields=['Blocker ID', 'Criticality composite', 'Classification'])
+    criticality = {integer(r['Blocker ID'], 'Blocker ID'): (number(r['Criticality composite'], 'criticality'), text(r['Classification'])) for r in criticality_rows}
+    require(len(criticality) == len(criticality_rows), 'Dependency_Analysis: duplicate blocker ID')
     gates = [attrs(r) for r in m.records('Stage_Gates')]
     gate_map = unique(gates, 'gate_id', 'Stage_Gates')
     require(set(gate_map) == {f'G{i}' for i in range(6)}, 'Stage_Gates: expected G0 through G5')
@@ -236,7 +246,7 @@ def build_master(m):
 
     questionnaires, mappings = [], []
     qfields=['Question ID','Question','Weight','0 — Absent','1 — Recognised','2 — Defined / tested locally','3 — Implemented','4 — Measured / sustained','Blocker IDs (primary keys)','Criteria to assess','Topic','Why this matters','What to consider','Evidence examples','When to use N/A','When to use Don’t Know']
-    for sheet in ['Company_Quick','Company_Expert','Project_Quick','Project_Expert']:
+    for sheet in ['Company_Expert','Project_Expert']:
         assessment,mode=sheet.lower().split('_')
         ws=m.wb[sheet]
         headers=[i for i,row in enumerate(ws.values,1) if row[0]=='Question ID' and row[1]=='Question']
@@ -247,9 +257,13 @@ def build_master(m):
             ids=id_parts(r['Blocker IDs (primary keys)'],sheet)
             require(ids and set(ids)<=set(bm),f"{sheet} {r['Question ID']}: unknown/missing blocker")
             require(mode!='expert' or len(ids)==1,f'{sheet}: expert question must map to one blocker')
+            require(ids[0] in criticality, f"{sheet} {r['Question ID']}: missing Dependency_Analysis for blocker {ids[0]}")
+            score, classification = criticality[ids[0]]
+            require(classification, f"{sheet} {r['Question ID']}: missing criticality classification for blocker {ids[0]}")
             weight=number(r['Weight'],f"{sheet} {r['Question ID']} weight")
             require(weight>=0,f'{sheet}: negative weight')
             q={'assessment_type':assessment,'mode':mode,'question_id':r['Question ID'],'text':r['Question'],'default_weight':weight,'blocker_ids':ids,'criteria':r['Criteria to assess'],'topic':r['Topic'],'source':origin(sheet,r),'why_this_matters':r['Why this matters'],'what_to_consider':r['What to consider'],'evidence_examples':r['Evidence examples'],'when_to_use_na':r['When to use N/A'],'when_to_use_dont_know':r['When to use Don’t Know']}
+            q['criticality_composite'], q['criticality'] = score, classification
             for n,key in enumerate(qfields[3:8]):
                 require(text(r[key]),f"{sheet} {r['Question ID']}: missing rubric {n}")
                 q[f'rubric_{n}']=r[key]
@@ -276,6 +290,15 @@ def build_master(m):
                 mappings.append({'assessment_type':assessment,'mode':mode,'question_id':q['question_id'],'questionnaire_version':version,'blocker_id':bid,'allocated_weight':q['default_weight']/len(q['blocker_ids']),'suggested_evidence':t['Suggested evidence'],'evidence_source':origin(sheet,t)})
         questionnaires.append({'assessment_type':assessment,'mode':mode,'questionnaire_version':version,'published_at':None,'questions':qs,'source_sheet':sheet})
 
+        selected = sorted(qs, key=lambda q: (q['criticality_composite'], q['blocker_ids'][0], q['question_id']))[:15]
+        quick_questions = [{**q, 'mode':'quick'} for q in selected]
+        quick_version = digest(quick_questions)
+        for q in quick_questions:
+            q['questionnaire_version'] = quick_version
+            original = next(x for x in mappings if x['assessment_type'] == assessment and x['mode'] == 'expert' and x['question_id'] == q['question_id'])
+            mappings.append({**original, 'mode':'quick', 'questionnaire_version':quick_version})
+        questionnaires.append({'assessment_type':assessment,'mode':'quick','questionnaire_version':quick_version,'published_at':None,'questions':quick_questions,'source_sheet':sheet})
+
     legacy=[]
     for r in m.records('Legacy_Readiness'):
         q=attrs(r)
@@ -298,7 +321,8 @@ def build_master(m):
     require(all({r['blockerId'] for r in legacy_maps if r['questionId']==q['id'] and r['relationship']=='Direct'}==set(q['sourceBlockerIds']) for q in legacy),'Legacy question IDs and Direct mappings disagree')
 
     require(len(bm)==41 and len(em)==109 and len(relationships)==152,'Current website compatibility requires 41 blockers, 109 enablers and 152 enabler links; review the website contract before changing inventory')
-    require([len(q['questions']) for q in questionnaires]==[16,41,16,41] and len(mappings)==164,'Current website questionnaire inventory changed')
+    require([len(q['questions']) for q in questionnaires]==[41,15,41,15] and len(mappings)==112,'Current website questionnaire inventory changed')
+    questionnaires.sort(key=lambda q: (q['assessment_type'], 0 if q['mode']=='quick' else 1))
     for d in domains:
         d['enabled']=any(b['domain']==d['slug'] for b in blockers)
     source={'workbook_name':m.path.name,'workbook_sha256':hashlib.sha256(m.path.read_bytes()).hexdigest(),'exporter_version':EXPORTER_VERSION}

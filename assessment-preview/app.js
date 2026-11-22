@@ -95,7 +95,7 @@
     app.innerHTML=`<button id="scope-back">← Assessment scope</button><p class="eyebrow depth-label ${selectedScope}">${selectedScope==='company'?'Company':'Project'} Assessment · Step 2 / 2</p>
       <h1>Choose the assessment depth</h1><div class="cards depth-cards ${selectedScope}">${current.questionnaires.map((q,i)=>q.assessment_type!==selectedScope?'':`
       <section class="card"><h2>${q.mode==='quick'?'Quick overview':'Expert assessment'}</h2><p class="question-count">${q.questions.length} questions</p>
-      <p>${q.mode==='quick'?'Aggregated questions covering key topics.':'Detailed assessment with one question per blocker.'}</p>
+      <p>${q.mode==='quick'?'The 15 questions associated with the most critical blockers.':'Detailed assessment with one question per blocker.'}</p>
       <p class="muted">${q.mode==='quick'?'High-level maturity insights.':'Detailed analysis and recommendations.'}</p><button class="primary" data-start="${i}">Start ${esc(title(q))}</button></section>`).join('')}</div>`;
     on('#scope-back',()=>go('home'));
     app.querySelectorAll('[data-start]').forEach(b=>b.onclick=()=>coffee(current.questionnaires[Number(b.dataset.start)]));
@@ -114,14 +114,14 @@
         <input id="rating-slider" type="range" min="0" max="4" step="1" value="${answer.score??0}" aria-describedby="rating-description">
         <div class="rating-ticks">${levels.map((label,n)=>`<button type="button" data-level="${n}" aria-label="Select level ${n}: ${label}" aria-pressed="${answer.score===n}">${n}</button>`).join('')}</div>
       </div>
-      <p class="muted">${q.mode === 'quick' ? 'Choose the lowest level that applies across all parts of this question.' : 'Choose the level that best describes your current practice.'}</p>
+      <p class="muted">${q.mode === 'quick' && question.blocker_ids.length > 1 ? 'Choose the lowest level that applies across all parts of this question.' : 'Choose the level that best describes your current practice.'}</p>
       <div id="rating-description" class="selected-guidance">${answer.score!==null?`<strong>Level ${answer.score} · ${levels[answer.score]}</strong>${V.answerGuidance(question,answer.score)}`:answer.response_state==='dont_know'?esc(question.dont_know_guidance||question.when_to_use_dont_know||'More information is needed.'):answer.applicability==='not_applicable'?esc(question.na_guidance||question.when_to_use_na||'Explain why this question is outside scope.'):'Move the slider or choose a number to see its description.'}</div>
       <div class="rating-alternatives">
         <button id="answer-unknown" aria-pressed="${answer.response_state==='dont_know'}">Don’t Know</button>
-        <button id="answer-na" aria-pressed="${answer.applicability==='not_applicable'}">N/A${q.mode==='quick'?' · all parts':''}</button>
+        <button id="answer-na" aria-pressed="${answer.applicability==='not_applicable'}">N/A${q.mode==='quick'&&question.blocker_ids.length>1?' · all parts':''}</button>
         <button id="clear-answer" class="clear-answer">Clear answer</button>
       </div>
-      ${QuestionFeedback.markup()}
+      ${QuestionFeedback.markup(esc(answer.review_comment||''))}
       ${V.questionContext(question)}
       <details class="question-help response-notes" ${answer.applicability==='not_applicable'?'open':''}>
       <summary id="note-summary">${answer.applicability==='not_applicable'?'N/A reason (required)':answer.response_state==='dont_know'?'Information needed (optional)':'Evidence or notes (optional)'}</summary>
@@ -159,6 +159,7 @@
     }
     on('#answer-unknown',()=>chooseAlternative(false));on('#answer-na',()=>chooseAlternative(true));
     QuestionFeedback.mount(session,question.question_id);
+    app.querySelector('#question-change').oninput=e=>{answer.review_comment=e.target.value;touch();QuestionFeedback.comment(session,question.question_id,e.target.value);};
     const note=app.querySelector('#response-note');
     note.oninput=()=>{if(answer.applicability==='not_applicable')answer.na_reason=note.value;else answer.evidence=note.value;touch();app.querySelector('progress').value=progressCount();};
     on('#clear-answer',()=>{answer.score=null;answer.applicability='undecided';answer.response_state='unanswered';answer.all_blockers_not_applicable=false;touch();questions();});
@@ -179,6 +180,7 @@
       <section class="radar-panel"><div class="radar-controls"><label>View by <select id="radar-kind"><option value="stage_gate" ${radarKind==='stage_gate'?'selected':''}>Stage Gate</option><option value="cluster" ${radarKind==='cluster'?'selected':''}>Cluster</option><option value="community" ${radarKind==='community'?'selected':''}>Community</option></select></label>${radarKind==='cluster'?`<label>Dimension <select id="radar-dimension">${dimensions.map(d=>`<option ${d===radarDimension?'selected':''}>${esc(d)}</option>`).join('')}</select></label>`:''}</div><h2 class="radar-view-title">${radarKind==='cluster'?esc(radarDimension)+' clusters':radarKind==='community'?'Communities':'Stage Gates'}</h2>${V.radar(axes,radarKind)}<p class="muted radar-caption">${report.rows.filter(r => r.status === 'valid').length}/${q.questions.length} questions answered${report.counts.not_applicable ? ` · ${report.counts.not_applicable} not applicable` : ''}.
       ${report.counts.na_reason_missing ? `${report.counts.na_reason_missing} N/A responses still need a reason. ` : ''}${report.counts.information_gap ? `${report.counts.information_gap} Don’t Know responses need follow-up. ` : ''}${report.partial ? 'Partial profile — unanswered areas are left blank.' : ''} Self-reported preview.</p></section>
       <div class="tools result-actions"><button class="primary" id="timeline">Explore my timeline →</button><button id="pdf">PDF · recommended enablers</button></div>
+      <div class="tools">${q.mode==='quick'&&q.questions.length===15?'<button id="continue-expert">Continue to full questionnaire</button>':''}<button id="export-json">Download assessment JSON</button></div>
       <section class="pdf-only"><h2>Enablers to develop</h2><p>${report.partial ? 'Recommendations reflect the answered questions only.' : 'Recommendations reflect the reported gaps.'} Scores do not imply blocker closure.</p>
       ${V.enablerReport(report, catalog, new URL("../", location.href))}</section>`;
     const nameInput=app.querySelector('#assessment-name');
@@ -196,6 +198,16 @@
     const dimensionSelect=app.querySelector('#radar-dimension');
     if(dimensionSelect)dimensionSelect.onchange=e=>{radarDimension=e.target.value;results();};
     on('#back', () => go('questions')); on('#home', () => go('home'));
+    on('#continue-expert', () => {
+      const next = M.continueExpert(catalog, session, session.assessment_id, now());
+      const index=store.sessions.findIndex(s=>s.assessment_id===session.assessment_id);
+      session=next; if(index>=0)store.sessions[index]=next;else store.sessions.push(next); persist(); go('questions');
+    });
+    on('#export-json', () => {
+      const blob=new Blob([JSON.stringify({schema_version:'1.0',exported_at:now(),assessment:session},null,2)],{type:'application/json'});
+      const url=URL.createObjectURL(blob), link=document.createElement('a');
+      link.href=url; link.download=`aist-assessment-${session.assessment_id}.json`; link.click(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+    });
     on('#timeline', () => {
       try {
         sessionStorage.setItem('aistQuestionnaireTimelineV1', JSON.stringify(V.timeline(catalog, report, session)));
