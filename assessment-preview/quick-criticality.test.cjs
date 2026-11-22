@@ -14,14 +14,17 @@ test('quick assessments contain the 15 lowest scores from their own expert asses
   }
 });
 
-test('continuing preserves all answers and comments, with a separate full session', () => {
+test('continuing preserves answers, metadata and feedback identity', () => {
   const quick = catalog.questionnaires.find(q => q.assessment_type === 'company' && q.mode === 'quick');
   const now = '2026-11-22T10:00:00.000Z';
   const draft = M.create(catalog, quick, 'quick-id', now);
   const id = quick.questions[0].question_id;
   Object.assign(draft.answers[id], {score: 2, applicability:'applicable', evidence:'evidence', review_comment:'change this'});
   draft.scoring_basis = 'self_report_preview';
-  const full = M.continueExpert(catalog, draft, 'full-id', now);
+  draft.assessment_name = 'Baseline';
+  const full = M.continueExpert(catalog, draft, draft.assessment_id, now);
+  assert.equal(full.assessment_id, draft.assessment_id);
+  assert.equal(full.assessment_name, 'Baseline');
   assert.equal(full.source_quick_assessment_id, draft.assessment_id);
   assert.deepEqual(full.answers[id], draft.answers[id]);
   assert.notEqual(full.answers[id], draft.answers[id]);
