@@ -42,7 +42,7 @@
   function comment(session,questionId,value){ update(session,questionId,{suggestion:value}); }
   function markup(change=''){return `<details class="question-help question-feedback"><summary>Rate this question <span class="muted">(optional)</span></summary>
     <p class="feedback-intro">Help us improve the questionnaire. This does not affect your assessment score.</p>
-    <div id="question-stars"></div><label for="question-change">What would you change about this question? (optional)</label><textarea id="question-change" rows="3">${change}</textarea><div class="feedback-actions"><button type="button" id="feedback-clear">Clear ratings</button><button type="button" id="feedback-retry">Retry</button></div>
+    <div id="question-stars"></div><label for="question-change">What would you change about this question? (optional)</label><textarea id="question-change" rows="3" maxlength="2000">${change}</textarea><div class="feedback-actions"><button type="button" id="feedback-clear">Clear ratings</button><button type="button" id="feedback-retry">Retry</button></div>
     <p class="feedback-status" role="status" data-feedback-status=""></p>
     <small>Ratings, your suggested change and an anonymous answered/not-answered flag are shared with the research team. Your maturity scores, assessment notes and name stay in this browser.</small></details>`;}
   function mount(session,questionId){
