@@ -322,6 +322,7 @@ def build_master(m):
 
     require(len(bm)==41 and len(em)==109 and len(relationships)==152,'Current website compatibility requires 41 blockers, 109 enablers and 152 enabler links; review the website contract before changing inventory')
     require([len(q['questions']) for q in questionnaires]==[41,15,41,15] and len(mappings)==112,'Current website questionnaire inventory changed')
+    questionnaires.sort(key=lambda q: (q['assessment_type'], 0 if q['mode']=='quick' else 1))
     for d in domains:
         d['enabled']=any(b['domain']==d['slug'] for b in blockers)
     source={'workbook_name':m.path.name,'workbook_sha256':hashlib.sha256(m.path.read_bytes()).hexdigest(),'exporter_version':EXPORTER_VERSION}
