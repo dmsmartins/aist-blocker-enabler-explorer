@@ -159,7 +159,7 @@
     }
     on('#answer-unknown',()=>chooseAlternative(false));on('#answer-na',()=>chooseAlternative(true));
     QuestionFeedback.mount(session,question.question_id);
-    app.querySelector('#question-change').oninput=e=>{answer.review_comment=e.target.value;touch();};
+    app.querySelector('#question-change').oninput=e=>{answer.review_comment=e.target.value;touch();QuestionFeedback.comment(session,question.question_id,e.target.value);};
     const note=app.querySelector('#response-note');
     note.oninput=()=>{if(answer.applicability==='not_applicable')answer.na_reason=note.value;else answer.evidence=note.value;touch();app.querySelector('progress').value=progressCount();};
     on('#clear-answer',()=>{answer.score=null;answer.applicability='undecided';answer.response_state='unanswered';answer.all_blockers_not_applicable=false;touch();questions();});
