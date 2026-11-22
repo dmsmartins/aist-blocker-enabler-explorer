@@ -199,8 +199,9 @@
     if(dimensionSelect)dimensionSelect.onchange=e=>{radarDimension=e.target.value;results();};
     on('#back', () => go('questions')); on('#home', () => go('home'));
     on('#continue-expert', () => {
-      const next = M.continueExpert(catalog, session, crypto.randomUUID(), now());
-      session=next; store.sessions.push(next); persist(); go('questions');
+      const next = M.continueExpert(catalog, session, session.assessment_id, now());
+      const index=store.sessions.findIndex(s=>s.assessment_id===session.assessment_id);
+      session=next; if(index>=0)store.sessions[index]=next;else store.sessions.push(next); persist(); go('questions');
     });
     on('#export-json', () => {
       const blob=new Blob([JSON.stringify({schema_version:'1.0',exported_at:now(),assessment:session},null,2)],{type:'application/json'});
