@@ -114,11 +114,11 @@
         <input id="rating-slider" type="range" min="0" max="4" step="1" value="${answer.score??0}" aria-describedby="rating-description">
         <div class="rating-ticks">${levels.map((label,n)=>`<button type="button" data-level="${n}" aria-label="Select level ${n}: ${label}" aria-pressed="${answer.score===n}">${n}</button>`).join('')}</div>
       </div>
-      <p class="muted">${q.mode === 'quick' ? 'Choose the lowest level that applies across all parts of this question.' : 'Choose the level that best describes your current practice.'}</p>
+      <p class="muted">${q.mode === 'quick' && question.blocker_ids.length > 1 ? 'Choose the lowest level that applies across all parts of this question.' : 'Choose the level that best describes your current practice.'}</p>
       <div id="rating-description" class="selected-guidance">${answer.score!==null?`<strong>Level ${answer.score} · ${levels[answer.score]}</strong>${V.answerGuidance(question,answer.score)}`:answer.response_state==='dont_know'?esc(question.dont_know_guidance||question.when_to_use_dont_know||'More information is needed.'):answer.applicability==='not_applicable'?esc(question.na_guidance||question.when_to_use_na||'Explain why this question is outside scope.'):'Move the slider or choose a number to see its description.'}</div>
       <div class="rating-alternatives">
         <button id="answer-unknown" aria-pressed="${answer.response_state==='dont_know'}">Don’t Know</button>
-        <button id="answer-na" aria-pressed="${answer.applicability==='not_applicable'}">N/A${q.mode==='quick'?' · all parts':''}</button>
+        <button id="answer-na" aria-pressed="${answer.applicability==='not_applicable'}">N/A${q.mode==='quick'&&question.blocker_ids.length>1?' · all parts':''}</button>
         <button id="clear-answer" class="clear-answer">Clear answer</button>
       </div>
       ${QuestionFeedback.markup(esc(answer.review_comment||''))}
