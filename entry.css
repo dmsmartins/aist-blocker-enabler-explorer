@@ -184,3 +184,61 @@
   .orbit-glow { animation: none; }
   .journey-card { transition: none; }
 }
+
+/* Assessment-first introduction and illustrative walkthrough. */
+.hero { padding: 74px 0 82px; }
+.hero-grid { grid-template-columns: minmax(0,.88fr) minmax(0,1.12fr); gap: clamp(38px,6vw,96px); }
+.hero-copy .lead { max-width: 520px; }
+.hero-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 26px; margin-top: 32px; }
+.primary-entry { width: min(100%, 370px); }
+.entry-recommended { display: block; color: #1675bb; font-size: 10px; letter-spacing: .16em; font-weight: 800; margin-bottom: 10px; }
+.primary-entry .hero-cta { width: 100%; box-sizing: border-box; background: #103657; color: #fff; padding: 19px 22px; border-radius: 12px; }
+.primary-entry p { margin: 9px 0 0; color: #61798b; font-size: 13px; }
+.entry-shortcuts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; font-size: 13px; }
+.entry-shortcuts > span { width: 100%; color: #718497; }
+.entry-shortcuts a, .entry-shortcuts button { border: 0; background: transparent; padding: 3px 0; color: #20577d; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+.entry-shortcuts a:hover, .entry-shortcuts button:hover { text-decoration: underline; }
+.intro-film { background: #fff; border: 1px solid #d7e9f2; border-radius: 22px; padding: 24px; box-shadow: 0 28px 70px #1d55741c; overflow: hidden; }
+.film-top { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.film-kicker, .film-example { font-size: 10px; font-weight: 800; letter-spacing: .13em; color: #628195; }
+.film-example { color: #91a6b4; font-size: 9px; }
+.film-steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin: 24px 0 18px; }
+.film-steps button { border: 1px solid transparent; border-radius: 10px; padding: 11px 8px; background: #f4f8fb; color: #6a8293; font-size: 13px; font-weight: 700; cursor: pointer; }
+.film-steps button span { margin-right: 5px; font-size: 10px; color: #91a7b7; }
+.film-steps button[aria-pressed="true"] { background: #e6f4fd; border-color: #c2e6fa; color: #086da7; }
+.film-stage { min-height: 285px; border-radius: 16px; background: linear-gradient(145deg,#f3f9fd,#eaf5fb); border: 1px solid #e1eef5; padding: 25px; }
+.film-scene[hidden] { display: none; }
+.scene-heading { color: #4781a2; font-weight: 800; font-size: 10px; letter-spacing: .12em; display: flex; align-items: center; gap: 8px; }
+.scene-dot { width: 7px; height: 7px; background: #28a4c9; border-radius: 50%; }
+.scene-question { margin-top: 17px; color: #143953; font-size: clamp(21px,2vw,27px); font-weight: 750; letter-spacing: -.035em; line-height: 1.18; }
+.film-scene p { margin: 8px 0 20px; font-size: 13px; line-height: 1.5; color: #668091; }
+.scene-choice, .scene-result, .scene-marker, .scene-network > div { background: #fff; border: 1px solid #dcebf3; border-radius: 11px; box-shadow: 0 5px 16px #2a77930a; }
+.scene-choice { display: flex; align-items: center; gap: 10px; padding: 12px; color: #254f68; font-size: 12px; font-weight: 700; }
+.choice-icon { display: grid; place-items: center; background: #dff5ec; color: #1d9871; width: 22px; height: 22px; border-radius: 50%; }
+.choice-count { color: #97acb8; margin-left: auto; font-weight: 600; }
+.scene-result { margin-top: 10px; padding: 12px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.scene-result > span, .scene-network small { font-size: 9px; color: #7190a2; font-weight: 800; letter-spacing: .1em; }
+.scene-result small { margin-left: auto; color: #668091; font-size: 11px; }
+.scene-bars { height: 27px; display: flex; align-items: end; gap: 4px; }
+.scene-bars i { display: block; width: 6px; border-radius: 4px; background: #54aed4; height: 50%; }
+.scene-bars i:nth-child(2) { height: 85%; }.scene-bars i:nth-child(3) { height: 65%; }.scene-bars i:nth-child(4) { height: 100%; }.scene-bars i:nth-child(5) { height: 72%; }
+.scene-track { display: grid; grid-template-columns: repeat(5,1fr); gap: 4px; margin-top: 28px; }
+.scene-track span { padding: 10px 2px; background: #dceff8; border-radius: 6px; color: #4483a4; text-align: center; font-size: 9px; font-weight: 800; }
+.scene-track span:nth-child(3) { background: #1486b7; color: #fff; }
+.scene-marker { margin-top: 14px; display: flex; gap: 12px; padding: 13px; color: #1591b5; }
+.scene-marker strong, .scene-marker small { display: block; color: #315970; font-size: 12px; }.scene-marker small { color: #7992a0; margin-top: 4px; }
+.scene-network { display: flex; align-items: center; gap: 10px; color: #5fa5c6; }
+.scene-network > div { flex: 1; min-width: 0; padding: 16px 12px; }.scene-network strong { display: block; margin-top: 6px; font-size: 12px; color: #28556d; }
+.scene-caption { margin-top: 18px; font-size: 12px; color: #698899; }
+.film-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 17px; color: #7b94a3; font-size: 12px; }
+.film-pause { border: 0; background: none; padding: 5px; color: #3b6f8d; font-size: 12px; cursor: pointer; }
+.lifecycle-section { width: min(1440px,92%); margin: 0 auto; padding: 68px 0 48px; }
+.lifecycle-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+.lifecycle-heading h2 { margin: 8px 0; color: #143953; font-size: clamp(27px,3vw,37px); letter-spacing: -.035em; }
+.lifecycle-heading p:not(.eyebrow) { color: #617d8d; margin: 0; line-height: 1.55; }
+.lifecycle-link { flex-shrink: 0; color: #106f9c; font-size: 14px; font-weight: 700; text-decoration: none; }
+.lifecycle-art { margin-top: 36px; }
+@media (max-width: 800px) { .hero-grid { grid-template-columns: 1fr; }.hero { padding: 44px 0 54px; }.hero-visual { margin-top: 0; }.lifecycle-heading { align-items: flex-start; flex-direction: column; }.lifecycle-section { padding-top: 48px; } }
+@media (max-width: 480px) { .intro-film { padding: 16px; }.film-stage { min-height: 280px; padding: 18px; }.film-steps button { font-size: 12px; }.film-steps button span { display: block; margin: 0 0 2px; }.film-example { font-size: 8px; }.scene-result small { width: 100%; margin-left: 0; }.scene-track span { font-size: 7px; } }
+@media (prefers-reduced-motion: no-preference) { .film-scene:not([hidden]) { animation: scene-enter .45s ease both; } @keyframes scene-enter { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } } }
+
