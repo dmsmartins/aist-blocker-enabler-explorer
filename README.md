@@ -58,10 +58,13 @@ opens the shared experience directly, without embedding a second application.
 The live application reads:
 
 ```text
-data/explorer-data.json
+data/new-dependencies/explorer-data.json
 ```
 
-Current schema: **3.1**
+Current schema: **3.1**. The standard Explorer, Timeline, assessment Timeline,
+communities and Scale Run use the revised dataset. The original
+`data/explorer-data.json` is retained only for explicit comparison, including
+`communities/?version=original` and the side-by-side dependency view.
 
 It contains:
 
@@ -80,7 +83,7 @@ Internal blocker/enabler IDs are used for relationships but are not displayed in
 The converter is stored at:
 
 ```text
-tools/excel_to_explorer_json_v2.py
+tools/new-dependencies/export_master.py
 ```
 
 Typical workflow:
@@ -89,16 +92,16 @@ Typical workflow:
 2. Validate it:
 
 ```bash
-python tools/excel_to_explorer_json_v2.py "Final_Blockers&Enablers_Explorer.xlsx" --check-only
+python tools/new-dependencies/export_master.py "AIST_Explorer_Master.xlsx" --check-only
 ```
 
 3. Generate the live JSON:
 
 ```bash
-python tools/excel_to_explorer_json_v2.py "Final_Blockers&Enablers_Explorer.xlsx" "explorer-data.json"
+python tools/new-dependencies/export_master.py "AIST_Explorer_Master.xlsx" --output-dir "output"
 ```
 
-4. Replace `data/explorer-data.json` with the generated file.
+4. Review the outputs and replace `data/new-dependencies/explorer-data.json` with the revised dataset. If updating the assessment catalogue, coordinate its version with the feedback service before publication.
 5. Commit and push to `main`.
 6. GitHub Pages updates automatically.
 
@@ -159,3 +162,4 @@ Validation: `node --test --test-isolation=none stage-dependencies.test.mjs depen
 ## Dependency review scope
 
 New reviews use the 84 directed pairs selected on 2026-11-02. The Worker owns the exact allowlist and enforces it in assignment and submission validation. The Explorer requires scope `dependency-review-84-v1` and a count of 84 before starting a new draft. Deploy the validated Worker before releasing this UI. Existing browser drafts retain their original pairs and can be submitted until their signed expiry. Reverse direction remains an answer about the displayed A → B pair. The final set may be smaller than 10/15; completion is shown when no eligible unseen pairs remain. Catalogue data, assessments and stakeholder flows are unchanged.
+

@@ -26,15 +26,11 @@
     if(!report.recommendations.length) return '<p>No enablers are suggested from the current responses. Unanswered questions do not count as gaps.</p>';
     return report.recommendations.map(e=>`<article class="pdf-enabler"><h3>${escape(e.enabler_title)}</h3><p><strong>Actions:</strong> ${escape(e.practical_actions)}</p><p><strong>Expected outcome:</strong> ${escape(e.expected_outcome)}</p><p class="muted">Addresses: ${e.contributions.map(b=>{const title=catalog?.blockers.find(x=>x.blocker_id===b.blocker_id)?.title || "Blocker details";const href=baseUrl ? new URL(`assessment-preview/blocker.html?id=${encodeURIComponent(b.blocker_id)}`,baseUrl).href : null;return href ? `<a href="${escape(href)}">${escape(title)}</a>` : escape(title);}).join("; ")}</p></article>`).join('');
   }
-  function timeline(c, report, session) {
-    const stakeholders = value => String(value || '').split(';').map(x=>x.trim()).filter(Boolean);
+  function timeline(c, report, session, revisedData) {
+    if (!revisedData || !Array.isArray(revisedData.blockerDependencies)) throw new Error('Revised dependencies are required to open the timeline.');
     const statuses = Object.fromEntries(report.blockers.map(b=>[b.blocker_id,b.status==='not_applicable'?'not_applicable':b.score===null?'unanswered':b.score<=2?'gap':'review']));
     return {assessment_id:session.assessment_id,assessment_name:session.assessment_name,created_at:session.created_at,completed_at:session.completed_at,preview:true,blockerStatuses:statuses,blockerScores:Object.fromEntries(report.blockers.map(b=>[b.blocker_id,b.score])),mode:session.mode,
-      data:{stageGates:labels.map((label,id)=>({id,label})),domains:[],mechanisms:[...new Map(c.blocker_enabler_relationships.map(r=>[r.attribute,{key:r.attribute,description:r.attribute_description}])).values()],
-        blockers:c.blockers.map(b=>({id:b.blocker_id,title:b.title,statement:b.statement,cluster:b.cluster,dimension:b.dimension,stageGate:gateNumber(b.stage_gate),stageGateDescription:b.stage_gate,whyItMatters:b.why_it_matters,consequence:b.consequence,stakeholders:stakeholders(b.stakeholders),classification:b.dependency_analysis?.state,communityName:b.dependency_analysis?.community})),
-        enablers:c.enablers.map(e=>({id:e.enabler_id,title:e.enabler_title,description:e.enabler_description,practicalActions:e.practical_actions,expectedOutcome:e.expected_outcome,stageGate:null,stakeholders:stakeholders(e.stakeholders)})),
-        relationships:c.blocker_enabler_relationships.map(r=>({id:r.relationship_id,blockerId:r.blocker_id,enablerId:r.enabler_id,mechanism:r.attribute,rationale:r.rationale})),
-        blockerDependencies:c.blocker_dependencies.map(r=>({id:r.relationship_id,blockerId:r.blocker_id,dependsOnBlockerId:r.depends_on_blocker_id,dependencyImportance:r.dependency_importance}))}};
+      data:revisedData};
   }
 
   function questionContext(q) {

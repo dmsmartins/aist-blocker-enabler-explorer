@@ -8,7 +8,7 @@
   const levels = ['Absent', 'Recognised', 'Defined / tested locally', 'Implemented', 'Measured / sustained'];
   let selectedScope = 'company', nameDraft = null;
   let coffeeTimer, radarKind = 'stage_gate', radarDimension = 'Organisational';
-  let current, catalog, session, view = 'home', store = { catalogs: {}, sessions: [] }, storageBlocked = false;
+  let current, catalog, revisedData, session, view = 'home', store = { catalogs: {}, sessions: [] }, storageBlocked = false;
   function persist() {
     if (storageBlocked) return false;
     try { localStorage.setItem(STORE, JSON.stringify(store)); status.textContent = 'Saved in this browser'; return true; }
@@ -104,7 +104,7 @@
     const q = M.questionnaire(catalog, session);
     session.current_step = Math.max(0, Math.min(Number.isInteger(session.current_step) ? session.current_step : 0, q.questions.length - 1));
     const question = q.questions[session.current_step], answer = session.answers[question.question_id];
-    const progressCount = () => { const r=M.report(catalog,session);return r.counts.valid+r.counts.not_applicable; };
+    const progressCount = () => { const r=M.report(catalog,session,revisedData);return r.counts.valid+r.counts.not_applicable; };
     const answered = progressCount();
     app.innerHTML = `<div class="tools"><button id="home">← Questionnaires</button><button id="results">Results</button></div>
       <p class="eyebrow">${esc(title(q))}</p>${session.assessment_name?`<p class="assessment-name">${esc(session.assessment_name)}</p>`:''}<progress max="${q.questions.length}" value="${answered}" aria-label="Questions answered"></progress>
@@ -167,7 +167,7 @@
     on('#next', () => { if (session.current_step === q.questions.length - 1) go('results'); else { session.current_step++; touch(); go('questions'); } });
   }
   function results() {
-    const q = M.questionnaire(catalog, session), report = M.report(catalog, session);
+    const q = M.questionnaire(catalog, session), report = M.report(catalog, session, revisedData);
     const dimensions=[...new Set(report.groups.filter(g=>g.kind==='cluster').map(g=>g.dimension))];
     if(!dimensions.includes(radarDimension))radarDimension=dimensions[0];
     const axes=radarKind==='stage_gate'?V.gateAxes(report):report.groups.filter(g=>g.kind===radarKind&&(radarKind!=='cluster'||g.dimension===radarDimension)).sort((a,b)=>a.label.localeCompare(b.label,'en',{numeric:true}));
@@ -208,19 +208,23 @@
       const url=URL.createObjectURL(blob), link=document.createElement('a');
       link.href=url; link.download=`aist-assessment-${session.assessment_id}.json`; link.click(); setTimeout(()=>URL.revokeObjectURL(url),1000);
     });
-    on('#timeline', () => {
+    on('#timeline', async () => {
       try {
-        sessionStorage.setItem('aistQuestionnaireTimelineV1', JSON.stringify(V.timeline(catalog, report, session)));
+        sessionStorage.setItem('aistQuestionnaireTimelineV1', JSON.stringify(V.timeline(catalog, report, session, revisedData)));
         window.location.href = `../timeline/?assessment=questionnaire&id=${encodeURIComponent(session.assessment_id)}`;
-      } catch { status.textContent = 'Unable to open the timeline: browser session storage is unavailable.'; }
+      } catch (error) { status.textContent = `Unable to open the timeline: ${error.message}`; }
     });
     on('#pdf', () => window.print());
   }
   function render() { if (view === 'home') home(); else if (view === 'depth') depth(); else if (view === 'questions') questions(); else results(); }
   try {
-    const response = await fetch('../data/explorer_catalog.json', { cache: 'no-cache' });
+    const [response,revisedResponse] = await Promise.all([fetch('../data/explorer_catalog.json', { cache: 'no-cache' }),fetch('../data/new-dependencies/explorer-data.json', { cache: 'no-cache' })]);
     if (!response.ok) throw new Error(`Catalogue HTTP ${response.status}`);
     current = M.validate(await response.json());
+    if(!revisedResponse.ok)throw new Error('The revised dependencies could not be loaded.');
+    revisedData=await revisedResponse.json();
+    const ids=new Set(revisedData.blockers.map(b=>b.id));
+    if(!Array.isArray(revisedData.blockerDependencies)||current.blockers.some(b=>!ids.has(b.blocker_id)))throw new Error('The revised dataset does not match this assessment.');
     try {
       const raw = localStorage.getItem(STORE);
       if (raw) { const saved = JSON.parse(raw); if (!saved.catalogs || !Array.isArray(saved.sessions)) throw new Error('Invalid saved data'); store = saved; }

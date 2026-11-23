@@ -5,6 +5,7 @@ import './model.js';
 import './views.js';
 const M=globalThis.AssessmentPreview,V=globalThis.AssessmentViews;
 const c=JSON.parse(readFileSync(new URL('../data/explorer_catalog.json',import.meta.url)));
+const revised=JSON.parse(readFileSync(new URL('../data/new-dependencies/explorer-data.json',import.meta.url)));
 const q=c.questionnaires[0];
 function make(){const s=M.create(c,q,'preview','2026-10-19T12:00:00Z');s.scoring_basis='self_report_preview';return s;}
 test('self-reported preview scores without inventing evidence, legacy scoring unchanged',()=>{
@@ -24,9 +25,9 @@ test('timeline uses canonical IDs and retains unanswered, N/A, gaps and review w
   const s=make();Object.assign(s.answers[q.questions[0].question_id],{score:4,applicability:'applicable'});
   Object.assign(s.answers[q.questions[1].question_id],{score:1,applicability:'applicable'});
   Object.assign(s.answers[q.questions[2].question_id],{applicability:'not_applicable',na_reason:'Outside scope',all_blockers_not_applicable:true});
-  const t=V.timeline(c,M.report(c,s),s);
+  const t=V.timeline(c,M.report(c,s,revised),s,revised);
   assert.equal(t.blockerStatuses[q.questions[0].blocker_ids[0]],'review');assert.equal(t.blockerStatuses[q.questions[1].blocker_ids[0]],'gap');assert.equal(t.blockerStatuses[q.questions[2].blocker_ids[0]],'not_applicable');assert.equal(t.blockerStatuses[q.questions[3].blocker_ids[0]],'unanswered');
-  assert.ok(!Object.values(t.blockerStatuses).includes('resolved'));assert.equal(t.data.blockerDependencies.length,127);assert.equal(t.data.relationships.length,152);assert.ok(t.data.enablers.every(e=>e.stageGate===null));
+  assert.ok(!Object.values(t.blockerStatuses).includes('resolved'));assert.equal(t.data.blockerDependencies.length,83);assert.equal(t.data.relationships.length,152);assert.deepEqual(t.data.blockerDependencies,revised.blockerDependencies);
 });
 test('enriched questions render context and all five example sets with escaping',()=>{
   for(const form of c.questionnaires)for(const question of form.questions){
@@ -107,5 +108,5 @@ test('named saving preserves identity, answers and score, including duplicate na
   M.nameAssessment(a,'Finished','2026-10-22T12:00:00Z',M.report(c,a));
   M.nameAssessment(a,'Finished again','2026-10-23T12:00:00Z',M.report(c,a));
   assert.equal(a.completed_at,'2026-10-22T12:00:00Z');
-  assert.equal(V.timeline(c,M.report(c,a),a).assessment_name,'Finished again');
+  assert.equal(V.timeline(c,M.report(c,a,revised),a,revised).assessment_name,'Finished again');
 });

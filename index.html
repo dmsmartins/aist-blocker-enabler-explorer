@@ -943,7 +943,7 @@ async function init() {
   if (window.__EXPLORER_DATA__) {
     state.data = window.__EXPLORER_DATA__;
   } else {
-    const res = await fetch('data/explorer-data.json?v=20261001-gates-0-5', {cache: 'no-cache'});
+    const res = await fetch('data/new-dependencies/explorer-data.json', {cache: 'no-cache'});
     state.data = await res.json();
   }
   updateBookmarkCount();
@@ -1155,10 +1155,10 @@ function renderExplore() {
   app.innerHTML=`<section class="page narrow"><p class="eyebrow">Browse</p><h2>Explore the knowledge structure.</h2><p class="lead">Discover related blockers through communities, or follow the dependencies between them.</p><div class="path-grid">
   <button class="path-card" id="byDomain"><div class="path-visual">▦</div><h3>Communities</h3><p>Explore related blockers and their enablers.</p><span class="card-link">Explore communities →</span></button>
   <button class="path-card" id="byNewDependencies"><div class="path-visual">↗</div><h3>New Dependencies</h3><p>Compare original and updated blocker connections.</p><span class="card-link">Compare dependencies →</span></button>
-  <button class="path-card" id="byNewCommunities"><div class="path-visual">▦</div><h3>New Communities</h3><p>Explore the community view with the updated dependencies.</p><span class="card-link">Explore new communities →</span></button>
+  <button class="path-card" id="byNewCommunities"><div class="path-visual">▦</div><h3>Original Communities</h3><p>Compare the previous community view with the revised analysis.</p><span class="card-link">View original communities →</span></button>
   <button class="path-card" id="byDependencies"><div class="path-visual">↗</div><h3>Dependencies</h3><p>Understand what depends on what, and where to act first.</p><span class="card-link">Explore dependencies →</span></button></div></section>`;
   document.getElementById('byNewDependencies').onclick=()=>{ window.location.href='./new-dependencies/index.html'; };
-  document.getElementById('byNewCommunities').onclick=()=>{ window.location.href='./new-communities/index.html'; };
+  document.getElementById('byNewCommunities').onclick=()=>{ window.location.href='./communities/?version=original'; };
   document.getElementById('byDomain').onclick=()=>navigate('domains');
   document.getElementById('byDependencies').onclick=()=>navigate('dependencies');
 }
