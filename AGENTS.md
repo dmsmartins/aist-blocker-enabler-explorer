@@ -6,7 +6,7 @@
 - First inspect README.md and only the files directly relevant to the task. Do not scan or reproduce entire large files unless needed.
 - Before edits, state a short plan and list affected paths. Prefer the smallest viable patch. Avoid unrelated refactoring.
 - Treat the current data schema and IDs as contracts. Preserve blocker/enabler references, dependencies, gate mappings and review statuses.
-- Data source of truth: Excel workbook -> tools/excel_to_explorer_json_v2.py -> data/explorer-data.json. Do not hand-edit generated JSON when source/converter should change.
+- Data source of truth: Excel workbook -> tools/new-dependencies/export_master.py -> data/explorer-data.json, data/explorer_catalog.json and data/stage-gate-guidance.json. Do not hand-edit generated JSON when source/converter should change.
 - Keep the Explorer distinct from the planned Project & Stage Gate Tracker; do not introduce a multi-user backend into the static Explorer by accident.
 
 ## Verification

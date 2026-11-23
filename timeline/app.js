@@ -5,7 +5,7 @@ import {ReactFlow,ReactFlowProvider,Background,Controls,Handle,Position,MarkerTy
 import {gateKey,guidanceFor} from "./guidance.mjs";
 import {mechanismGroups,initialMechanism,firstSentence,enablerLayout} from "./unlock.mjs";
 import {collectionId,collections,matchingBlockers,collectionAssessment,explorationFromHash,explorationHash,visibleDependencies} from "./explore.mjs";
-import {useOriginalCommunities,loadDependencyDataset} from "./dependency-source.mjs";
+import {loadDependencyDataset} from "./dependency-source.mjs?v=20261123-single-master";
 
 const html=htm.bind(React.createElement);
 function formatStakeholders([owner, ...others]) {
@@ -13,8 +13,6 @@ function formatStakeholders([owner, ...others]) {
   return html`<span><strong>${owner}</strong>${others.length ? " · " + others.join(" · ") : ""}</span>`;
 }
 const communityMode=document.documentElement.dataset.explorer==="community";
-const originalMode=useOriginalCommunities(communityMode,location.search);
-const newDependenciesMode=!originalMode;
 const mode=communityMode?"community":"gate";
 const collectionLabel=communityMode?"Community":"Stage Gate";
 const MECH_COLORS={Frame:"#6e68d8",Commit:"#c67b2b",Equip:"#2478b5",Assure:"#a05486",Operate:"#27865e",Learn:"#73883c"};
@@ -139,7 +137,7 @@ function AppCanvas({data,guidance,guidanceLoading}){
   const [unlockOpen,setUnlockOpen]=useState(true);
   const [showCompleted,setShowCompleted]=useState(false);
   const [stakeholder,setStakeholder]=useState(initialSelection.stakeholder);
-  const [includeUnreviewed,setIncludeUnreviewed]=useState(true);
+  const includeUnreviewed=true;
   useEffect(()=>{setGuidanceKey(null)},[selectedGroup,selectedBlocker]);
   const assessment=useMemo(()=>readCompanyAssessment(),[]);
   const assessmentMode=!!assessment;
@@ -218,8 +216,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
       const ga=assessmentMode?groupAssessment(g.id):null;
       if(communityMode){
         if(selectedGroup!=null&&g.id!==selectedGroup)return;
-        const places=phoneViewport?[[0,0],[0,420],[0,840],[0,1260],[0,1680]]:[[50,0],[520,0],[900,330],[450,390],[0,400]];
-        const [x,y]=selectedBlocker?[groupX(g.id),-220]:newDependenciesMode?(phoneViewport?[0,index*450]:[(index%3)*460,Math.floor(index/3)*460]):(places[index]||[(index%3)*430,Math.floor(index/3)*430]);
+      const [x,y]=selectedBlocker?[groupX(g.id),-220]:(phoneViewport?[0,index*450]:[(index%3)*460,Math.floor(index/3)*460]);
         nodes.push({id:`community-${g.id}`,type:"community",position:{x,y},data:{gate:g,index,size:phoneViewport?400:([400,400,400,380,360][index]||400),members:sourceBlockers.filter(b=>groupId(b)===g.id),assessmentState:ga?.state,remaining:ga?.remaining,preview:previewMode,gapCount:ga?.gaps,unanswered:ga?.unanswered,keyboardActivate:()=>selectGroup(g.id),openBlocker:openDeepDive}});
         return;
       }
@@ -252,8 +249,7 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
           // Reciprocal dependencies use one card with both directional edges.
           if(!nodes.some(n=>n.id===`blocker-${xBlock.id}`))nodes.push({id:`blocker-${xBlock.id}`,type:"blocker",position:{x,y},data:{blocker:xBlock,selected:false,relationsHighlighted:relationsOpen,domainTitle:domains[xBlock.domain]||"",zoom,relationLabel:label,maturityScore:assessment?.blockerScores?.[xBlock.id],status:assessmentMode?blockerStatus(xBlock.id):null,keyboardActivate:()=>openDeepDive(xBlock)}});
           const edge=side==="up"?{source:`blocker-${xBlock.id}`,target:`blocker-${b.id}`}:{source:`blocker-${b.id}`,target:`blocker-${xBlock.id}`};
-          const relation=dependencies.find(d=>side==="up"?d.blockerId===b.id&&d.dependsOnBlockerId===xBlock.id:d.blockerId===xBlock.id&&d.dependsOnBlockerId===b.id);
-          edges.push({id:`dep-${side}-${xBlock.id}`,...edge,...edgeBase,type:"dependency",style:{stroke:side==="up"?"#6e97b3":"#3b86b7",strokeWidth:relationsOpen?2.5:1.5,strokeDasharray:relation?.reviewStatus==="Validated"?undefined:"5 4",opacity:detailOpen&&!relationsOpen?.25:1}});
+        edges.push({id:`dep-${side}-${xBlock.id}`,...edge,...edgeBase,type:"dependency",style:{stroke:side==="up"?"#6e97b3":"#3b86b7",strokeWidth:relationsOpen?2.5:1.5,strokeDasharray:"5 4",opacity:detailOpen&&!relationsOpen?.25:1}});
         });
       };
       placeSide(deps.upstream,"up");placeSide(deps.downstream,"down");
@@ -340,20 +336,20 @@ const blockerStatus=useCallback(id=>assessment?.blockerStatuses?.[id]||"open",[a
   return html`<div className="shell">
     ${previewMode?html`<header className="topbar"><a className="brand" href=${"../assessment-preview/?resume="+encodeURIComponent(assessment.assessment_id)}><span className="brand-mark"></span><span>AI Scalability Explorer</span></a><div className="top-title">${communityMode?"My scalability communities":"My scalability timeline"}</div><div className="top-actions"><a className="top-link" href=${"../assessment-preview/?resume="+encodeURIComponent(assessment.assessment_id)}>← Results</a><a className="top-link" href=${alternateUrl}>${communityMode?"Timeline ↗":"Communities ↗"}</a>${selectedGroup!=null?html`<button className="ghost-top" onClick=${back}>← Back one level</button>`:null}<button className="ghost-top" onClick=${reset}>Reset view</button></div></header>`:html`    <header className="topbar">
       <a className="brand" href="../#home"><span className="brand-mark"></span><span>AI Scalability Explorer</span></a>
-      <div className="top-title">${originalMode?"Original communities · comparison":communityMode?"Communities":assessmentMode?"My AI Scalability Timeline":"Spatial Timeline"}</div>
+      <div className="top-title">${communityMode?"Communities":assessmentMode?"My AI Scalability Timeline":"Spatial Timeline"}</div>
       <div className="top-actions">
         <a className="icon-top" href="../?search=1#explore" aria-label="Search" title="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg></a>
         <a className="icon-top" href="../#selection" aria-label="My selection" title="My selection"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5h10v15l-5-3.1-5 3.1z"></path></svg>${savedCount?html`<span className="saved-count">${savedCount}</span>`:null}</a>
         ${(selectedGroup != null)?html`<button className="ghost-top" onClick=${back}>← Back one level</button>`:null}
         ${assessmentMode?html`<button className=${"ghost-top"+(showCompleted?" active-toggle":"")} onClick=${()=>setShowCompleted(v=>!v)}>${showCompleted?"Hide completed":"Show completed"}</button>`:null}
-        <button className="ghost-top" onClick=${reset}>Reset</button><a className="top-link" href=${alternateUrl}>${communityMode?"Timeline ↗":"Communities ↗"}</a><a className="top-link" href="../#explore">Explorer ↗</a>${communityMode&&!originalMode?html`<a className="top-link" href="../communities/?version=original">Original communities ↗</a>`:null}${originalMode?html`<a className="top-link" href="../communities/">Revised communities ↗</a>`:null}<a className="top-link" href="../#dependencies">Dependencies ↗</a><a className="top-link" href="../play/">Play ↗</a>
+        <button className="ghost-top" onClick=${reset}>Reset</button><a className="top-link" href=${alternateUrl}>${communityMode?"Timeline ↗":"Communities ↗"}</a><a className="top-link" href="../#explore">Explorer ↗</a><a className="top-link" href="../#dependencies">Dependencies ↗</a><a className="top-link" href="../play/">Play ↗</a>
       </div>
     </header>`}
     <section className="explorer-filters" aria-label="Explorer filters">
       <div className="filter-fields"><label>${collectionLabel}<select aria-label=${collectionLabel} value=${selectedGroup==null?"":String(selectedGroup)} onChange=${e=>selectGroup(e.target.value===""?null:Number(e.target.value))}><option value="">${communityMode?"All communities":"All Stage Gates"}</option>${groupRows.map(g=>html`<option key=${g.id} value=${String(g.id)}>${communityMode?g.label:`Gate ${g.id} · ${g.label}`}</option>`)}</select></label>
       <label>Stakeholder<select aria-label="Stakeholder" value=${stakeholder} onChange=${e=>{setStakeholder(e.target.value);selectGroup(selectedGroup)}}><option value="">All stakeholders</option>${roles.map(role=>html`<option key=${role} value=${role}>${role}</option>`)}</select></label>
       <span className="filter-count" role="status" title="Blockers matching the filters. Related blockers remain available as context.">${matchingCount} of ${data.blockers.length} blockers</span></div>
-          <div className="dependency-legend"><span className="critical-key">Critical core</span>${newDependenciesMode?html`<span>Revised dependencies and criticality.</span><span>Dashed = reviewed in source; not marked as validated.</span><a href="../new-dependencies/index.html">Compare original and revised versions</a>`:html`<span>Original version for comparison.</span><span>Dashed = unreviewed dependency</span><label><input type="checkbox" checked=${includeUnreviewed} onChange=${e=>setIncludeUnreviewed(e.target.checked)}/>Unreviewed links</label>`}</div>
+          <div className="dependency-legend"><span className="critical-key">Critical core</span><span>Dashed lines show dependencies.</span></div>
     </section>
     <main className=${"workspace"+(detailOpen?" detail-open":"")+(communityMode&&selectedGroup==null?" community-overview":"")}>
       <div className=${"intro"+((selectedGroup != null)?" compact":"")}><div className="eyebrow">${previewMode?"Self-reported assessment":assessmentMode?"Assessment result · illustrative":"Semantic zoom"}</div><h1>${introTitle}</h1><p>${introText}</p></div>
@@ -413,7 +409,7 @@ function Root(){
   useEffect(()=>{
     const snapshot=new URLSearchParams(location.search).get("assessment")==="questionnaire"?readCompanyAssessment():null;
     if(new URLSearchParams(location.search).get("assessment")==="questionnaire"&&!snapshot?.data){setError("This assessment is not available in this tab. Return to the questionnaire results and open the timeline again.");return;}
-    loadDependencyDataset({original:originalMode,snapshot}).then(setData).catch(e=>setError(e.message))},[]);
+    loadDependencyDataset({snapshot}).then(setData).catch(e=>setError(e.message))},[]);
   if(error)return html`<div style=${{padding:"40px",fontFamily:"system-ui"}}><h2>Could not load data</h2><p>${error}</p></div>`;
   if(!data)return html`<div className="timeline-loading"><span className="loading-spinner" aria-hidden="true"></span><span>Loading spatial timeline…</span></div>`;
   return html`<${ReactFlowProvider}><${AppCanvas} data=${data} guidance=${guidance} guidanceLoading=${guidanceLoading}/></${ReactFlowProvider}>`;

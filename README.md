@@ -58,13 +58,12 @@ opens the shared experience directly, without embedding a second application.
 The live application reads:
 
 ```text
-data/new-dependencies/explorer-data.json
+data/explorer-data.json
 ```
 
-Current schema: **3.1**. The standard Explorer, Timeline, assessment Timeline,
-communities and Scale Run use the revised dataset. The original
-`data/explorer-data.json` is retained only for explicit comparison, including
-`communities/?version=original` and the side-by-side dependency view.
+Current schema: **3.1**. The Master workbook is the source for the Explorer,
+Timeline, communities, Stage Gates and assessments. The exported data files are
+published together, so all views reflect the same version of the workbook.
 
 It contains:
 
@@ -101,7 +100,7 @@ python tools/new-dependencies/export_master.py "AIST_Explorer_Master.xlsx" --che
 python tools/new-dependencies/export_master.py "AIST_Explorer_Master.xlsx" --output-dir "output"
 ```
 
-4. Review the outputs and replace `data/new-dependencies/explorer-data.json` with the revised dataset. If updating the assessment catalogue, coordinate its version with the feedback service before publication.
+4. Review the outputs and replace the corresponding files under `data/` together, including `explorer-data.json`, `explorer_catalog.json` and `stage-gate-guidance.json`. Coordinate the catalogue version with the feedback service before publication.
 5. Commit and push to `main`.
 6. GitHub Pages updates automatically.
 
@@ -161,5 +160,7 @@ Validation: `node --test --test-isolation=none stage-dependencies.test.mjs depen
 
 ## Dependency review scope
 
-New reviews use the 84 directed pairs selected on 2026-11-02. The Worker owns the exact allowlist and enforces it in assignment and submission validation. The Explorer requires scope `dependency-review-84-v1` and a count of 84 before starting a new draft. Deploy the validated Worker before releasing this UI. Existing browser drafts retain their original pairs and can be submitted until their signed expiry. Reverse direction remains an answer about the displayed A → B pair. The final set may be smaller than 10/15; completion is shown when no eligible unseen pairs remain. Catalogue data, assessments and stakeholder flows are unchanged.
-
+New reviews sample directed dependencies from the current Master-derived dataset.
+The Worker signs the workbook version with each session; when the Master changes,
+older drafts can be exported and a new session started. Deploy the updated Worker
+before releasing this UI.

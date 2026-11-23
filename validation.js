@@ -1,16 +1,15 @@
 (function(root){
   'use strict';
   const API='https://aist-dependency-votes.diogomsmartins.workers.dev';
-  const REVIEW_SCOPE='dependency-review-84-v1';
-  const ELIGIBLE_PAIR_COUNT=84;
+  const REVIEW_SCOPE='dependency-review-master-v1';
   function scopeMessage(draft){
     return draft && draft.reviewScope!==REVIEW_SCOPE
-      ? 'Resuming an earlier session with its original pairs. Your answers can still be submitted until the session expires.'
-      : 'New sessions draw only from 84 selected directed pairs. A → B and B → A are separate. Reverse direction records your judgement about the displayed pair.';
+      ? 'This draft uses an earlier dependency map. Export it and start a new session using the current Master.'
+      : 'New sessions draw from the current Master dependencies. A → B and B → A are separate. Reverse direction records your judgement about the displayed pair.';
   }
   function validateSession(result){
-    if(result.reviewScope!==REVIEW_SCOPE || result.eligiblePairCount!==ELIGIBLE_PAIR_COUNT)
-      throw new Error('The selected-pair review is not available yet. Please try again after the review service has been updated.');
+    if(result.reviewScope!==REVIEW_SCOPE || !Number.isSafeInteger(result.eligiblePairCount) || result.eligiblePairCount<1)
+      throw new Error('The current dependency review is not available yet. Please try again after the review service has been updated.');
     return result;
   }
   const KEY='aist-dependency-review-v1'+(typeof location!=='undefined'&&new URLSearchParams(location.search).get('reviewTest')==='1'?'-test':'');
@@ -45,7 +44,7 @@
       root.stageDependencyNavigation?.();
       const area=host.querySelector('#vr-content');
       if(screen==='start'){
-        area.innerHTML=`<div class="vr-box vr-intro"><h2>Review a few pairs</h2><p>For each pair, consider: <strong>does addressing blocker A require progress on blocker B?</strong> Being related is not enough. You can suggest the reverse direction in the same answer.</p><div class="vr-steps"><span><b>1</b> Read both blockers</span><span><b>2</b> Yes, No, Reverse or Not sure</span><span><b>3</b> Submit your answers</span></div><p>You can stop early or continue with another set. Pairs you have already submitted in this browser are skipped; the final set may contain fewer pairs. Current links and their importance are hidden while you vote.</p><div class="vr-setup"><label>Pairs in this set<select id="vr-size"><option value="10">10 pairs</option><option value="15">15 pairs</option></select></label><label>Your role (optional)<input id="vr-role" maxlength="100" placeholder="e.g. Operations, IT, project manager" value="${escape(store.role||'')}"></label></div><button class="vr-primary" id="vr-start" ${busy||complete?'disabled':''}>${busy?'Preparing pairs…':complete?'Review complete':'Start reviewing'}</button>${complete?'<p role="status">You have reviewed all 84 selected pairs in this browser. Thank you.</p>':''}</div>`;
+        area.innerHTML=`<div class="vr-box vr-intro"><h2>Review a few pairs</h2><p>For each pair, consider: <strong>does addressing blocker A require progress on blocker B?</strong> Being related is not enough. You can suggest the reverse direction in the same answer.</p><div class="vr-steps"><span><b>1</b> Read both blockers</span><span><b>2</b> Yes, No, Reverse or Not sure</span><span><b>3</b> Submit your answers</span></div><p>You can stop early or continue with another set. Pairs you have already submitted in this browser are skipped; the final set may contain fewer pairs. Each pair is a current dependency; its importance is hidden while you vote.</p><div class="vr-setup"><label>Pairs in this set<select id="vr-size"><option value="10">10 pairs</option><option value="15">15 pairs</option></select></label><label>Your role (optional)<input id="vr-role" maxlength="100" placeholder="e.g. Operations, IT, project manager" value="${escape(store.role||'')}"></label></div><button class="vr-primary" id="vr-start" ${busy||complete?'disabled':''}>${busy?'Preparing pairs…':complete?'Review complete':'Start reviewing'}</button>${complete?'<p role="status">You have reviewed all current dependencies in this browser. Thank you.</p>':''}</div>`;
         area.querySelector('#vr-start').onclick=async()=>{
           const size=Number(area.querySelector('#vr-size').value);store.role=area.querySelector('#vr-role').value.trim();busy=true;error='';render();
           try{const result=validateSession(await request('/session',{participantId:store.participantId,size,exclude:store.seen[store.version]||[],excludeVersion:store.version,isTest:testMode,reviewScope:REVIEW_SCOPE}));
