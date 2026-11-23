@@ -15,6 +15,7 @@
     catch { status.textContent = 'Browser storage is full or unavailable. Keep this tab open; these answers cannot be restored after closing.'; return false; }
   }
   function touch() { session.updated_at = now(); persist(); }
+  function changedAnswer() { delete session.completed_at; }
   function on(selector, callback) { app.querySelector(selector)?.addEventListener('click', callback); }
   function go(next) { clearInterval(coffeeTimer); view = next; render(); app.focus(); window.scrollTo(0, 0); }
   function coffee(q) {
@@ -87,7 +88,7 @@
       <span class="scope-heading">${scope==='company'?'Assess your organisation':'Assess a specific project or initiative'}</span>
       <span class="scope-description">${scope==='company'?'Evaluate organisational maturity, capabilities and readiness to scale.':'Evaluate maturity, blockers and enablers for a specific project.'}</span><span class="scope-link">Choose assessment depth →</span></button>`).join('')}</div>
       ${store.sessions.length ? `<section class="panel"><h2>Your assessments</h2><div class="drafts">${store.sessions.map((s,i)=>`
-      <button data-resume="${i}"><strong>${esc(M.displayName(s))}</strong><small>${esc(title(s))} · ${esc((s.completed_at||s.updated_at||s.created_at||'').slice(0,10))}${s.completed_at?' · Completed':' · In progress'}</small></button>`).join('')}</div></section>` : ''}`;
+      <button class="${s.completed_at?'assessment-completed':''}" data-resume="${i}"><strong>${esc(M.displayName(s))}</strong><small>${esc(title(s))} · ${esc((s.completed_at||s.updated_at||s.created_at||'').slice(0,10))}${s.completed_at?' · Completed':' · In progress'}</small></button>`).join('')}</div></section>` : ''}`;
     app.querySelectorAll('[data-scope]').forEach(b=>b.onclick=()=>{selectedScope=b.dataset.scope;go('depth');});
     app.querySelectorAll('[data-resume]').forEach(b=>b.onclick=()=>{const i=Number(b.dataset.resume);resume(i,store.sessions[i].assessment_name?'results':'questions');});
   }
@@ -135,7 +136,7 @@
       const n=Number(value);
       if(!Number.isInteger(n)||n<0||n>4)return;
       const wasNa=answer.applicability==='not_applicable';
-      answer.score=n;answer.applicability='applicable';answer.response_state='rated';answer.all_blockers_not_applicable=false;
+      changedAnswer();answer.score=n;answer.applicability='applicable';answer.response_state='rated';answer.all_blockers_not_applicable=false;
       answer.updated_at=now();touch();QuestionFeedback.answered(session,question.question_id);
       slider.value=n;slider.setAttribute('aria-valuetext',`${n} · ${levels[n]}`);
       app.querySelector('#rating-value').textContent=`${n} · ${levels[n]}`;
@@ -153,7 +154,7 @@
     slider.setAttribute('aria-valuetext',answer.score===null?'No rating selected':`${answer.score} · ${levels[answer.score]}`);
     app.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>chooseLevel(b.dataset.level));
     function chooseAlternative(na){
-      answer.score=null;answer.applicability=na?'not_applicable':'undecided';answer.response_state=na?'not_applicable':'dont_know';
+      changedAnswer();answer.score=null;answer.applicability=na?'not_applicable':'undecided';answer.response_state=na?'not_applicable':'dont_know';
       answer.all_blockers_not_applicable=na&&q.mode==='quick';answer.updated_at=now();touch();questions();
       app.querySelector(na?'#answer-na':'#answer-unknown').focus({preventScroll:true});
     }
@@ -161,8 +162,8 @@
     QuestionFeedback.mount(session,question.question_id);
     app.querySelector('#question-change').oninput=e=>{answer.review_comment=e.target.value;touch();QuestionFeedback.comment(session,question.question_id,e.target.value);};
     const note=app.querySelector('#response-note');
-    note.oninput=()=>{if(answer.applicability==='not_applicable')answer.na_reason=note.value;else answer.evidence=note.value;touch();app.querySelector('progress').value=progressCount();};
-    on('#clear-answer',()=>{answer.score=null;answer.applicability='undecided';answer.response_state='unanswered';answer.all_blockers_not_applicable=false;touch();questions();});
+    note.oninput=()=>{changedAnswer();if(answer.applicability==='not_applicable')answer.na_reason=note.value;else answer.evidence=note.value;touch();app.querySelector('progress').value=progressCount();};
+    on('#clear-answer',()=>{changedAnswer();answer.score=null;answer.applicability='undecided';answer.response_state='unanswered';answer.all_blockers_not_applicable=false;touch();questions();});
     on('#previous', () => { session.current_step--; touch(); go('questions'); });
     on('#next', () => { if (session.current_step === q.questions.length - 1) go('results'); else { session.current_step++; touch(); go('questions'); } });
   }
@@ -174,6 +175,7 @@
     app.innerHTML = `<div class="tools"><button id="back">← Questions</button><button id="home">Questionnaires</button></div>
       <p class="eyebrow">${esc(title(q))}</p><h1 id="profile-title">${session.assessment_name?esc(session.assessment_name):'Your scalability profile'}</h1>
       <p class="muted">Created ${esc(session.created_at.slice(0,10))}${session.completed_at?` · Completed ${esc(session.completed_at.slice(0,10))}`:''}</p>
+      <section class="panel completion-panel" role="status">${session.completed_at?'<strong>Assessment completed</strong><p>Your answers are saved in this browser. Download your JSON to share them.</p>':'<strong>Review your answers and complete the assessment</strong><p>Your answers are saved in this browser.</p><button id="complete-assessment" class="primary">Complete assessment</button>'}<p id="completion-feedback"></p></section>
       <form id="save-assessment" class="panel save-assessment"><h2>Save your assessment</h2>
       <label for="assessment-name">Assessment name</label><div class="save-name-row"><input id="assessment-name" name="assessment-name" required maxlength="160" value="${esc(nameDraft??session.assessment_name??M.defaultName(session))}" aria-describedby="save-feedback"><button class="primary" type="submit">Save assessment</button></div>
       <p id="save-feedback" role="status">Your answers are saved automatically in this browser. Saving a name updates this assessment.</p></form>
@@ -183,6 +185,7 @@
       <div class="tools">${q.mode==='quick'&&q.questions.length===15?'<button id="continue-expert">Continue to full questionnaire</button>':''}<button id="export-json">Download assessment JSON</button></div>
       <section class="pdf-only"><h2>Enablers to develop</h2><p>${report.partial ? 'Recommendations reflect the answered questions only.' : 'Recommendations reflect the reported gaps.'} Scores do not imply blocker closure.</p>
       ${V.enablerReport(report, catalog, new URL("../", location.href))}</section>`;
+    on('#complete-assessment',()=>{try{M.completeAssessment(session,report,now());if(persist())results();else app.querySelector('#completion-feedback').textContent='Unable to save in this browser. Download your answers before closing.';}catch(e){app.querySelector('#completion-feedback').textContent=e.message;}});
     const nameInput=app.querySelector('#assessment-name');
     nameInput.oninput=()=>{nameDraft=nameInput.value;nameInput.setCustomValidity('');};
     app.querySelector('#save-assessment').onsubmit=e=>{
@@ -204,7 +207,7 @@
       session=next; if(index>=0)store.sessions[index]=next;else store.sessions.push(next); persist(); go('questions');
     });
     on('#export-json', () => {
-      const blob=new Blob([JSON.stringify({schema_version:'1.0',exported_at:now(),assessment:session},null,2)],{type:'application/json'});
+      const blob=new Blob([JSON.stringify(M.exportAnswers(catalog,session,now()),null,2)],{type:'application/json'});
       const url=URL.createObjectURL(blob), link=document.createElement('a');
       link.href=url; link.download=`aist-assessment-${session.assessment_id}.json`; link.click(); setTimeout(()=>URL.revokeObjectURL(url),1000);
     });
@@ -218,7 +221,7 @@
   }
   function render() { if (view === 'home') home(); else if (view === 'depth') depth(); else if (view === 'questions') questions(); else results(); }
   try {
-    const [response,revisedResponse] = await Promise.all([fetch('../data/explorer_catalog.json', { cache: 'no-cache' }),fetch('../data/new-dependencies/explorer-data.json', { cache: 'no-cache' })]);
+    const [response,revisedResponse] = await Promise.all([fetch('../data/explorer_catalog.json', { cache: 'no-cache' }),fetch('../data/explorer-data.json', { cache: 'no-cache' })]);
     if (!response.ok) throw new Error(`Catalogue HTTP ${response.status}`);
     current = M.validate(await response.json());
     if(!revisedResponse.ok)throw new Error('The revised dependencies could not be loaded.');
