@@ -99,7 +99,7 @@
     }
     return s;
   }
-  function report(c,s) {
+  function report(c,s,revisedData) {
     const q=questionnaire(c,s), rows=[], counts={information_gap:0,valid:0,not_applicable:0,unanswered:0,evidence_missing:0,na_reason_missing:0,invalid:0,zero_weight:0};
     let numerator=0,denominator=0;
     const blockers=[];
@@ -110,7 +110,9 @@
       if(status==='valid'){numerator+=answer.effective_weight*answer.score;denominator+=4*answer.effective_weight;}
       rows.push({question,answer,status});
       for (const id of question.blocker_ids) {
-        const b=c.blockers.find(b=>b.blocker_id===id);
+        let b=c.blockers.find(b=>b.blocker_id===id);
+        const revised=revisedData?.blockers?.find(item=>item.id===id);
+        if(revised) b={...b,dependency_analysis:{...b.dependency_analysis,community:revised.communityName,community_id:revised.communityId,state:revised.classification,criticality_composite:revised.criticalityComposite}};
         blockers.push({...b,question_id:question.question_id,status,score:status==='valid'?answer.score:null,allocated_weight:answer.effective_weight/question.blocker_ids.length,score_origin:q.mode==='quick'?(question.blocker_ids.length>1?'quick_group':'quick_individual'):'expert',operational_status:'not_reviewed'});
       }
     }
@@ -135,3 +137,4 @@
   }
   root.AssessmentPreview={defaultName,displayName,nameAssessment,validate,key,create,continueExpert,classify,questionnaire,validateAssessment,report,weightOK};
 })(globalThis);
+

@@ -4,7 +4,9 @@
 `../timeline/app.js` and `../timeline/styles.css`. Its `data-explorer="community"`
 attribute changes the first collection layer and filter label to Communities.
 All blocker, mechanism, enabler, dependency and accessibility interactions remain
-shared. Data is loaded from the existing `../data/explorer-data.json`.
+shared. By default, data comes from `../data/new-dependencies/explorer-data.json`.
+For the temporary comparison, `?version=original` explicitly opens the former
+`../data/explorer-data.json` dataset. The Timeline and assessments use revised data.
 
 Choose an organic community group or the Community filter to retain that same group
 and reveal its blocker cards directly below it. No Stage Gate-style community cards
@@ -24,10 +26,11 @@ without a nested iframe or duplicate navigation header.
 
 The former SVG renderer (`app.mjs` and its styles) and its utility modules are
 retained for compatibility and reference; they are not loaded by this entry point.
-The source schema and community associations have not changed.
+The original dataset is retained for comparison only.
 
 Shared model checks:
 
 ```sh
 node --test --test-isolation=none timeline/explore.test.mjs timeline/unlock.test.mjs communities/zoom.test.mjs
 ```
+
