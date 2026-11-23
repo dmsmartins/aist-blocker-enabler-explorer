@@ -2,7 +2,7 @@ import {zoomBox} from './zoom.mjs';
 import {visibleBlockers,orderedDependencies,isValidated,incompleteIds,projectComponents} from './model.mjs';
 const app=document.querySelector('#app');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const data=await fetch('../data/new-dependencies/explorer-data.json').then(r=>{if(!r.ok)throw Error('Data could not be loaded');return r.json()}).catch(e=>{app.textContent=e.message;throw e});
+const data=await fetch('../data/explorer-data.json').then(r=>{if(!r.ok)throw Error('Data could not be loaded');return r.json()}).catch(e=>{app.textContent=e.message;throw e});
 let mode='communities',domain='',role='',focus=null,selected=null,includeUnreviewed=true,activeCommunity=null,box=[0,0,1600,900];
 const positions=[[80,60],[1390,80],[720,710],[1440,800],[80,790]];
 const get=id=>data.blockers.find(b=>b.id===Number(id));

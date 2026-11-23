@@ -218,7 +218,7 @@
   }
   function render() { if (view === 'home') home(); else if (view === 'depth') depth(); else if (view === 'questions') questions(); else results(); }
   try {
-    const [response,revisedResponse] = await Promise.all([fetch('../data/explorer_catalog.json', { cache: 'no-cache' }),fetch('../data/new-dependencies/explorer-data.json', { cache: 'no-cache' })]);
+    const [response,revisedResponse] = await Promise.all([fetch('../data/explorer_catalog.json', { cache: 'no-cache' }),fetch('../data/explorer-data.json', { cache: 'no-cache' })]);
     if (!response.ok) throw new Error(`Catalogue HTTP ${response.status}`);
     current = M.validate(await response.json());
     if(!revisedResponse.ok)throw new Error('The revised dependencies could not be loaded.');

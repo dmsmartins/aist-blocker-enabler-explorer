@@ -58,13 +58,12 @@ opens the shared experience directly, without embedding a second application.
 The live application reads:
 
 ```text
-data/new-dependencies/explorer-data.json
+data/explorer-data.json
 ```
 
-Current schema: **3.1**. The standard Explorer, Timeline, assessment Timeline,
-communities and Scale Run use the revised dataset. The original
-`data/explorer-data.json` is retained only for explicit comparison, including
-`communities/?version=original` and the side-by-side dependency view.
+Current schema: **3.1**. The Master workbook is the source for the Explorer,
+Timeline, communities, Stage Gates and assessments. The exported data files are
+published together, so all views reflect the same version of the workbook.
 
 It contains:
 
@@ -101,7 +100,7 @@ python tools/new-dependencies/export_master.py "AIST_Explorer_Master.xlsx" --che
 python tools/new-dependencies/export_master.py "AIST_Explorer_Master.xlsx" --output-dir "output"
 ```
 
-4. Review the outputs and replace `data/new-dependencies/explorer-data.json` with the revised dataset. If updating the assessment catalogue, coordinate its version with the feedback service before publication.
+4. Review the outputs and replace the corresponding files under `data/` together, including `explorer-data.json`, `explorer_catalog.json` and `stage-gate-guidance.json`. Coordinate the catalogue version with the feedback service before publication.
 5. Commit and push to `main`.
 6. GitHub Pages updates automatically.
 

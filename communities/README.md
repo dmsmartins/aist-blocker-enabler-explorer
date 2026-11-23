@@ -4,19 +4,16 @@
 `../timeline/app.js` and `../timeline/styles.css`. Its `data-explorer="community"`
 attribute changes the first collection layer and filter label to Communities.
 All blocker, mechanism, enabler, dependency and accessibility interactions remain
-shared. By default, data comes from `../data/new-dependencies/explorer-data.json`.
-For the temporary comparison, `?version=original` explicitly opens the former
-`../data/explorer-data.json` dataset. The Timeline and assessments use revised data.
+shared. Data comes from `../data/explorer-data.json`, generated from the Master workbook.
 
 Choose an organic community group or the Community filter to retain that same group
 and reveal its blocker cards directly below it. No Stage Gate-style community cards
 are shown. Each member dot is also a keyboard-accessible shortcut to its blocker;
 hover or focus identifies the blocker. Dependency lines carry moving dots while
-keeping solid/dashed review styling, and respect reduced-motion preferences.
+keeping dashed dependency styling, and respect reduced-motion preferences.
 Stakeholder intersects that membership. The counter reports matching blockers;
 related blockers remain available as dependency context. An explicit empty state
-allows the filters to be cleared. The original critical-core visual treatment and
-review-status distinction are retained.
+allows the filters to be cleared. The critical-core visual treatment is retained.
 
 Links support `#community=1`, optional `role`, and the same
 `#blocker=1323&mech=assure` format as Timeline. Browser Back/Forward restores the
@@ -26,7 +23,7 @@ without a nested iframe or duplicate navigation header.
 
 The former SVG renderer (`app.mjs` and its styles) and its utility modules are
 retained for compatibility and reference; they are not loaded by this entry point.
-The original dataset is retained for comparison only.
+
 
 Shared model checks:
 

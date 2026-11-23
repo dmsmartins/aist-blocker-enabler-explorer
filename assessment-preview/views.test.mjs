@@ -5,7 +5,7 @@ import './model.js';
 import './views.js';
 const M=globalThis.AssessmentPreview,V=globalThis.AssessmentViews;
 const c=JSON.parse(readFileSync(new URL('../data/explorer_catalog.json',import.meta.url)));
-const revised=JSON.parse(readFileSync(new URL('../data/new-dependencies/explorer-data.json',import.meta.url)));
+const revised=JSON.parse(readFileSync(new URL('../data/explorer-data.json',import.meta.url)));
 const q=c.questionnaires[0];
 function make(){const s=M.create(c,q,'preview','2026-10-19T12:00:00Z');s.scoring_basis='self_report_preview';return s;}
 test('self-reported preview scores without inventing evidence, legacy scoring unchanged',()=>{
