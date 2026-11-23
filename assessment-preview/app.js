@@ -82,7 +82,7 @@
       : '<rect x="3" y="6" width="18" height="15" rx="2"/><path d="M8 6V3h8v3M3 11h18M10 11v3h4v-3"/>';
     app.innerHTML = `<p class="eyebrow">Maturity assessment · Step 1 / 2</p><h1>What do you want to assess?</h1>
       <p class="muted">Choose whether to assess your organisation or a specific project.</p>
-      <div class="cards scope-cards">${['company','project'].map(scope=>`<button class="scope-card ${scope}" data-scope="${scope}">
+      <div class="cards scope-cards">${['company'].map(scope=>`<button class="scope-card ${scope}" data-scope="${scope}">
       <svg viewBox="0 0 24 24" aria-hidden="true">${icon(scope)}</svg><span class="eyebrow">${scope==='company'?'Company':'Project'} Assessment</span>
       <span class="scope-heading">${scope==='company'?'Assess your organisation':'Assess a specific project or initiative'}</span>
       <span class="scope-description">${scope==='company'?'Evaluate organisational maturity, capabilities and readiness to scale.':'Evaluate maturity, blockers and enablers for a specific project.'}</span><span class="scope-link">Choose assessment depth →</span></button>`).join('')}</div>
