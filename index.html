@@ -834,7 +834,7 @@ body:has(.community-page){height:100dvh;display:flex;flex-direction:column;overf
 </style>
   <link rel="stylesheet" href="dependencies.css" />
   <link rel="stylesheet" href="stage-dependencies.css?v=20261002-stage-map" />
-<link rel="stylesheet" href="community-metadata.css" /><link rel="stylesheet" href="entry.css?v=20261021-depth">
+<link rel="stylesheet" href="community-metadata.css" /><link rel="stylesheet" href="entry.css?v=20261123-guided">
   <link rel="stylesheet" href="review.css?v=20261029" />
 </head>
 <body>
@@ -1025,29 +1025,66 @@ function renderHome() {
         <div class="hero-copy">
           <p class="eyebrow">UIC AIST · Insight to impact</p>
           <h1>Understand.<br>Overcome.<br><span>Scale AI.</span></h1>
-          <p class="lead">Start with a maturity assessment to discover where you are ready to scale, then explore the timeline to understand what is missing. Or dive straight into the explorer.</p>
+          <p class="lead">Start with an assessment to understand where you stand. Follow your results through the AI lifecycle, then explore the blockers and enablers behind them.</p>
           <div class="hero-actions">
-            <a class="hero-cta" href="./assessment-preview/">Start with an Assessment <span aria-hidden="true">→</span></a>
-            <span class="recommended">★ Recommended first step</span>
-            <a class="hero-timeline" href="./timeline/">Explore the Timeline <span aria-hidden="true">→</span></a>
-            <button class="hero-browse" data-entry="explore">Browse the explorer instead →</button>
+            <div class="primary-entry"><span class="entry-recommended">RECOMMENDED START</span><a class="hero-cta" href="./assessment-preview/">Start an assessment <span aria-hidden="true">→</span></a><p>Choose a company or project assessment.</p></div>
+            <div class="entry-shortcuts"><span>Already know where to go?</span><a href="./timeline/">Open the Timeline <span aria-hidden="true">↗</span></a><button data-entry="explore">Explore directly <span aria-hidden="true">→</span></button></div>
           </div>
         </div>
-        <div class="hero-visual">
-          ${timelinePreviewSvg()}
-          
-        </div>
+        <div class="hero-visual"><div class="intro-film" aria-label="How to use the Explorer">
+          <div class="film-top"><span class="film-kicker">A GUIDED WAY IN</span><span class="film-example">ILLUSTRATIVE EXAMPLE</span></div>
+          <div class="film-steps" role="group" aria-label="Explore the three steps">
+            <button type="button" data-film-step="0" aria-pressed="true"><span>01</span> Assess</button>
+            <button type="button" data-film-step="1" aria-pressed="false"><span>02</span> Timeline</button>
+            <button type="button" data-film-step="2" aria-pressed="false"><span>03</span> Explore</button>
+          </div>
+          <div class="film-stage" aria-live="off">
+            <div class="film-scene" data-scene="0"><div class="scene-heading"><span class="scene-dot"></span> COMPANY ASSESSMENT</div><div class="scene-question">How ready are you to scale AI?</div><p>Reflect on your organisation's current capabilities.</p><div class="scene-choice"><span class="choice-icon">✓</span><span>Answer the questions</span><span class="choice-count">1 / 15</span></div><div class="scene-result"><span>YOUR SCALABILITY PROFILE</span><div class="scene-bars"><i></i><i></i><i></i><i></i><i></i></div><small>See where to focus</small></div></div>
+            <div class="film-scene" data-scene="1" hidden><div class="scene-heading"><span class="scene-dot"></span> FOLLOW YOUR RESULTS</div><div class="scene-question">See the bigger picture.</div><p>Follow your assessment through the AI lifecycle.</p><div class="scene-track"><span>ALIGN</span><span>DESIGN</span><span>BUILD</span><span>DEPLOY</span><span>OPERATE</span></div><div class="scene-marker"><span>●</span><div><strong>Find where challenges appear</strong><small>Understand them in context</small></div></div></div>
+            <div class="film-scene" data-scene="2" hidden><div class="scene-heading"><span class="scene-dot"></span> EXPLORE CONNECTIONS</div><div class="scene-question">From insight to action.</div><p>Investigate how blockers connect to enablers.</p><div class="scene-network"><div><small>BLOCKER</small><strong>A challenge to scale</strong></div><span aria-hidden="true">→</span><div><small>ENABLER</small><strong>A way forward</strong></div></div><div class="scene-caption">Explore dependencies, context and practical actions.</div></div>
+          </div>
+          <div class="film-footer"><span>See how it works</span><button type="button" class="film-pause" aria-label="Pause animation">Pause <span aria-hidden="true">Ⅱ</span></button></div>
+        </div></div>
       </div>
     </section>
+    <section class="lifecycle-section"><div class="lifecycle-heading"><div><p class="eyebrow">THE AI LIFECYCLE</p><h2>Explore the journey, stage by stage.</h2><p>See how challenges and opportunities connect across the six Stage Gates.</p></div><a href="./timeline/" class="lifecycle-link">Open the Timeline <span aria-hidden="true">→</span></a></div><div class="lifecycle-art hero-visual">${timelinePreviewSvg()}</div></section>
     <section class="framework-strip">
       <p class="eyebrow">Enablers</p><h2 class="framework-title">Enablers act through six mechanisms</h2><p class="mechanism-intro">These mechanisms help overcome blockers and move organisations from insight to impact, providing the conditions, capabilities and support needed across the journey.</p>
       <div class="mechanism-explainer-grid">${mechs}</div>
     </section>`;
   mountJourneyConnections();
+  mountIntroFilm();
   app.querySelectorAll('[data-entry]').forEach(btn => btn.addEventListener('click', () => {
     const action = btn.dataset.entry;
     if (action === 'role') openRolePicker(); else navigate(action);
   }));
+}
+function mountIntroFilm() {
+  const film = app.querySelector('.intro-film');
+  if (!film) return;
+  const steps = [...film.querySelectorAll('[data-film-step]')];
+  const scenes = [...film.querySelectorAll('[data-scene]')];
+  const pause = film.querySelector('.film-pause');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let current = 0, playing = !reduced.matches;
+  function show(index) {
+    current = index;
+    scenes.forEach((scene,i)=>{ scene.hidden=i!==index; });
+    steps.forEach((step,i)=>step.setAttribute('aria-pressed',String(i===index)));
+  }
+  function updatePause() {
+    pause.textContent = playing ? 'Pause Ⅱ' : 'Play ▶';
+    pause.setAttribute('aria-label',playing ? 'Pause animation' : 'Play animation');
+  }
+  steps.forEach((button,i)=>button.addEventListener('click',()=>{playing=false;show(i);updatePause();}));
+  pause.addEventListener('click',()=>{playing=!playing;updatePause();});
+  const onMotionChange=()=>{if(reduced.matches){playing=false;updatePause();}};
+  reduced.addEventListener?.('change',onMotionChange);
+  show(0); updatePause();
+  const timer=setInterval(()=>{
+    if (!film.isConnected) { clearInterval(timer); reduced.removeEventListener?.('change',onMotionChange); return; }
+    if (playing && !document.hidden && !film.contains(document.activeElement)) show((current+1)%scenes.length);
+  },6000);
 }
 function entryCard(title, text, link, action, symbol) {
   return `<button class="entry-card" data-entry="${action}"><div class="entry-icon">${symbol}</div><h3>${title}</h3><p>${text}</p><span class="card-link">${link} →</span></button>`;
@@ -1101,7 +1138,7 @@ function timelinePreviewSvg() {
     '<path d="M4 7h12l-3-3m3 3-3 3M20 17H8l3-3m-3 3 3 3"/>'
   ];
   const captions=['Define ambition and value','Design a feasible solution','Build and verify','Deploy into operations','Operate and improve','Retire and transition'];
-  return `<div class="journey-pill">Assessment <span>→</span> Timeline <span>→</span> Action</div><div class="journey-art">
+  return `<div class="journey-pill">Six Stage Gates <span>·</span> One connected journey</div><div class="journey-art">
     <svg class="journey-orbits" viewBox="0 0 1000 650" preserveAspectRatio="none" aria-hidden="true" focusable="false">
       <g transform="rotate(-18 500 325)">
         <ellipse class="orbit-track" cx="500" cy="355" rx="520" ry="235"/>
