@@ -160,5 +160,7 @@ Validation: `node --test --test-isolation=none stage-dependencies.test.mjs depen
 
 ## Dependency review scope
 
-New reviews use the 84 directed pairs selected on 2026-11-02. The Worker owns the exact allowlist and enforces it in assignment and submission validation. The Explorer requires scope `dependency-review-84-v1` and a count of 84 before starting a new draft. Deploy the validated Worker before releasing this UI. Existing browser drafts retain their original pairs and can be submitted until their signed expiry. Reverse direction remains an answer about the displayed A → B pair. The final set may be smaller than 10/15; completion is shown when no eligible unseen pairs remain. Catalogue data, assessments and stakeholder flows are unchanged.
-
+New reviews sample directed dependencies from the current Master-derived dataset.
+The Worker signs the workbook version with each session; when the Master changes,
+older drafts can be exported and a new session started. Deploy the updated Worker
+before releasing this UI.
