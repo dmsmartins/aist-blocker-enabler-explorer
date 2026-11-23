@@ -74,6 +74,17 @@
     if(!s.completed_at && r.rows.every(row=>['valid','not_applicable','information_gap'].includes(row.status)))s.completed_at=timestamp;
     return s;
   }
+  function exportAnswers(c,s,timestamp) {
+    const q=questionnaire(c,s);
+    return {schema_version:'1.0',exported_at:timestamp,assessment_id:s.assessment_id,assessment_name:s.assessment_name||'',assessment_type:s.assessment_type,mode:s.mode,catalog_version:s.catalog_version,questionnaire_version:s.questionnaire_version,completed_at:s.completed_at||null,answers:q.questions.map(question=>{
+      const a=s.answers[question.question_id];
+      return {question_id:question.question_id,question:question.text,blocker_ids:question.blocker_ids,maturity_level:a.score,response_state:a.response_state||(a.score!==null?'rated':a.applicability==='not_applicable'?'not_applicable':'unanswered'),evidence:a.evidence,not_applicable_reason:a.na_reason};
+    })};
+  }
+  function completeAssessment(s,r,timestamp) {
+    assert(r.rows.every(row=>['valid','not_applicable','information_gap'].includes(row.status)), 'Please answer every question and complete required N/A reasons.');
+    s.completed_at=timestamp; s.updated_at=timestamp; return s;
+  }
   function classify(a,q,mode,selfReport=false) {
     if (!a || !weightOK(a.effective_weight)) return 'invalid';
     if(a.applicability==='not_applicable') return a.score===null && (selfReport && !(q.na_guidance||q.when_to_use_na) || text(a.na_reason) && (mode!=='quick'||a.all_blockers_not_applicable===true)) ? 'not_applicable':'na_reason_missing';
@@ -135,6 +146,6 @@
     recommendations.sort((a,b)=>b.priority-a.priority||a.enabler_id-b.enabler_id);
     return {maturity_percent:denominator?100*numerator/denominator:null,numerator,denominator,completion:(counts.valid+counts.not_applicable)/q.questions.length,counts,rows,blockers,groups,recommendations,partial:counts.valid+counts.not_applicable<q.questions.length};
   }
-  root.AssessmentPreview={defaultName,displayName,nameAssessment,validate,key,create,continueExpert,classify,questionnaire,validateAssessment,report,weightOK};
+  root.AssessmentPreview={exportAnswers,completeAssessment,defaultName,displayName,nameAssessment,validate,key,create,continueExpert,classify,questionnaire,validateAssessment,report,weightOK};
 })(globalThis);
 
