@@ -94,7 +94,7 @@
   }
   function depth() {
     app.innerHTML=`<button id="scope-back">← Assessment scope</button><p class="eyebrow depth-label ${selectedScope}">${selectedScope==='company'?'Company':'Project'} Assessment · Step 2 / 2</p>
-      <h1>Choose the assessment depth</h1><div class="cards depth-cards ${selectedScope}">${current.questionnaires.map((q,i)=>q.assessment_type!==selectedScope?'':`
+      <h1>Choose the assessment depth</h1><div class="cards depth-cards ${selectedScope}">${current.questionnaires.map((q,i)=>(q.assessment_type!==selectedScope || (q.assessment_type==='company' && q.mode==='quick'))?'':`
       <section class="card"><h2>${q.mode==='quick'?'Quick overview':'Expert assessment'}</h2><p class="question-count">${q.questions.length} questions</p>
       <p>${q.mode==='quick'?'The 15 questions associated with the most critical blockers.':'Detailed assessment with one question per blocker.'}</p>
       <p class="muted">${q.mode==='quick'?'High-level maturity insights.':'Detailed analysis and recommendations.'}</p><button class="primary" data-start="${i}">Start ${esc(title(q))}</button></section>`).join('')}</div>`;
